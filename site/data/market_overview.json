@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-03-11 13:04",
+  "updated_at": "2026-03-11 13:07",
   "update_frequency": "Borsa saatleri içerisinde her saat başı otomatik güncellenir",
   "bist30": {
-    "index_value": 14976.89,
+    "index_value": 14975.47,
     "change_percent": -0.06,
     "volume": 0,
     "high": 15089.47,
@@ -13,16 +13,16 @@
     "XU030": {
       "name": "BIST 30",
       "ticker": "XU030.IS",
-      "value": 14976.89,
-      "change": -8.31,
+      "value": 14975.47,
+      "change": -9.73,
       "change_pct": -0.06,
-      "weekly_change_pct": 0.52,
-      "monthly_change_pct": -0.25,
+      "weekly_change_pct": 0.51,
+      "monthly_change_pct": -0.26,
       "yearly_high": 16014.0,
       "yearly_low": 9733.6,
       "volume": 0,
-      "sma20": 15276.52,
-      "sma50": 14548.69,
+      "sma20": 15276.45,
+      "sma50": 14548.66,
       "sma200": 12411.43,
       "trend": "YÜKSELEN",
       "trend_color": "#69f0ae",
@@ -32,8 +32,8 @@
     "XU100": {
       "name": "BIST 100",
       "ticker": "XU100.IS",
-      "value": 13163.5,
-      "change": -12.2,
+      "value": 13163.59,
+      "change": -12.11,
       "change_pct": -0.09,
       "weekly_change_pct": 0.65,
       "monthly_change_pct": -4.59,
@@ -54,10 +54,10 @@
       "ticker": "ASELS",
       "name": "Aselsan",
       "sector": "Savunma",
-      "price": 333.0,
-      "change_pct": -0.374,
-      "rsi": 58.0371,
-      "stoch_k": 63.2432,
+      "price": 333.25,
+      "change_pct": -0.2992,
+      "rsi": 58.1528,
+      "stoch_k": 63.7838,
       "adx": 45.5157,
       "volume_ratio": 0.2,
       "signal": "AL",
@@ -66,11 +66,11 @@
       "confidence": 91.0,
       "color": "#00c853",
       "targets": {
-        "target_1": 337.99,
-        "target_2": 342.99,
-        "target_3": 347.98,
-        "stop_loss": 326.34,
-        "add_level": 329.67
+        "target_1": 338.25,
+        "target_2": 343.25,
+        "target_3": 348.25,
+        "stop_loss": 326.58,
+        "add_level": 329.92
       },
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: HAFİF AL — Yükseliş trendi sürüyor ama momentum azalıyor. | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim aktif. Uz"
     },
@@ -78,10 +78,10 @@
       "ticker": "TKFEN",
       "name": "Tekfen Holding",
       "sector": "Holding",
-      "price": 84.25,
-      "change_pct": 4.6584,
-      "rsi": 59.2194,
-      "stoch_k": 92.7419,
+      "price": 84.2,
+      "change_pct": 4.5963,
+      "rsi": 59.1668,
+      "stoch_k": 92.4731,
       "adx": 32.34,
       "volume_ratio": 0.9,
       "signal": "HAFİF AL",
@@ -90,11 +90,11 @@
       "confidence": 61.9,
       "color": "#69f0ae",
       "targets": {
-        "target_1": 85.51,
-        "target_2": 86.78,
-        "target_3": 88.04,
-        "stop_loss": 82.56,
-        "add_level": 83.41
+        "target_1": 85.46,
+        "target_2": 86.73,
+        "target_3": 87.99,
+        "stop_loss": 82.52,
+        "add_level": 83.36
       },
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: GÜÇLÜ AL — MACD yukarı kesişim (Golden Cross). Yükseliş başlangıcı! | HAFİF AL — Genel trend yukarı yönlü. | HAFİF AL — Kısa vadeli toparlanma me"
     },
@@ -102,10 +102,10 @@
       "ticker": "TUPRS",
       "name": "Tüpraş",
       "sector": "Enerji",
-      "price": 255.0,
-      "change_pct": 2.8226,
-      "rsi": 66.5248,
-      "stoch_k": 65.6371,
+      "price": 254.75,
+      "change_pct": 2.7218,
+      "rsi": 66.4155,
+      "stoch_k": 65.251,
       "adx": 30.5908,
       "volume_ratio": 0.6,
       "signal": "HAFİF AL",
@@ -114,13 +114,13 @@
       "confidence": 39.6,
       "color": "#69f0ae",
       "targets": {
-        "target_1": 258.82,
-        "target_2": 262.65,
-        "target_3": 266.47,
-        "stop_loss": 249.9,
-        "add_level": 252.45
+        "target_1": 258.57,
+        "target_2": 262.39,
+        "target_3": 266.21,
+        "stop_loss": 249.66,
+        "add_level": 252.2
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺388.88\n  • Direnç 2: ₺333.07\n  • Direnç 1: ₺294.03\n  • Pivot: ₺238.22\n  • "
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺388.72\n  • Direnç 2: ₺332.98\n  • Direnç 1: ₺293.87\n  • Pivot: ₺238.13\n  • "
     }
   ],
   "top_sells": [
@@ -152,10 +152,10 @@
       "ticker": "HEKTS",
       "name": "Hektaş",
       "sector": "Kimya",
-      "price": 2.91,
-      "change_pct": -1.3559,
-      "rsi": 38.4897,
-      "stoch_k": 22.9508,
+      "price": 2.9,
+      "change_pct": -1.6949,
+      "rsi": 38.0194,
+      "stoch_k": 21.3115,
       "adx": 34.7657,
       "volume_ratio": 0.2,
       "signal": "HAFİF SAT",
@@ -164,11 +164,11 @@
       "confidence": 54.6,
       "color": "#ff8a80",
       "targets": {
-        "target_1": 2.87,
-        "target_2": 2.82,
-        "target_3": 2.78,
-        "stop_loss": 2.97,
-        "add_level": 2.94
+        "target_1": 2.86,
+        "target_2": 2.81,
+        "target_3": 2.77,
+        "stop_loss": 2.96,
+        "add_level": 2.93
       },
       "explanation_short": "🔴 Günlük bazda SATIŞ sinyali veriyoruz. Satış sebepleri: HAFİF SAT — Düşüş trendi var ama zayıflıyor. | SAT — Tüm ortalamalar üstünde, ağır düşüş trendi. | SAT — Ölüm kesişimi aktif. Uzun vadeli düşüş"
     },
@@ -224,10 +224,10 @@
       "ticker": "TAVHL",
       "name": "TAV Havalimanları",
       "sector": "Havacılık",
-      "price": 300.75,
-      "change_pct": 0.0,
-      "rsi": 40.6649,
-      "stoch_k": 38.9831,
+      "price": 301.25,
+      "change_pct": 0.1663,
+      "rsi": 40.9611,
+      "stoch_k": 39.8305,
       "adx": 58.4687,
       "volume_ratio": 0.3,
       "signal": "HAFİF SAT",
@@ -236,49 +236,49 @@
       "confidence": 66.1,
       "color": "#ff8a80",
       "targets": {
-        "target_1": 296.24,
-        "target_2": 291.73,
-        "target_3": 287.22,
-        "stop_loss": 306.76,
-        "add_level": 303.76
+        "target_1": 296.73,
+        "target_2": 292.21,
+        "target_3": 287.69,
+        "stop_loss": 307.27,
+        "add_level": 304.26
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺445.17\n  • Direnç 2: ₺407.08\n  • Direnç 1: ₺353.92\n  • Pivot: ₺315.83\n  • "
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺445.50\n  • Direnç 2: ₺407.25\n  • Direnç 1: ₺354.25\n  • Pivot: ₺316.00\n  • "
     }
   ],
   "signal_counts": {
     "STRONG_BUY": 0,
     "BUY": 1,
     "WEAK_BUY": 2,
-    "HOLD": 13,
-    "WEAK_SELL": 12,
+    "HOLD": 14,
+    "WEAK_SELL": 11,
     "SELL": 0,
     "STRONG_SELL": 0
   },
   "news": [
     {
       "title": "📊 BIST 30 Teknik Analiz Raporu Güncellendi",
-      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 11.03.2026 13:04 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
-      "date": "11.03.2026 13:04",
+      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 11.03.2026 13:07 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
+      "date": "11.03.2026 13:07",
       "category": "analiz",
       "icon": "📊"
     },
     {
       "title": "🔔 Stochastic & ADX Göstergeleri Eklendi",
       "summary": "Yeni teknik göstergeler: Stochastic Oscillator ve ADX (Average Directional Index) artık tüm hisseler için hesaplanıyor. Fibonacci düzeltme seviyeleri de aktif.",
-      "date": "11.03.2026 13:04",
+      "date": "11.03.2026 13:07",
       "category": "güncelleme",
       "icon": "🔔"
     },
     {
       "title": "🎯 Hedef Fiyat Sistemi Aktif",
       "summary": "Her hisse için günlük, haftalık ve aylık hedef fiyatlar, stop-loss seviyeleri ve ekleme noktaları hesaplanıyor.",
-      "date": "11.03.2026 13:04",
+      "date": "11.03.2026 13:07",
       "category": "özellik",
       "icon": "🎯"
     },
     {
       "title": "⏰ Veriler Borsa Saatlerinde Saatlik Güncelleniyor",
-      "summary": "Piyasa açıkken (10:30 - 18:30) veriler her saat başı otomatik güncellenir. Son güncelleme saatini sayfanın üstünde görebilirsiniz.",
+      "summary": "Piyasa açıkken (10:00 - 18:30) veriler her saat başı otomatik güncellenir. Son güncelleme saatini sayfanın üstünde görebilirsiniz.",
       "date": "11.03.2026",
       "category": "bilgi",
       "icon": "⏰"

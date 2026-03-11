@@ -2,9 +2,10 @@ name: BIST 30 Saatlik Veri Güncelleme
 
 on:
   schedule:
-    # Borsa saatlerinde her saat başı (TSİ 10:30, 11:30, 12:30, 13:30, 14:30, 15:30, 16:30, 17:30, 18:30)
-    # UTC: 07:30, 08:30, 09:30, 10:30, 11:30, 12:30, 13:30, 14:30, 15:30
-    - cron: '30 7-15 * * 1-5'
+    # Borsa saatlerinde her saat başı (TSİ 10:00 - 18:00) ve kapanış sonrası 18:30
+    # UTC: 07:00, 08:00, 09:00, 10:00, 11:00, 12:00, 13:00, 14:00, 15:00
+    - cron: '0 7-15 * * 1-5'
+    - cron: '30 15 * * 1-5'
   workflow_dispatch: # Manuel tetikleme
 
 jobs:

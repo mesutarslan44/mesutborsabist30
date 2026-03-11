@@ -176,7 +176,7 @@ def generate_news_feed():
         },
         {
             "title": "⏰ Veriler Borsa Saatlerinde Saatlik Güncelleniyor",
-            "summary": "Piyasa açıkken (10:30 - 18:30) veriler her saat başı otomatik güncellenir. Son güncelleme saatini sayfanın üstünde görebilirsiniz.",
+            "summary": "Piyasa açıkken (10:00 - 18:30) veriler her saat başı otomatik güncellenir. Son güncelleme saatini sayfanın üstünde görebilirsiniz.",
             "date": now.strftime("%d.%m.%Y"),
             "category": "bilgi",
             "icon": "⏰"
@@ -194,7 +194,7 @@ def process_stock(ticker_yahoo, info, all_data):
         "name": info["name"],
         "sector": info["sector"],
         "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
-        "update_frequency": "Borsa saatleri içerisinde (10:30 - 18:30) her saat başı otomatik güncellenir.",
+        "update_frequency": "Borsa saatleri içerisinde (10:00 - 18:30) her saat başı otomatik güncellenir.",
         "periods": {}
     }
 
