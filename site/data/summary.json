@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-11 15:57",
+  "updated_at": "2026-03-11 16:08",
   "update_frequency": "Borsa saatleri içerisinde her saat başı otomatik güncellenir",
   "total_stocks": 28,
   "signal_counts": {
@@ -728,22 +728,22 @@
   "news": [
     {
       "title": "📊 BIST 30 Teknik Analiz Raporu Güncellendi",
-      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 11.03.2026 15:57 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
-      "date": "11.03.2026 15:57",
+      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 11.03.2026 16:08 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
+      "date": "11.03.2026 16:08",
       "category": "analiz",
       "icon": "📊"
     },
     {
       "title": "🔔 Stochastic & ADX Göstergeleri Eklendi",
       "summary": "Yeni teknik göstergeler: Stochastic Oscillator ve ADX (Average Directional Index) artık tüm hisseler için hesaplanıyor. Fibonacci düzeltme seviyeleri de aktif.",
-      "date": "11.03.2026 15:57",
+      "date": "11.03.2026 16:08",
       "category": "güncelleme",
       "icon": "🔔"
     },
     {
       "title": "🎯 Hedef Fiyat Sistemi Aktif",
       "summary": "Her hisse için günlük, haftalık ve aylık hedef fiyatlar, stop-loss seviyeleri ve ekleme noktaları hesaplanıyor.",
-      "date": "11.03.2026 15:57",
+      "date": "11.03.2026 16:08",
       "category": "özellik",
       "icon": "🎯"
     },
