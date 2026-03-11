@@ -175,8 +175,8 @@ def generate_news_feed():
             "icon": "🎯"
         },
         {
-            "title": "⏰ Veriler Her İş Günü Güncelleniyor",
-            "summary": "Borsa kapanışı sonrası (19:15) tüm veriler otomatik güncellenir. Son güncelleme saatini sayfanın üstünde görebilirsiniz.",
+            "title": "⏰ Veriler Borsa Saatlerinde Saatlik Güncelleniyor",
+            "summary": "Piyasa açıkken (10:30 - 18:30) veriler her saat başı otomatik güncellenir. Son güncelleme saatini sayfanın üstünde görebilirsiniz.",
             "date": now.strftime("%d.%m.%Y"),
             "category": "bilgi",
             "icon": "⏰"
@@ -194,7 +194,7 @@ def process_stock(ticker_yahoo, info, all_data):
         "name": info["name"],
         "sector": info["sector"],
         "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
-        "update_frequency": "Her iş günü 19:15'te (borsa kapanışı sonrası) otomatik güncellenir.",
+        "update_frequency": "Borsa saatleri içerisinde (10:30 - 18:30) her saat başı otomatik güncellenir.",
         "periods": {}
     }
 
@@ -318,7 +318,7 @@ def main():
     # 6. Summary JSON
     summary = {
         "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
-        "update_frequency": "Her iş günü 19:15'te otomatik güncellenir",
+        "update_frequency": "Borsa saatleri içerisinde her saat başı otomatik güncellenir",
         "total_stocks": len(stocks_summary),
         "signal_counts": signal_counts,
         "stocks": stocks_summary,
@@ -332,7 +332,7 @@ def main():
     # 7. Market Overview JSON
     market_overview = {
         "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
-        "update_frequency": "Her iş günü 19:15'te otomatik güncellenir",
+        "update_frequency": "Borsa saatleri içerisinde her saat başı otomatik güncellenir",
         "bist30": bist30_info,
         "indices": indices,
         "top_buys": top_buys[:5],

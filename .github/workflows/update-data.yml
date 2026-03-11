@@ -1,9 +1,10 @@
-name: BIST 30 Veri Güncelleme
+name: BIST 30 Saatlik Veri Güncelleme
 
 on:
   schedule:
-    # Her iş günü saat 16:15 UTC (19:15 TR saati - borsa kapanışı sonrası)
-    - cron: '15 16 * * 1-5'
+    # Borsa saatlerinde her saat başı (TSİ 10:30, 11:30, 12:30, 13:30, 14:30, 15:30, 16:30, 17:30, 18:30)
+    # UTC: 07:30, 08:30, 09:30, 10:30, 11:30, 12:30, 13:30, 14:30, 15:30
+    - cron: '30 7-15 * * 1-5'
   workflow_dispatch: # Manuel tetikleme
 
 jobs:
@@ -36,5 +37,5 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add site/data/
-          git diff --staged --quiet || git commit -m "📊 Günlük veri güncellemesi - $(date +'%Y-%m-%d %H:%M')"
+          git diff --staged --quiet || git commit -m "📊 Saatlik güncelleme - $(TZ='Europe/Istanbul' date +'%Y-%m-%d %H:%M TSİ')"
           git push
