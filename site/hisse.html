@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="BIST 30 Hisse Detaylı Teknik Analiz - Fiyat Grafikleri, RSI, MACD, Bollinger Bands">
+        content="BIST 30 Hisse Detaylı Teknik Analiz - Hedef Fiyatlar, RSI, MACD, Stochastic, ADX, Fibonacci">
     <title>Hisse Detay | BIST 30 Analiz</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon"
@@ -69,7 +69,49 @@
             </div>
         </div>
 
-        <!-- Key Indicators -->
+        <!-- DETAILED EXPLANATION -->
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="icon">📝</span>
+                Neden Bu Sinyal? — Detaylı Açıklama
+            </h2>
+        </div>
+        <div class="explanation-card" id="explanationCard">
+            <div class="loading">
+                <div class="spinner"></div>
+                <span class="loading-text">Analiz yükleniyor...</span>
+            </div>
+        </div>
+
+        <!-- TARGETS -->
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="icon">🎯</span>
+                Hedef Fiyatlar & Stop-Loss
+            </h2>
+        </div>
+        <div class="targets-grid" id="targetsGrid">
+            <!-- JS ile doldurulacak -->
+        </div>
+
+        <!-- FIBONACCI LEVELS -->
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="icon">🔢</span>
+                Fibonacci & Destek/Direnç Seviyeleri
+            </h2>
+        </div>
+        <div class="levels-grid" id="levelsGrid">
+            <!-- JS ile doldurulacak -->
+        </div>
+
+        <!-- Key Indicators (Genişletilmiş) -->
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="icon">📊</span>
+                Teknik Göstergeler (9 Gösterge)
+            </h2>
+        </div>
         <div class="indicators-grid" id="indicatorsGrid">
             <!-- Dynamically filled -->
         </div>
@@ -106,11 +148,11 @@
             </div>
         </div>
 
-        <!-- Analysis Details -->
+        <!-- Detailed Signal Analysis -->
         <div class="section-header">
             <h2 class="section-title">
                 <span class="icon">🎯</span>
-                Detaylı Sinyal Analizi
+                Detaylı Sinyal Analizi (9 Gösterge)
             </h2>
         </div>
         <div class="analysis-details" id="analysisDetails">
@@ -131,6 +173,17 @@
             <!-- Dynamically filled -->
         </div>
 
+        <!-- Data Freshness -->
+        <div class="data-freshness" id="dataFreshness">
+            <div class="freshness-icon">⏰</div>
+            <div class="freshness-info">
+                <strong>Veri Güncellik Bilgisi:</strong>
+                <span id="freshnessText">Veriler her iş günü borsa kapanışı sonrası (19:15 TSİ) otomatik
+                    güncellenir.</span>
+                <br><small id="stockUpdateTime">--</small>
+            </div>
+        </div>
+
         <!-- Disclaimer -->
         <div class="disclaimer">
             <strong>⚠️ Yasal Uyarı:</strong> Bu platform yalnızca eğitim ve bilgi amaçlıdır.
@@ -143,7 +196,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>© 2026 Mesut BIST30 Analiz Platformu | Veriler Yahoo Finance üzerinden sağlanmaktadır</p>
+        <p>© 2026 Mesut BIST30 Analiz Platformu | 9 Gösterge | Veriler Yahoo Finance üzerinden sağlanmaktadır</p>
     </footer>
 
     <script src="js/charts.js"></script>

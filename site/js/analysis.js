@@ -1,22 +1,19 @@
 /**
- * BIST 30 Analiz - Hisse Detay Sayfası Orchestrator
- * Veri yükleme, gösterge kartları, sinyal analizi detayları
+ * BIST 30 Analiz - Hisse Detay Sayfası v2.0
+ * Detaylı açıklamalar, hedef fiyatlar, Fibonacci, 9 gösterge
  */
 
 (function () {
     'use strict';
 
-    // ── Globals ──
-    let stockData = null;
-    let currentPeriod = 'daily';
+    var stockData = null;
+    var currentPeriod = 'daily';
 
-    // ── URL Parameter ──
     function getTickerFromUrl() {
-        const params = new URLSearchParams(window.location.search);
+        var params = new URLSearchParams(window.location.search);
         return params.get('ticker') || '';
     }
 
-    // ── Format Helpers ──
     function formatPrice(val) {
         if (val == null || isNaN(val)) return '--';
         return '₺' + val.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -24,16 +21,8 @@
 
     function formatPercent(val) {
         if (val == null || isNaN(val)) return '--%';
-        const sign = val >= 0 ? '+' : '';
+        var sign = val >= 0 ? '+' : '';
         return sign + val.toFixed(2) + '%';
-    }
-
-    function formatVolume(val) {
-        if (val == null || isNaN(val)) return '--';
-        if (val >= 1e9) return (val / 1e9).toFixed(1) + 'B';
-        if (val >= 1e6) return (val / 1e6).toFixed(1) + 'M';
-        if (val >= 1e3) return (val / 1e3).toFixed(0) + 'K';
-        return val.toLocaleString('tr-TR');
     }
 
     function getChangeClass(val) {
@@ -43,57 +32,45 @@
     }
 
     function getSignalClass(signalEn) {
-        const map = {
-            'STRONG_BUY': 'strong-buy',
-            'BUY': 'buy',
-            'WEAK_BUY': 'weak-buy',
+        var map = {
+            'STRONG_BUY': 'strong-buy', 'BUY': 'buy', 'WEAK_BUY': 'weak-buy',
             'HOLD': 'hold',
-            'WEAK_SELL': 'weak-sell',
-            'SELL': 'sell',
-            'STRONG_SELL': 'strong-sell'
+            'WEAK_SELL': 'weak-sell', 'SELL': 'sell', 'STRONG_SELL': 'strong-sell'
         };
         return map[signalEn] || 'hold';
     }
 
-    // ── Render Stock Header ──
+    // ── Render Header ──
     function renderHeader(data, periodData) {
-        const indicators = periodData.indicators || {};
-        const rec = periodData.recommendation || {};
+        var indicators = periodData.indicators || {};
+        var rec = periodData.recommendation || {};
 
         document.getElementById('headerTicker').textContent = data.ticker;
         document.getElementById('headerName').textContent = data.name;
         document.getElementById('headerSector').textContent = data.sector;
 
-        const priceEl = document.getElementById('headerPrice');
-        priceEl.textContent = formatPrice(indicators.price);
+        document.getElementById('headerPrice').textContent = formatPrice(indicators.price);
 
-        const changeEl = document.getElementById('headerChange');
-        const changePct = indicators.change_pct || 0;
+        var changeEl = document.getElementById('headerChange');
+        var changePct = indicators.change_pct || 0;
         changeEl.textContent = formatPercent(changePct);
         changeEl.className = 'stock-header-change stock-change ' + getChangeClass(changePct);
 
-        // Signal badge
-        const badgeContainer = document.getElementById('headerSignalBadge');
+        var badgeContainer = document.getElementById('headerSignalBadge');
         if (badgeContainer && rec.signal) {
-            badgeContainer.innerHTML = `
-                <span class="signal-badge ${getSignalClass(rec.signal_en)}" style="font-size:14px;padding:8px 20px;">
-                    <span class="dot"></span>
-                    ${rec.signal}
-                </span>
-            `;
+            badgeContainer.innerHTML = '<span class="signal-badge ' + getSignalClass(rec.signal_en) + '" style="font-size:14px;padding:8px 20px;">' +
+                '<span class="dot"></span>' + rec.signal + '</span>';
         }
 
-        // Page title
-        document.title = `${data.ticker} - ${data.name} | BIST 30 Analiz`;
+        document.title = data.ticker + ' - ' + data.name + ' | BIST 30 Analiz';
     }
 
-    // ── Render Recommendation Card ──
+    // ── Render Recommendation ──
     function renderRecommendation(rec) {
-        const card = document.getElementById('recCard');
+        var card = document.getElementById('recCard');
         if (!card || !rec) return;
 
-        // Determine card class
-        const score = rec.score || 0;
+        var score = rec.score || 0;
         card.className = 'rec-card';
         if (score > 10) card.classList.add('buy');
         else if (score < -10) card.classList.add('sell');
@@ -101,271 +78,388 @@
         document.getElementById('recSignal').textContent = rec.signal || '--';
         document.getElementById('recSignal').style.color = rec.color || 'var(--text-primary)';
 
-        const scoreEl = document.getElementById('recScore');
+        var scoreEl = document.getElementById('recScore');
         scoreEl.textContent = (score > 0 ? '+' : '') + score.toFixed(1);
         scoreEl.style.color = rec.color || 'var(--text-primary)';
 
-        const confidenceEl = document.getElementById('recConfidence');
-        confidenceEl.textContent = `Güven: %${rec.confidence ? rec.confidence.toFixed(0) : 0}`;
+        document.getElementById('recConfidence').textContent = 'Güven: %' + (rec.confidence ? rec.confidence.toFixed(0) : 0);
 
-        const fillEl = document.getElementById('recConfidenceFill');
+        var fillEl = document.getElementById('recConfidenceFill');
         if (fillEl) {
-            setTimeout(() => {
-                fillEl.style.width = (rec.confidence || 0) + '%';
-            }, 300);
+            setTimeout(function () { fillEl.style.width = (rec.confidence || 0) + '%'; }, 300);
         }
     }
 
-    // ── Render Indicator Cards ──
+    // ── Render Explanation (YENI) ──
+    function renderExplanation(rec) {
+        var container = document.getElementById('explanationCard');
+        if (!container || !rec) return;
+
+        var explanation = rec.explanation || 'Açıklama üretilemiyor.';
+        // Convert newlines to HTML
+        var html = '<div class="explanation-text">';
+        var lines = explanation.split('\n');
+        for (var i = 0; i < lines.length; i++) {
+            var line = lines[i].trim();
+            if (!line) continue;
+            if (line.indexOf('🎯') >= 0 || line.indexOf('⬇️') >= 0 || line.indexOf('📊') >= 0 || line.indexOf('💡') >= 0) {
+                html += '<div class="explanation-section-title">' + line + '</div>';
+            } else if (line.indexOf('•') >= 0) {
+                html += '<div class="explanation-bullet">' + line + '</div>';
+            } else {
+                html += '<div class="explanation-line">' + line + '</div>';
+            }
+        }
+        html += '</div>';
+        container.innerHTML = html;
+    }
+
+    // ── Render Targets (YENI) ──
+    function renderTargets(rec, indicators) {
+        var container = document.getElementById('targetsGrid');
+        if (!container) return;
+
+        var targets = (rec && rec.targets) || {};
+        var score = (rec && rec.score) || 0;
+        var price = (indicators && indicators.price) || 0;
+
+        if (!targets.target_1) {
+            container.innerHTML = '<div style="padding:20px;color:var(--text-muted);">Hedef fiyat verisi yok.</div>';
+            return;
+        }
+
+        var html = '';
+
+        if (score > 0) {
+            html += '<div class="target-card buy-target">';
+            html += '<div class="target-icon">🎯</div>';
+            html += '<div class="target-label">1. Hedef</div>';
+            html += '<div class="target-value">' + formatPrice(targets.target_1) + '</div>';
+            html += '<div class="target-pct">(' + formatPercent((targets.target_1 - price) / price * 100) + ')</div>';
+            html += '</div>';
+
+            html += '<div class="target-card buy-target">';
+            html += '<div class="target-icon">🎯🎯</div>';
+            html += '<div class="target-label">2. Hedef</div>';
+            html += '<div class="target-value">' + formatPrice(targets.target_2) + '</div>';
+            html += '<div class="target-pct">(' + formatPercent((targets.target_2 - price) / price * 100) + ')</div>';
+            html += '</div>';
+
+            html += '<div class="target-card buy-target">';
+            html += '<div class="target-icon">🚀</div>';
+            html += '<div class="target-label">3. Hedef (İddialı)</div>';
+            html += '<div class="target-value">' + formatPrice(targets.target_3) + '</div>';
+            html += '<div class="target-pct">(' + formatPercent((targets.target_3 - price) / price * 100) + ')</div>';
+            html += '</div>';
+        } else {
+            html += '<div class="target-card sell-target">';
+            html += '<div class="target-icon">⬇️</div>';
+            html += '<div class="target-label">1. Destek</div>';
+            html += '<div class="target-value">' + formatPrice(targets.target_1) + '</div>';
+            html += '</div>';
+
+            html += '<div class="target-card sell-target">';
+            html += '<div class="target-icon">⬇️⬇️</div>';
+            html += '<div class="target-label">2. Destek</div>';
+            html += '<div class="target-value">' + formatPrice(targets.target_2) + '</div>';
+            html += '</div>';
+
+            html += '<div class="target-card sell-target">';
+            html += '<div class="target-icon">🔻</div>';
+            html += '<div class="target-label">Kritik Destek</div>';
+            html += '<div class="target-value">' + formatPrice(targets.target_3) + '</div>';
+            html += '</div>';
+        }
+
+        html += '<div class="target-card stop-target">';
+        html += '<div class="target-icon">🛑</div>';
+        html += '<div class="target-label">Zarar Kes (Stop)</div>';
+        html += '<div class="target-value">' + formatPrice(targets.stop_loss) + '</div>';
+        html += '</div>';
+
+        html += '<div class="target-card add-target">';
+        html += '<div class="target-icon">➕</div>';
+        html += '<div class="target-label">Ekleme Seviyesi</div>';
+        html += '<div class="target-value">' + formatPrice(targets.add_level) + '</div>';
+        html += '</div>';
+
+        container.innerHTML = html;
+    }
+
+    // ── Render Fibonacci & Support/Resistance (YENI) ──
+    function renderLevels(rec, indicators) {
+        var container = document.getElementById('levelsGrid');
+        if (!container) return;
+
+        var fib = (rec && rec.fibonacci) || (indicators && indicators.fibonacci) || {};
+        var sr = (rec && rec.support_resistance) || (indicators && indicators.support_resistance) || {};
+        var price = (indicators && indicators.price) || 0;
+
+        var html = '';
+
+        // Fibonacci
+        html += '<div class="levels-section">';
+        html += '<h3 class="levels-title">🔢 Fibonacci Düzeltme Seviyeleri</h3>';
+        var fibLevels = [
+            { label: '%0 (Tepe)', key: '0' },
+            { label: '%23.6', key: '0.236' },
+            { label: '%38.2', key: '0.382' },
+            { label: '%50', key: '0.5' },
+            { label: '%61.8 (Altın Oran)', key: '0.618' },
+            { label: '%78.6', key: '0.786' },
+            { label: '%100 (Dip)', key: '1.0' },
+        ];
+        for (var i = 0; i < fibLevels.length; i++) {
+            var f = fibLevels[i];
+            var fibVal = fib[f.key] || 0;
+            var isNear = Math.abs(price - fibVal) / price < 0.02;
+            html += '<div class="level-row' + (isNear ? ' level-active' : '') + '">';
+            html += '<span class="level-label">' + f.label + '</span>';
+            html += '<span class="level-value">' + formatPrice(fibVal) + '</span>';
+            if (isNear) html += '<span class="level-badge">📍 Yakın!</span>';
+            html += '</div>';
+        }
+        html += '</div>';
+
+        // Support/Resistance
+        html += '<div class="levels-section">';
+        html += '<h3 class="levels-title">📐 Destek & Direnç (Pivot)</h3>';
+        var srLevels = [
+            { label: 'Direnç 3', key: 'r3', color: 'var(--bear-red)' },
+            { label: 'Direnç 2', key: 'r2', color: 'var(--bear-red)' },
+            { label: 'Direnç 1', key: 'r1', color: 'var(--bear-red)' },
+            { label: 'Pivot', key: 'pivot', color: 'var(--accent-blue)' },
+            { label: 'Destek 1', key: 's1', color: 'var(--bull-green)' },
+            { label: 'Destek 2', key: 's2', color: 'var(--bull-green)' },
+            { label: 'Destek 3', key: 's3', color: 'var(--bull-green)' },
+        ];
+        for (var j = 0; j < srLevels.length; j++) {
+            var s = srLevels[j];
+            var srVal = sr[s.key] || 0;
+            var isNearSR = Math.abs(price - srVal) / price < 0.02;
+            html += '<div class="level-row' + (isNearSR ? ' level-active' : '') + '">';
+            html += '<span class="level-label" style="color:' + s.color + '">' + s.label + '</span>';
+            html += '<span class="level-value">' + formatPrice(srVal) + '</span>';
+            if (isNearSR) html += '<span class="level-badge">📍 Yakın!</span>';
+            html += '</div>';
+        }
+        html += '</div>';
+
+        container.innerHTML = html;
+    }
+
+    // ── Render Indicators (9 Gösterge) ──
     function renderIndicators(indicators) {
-        const grid = document.getElementById('indicatorsGrid');
+        var grid = document.getElementById('indicatorsGrid');
         if (!grid) return;
 
-        const cards = [
+        var cards = [
             {
-                name: 'RSI (14)',
-                value: indicators.rsi != null ? indicators.rsi.toFixed(1) : '--',
+                name: 'RSI (14)', value: indicators.rsi != null ? indicators.rsi.toFixed(1) : '--',
                 color: indicators.rsi >= 70 ? 'var(--bear-red)' : indicators.rsi <= 30 ? 'var(--bull-green)' : 'var(--accent-blue)',
-                comment: indicators.rsi >= 70 ? 'Aşırı alım bölgesi' : indicators.rsi <= 30 ? 'Aşırı satım bölgesi' : 'Nötr bölge',
-                barValue: indicators.rsi || 50,
-                barMax: 100,
-                barColor: indicators.rsi >= 70 ? 'var(--gradient-bear)' : indicators.rsi <= 30 ? 'var(--gradient-bull)' : 'var(--gradient-1)',
+                comment: indicators.rsi >= 70 ? 'Aşırı alım' : indicators.rsi <= 30 ? 'Aşırı satım' : 'Nötr',
+                barValue: indicators.rsi || 50, barMax: 100
             },
             {
-                name: 'MACD',
-                value: indicators.macd != null ? indicators.macd.toFixed(4) : '--',
+                name: 'Stochastic %K', value: indicators.stoch_k != null ? indicators.stoch_k.toFixed(1) : '--',
+                color: indicators.stoch_k >= 80 ? 'var(--bear-red)' : indicators.stoch_k <= 20 ? 'var(--bull-green)' : 'var(--accent-cyan)',
+                comment: indicators.stoch_k >= 80 ? 'Aşırı alım' : indicators.stoch_k <= 20 ? 'Aşırı satım' : 'Nötr',
+                barValue: indicators.stoch_k || 50, barMax: 100
+            },
+            {
+                name: 'ADX', value: indicators.adx != null ? indicators.adx.toFixed(1) : '--',
+                color: indicators.adx >= 25 ? 'var(--accent-purple)' : 'var(--text-muted)',
+                comment: indicators.adx >= 50 ? 'Çok güçlü trend' : indicators.adx >= 25 ? 'Güçlü trend' : 'Zayıf/yok',
+                barValue: Math.min(indicators.adx || 0, 60), barMax: 60
+            },
+            {
+                name: 'MACD', value: indicators.macd != null ? indicators.macd.toFixed(4) : '--',
                 color: indicators.macd > indicators.macd_signal ? 'var(--bull-green)' : 'var(--bear-red)',
-                comment: indicators.macd > indicators.macd_signal ? 'MACD sinyal üstünde (yükseliş)' : 'MACD sinyal altında (düşüş)',
+                comment: indicators.macd > indicators.macd_signal ? 'Sinyal üst (yükseliş)' : 'Sinyal alt (düşüş)'
             },
             {
-                name: 'SMA 20',
-                value: formatPrice(indicators.sma_20),
+                name: 'SMA 20', value: formatPrice(indicators.sma_20),
                 color: indicators.price > indicators.sma_20 ? 'var(--bull-green)' : 'var(--bear-red)',
-                comment: indicators.price > indicators.sma_20 ? 'Fiyat SMA20 üstünde ✓' : 'Fiyat SMA20 altında ✗',
+                comment: indicators.price > indicators.sma_20 ? 'Fiyat SMA20 üstünde ✓' : 'Fiyat SMA20 altında ✗'
             },
             {
-                name: 'SMA 50',
-                value: formatPrice(indicators.sma_50),
+                name: 'SMA 50', value: formatPrice(indicators.sma_50),
                 color: indicators.price > indicators.sma_50 ? 'var(--bull-green)' : 'var(--bear-red)',
-                comment: indicators.price > indicators.sma_50 ? 'Fiyat SMA50 üstünde ✓' : 'Fiyat SMA50 altında ✗',
+                comment: indicators.price > indicators.sma_50 ? 'Fiyat SMA50 üstünde ✓' : 'Fiyat SMA50 altında ✗'
             },
             {
-                name: 'Bollinger Üst',
-                value: formatPrice(indicators.bb_upper),
+                name: 'Bollinger Üst/Alt', value: formatPrice(indicators.bb_upper),
                 color: 'var(--accent-purple)',
-                comment: `Orta: ${formatPrice(indicators.bb_middle)}`,
+                comment: 'Alt: ' + formatPrice(indicators.bb_lower)
             },
             {
-                name: 'Bollinger Alt',
-                value: formatPrice(indicators.bb_lower),
-                color: 'var(--accent-purple)',
-                comment: indicators.price <= indicators.bb_lower ? 'Fiyat alt banda temas!' : '',
-            },
-            {
-                name: 'Hacim Oranı',
-                value: indicators.volume_ratio ? indicators.volume_ratio.toFixed(1) + 'x' : '--',
+                name: 'Hacim Oranı', value: indicators.volume_ratio ? indicators.volume_ratio.toFixed(1) + 'x' : '--',
                 color: indicators.volume_ratio > 1.5 ? 'var(--accent-cyan)' : 'var(--text-secondary)',
-                comment: indicators.volume_ratio > 2 ? 'Yüksek hacim!' : indicators.volume_ratio > 1.5 ? 'Ortalamanın üstünde' : 'Normal hacim',
+                comment: indicators.volume_ratio > 2 ? 'Yüksek hacim!' : 'Normal'
             },
             {
-                name: 'EMA 12/26',
-                value: indicators.ema_12 ? `${indicators.ema_12.toFixed(2)}` : '--',
+                name: 'EMA 12/26', value: indicators.ema_12 ? indicators.ema_12.toFixed(2) : '--',
                 color: indicators.ema_12 > indicators.ema_26 ? 'var(--bull-green)' : 'var(--bear-red)',
-                comment: indicators.ema_12 > indicators.ema_26 ? 'EMA12 > EMA26 (yükseliş)' : 'EMA12 < EMA26 (düşüş)',
+                comment: indicators.ema_12 > indicators.ema_26 ? 'EMA12 > EMA26 ✓' : 'EMA12 < EMA26 ✗'
             },
         ];
 
-        grid.innerHTML = cards.map(card => `
-            <div class="indicator-card">
-                <div class="indicator-name">${card.name}</div>
-                <div class="indicator-value" style="color: ${card.color}">${card.value}</div>
-                <div class="indicator-comment">${card.comment || ''}</div>
-                ${card.barValue != null ? `
-                    <div class="indicator-bar">
-                        <div class="indicator-bar-fill" style="width: ${(card.barValue / (card.barMax || 100)) * 100}%; background: ${card.barColor || 'var(--gradient-1)'}"></div>
-                    </div>
-                ` : ''}
-            </div>
-        `).join('');
+        var html = '';
+        for (var i = 0; i < cards.length; i++) {
+            var c = cards[i];
+            html += '<div class="indicator-card">';
+            html += '<div class="indicator-name">' + c.name + '</div>';
+            html += '<div class="indicator-value" style="color:' + c.color + '">' + c.value + '</div>';
+            html += '<div class="indicator-comment">' + (c.comment || '') + '</div>';
+            if (c.barValue != null && c.barMax) {
+                html += '<div class="indicator-bar"><div class="indicator-bar-fill" style="width:' + ((c.barValue / c.barMax) * 100) + '%;"></div></div>';
+            }
+            html += '</div>';
+        }
+        grid.innerHTML = html;
     }
 
-    // ── Render Price Info Grid ──
+    // ── Render Price Info ──
     function renderPriceInfo(indicators) {
-        const grid = document.getElementById('priceInfoGrid');
+        var grid = document.getElementById('priceInfoGrid');
         if (!grid) return;
-
-        const items = [
+        var items = [
             { name: 'Açılış', value: formatPrice(indicators.open) },
             { name: 'Yüksek', value: formatPrice(indicators.high), color: 'var(--bull-green)' },
             { name: 'Düşük', value: formatPrice(indicators.low), color: 'var(--bear-red)' },
             { name: 'Kapanış', value: formatPrice(indicators.price) },
-            { name: 'Hacim', value: formatVolume(indicators.volume) },
-            { name: 'Ort. Hacim (20)', value: formatVolume(indicators.volume_avg) },
-            { name: '5 Günlük Değişim', value: formatPercent(indicators.change_5d), color: indicators.change_5d >= 0 ? 'var(--bull-green)' : 'var(--bear-red)' },
-            { name: '20 Günlük Değişim', value: formatPercent(indicators.change_20d), color: indicators.change_20d >= 0 ? 'var(--bull-green)' : 'var(--bear-red)' },
-            { name: 'SMA 200', value: formatPrice(indicators.sma_200), color: indicators.price > indicators.sma_200 ? 'var(--bull-green)' : 'var(--bear-red)' },
+            { name: '5 Günlük', value: formatPercent(indicators.change_5d), color: indicators.change_5d >= 0 ? 'var(--bull-green)' : 'var(--bear-red)' },
+            { name: '20 Günlük', value: formatPercent(indicators.change_20d), color: indicators.change_20d >= 0 ? 'var(--bull-green)' : 'var(--bear-red)' },
         ];
 
-        grid.innerHTML = items.map(item => `
-            <div class="indicator-card">
-                <div class="indicator-name">${item.name}</div>
-                <div class="indicator-value" style="color: ${item.color || 'var(--text-primary)'}; font-size: 20px;">${item.value}</div>
-            </div>
-        `).join('');
+        var html = '';
+        for (var i = 0; i < items.length; i++) {
+            html += '<div class="indicator-card">';
+            html += '<div class="indicator-name">' + items[i].name + '</div>';
+            html += '<div class="indicator-value" style="color:' + (items[i].color || 'var(--text-primary)') + ';font-size:20px;">' + items[i].value + '</div>';
+            html += '</div>';
+        }
+        grid.innerHTML = html;
     }
 
-    // ── Render Analysis Details ──
+    // ── Render Analysis Details (9 Gösterge) ──
     function renderAnalysisDetails(rec) {
-        const container = document.getElementById('analysisDetails');
+        var container = document.getElementById('analysisDetails');
         if (!container || !rec || !rec.details) return;
 
-        const indicatorLabels = {
-            'rsi': { name: 'RSI', icon: '📊' },
-            'macd': { name: 'MACD', icon: '📈' },
-            'sma_trend': { name: 'SMA Trend', icon: '📉' },
-            'sma_cross': { name: 'SMA Kesişim', icon: '✂️' },
-            'bollinger': { name: 'Bollinger', icon: '🔔' },
-            'volume': { name: 'Hacim', icon: '📊' },
+        var iconMap = {
+            'rsi': '📊', 'macd': '📈', 'sma_trend': '📉', 'sma_cross': '✂️',
+            'bollinger': '🔔', 'volume': '📊', 'stochastic': '🔄', 'adx': '💪', 'fibonacci': '🔢'
+        };
+        var nameMap = {
+            'rsi': 'RSI', 'macd': 'MACD', 'sma_trend': 'SMA Trend', 'sma_cross': 'SMA Kesişim',
+            'bollinger': 'Bollinger', 'volume': 'Hacim', 'stochastic': 'Stochastic', 'adx': 'ADX', 'fibonacci': 'Fibonacci'
         };
 
-        container.innerHTML = rec.details.map(detail => {
-            const info = indicatorLabels[detail.indicator] || { name: detail.indicator, icon: '📌' };
-            const scoreClass = detail.score > 0 ? 'positive' : detail.score < 0 ? 'negative' : 'neutral';
-            const scoreSign = detail.score > 0 ? '+' : '';
-            const weightPct = (detail.weight * 100).toFixed(0);
+        var html = '';
+        for (var i = 0; i < rec.details.length; i++) {
+            var d = rec.details[i];
+            var icon = iconMap[d.indicator] || '📌';
+            var name = nameMap[d.indicator] || d.indicator;
+            var scoreClass = d.score > 0 ? 'positive' : d.score < 0 ? 'negative' : 'neutral';
+            var scoreSign = d.score > 0 ? '+' : '';
+            var weightPct = (d.weight * 100).toFixed(0);
 
-            return `
-                <div class="analysis-item">
-                    <div class="analysis-left">
-                        <span style="font-size:18px;">${info.icon}</span>
-                        <div>
-                            <div class="analysis-indicator-name">${info.name} <span style="color:var(--text-muted);font-weight:400;font-size:12px;">(ağırlık: %${weightPct})</span></div>
-                            <div class="analysis-comment">${detail.comment}</div>
-                        </div>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:12px;">
-                        <span class="analysis-score ${scoreClass}">${scoreSign}${detail.score}</span>
-                        <span class="analysis-score ${scoreClass}" style="font-size:11px;opacity:0.8;">→ ${scoreSign}${detail.weighted_score.toFixed(1)}</span>
-                    </div>
-                </div>
-            `;
-        }).join('');
+            html += '<div class="analysis-item">';
+            html += '<div class="analysis-left">';
+            html += '<span style="font-size:18px;">' + icon + '</span>';
+            html += '<div>';
+            html += '<div class="analysis-indicator-name">' + name + ' <span style="color:var(--text-muted);font-weight:400;font-size:12px;">(ağırlık: %' + weightPct + ')</span></div>';
+            html += '<div class="analysis-comment">' + d.comment + '</div>';
+            if (d.aksiyon) {
+                html += '<div class="analysis-action" style="margin-top:4px;font-size:12px;font-weight:600;color:' + (d.score > 0 ? 'var(--bull-green)' : d.score < 0 ? 'var(--bear-red)' : 'var(--accent-yellow)') + ';">→ ' + d.aksiyon + '</div>';
+            }
+            html += '</div>';
+            html += '</div>';
+            html += '<div style="display:flex;align-items:center;gap:12px;">';
+            html += '<span class="analysis-score ' + scoreClass + '">' + scoreSign + d.score + '</span>';
+            html += '<span class="analysis-score ' + scoreClass + '" style="font-size:11px;opacity:0.8;">→ ' + scoreSign + d.weighted_score.toFixed(1) + '</span>';
+            html += '</div>';
+            html += '</div>';
+        }
+        container.innerHTML = html;
     }
 
     // ── Switch Period ──
     function switchPeriod(period) {
-        if (!stockData || !stockData.periods || !stockData.periods[period]) {
-            console.warn('Bu periyot için veri yok:', period);
-            return;
-        }
-
+        if (!stockData || !stockData.periods || !stockData.periods[period]) return;
         currentPeriod = period;
-        const periodData = stockData.periods[period];
+        var periodData = stockData.periods[period];
 
-        // Update tabs
-        document.querySelectorAll('.period-tab').forEach(tab => {
+        document.querySelectorAll('.period-tab').forEach(function (tab) {
             tab.classList.toggle('active', tab.dataset.period === period);
         });
 
-        // Re-render everything with new period data
         renderHeader(stockData, periodData);
         renderRecommendation(periodData.recommendation);
+        renderExplanation(periodData.recommendation);
+        renderTargets(periodData.recommendation, periodData.indicators);
+        renderLevels(periodData.recommendation, periodData.indicators);
         renderIndicators(periodData.indicators);
         renderPriceInfo(periodData.indicators);
         renderAnalysisDetails(periodData.recommendation);
 
-        // Re-render charts
         if (window.BistCharts) {
             window.BistCharts.renderAllCharts(periodData);
         }
     }
 
-    // ── Error Display ──
     function showError(message) {
-        const container = document.querySelector('.container');
+        var container = document.querySelector('.container');
         if (container) {
-            container.innerHTML = `
-                <a href="index.html" class="back-link">← Dashboard'a Dön</a>
-                <div style="text-align:center;padding:80px 20px;">
-                    <div style="font-size:64px;margin-bottom:24px;">😕</div>
-                    <h2 style="margin-bottom:12px;">Hisse Bulunamadı</h2>
-                    <p style="color:var(--text-muted);max-width:400px;margin:0 auto;">
-                        ${message}<br><br>
-                        <a href="index.html" style="color:var(--accent-blue);">Dashboard'a dön →</a>
-                    </p>
-                </div>
-            `;
+            container.innerHTML = '<a href="index.html" class="back-link">← Dashboard\'a Dön</a>' +
+                '<div style="text-align:center;padding:80px 20px;">' +
+                '<div style="font-size:64px;margin-bottom:24px;">😕</div>' +
+                '<h2 style="margin-bottom:12px;">Hisse Bulunamadı</h2>' +
+                '<p style="color:var(--text-muted);">' + message + '<br><br><a href="index.html" style="color:var(--accent-blue);">Dashboard\'a dön →</a></p>' +
+                '</div>';
         }
     }
 
-    // ── Period Label Mapping ──
-    function getPeriodLabel(period) {
-        const labels = { daily: 'Günlük', weekly: 'Haftalık', monthly: 'Aylık' };
-        return labels[period] || period;
-    }
-
-    // ── Setup Period Tabs ──
-    function setupPeriodTabs() {
-        document.querySelectorAll('.period-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                switchPeriod(tab.dataset.period);
-            });
-        });
-    }
-
-    // ── Initialize ──
     async function init() {
-        const ticker = getTickerFromUrl();
-        if (!ticker) {
-            showError('URL\'de hisse kodu bulunamadı. Dashboard\'dan bir hisse seçin.');
-            return;
-        }
-
-        // Load data
-        if (!window.BistCharts) {
-            showError('Grafik modülü yüklenemedi.');
-            return;
-        }
+        var ticker = getTickerFromUrl();
+        if (!ticker) { showError('URL\'de hisse kodu bulunamadı.'); return; }
+        if (!window.BistCharts) { showError('Grafik modülü yüklenemedi.'); return; }
 
         stockData = await window.BistCharts.loadStockData(ticker);
-        if (!stockData) {
-            showError(`"${ticker}" hissesi için veri bulunamadı. Python scripti çalıştırılmış mı?`);
-            return;
-        }
+        if (!stockData) { showError('"' + ticker + '" hissesi için veri bulunamadı.'); return; }
 
         window.BistCharts.setStockData(stockData);
 
-        // Update badge
-        const updateTime = document.getElementById('updateTime');
-        if (updateTime && stockData.updated_at) {
-            updateTime.textContent = 'Son: ' + stockData.updated_at;
+        // Update info
+        var updateTime = document.getElementById('updateTime');
+        if (updateTime && stockData.updated_at) updateTime.textContent = 'Son: ' + stockData.updated_at;
+
+        var stockUpdateTime = document.getElementById('stockUpdateTime');
+        if (stockUpdateTime) {
+            stockUpdateTime.textContent = 'Son güncelleme: ' + (stockData.updated_at || '--') + ' | ' + (stockData.update_frequency || '');
         }
 
         // Setup tabs
-        setupPeriodTabs();
+        document.querySelectorAll('.period-tab').forEach(function (tab) {
+            tab.addEventListener('click', function () { switchPeriod(tab.dataset.period); });
+        });
 
-        // Determine best available period
-        const availablePeriods = Object.keys(stockData.periods || {});
-        if (availablePeriods.length === 0) {
-            showError(`"${ticker}" için periyot verisi bulunamadı.`);
-            return;
-        }
+        var availablePeriods = Object.keys(stockData.periods || {});
+        if (availablePeriods.length === 0) { showError('Periyot verisi bulunamadı.'); return; }
 
-        const startPeriod = availablePeriods.includes('daily') ? 'daily' : availablePeriods[0];
+        var startPeriod = availablePeriods.indexOf('daily') >= 0 ? 'daily' : availablePeriods[0];
 
-        // Hide unavailable tabs
-        document.querySelectorAll('.period-tab').forEach(tab => {
-            if (!availablePeriods.includes(tab.dataset.period)) {
+        document.querySelectorAll('.period-tab').forEach(function (tab) {
+            if (availablePeriods.indexOf(tab.dataset.period) < 0) {
                 tab.style.opacity = '0.3';
                 tab.style.pointerEvents = 'none';
             }
         });
 
-        // Initial render
         switchPeriod(startPeriod);
     }
 
-    // Run
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {

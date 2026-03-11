@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 BIST 30 Hisse Listesi ve Konfigürasyon
+Genişletilmiş versiyon: Stochastic, ADX, Fibonacci, Hedef Fiyatlar
 """
 
 # BIST 30 Hisseleri (Yahoo Finance formatı: .IS = Istanbul Stock Exchange)
@@ -37,6 +38,12 @@ BIST30_TICKERS = {
     "YKBNK.IS": {"name": "Yapı Kredi", "sector": "Bankacılık"},
 }
 
+# Endeksler
+MARKET_INDICES = {
+    "XU030.IS": {"name": "BIST 30", "description": "Borsa İstanbul en büyük 30 şirket"},
+    "XU100.IS": {"name": "BIST 100", "description": "Borsa İstanbul en büyük 100 şirket"},
+}
+
 # Teknik Analiz Parametreleri
 RSI_PERIOD = 14
 RSI_OVERBOUGHT = 70
@@ -58,14 +65,31 @@ BOLLINGER_STD = 2
 
 VOLUME_AVG_PERIOD = 20
 
-# Sinyal Ağırlıkları
+# Stochastic Oscillator
+STOCH_K_PERIOD = 14
+STOCH_D_PERIOD = 3
+STOCH_OVERBOUGHT = 80
+STOCH_OVERSOLD = 20
+
+# ADX (Average Directional Index)
+ADX_PERIOD = 14
+ADX_STRONG_TREND = 25
+ADX_VERY_STRONG_TREND = 50
+
+# Fibonacci Seviyeleri
+FIBONACCI_LEVELS = [0, 0.236, 0.382, 0.5, 0.618, 0.786, 1.0]
+
+# Sinyal Ağırlıkları (genişletilmiş)
 SIGNAL_WEIGHTS = {
-    "rsi": 0.20,
-    "macd": 0.25,
-    "sma_trend": 0.15,
-    "sma_cross": 0.15,
-    "bollinger": 0.15,
-    "volume": 0.10,
+    "rsi": 0.15,
+    "macd": 0.20,
+    "sma_trend": 0.10,
+    "sma_cross": 0.10,
+    "bollinger": 0.10,
+    "volume": 0.08,
+    "stochastic": 0.12,
+    "adx": 0.08,
+    "fibonacci": 0.07,
 }
 
 # Veri Çekme Periyotları
@@ -73,4 +97,11 @@ DATA_PERIODS = {
     "daily": {"period": "1y", "interval": "1d"},
     "weekly": {"period": "2y", "interval": "1wk"},
     "monthly": {"period": "5y", "interval": "1mo"},
+}
+
+# Hedef Fiyat Çarpanları
+TARGET_MULTIPLIERS = {
+    "daily": {"target_pct": 0.03, "stop_pct": 0.02},      # %3 hedef, %2 stop
+    "weekly": {"target_pct": 0.08, "stop_pct": 0.05},      # %8 hedef, %5 stop
+    "monthly": {"target_pct": 0.20, "stop_pct": 0.10},     # %20 hedef, %10 stop
 }

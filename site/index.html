@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="BIST 30 Hisse Senedi Teknik Analiz Platformu - Al/Sat sinyalleri, RSI, MACD, Bollinger Bands ile profesyonel borsa analizi">
-    <meta name="keywords" content="BIST 30, borsa, teknik analiz, RSI, MACD, al sat sinyali, hisse senedi">
+        content="BIST 30 Profesyonel Teknik Analiz - RSI, MACD, Stochastic, ADX, Fibonacci ile AL/SAT Sinyalleri ve Hedef Fiyatlar">
     <title>BIST 30 Analiz | Profesyonel Teknik Analiz Platformu</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon"
@@ -24,35 +23,33 @@
             </a>
             <div class="nav-links">
                 <a href="index.html" class="nav-link active">Dashboard</a>
-                <a href="#stock-table" class="nav-link">Hisseler</a>
-                <a href="#top-signals" class="nav-link">Sinyaller</a>
+                <a href="index.html#stock-table" class="nav-link">Hisseler</a>
+                <a href="index.html#news-section" class="nav-link">Haberler</a>
             </div>
             <div class="update-badge" id="updateBadge">
                 <span class="update-dot"></span>
-                <span id="updateTime">Güncelleniyor...</span>
+                <span id="updateTime">Yükleniyor...</span>
             </div>
         </div>
     </nav>
 
     <!-- Market Bar -->
-    <div class="market-bar">
-        <div class="market-bar-inner" id="marketBar">
-            <div class="market-item">
-                <span class="market-item-label">BIST 30</span>
-                <span class="market-item-value" id="indexValue">--</span>
-                <span class="market-item-change" id="indexChange">--%</span>
+    <div class="market-bar" id="marketBar">
+        <div class="market-bar-inner">
+            <div class="market-item" id="bist30Bar">
+                <span class="market-label">BIST 30</span>
+                <span class="market-value" id="bist30Value">--</span>
+                <span class="market-change" id="bist30Change">--%</span>
+            </div>
+            <div class="market-item" id="bist100Bar">
+                <span class="market-label">BIST 100</span>
+                <span class="market-value" id="bist100Value">--</span>
+                <span class="market-change" id="bist100Change">--%</span>
             </div>
             <div class="market-item">
-                <span class="market-item-label">Hacim</span>
-                <span class="market-item-value" id="indexVolume">--</span>
-            </div>
-            <div class="market-item">
-                <span class="market-item-label">En Yüksek</span>
-                <span class="market-item-value" id="indexHigh">--</span>
-            </div>
-            <div class="market-item">
-                <span class="market-item-label">En Düşük</span>
-                <span class="market-item-value" id="indexLow">--</span>
+                <span class="market-label">Güncelleme</span>
+                <span class="market-value" id="updateFreq" style="font-size:11px;color:var(--accent-cyan);">Her iş günü
+                    19:15</span>
             </div>
         </div>
     </div>
@@ -60,93 +57,128 @@
     <div class="container">
 
         <!-- Hero -->
-        <section class="hero">
-            <h1>BIST 30 <span class="gradient">Teknik Analiz</span></h1>
-            <p>RSI, MACD, Bollinger Bands ve daha fazlası ile algoritmik al/sat sinyalleri</p>
-        </section>
+        <div class="hero">
+            <h1 class="hero-title">BIST 30 <span class="gradient-text">Teknik Analiz</span></h1>
+            <p class="hero-desc">
+                RSI, MACD, Stochastic, ADX, Fibonacci, Bollinger Bands ve daha fazlası ile
+                profesyonel AL/SAT sinyalleri. Hedef fiyatlar ve detaylı açıklamalar.
+            </p>
+        </div>
+
+        <!-- Endeks Yorumları -->
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="icon">🏛️</span>
+                Piyasa Durumu & Endeks Yorumu
+            </h2>
+        </div>
+        <div id="indexCommentary" class="index-commentary-grid">
+            <!-- JS ile doldurulacak -->
+        </div>
 
         <!-- Signal Summary -->
         <div class="signal-summary" id="signalSummary">
-            <div class="signal-card total fade-in fade-in-delay-1">
-                <div class="signal-card-number" id="totalStocks">--</div>
-                <div class="signal-card-label">Toplam Hisse</div>
+            <div class="signal-card total">
+                <div class="signal-count" id="totalCount">0</div>
+                <div class="signal-label">TOPLAM HİSSE</div>
             </div>
-            <div class="signal-card buy fade-in fade-in-delay-2">
-                <div class="signal-card-number" id="totalBuy">--</div>
-                <div class="signal-card-label">AL Sinyali</div>
+            <div class="signal-card buy">
+                <div class="signal-count" id="buyCount">0</div>
+                <div class="signal-label">AL SİNYALİ</div>
             </div>
-            <div class="signal-card hold fade-in fade-in-delay-3">
-                <div class="signal-card-number" id="totalHold">--</div>
-                <div class="signal-card-label">BEKLE</div>
+            <div class="signal-card hold">
+                <div class="signal-count" id="holdCount">0</div>
+                <div class="signal-label">BEKLE</div>
             </div>
-            <div class="signal-card sell fade-in fade-in-delay-4">
-                <div class="signal-card-number" id="totalSell">--</div>
-                <div class="signal-card-label">SAT Sinyali</div>
+            <div class="signal-card sell">
+                <div class="signal-count" id="sellCount">0</div>
+                <div class="signal-label">SAT SİNYALİ</div>
             </div>
         </div>
 
         <!-- Top Signals -->
-        <div class="top-signals" id="top-signals">
-            <div class="top-signal-box buy-box">
-                <div class="top-signal-title">🟢 En Güçlü AL Sinyalleri</div>
-                <div id="topBuys">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                    </div>
+        <div class="top-signals-grid">
+            <div>
+                <div class="section-header">
+                    <h2 class="section-title"><span class="icon">🟢</span> En Güçlü AL Sinyalleri</h2>
                 </div>
+                <div id="topBuys" class="top-signals-list"></div>
             </div>
-            <div class="top-signal-box sell-box">
-                <div class="top-signal-title">🔴 En Güçlü SAT Sinyalleri</div>
-                <div id="topSells">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                    </div>
+            <div>
+                <div class="section-header">
+                    <h2 class="section-title"><span class="icon">🔴</span> En Güçlü SAT Sinyalleri</h2>
+                </div>
+                <div id="topSells" class="top-signals-list"></div>
+            </div>
+        </div>
+
+        <!-- News -->
+        <div class="section-header" id="news-section">
+            <h2 class="section-title">
+                <span class="icon">📰</span>
+                Haberler & Güncellemeler
+            </h2>
+        </div>
+        <div id="newsContainer" class="news-grid">
+            <!-- JS ile doldurulacak -->
+        </div>
+
+        <!-- Stock Table -->
+        <div class="section-header" id="stock-table">
+            <h2 class="section-title">
+                <span class="icon">📋</span>
+                BIST 30 Hisse Tablosu
+            </h2>
+            <div class="table-controls">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Hisse ara..." class="search-input">
+                </div>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">Tümü</button>
+                    <button class="filter-tab" data-filter="buy">AL</button>
+                    <button class="filter-tab" data-filter="hold">BEKLE</button>
+                    <button class="filter-tab" data-filter="sell">SAT</button>
                 </div>
             </div>
         </div>
 
-        <!-- Stock Table -->
-        <div id="stock-table">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="icon">📋</span>
-                    BIST 30 Hisse Tablosu
-                </h2>
-                <div class="controls">
-                    <div class="search-box">
-                        <input type="text" id="searchInput" placeholder="Hisse ara...">
-                    </div>
-                    <button class="filter-btn active" data-filter="all" id="filterAll">Tümü</button>
-                    <button class="filter-btn" data-filter="buy" id="filterBuy">AL</button>
-                    <button class="filter-btn" data-filter="hold" id="filterHold">BEKLE</button>
-                    <button class="filter-btn" data-filter="sell" id="filterSell">SAT</button>
-                </div>
-            </div>
+        <div class="stock-table-wrapper">
+            <table class="stock-table">
+                <thead>
+                    <tr>
+                        <th data-sort="ticker">HİSSE</th>
+                        <th data-sort="price">FİYAT (₺)</th>
+                        <th data-sort="change_pct">DEĞİŞİM</th>
+                        <th data-sort="rsi">RSI</th>
+                        <th data-sort="stoch_k">STOCH</th>
+                        <th data-sort="adx">ADX</th>
+                        <th data-sort="volume_ratio">HACİM</th>
+                        <th data-sort="signal">SİNYAL</th>
+                        <th data-sort="score">PUAN</th>
+                    </tr>
+                </thead>
+                <tbody id="stockTableBody">
+                    <tr>
+                        <td colspan="9" class="loading-cell">
+                            <div class="loading">
+                                <div class="spinner"></div>
+                                <span class="loading-text">Veriler yükleniyor...</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-            <div class="stock-table-wrapper">
-                <table class="stock-table" id="stockTable">
-                    <thead>
-                        <tr>
-                            <th data-sort="ticker">Hisse</th>
-                            <th data-sort="price">Fiyat (₺)</th>
-                            <th data-sort="change_pct">Değişim</th>
-                            <th data-sort="rsi">RSI</th>
-                            <th data-sort="volume_ratio">Hacim</th>
-                            <th data-sort="signal">Sinyal</th>
-                            <th data-sort="score">Puan</th>
-                        </tr>
-                    </thead>
-                    <tbody id="stockTableBody">
-                        <tr>
-                            <td colspan="7">
-                                <div class="loading">
-                                    <div class="spinner"></div>
-                                    <span class="loading-text">Veriler yükleniyor...</span>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <!-- Data Freshness Info -->
+        <div class="data-freshness" id="dataFreshness">
+            <div class="freshness-icon">⏰</div>
+            <div class="freshness-info">
+                <strong>Veri Güncellik Bilgisi:</strong>
+                <span id="freshnessText">Veriler her iş günü borsa kapanışı sonrası (19:15 TSİ) otomatik
+                    güncellenir.</span>
+                <br><small id="lastUpdateText">Son güncelleme: Yükleniyor...</small>
             </div>
         </div>
 
@@ -162,7 +194,8 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>© 2026 Mesut BIST30 Analiz Platformu | Veriler Yahoo Finance üzerinden sağlanmaktadır</p>
+        <p>© 2026 Mesut BIST30 Analiz Platformu | 9 Gösterge | Hedef Fiyatlar | Veriler Yahoo Finance üzerinden
+            sağlanmaktadır</p>
     </footer>
 
     <script src="js/app.js"></script>
