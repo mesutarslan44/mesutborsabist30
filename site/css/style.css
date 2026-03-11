@@ -62,6 +62,8 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 body {
@@ -71,6 +73,8 @@ body {
     line-height: 1.6;
     min-height: 100vh;
     overflow-x: hidden;
+    width: 100%;
+    position: relative;
 }
 
 /* ── Animated Background ── */
@@ -1177,6 +1181,7 @@ body::after {
 
     .stock-table-wrapper {
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .stock-table {
@@ -1221,6 +1226,9 @@ body::after {
 
     .market-bar-inner {
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+        /* Room for scrollbar */
     }
 }
 
