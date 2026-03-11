@@ -1,0 +1,88 @@
+{
+  "updated_at": "2026-03-11 11:57",
+  "market": {
+    "index_value": 14952.27,
+    "change_percent": -0.22,
+    "volume": 0,
+    "high": 15089.47,
+    "low": 14929.28,
+    "date": "2026-03-11"
+  },
+  "top_buys": [
+    {
+      "ticker": "ASELS",
+      "name": "Aselsan",
+      "sector": "Savunma",
+      "price": 331.5,
+      "change_pct": -0.82,
+      "prev_close": 334.25,
+      "volume": 5055446,
+      "volume_ratio": 0.12,
+      "rsi": 57.35,
+      "signal": "AL",
+      "signal_en": "BUY",
+      "score": 31.0,
+      "confidence": 31.0,
+      "color": "#00c853"
+    },
+    {
+      "ticker": "TKFEN",
+      "name": "Tekfen Holding",
+      "sector": "Holding",
+      "price": 84.8,
+      "change_pct": 5.34,
+      "prev_close": 80.5,
+      "volume": 4127020,
+      "volume_ratio": 0.7,
+      "rsi": 59.79,
+      "signal": "HAFİF AL",
+      "signal_en": "WEAK_BUY",
+      "score": 20.5,
+      "confidence": 20.5,
+      "color": "#69f0ae"
+    }
+  ],
+  "top_sells": [
+    {
+      "ticker": "ARCLK",
+      "name": "Arçelik",
+      "sector": "Dayanıklı Tüketim",
+      "price": 112.5,
+      "change_pct": -1.32,
+      "prev_close": 114.0,
+      "volume": 662331,
+      "volume_ratio": 0.22,
+      "rsi": 44.7,
+      "signal": "SAT",
+      "signal_en": "SELL",
+      "score": -38.5,
+      "confidence": 38.5,
+      "color": "#ff5252"
+    },
+    {
+      "ticker": "PGSUS",
+      "name": "Pegasus",
+      "sector": "Havacılık",
+      "price": 178.1,
+      "change_pct": -0.72,
+      "prev_close": 179.4,
+      "volume": 4955743,
+      "volume_ratio": 0.17,
+      "rsi": 33.35,
+      "signal": "HAFİF SAT",
+      "signal_en": "WEAK_SELL",
+      "score": -28.0,
+      "confidence": 28.0,
+      "color": "#ff8a80"
+    }
+  ],
+  "stats": {
+    "strong_buy": 0,
+    "buy": 1,
+    "weak_buy": 3,
+    "hold": 4,
+    "weak_sell": 19,
+    "sell": 1,
+    "strong_sell": 0
+  }
+}

@@ -1,0 +1,40 @@
+name: BIST 30 Veri Güncelleme
+
+on:
+  schedule:
+    # Her iş günü saat 16:15 UTC (19:15 TR saati - borsa kapanışı sonrası)
+    - cron: '15 16 * * 1-5'
+  workflow_dispatch: # Manuel tetikleme
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: python/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r python/requirements.txt
+
+      - name: Run data generator
+        working-directory: python
+        run: python generate_data.py
+
+      - name: Commit and push updated data
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add site/data/
+          git diff --staged --quiet || git commit -m "📊 Günlük veri güncellemesi - $(date +'%Y-%m-%d %H:%M')"
+          git push

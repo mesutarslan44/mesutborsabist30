@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="BIST 30 Hisse Detaylı Teknik Analiz - Fiyat Grafikleri, RSI, MACD, Bollinger Bands">
+    <title>Hisse Detay | BIST 30 Analiz</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">B30</div>
+                <div class="logo-text">Mesut <span>BIST30</span></div>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="index.html#stock-table" class="nav-link">Hisseler</a>
+            </div>
+            <div class="update-badge" id="updateBadge">
+                <span class="update-dot"></span>
+                <span id="updateTime">Yükleniyor...</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- Back Link -->
+        <a href="index.html" class="back-link">← Dashboard'a Dön</a>
+
+        <!-- Stock Header -->
+        <div class="stock-header" id="stockHeader">
+            <div class="stock-header-left">
+                <div class="stock-header-ticker" id="headerTicker">---</div>
+                <h1 class="stock-header-name" id="headerName">Yükleniyor...</h1>
+                <span class="stock-header-sector" id="headerSector">---</span>
+            </div>
+            <div class="stock-header-right">
+                <div class="stock-header-price" id="headerPrice">₺--</div>
+                <div class="stock-header-change" id="headerChange">--%</div>
+                <div id="headerSignalBadge"></div>
+            </div>
+        </div>
+
+        <!-- Period Tabs -->
+        <div class="period-tabs">
+            <button class="period-tab active" data-period="daily" id="tabDaily">Günlük</button>
+            <button class="period-tab" data-period="weekly" id="tabWeekly">Haftalık</button>
+            <button class="period-tab" data-period="monthly" id="tabMonthly">Aylık</button>
+        </div>
+
+        <!-- Recommendation Card -->
+        <div class="rec-card" id="recCard">
+            <div class="rec-signal" id="recSignal">--</div>
+            <div class="rec-score" id="recScore">--</div>
+            <div class="rec-confidence" id="recConfidence">Güven: --%</div>
+            <div class="rec-confidence-bar">
+                <div class="rec-confidence-fill" id="recConfidenceFill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Key Indicators -->
+        <div class="indicators-grid" id="indicatorsGrid">
+            <!-- Dynamically filled -->
+        </div>
+
+        <!-- Price Chart -->
+        <div class="chart-container">
+            <div class="chart-title">📈 Fiyat Grafiği & Hareketli Ortalamalar</div>
+            <div class="chart-area">
+                <canvas id="priceChart"></canvas>
+            </div>
+        </div>
+
+        <!-- RSI & MACD Charts -->
+        <div class="chart-grid">
+            <div class="chart-container">
+                <div class="chart-title">📊 RSI (Göreceli Güç Endeksi)</div>
+                <div class="chart-area">
+                    <canvas id="rsiChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-container">
+                <div class="chart-title">📉 MACD (Hareketli Ortalama Yakınsama/Iraksama)</div>
+                <div class="chart-area">
+                    <canvas id="macdChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Volume Chart -->
+        <div class="chart-container">
+            <div class="chart-title">📊 Hacim Analizi</div>
+            <div class="chart-area" style="height: 200px;">
+                <canvas id="volumeChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Analysis Details -->
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="icon">🎯</span>
+                Detaylı Sinyal Analizi
+            </h2>
+        </div>
+        <div class="analysis-details" id="analysisDetails">
+            <div class="loading">
+                <div class="spinner"></div>
+                <span class="loading-text">Analiz yükleniyor...</span>
+            </div>
+        </div>
+
+        <!-- Price Info Table -->
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="icon">💰</span>
+                Fiyat Bilgileri
+            </h2>
+        </div>
+        <div class="indicators-grid" id="priceInfoGrid">
+            <!-- Dynamically filled -->
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+            <strong>⚠️ Yasal Uyarı:</strong> Bu platform yalnızca eğitim ve bilgi amaçlıdır.
+            Burada yer alan analiz ve sinyaller yatırım tavsiyesi niteliği taşımaz.
+            Yatırım kararlarınızı almadan önce mutlaka lisanslı bir yatırım danışmanına başvurunuz.
+            Geçmiş performans gelecek sonuçların garantisi değildir. Tüm yatırım riskleri yatırımcıya aittir.
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 Mesut BIST30 Analiz Platformu | Veriler Yahoo Finance üzerinden sağlanmaktadır</p>
+    </footer>
+
+    <script src="js/charts.js"></script>
+    <script src="js/analysis.js"></script>
+
+</body>
+
+</html>
