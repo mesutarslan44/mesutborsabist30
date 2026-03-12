@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-03-12 16:10",
+  "updated_at": "2026-03-12 16:33",
   "update_frequency": "Borsa saatleri içerisinde her saat başı otomatik güncellenir",
-  "total_stocks": 27,
+  "total_stocks": 28,
   "signal_counts": {
     "STRONG_BUY": 0,
     "BUY": 1,
     "WEAK_BUY": 3,
     "HOLD": 11,
     "WEAK_SELL": 12,
-    "SELL": 0,
+    "SELL": 1,
     "STRONG_SELL": 0
   },
   "stocks": [
@@ -659,6 +659,30 @@
         "add_level": 3.13
       },
       "explanation_short": "🔴 Günlük bazda SATIŞ sinyali veriyoruz. Satış sebepleri: HAFİF SAT — Düşüş trendi var ama zayıflıyor. | SAT — Tüm ortalamalar üstünde, ağır düşüş trendi. | SAT — Ölüm kesişimi aktif. Uzun vadeli düşüş"
+    },
+    {
+      "ticker": "PGSUS",
+      "name": "Pegasus",
+      "sector": "Havacılık",
+      "price": 179.0,
+      "change_pct": -0.5556,
+      "rsi": 34.2796,
+      "stoch_k": 28.4672,
+      "adx": 31.0642,
+      "volume_ratio": 0.6,
+      "signal": "SAT",
+      "signal_en": "SELL",
+      "score": -25.7,
+      "confidence": 59.6,
+      "color": "#ff5252",
+      "targets": {
+        "target_1": 176.31,
+        "target_2": 173.63,
+        "target_3": 170.94,
+        "stop_loss": 182.58,
+        "add_level": 180.79
+      },
+      "explanation_short": "🔴 Günlük bazda SATIŞ sinyali veriyoruz. Satış sebepleri: HAFİF SAT — Düşüş trendi var ama zayıflıyor. | SAT — Tüm ortalamalar üstünde, ağır düşüş trendi. | SAT — Ölüm kesişimi aktif. Uzun vadeli düşüş"
     }
   ],
   "indices": {
@@ -704,22 +728,22 @@
   "news": [
     {
       "title": "📊 BIST 30 Teknik Analiz Raporu Güncellendi",
-      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 12.03.2026 16:10 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
-      "date": "12.03.2026 16:10",
+      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 12.03.2026 16:33 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
+      "date": "12.03.2026 16:33",
       "category": "analiz",
       "icon": "📊"
     },
     {
       "title": "🔔 Stochastic & ADX Göstergeleri Eklendi",
       "summary": "Yeni teknik göstergeler: Stochastic Oscillator ve ADX (Average Directional Index) artık tüm hisseler için hesaplanıyor. Fibonacci düzeltme seviyeleri de aktif.",
-      "date": "12.03.2026 16:10",
+      "date": "12.03.2026 16:33",
       "category": "güncelleme",
       "icon": "🔔"
     },
     {
       "title": "🎯 Hedef Fiyat Sistemi Aktif",
       "summary": "Her hisse için günlük, haftalık ve aylık hedef fiyatlar, stop-loss seviyeleri ve ekleme noktaları hesaplanıyor.",
-      "date": "12.03.2026 16:10",
+      "date": "12.03.2026 16:33",
       "category": "özellik",
       "icon": "🎯"
     },
