@@ -56,6 +56,23 @@ def df_to_chart_data(analyzed_df):
     return chart_data
 
 
+def get_range_metrics(chart_data, period_len):
+    if not chart_data:
+        return {"min": None, "max": None}
+
+    window = chart_data[-period_len:] if len(chart_data) > period_len else chart_data
+    lows = [p.get("low") for p in window if p.get("low") is not None]
+    highs = [p.get("high") for p in window if p.get("high") is not None]
+
+    if not lows or not highs:
+        return {"min": None, "max": None}
+
+    return {
+        "min": round(float(min(lows)), 2),
+        "max": round(float(max(highs)), 2),
+    }
+
+
 def fetch_index_analysis(ticker, name):
     """Endeks analizi yapar."""
     try:
@@ -286,6 +303,9 @@ def main():
         if rec:
             signal_en = rec.get("signal_en", "HOLD")
             signal_counts[signal_en] = signal_counts.get(signal_en, 0) + 1
+            daily_chart = daily.get("chart_data", [])
+            range_3m = get_range_metrics(daily_chart, 63)
+            range_6m = get_range_metrics(daily_chart, 126)
 
             summary_item = {
                 "ticker": ticker_clean,
@@ -303,6 +323,8 @@ def main():
                 "confidence": rec.get("confidence", 0),
                 "color": rec.get("color", "#ffd740"),
                 "targets": rec.get("targets", {}),
+                "range_3m": range_3m,
+                "range_6m": range_6m,
                 "explanation_short": rec.get("explanation", "")[:200],
             }
             stocks_summary.append(summary_item)

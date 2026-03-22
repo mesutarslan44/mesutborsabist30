@@ -1575,6 +1575,18 @@ body::after {
     font-size: 14px;
 }
 
+.price-main {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.price-ranges {
+    margin-top: 3px;
+    font-size: 10px;
+    color: var(--text-muted);
+    line-height: 1.35;
+}
+
 .score-cell {
     display: flex;
     flex-direction: column;

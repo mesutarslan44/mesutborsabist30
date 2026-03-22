@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-22 21:25",
+  "updated_at": "2026-03-22 21:28",
   "update_frequency": "Borsa saatleri içerisinde her saat başı otomatik güncellenir",
   "total_stocks": 28,
   "signal_counts": {
@@ -34,6 +34,14 @@
         "stop_loss": 304.05,
         "add_level": 307.15
       },
+      "range_3m": {
+        "min": 241.2,
+        "max": 349.5
+      },
+      "range_6m": {
+        "min": 223.9,
+        "max": 349.5
+      },
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: GÜÇLÜ AL — MACD yukarı kesişim (Golden Cross). Yükseliş başlangıcı! | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim"
     },
     {
@@ -57,6 +65,14 @@
         "target_3": 353.99,
         "stop_loss": 331.97,
         "add_level": 335.36
+      },
+      "range_3m": {
+        "min": 209.7,
+        "max": 355.5
+      },
+      "range_6m": {
+        "min": 171.28,
+        "max": 355.5
       },
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: HAFİF AL — Yükseliş trendi sürüyor ama momentum azalıyor. | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim aktif. Uz"
     },
@@ -82,6 +98,14 @@
         "stop_loss": 77.86,
         "add_level": 78.66
       },
+      "range_3m": {
+        "min": 67.0,
+        "max": 95.75
+      },
+      "range_6m": {
+        "min": 66.69,
+        "max": 95.9
+      },
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: HAFİF AL — Yükseliş trendi sürüyor ama momentum azalıyor. | HAFİF AL — Genel trend yukarı yönlü. | HAFİF AL — Kısa vadeli toparlanma mevcut.. \n\n🎯"
     },
     {
@@ -105,6 +129,14 @@
         "target_3": 723.14,
         "stop_loss": 678.16,
         "add_level": 685.08
+      },
+      "range_3m": {
+        "min": 526.5,
+        "max": 724.5
+      },
+      "range_6m": {
+        "min": 507.48,
+        "max": 724.5
       },
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: HAFİF AL — Yükseliş trendi sürüyor ama momentum azalıyor. | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim aktif. Uz"
     },
@@ -130,6 +162,14 @@
         "stop_loss": 248.19,
         "add_level": 250.72
       },
+      "range_3m": {
+        "min": 175.21,
+        "max": 266.33
+      },
+      "range_6m": {
+        "min": 164.07,
+        "max": 266.33
+      },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺378.20\n  • Direnç 2: ₺322.26\n  • Direnç 1: ₺287.76\n  • Pivot: ₺231.82\n  • "
     },
     {
@@ -153,6 +193,14 @@
         "target_3": 2.53,
         "stop_loss": 2.37,
         "add_level": 2.4
+      },
+      "range_3m": {
+        "min": 2.13,
+        "max": 2.95
+      },
+      "range_6m": {
+        "min": 2.13,
+        "max": 4.16
       },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺3.69\n  • Direnç 2: ₺3.32\n  • Direnç 1: ₺2.87\n  • Pivot: ₺2.50\n  • Destek 1"
     },
@@ -178,6 +226,14 @@
         "stop_loss": 19.91,
         "add_level": 20.12
       },
+      "range_3m": {
+        "min": 16.13,
+        "max": 20.82
+      },
+      "range_6m": {
+        "min": 16.12,
+        "max": 21.5
+      },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺26.74\n  • Direnç 2: ₺23.78\n  • Direnç 1: ₺22.05\n  • Pivot: ₺19.09\n  • Dest"
     },
     {
@@ -201,6 +257,14 @@
         "target_3": 46.25,
         "stop_loss": 43.37,
         "add_level": 43.82
+      },
+      "range_3m": {
+        "min": 37.84,
+        "max": 50.9
+      },
+      "range_6m": {
+        "min": 32.44,
+        "max": 50.9
       },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺63.89\n  • Direnç 2: ₺57.39\n  • Direnç 1: ₺50.83\n  • Pivot: ₺44.33\n  • Dest"
     },
@@ -226,6 +290,14 @@
         "stop_loss": 5.91,
         "add_level": 5.97
       },
+      "range_3m": {
+        "min": 5.03,
+        "max": 6.57
+      },
+      "range_6m": {
+        "min": 4.97,
+        "max": 6.57
+      },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺8.26\n  • Direnç 2: ₺7.42\n  • Direnç 1: ₺6.72\n  • Pivot: ₺5.88\n  • Destek 1"
     },
     {
@@ -249,6 +321,14 @@
         "target_3": 512.05,
         "stop_loss": 480.2,
         "add_level": 485.1
+      },
+      "range_3m": {
+        "min": 330.0,
+        "max": 566.5
+      },
+      "range_6m": {
+        "min": 261.75,
+        "max": 566.5
       },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺815.50\n  • Direnç 2: ₺691.00\n  • Direnç 1: ₺590.50\n  • Pivot: ₺466.00\n  • "
     },
@@ -274,6 +354,14 @@
         "stop_loss": 114.66,
         "add_level": 115.83
       },
+      "range_3m": {
+        "min": 99.65,
+        "max": 136.0
+      },
+      "range_6m": {
+        "min": 99.65,
+        "max": 136.7
+      },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺171.80\n  • Direnç 2: ₺153.90\n  • Direnç 1: ₺135.45\n  • Pivot: ₺117.55\n  • "
     },
     {
@@ -297,6 +385,14 @@
         "target_3": 28.08,
         "stop_loss": 29.99,
         "add_level": 29.69
+      },
+      "range_3m": {
+        "min": 25.12,
+        "max": 33.28
+      },
+      "range_6m": {
+        "min": 23.5,
+        "max": 33.28
       },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺41.57\n  • Direnç 2: ₺37.43\n  • Direnç 1: ₺33.41\n  • Pivot: ₺29.27\n  • Dest"
     },
@@ -322,6 +418,14 @@
         "stop_loss": 28.46,
         "add_level": 28.18
       },
+      "range_3m": {
+        "min": 23.46,
+        "max": 32.72
+      },
+      "range_6m": {
+        "min": 23.46,
+        "max": 32.72
+      },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺41.85\n  • Direnç 2: ₺37.29\n  • Direnç 1: ₺32.59\n  • Pivot: ₺28.03\n  • Dest"
     },
     {
@@ -345,6 +449,14 @@
         "target_3": 33.21,
         "stop_loss": 35.48,
         "add_level": 35.13
+      },
+      "range_3m": {
+        "min": 33.26,
+        "max": 44.5
+      },
+      "range_6m": {
+        "min": 27.14,
+        "max": 44.5
       },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺53.01\n  • Direnç 2: ₺48.75\n  • Direnç 1: ₺41.77\n  • Pivot: ₺37.51\n  • Dest"
     },
@@ -370,6 +482,14 @@
         "stop_loss": 112.0,
         "add_level": 110.9
       },
+      "range_3m": {
+        "min": 87.74,
+        "max": 130.91
+      },
+      "range_6m": {
+        "min": 81.38,
+        "max": 130.91
+      },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺174.39\n  • Direnç 2: ₺152.65\n  • Direnç 1: ₺131.23\n  • Pivot: ₺109.48\n  • "
     },
     {
@@ -393,6 +513,14 @@
         "target_3": 88.39,
         "stop_loss": 94.4,
         "add_level": 93.48
+      },
+      "range_3m": {
+        "min": 81.9,
+        "max": 115.0
+      },
+      "range_6m": {
+        "min": 73.9,
+        "max": 115.0
       },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺143.50\n  • Direnç 2: ₺129.25\n  • Direnç 1: ₺110.90\n  • Pivot: ₺96.65\n  • D"
     },
@@ -418,6 +546,14 @@
         "stop_loss": 94.81,
         "add_level": 93.88
       },
+      "range_3m": {
+        "min": 76.41,
+        "max": 104.7
+      },
+      "range_6m": {
+        "min": 66.25,
+        "max": 104.7
+      },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺134.40\n  • Direnç 2: ₺119.55\n  • Direnç 1: ₺106.25\n  • Pivot: ₺91.40\n  • D"
     },
     {
@@ -441,6 +577,14 @@
         "target_3": 2.8,
         "stop_loss": 2.99,
         "add_level": 2.96
+      },
+      "range_3m": {
+        "min": 2.77,
+        "max": 3.63
+      },
+      "range_6m": {
+        "min": 2.77,
+        "max": 4.12
       },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺4.31\n  • Direnç 2: ₺3.97\n  • Direnç 1: ₺3.45\n  • Pivot: ₺3.11\n  • Destek 1"
     },
@@ -466,6 +610,14 @@
         "stop_loss": 291.72,
         "add_level": 288.86
       },
+      "range_3m": {
+        "min": 277.75,
+        "max": 369.0
+      },
+      "range_6m": {
+        "min": 217.6,
+        "max": 369.0
+      },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺435.33\n  • Direnç 2: ₺402.17\n  • Direnç 1: ₺344.08\n  • Pivot: ₺310.92\n  • "
     },
     {
@@ -489,6 +641,14 @@
         "target_3": 101.8,
         "stop_loss": 108.73,
         "add_level": 107.67
+      },
+      "range_3m": {
+        "min": 92.55,
+        "max": 129.6
+      },
+      "range_6m": {
+        "min": 88.34,
+        "max": 129.6
       },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺163.67\n  • Direnç 2: ₺146.63\n  • Direnç 1: ₺126.62\n  • Pivot: ₺109.58\n  • "
     },
@@ -514,6 +674,14 @@
         "stop_loss": 137.8,
         "add_level": 136.45
       },
+      "range_3m": {
+        "min": 129.5,
+        "max": 169.7
+      },
+      "range_6m": {
+        "min": 115.4,
+        "max": 169.7
+      },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺200.23\n  • Direnç 2: ₺184.97\n  • Direnç 1: ₺160.03\n  • Pivot: ₺144.77\n  • "
     },
     {
@@ -537,6 +705,14 @@
         "target_3": 557.72,
         "stop_loss": 595.68,
         "add_level": 589.84
+      },
+      "range_3m": {
+        "min": 509.5,
+        "max": 698.5
+      },
+      "range_6m": {
+        "min": 418.19,
+        "max": 698.5
       },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺874.17\n  • Direnç 2: ₺786.33\n  • Direnç 1: ₺685.17\n  • Pivot: ₺597.33\n  • "
     },
@@ -562,6 +738,14 @@
         "stop_loss": 295.29,
         "add_level": 292.39
       },
+      "range_3m": {
+        "min": 262.75,
+        "max": 352.5
+      },
+      "range_6m": {
+        "min": 262.75,
+        "max": 352.5
+      },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺430.17\n  • Direnç 2: ₺391.33\n  • Direnç 1: ₺340.42\n  • Pivot: ₺301.58\n  • "
     },
     {
@@ -585,6 +769,14 @@
         "target_3": 70.29,
         "stop_loss": 75.07,
         "add_level": 74.34
+      },
+      "range_3m": {
+        "min": 68.6,
+        "max": 93.5
+      },
+      "range_6m": {
+        "min": 53.05,
+        "max": 93.5
       },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺113.43\n  • Direnç 2: ₺103.47\n  • Direnç 1: ₺88.53\n  • Pivot: ₺78.57\n  • De"
     },
@@ -610,6 +802,14 @@
         "stop_loss": 20.56,
         "add_level": 20.36
       },
+      "range_3m": {
+        "min": 19.38,
+        "max": 27.12
+      },
+      "range_6m": {
+        "min": 17.62,
+        "max": 27.12
+      },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺32.80\n  • Direnç 2: ₺29.96\n  • Direnç 1: ₺25.06\n  • Pivot: ₺22.22\n  • Dest"
     },
     {
@@ -633,6 +833,14 @@
         "target_3": 13.32,
         "stop_loss": 14.23,
         "add_level": 14.09
+      },
+      "range_3m": {
+        "min": 13.31,
+        "max": 18.21
+      },
+      "range_6m": {
+        "min": 11.11,
+        "max": 18.21
       },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺21.90\n  • Direnç 2: ₺20.06\n  • Direnç 1: ₺17.00\n  • Pivot: ₺15.16\n  • Dest"
     },
@@ -658,6 +866,14 @@
         "stop_loss": 181.05,
         "add_level": 179.28
       },
+      "range_3m": {
+        "min": 167.3,
+        "max": 226.1
+      },
+      "range_6m": {
+        "min": 167.3,
+        "max": 232.2
+      },
       "explanation_short": "🔴 Günlük bazda SATIŞ sinyali veriyoruz. Satış sebepleri: HAFİF SAT — Düşüş trendi var ama zayıflıyor. | SAT — Tüm ortalamalar üstünde, ağır düşüş trendi. | SAT — Ölüm kesişimi aktif. Uzun vadeli düşüş"
     },
     {
@@ -681,6 +897,14 @@
         "target_3": 185.75,
         "stop_loss": 198.39,
         "add_level": 196.44
+      },
+      "range_3m": {
+        "min": 165.7,
+        "max": 229.1
+      },
+      "range_6m": {
+        "min": 146.0,
+        "max": 229.1
       },
       "explanation_short": "🔴 Günlük bazda SATIŞ sinyali veriyoruz. Satış sebepleri: HAFİF SAT — Düşüş trendi var ama zayıflıyor. | HAFİF SAT — Trend aşağı yönlü, dikkatli olun. | HAFİF SAT — Kısa vadeli düşüş baskısı var.. 💡 Ol"
     }
@@ -728,22 +952,22 @@
   "news": [
     {
       "title": "📊 BIST 30 Teknik Analiz Raporu Güncellendi",
-      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 22.03.2026 21:26 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
-      "date": "22.03.2026 21:26",
+      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 22.03.2026 21:28 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
+      "date": "22.03.2026 21:28",
       "category": "analiz",
       "icon": "📊"
     },
     {
       "title": "🔔 Stochastic & ADX Göstergeleri Eklendi",
       "summary": "Yeni teknik göstergeler: Stochastic Oscillator ve ADX (Average Directional Index) artık tüm hisseler için hesaplanıyor. Fibonacci düzeltme seviyeleri de aktif.",
-      "date": "22.03.2026 21:26",
+      "date": "22.03.2026 21:28",
       "category": "güncelleme",
       "icon": "🔔"
     },
     {
       "title": "🎯 Hedef Fiyat Sistemi Aktif",
       "summary": "Her hisse için günlük, haftalık ve aylık hedef fiyatlar, stop-loss seviyeleri ve ekleme noktaları hesaplanıyor.",
-      "date": "22.03.2026 21:26",
+      "date": "22.03.2026 21:28",
       "category": "özellik",
       "icon": "🎯"
     },

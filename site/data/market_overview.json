@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-22 21:25",
+  "updated_at": "2026-03-22 21:28",
   "update_frequency": "Borsa saatleri içerisinde her saat başı otomatik güncellenir",
   "bist30": {
     "index_value": 14847.03,
@@ -72,6 +72,14 @@
         "stop_loss": 304.05,
         "add_level": 307.15
       },
+      "range_3m": {
+        "min": 241.2,
+        "max": 349.5
+      },
+      "range_6m": {
+        "min": 223.9,
+        "max": 349.5
+      },
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: GÜÇLÜ AL — MACD yukarı kesişim (Golden Cross). Yükseliş başlangıcı! | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim"
     },
     {
@@ -95,6 +103,14 @@
         "target_3": 353.99,
         "stop_loss": 331.97,
         "add_level": 335.36
+      },
+      "range_3m": {
+        "min": 209.7,
+        "max": 355.5
+      },
+      "range_6m": {
+        "min": 171.28,
+        "max": 355.5
       },
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: HAFİF AL — Yükseliş trendi sürüyor ama momentum azalıyor. | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim aktif. Uz"
     },
@@ -120,6 +136,14 @@
         "stop_loss": 77.86,
         "add_level": 78.66
       },
+      "range_3m": {
+        "min": 67.0,
+        "max": 95.75
+      },
+      "range_6m": {
+        "min": 66.69,
+        "max": 95.9
+      },
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: HAFİF AL — Yükseliş trendi sürüyor ama momentum azalıyor. | HAFİF AL — Genel trend yukarı yönlü. | HAFİF AL — Kısa vadeli toparlanma mevcut.. \n\n🎯"
     },
     {
@@ -144,6 +168,14 @@
         "stop_loss": 678.16,
         "add_level": 685.08
       },
+      "range_3m": {
+        "min": 526.5,
+        "max": 724.5
+      },
+      "range_6m": {
+        "min": 507.48,
+        "max": 724.5
+      },
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: HAFİF AL — Yükseliş trendi sürüyor ama momentum azalıyor. | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim aktif. Uz"
     },
     {
@@ -167,6 +199,14 @@
         "target_3": 264.65,
         "stop_loss": 248.19,
         "add_level": 250.72
+      },
+      "range_3m": {
+        "min": 175.21,
+        "max": 266.33
+      },
+      "range_6m": {
+        "min": 164.07,
+        "max": 266.33
       },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺378.20\n  • Direnç 2: ₺322.26\n  • Direnç 1: ₺287.76\n  • Pivot: ₺231.82\n  • "
     }
@@ -194,6 +234,14 @@
         "stop_loss": 198.39,
         "add_level": 196.44
       },
+      "range_3m": {
+        "min": 165.7,
+        "max": 229.1
+      },
+      "range_6m": {
+        "min": 146.0,
+        "max": 229.1
+      },
       "explanation_short": "🔴 Günlük bazda SATIŞ sinyali veriyoruz. Satış sebepleri: HAFİF SAT — Düşüş trendi var ama zayıflıyor. | HAFİF SAT — Trend aşağı yönlü, dikkatli olun. | HAFİF SAT — Kısa vadeli düşüş baskısı var.. 💡 Ol"
     },
     {
@@ -217,6 +265,14 @@
         "target_3": 169.51,
         "stop_loss": 181.05,
         "add_level": 179.28
+      },
+      "range_3m": {
+        "min": 167.3,
+        "max": 226.1
+      },
+      "range_6m": {
+        "min": 167.3,
+        "max": 232.2
       },
       "explanation_short": "🔴 Günlük bazda SATIŞ sinyali veriyoruz. Satış sebepleri: HAFİF SAT — Düşüş trendi var ama zayıflıyor. | SAT — Tüm ortalamalar üstünde, ağır düşüş trendi. | SAT — Ölüm kesişimi aktif. Uzun vadeli düşüş"
     },
@@ -242,6 +298,14 @@
         "stop_loss": 20.56,
         "add_level": 20.36
       },
+      "range_3m": {
+        "min": 19.38,
+        "max": 27.12
+      },
+      "range_6m": {
+        "min": 17.62,
+        "max": 27.12
+      },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺32.80\n  • Direnç 2: ₺29.96\n  • Direnç 1: ₺25.06\n  • Pivot: ₺22.22\n  • Dest"
     },
     {
@@ -265,6 +329,14 @@
         "target_3": 13.32,
         "stop_loss": 14.23,
         "add_level": 14.09
+      },
+      "range_3m": {
+        "min": 13.31,
+        "max": 18.21
+      },
+      "range_6m": {
+        "min": 11.11,
+        "max": 18.21
       },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺21.90\n  • Direnç 2: ₺20.06\n  • Direnç 1: ₺17.00\n  • Pivot: ₺15.16\n  • Dest"
     },
@@ -290,6 +362,14 @@
         "stop_loss": 75.07,
         "add_level": 74.34
       },
+      "range_3m": {
+        "min": 68.6,
+        "max": 93.5
+      },
+      "range_6m": {
+        "min": 53.05,
+        "max": 93.5
+      },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺113.43\n  • Direnç 2: ₺103.47\n  • Direnç 1: ₺88.53\n  • Pivot: ₺78.57\n  • De"
     }
   ],
@@ -305,22 +385,22 @@
   "news": [
     {
       "title": "📊 BIST 30 Teknik Analiz Raporu Güncellendi",
-      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 22.03.2026 21:26 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
-      "date": "22.03.2026 21:26",
+      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 22.03.2026 21:28 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
+      "date": "22.03.2026 21:28",
       "category": "analiz",
       "icon": "📊"
     },
     {
       "title": "🔔 Stochastic & ADX Göstergeleri Eklendi",
       "summary": "Yeni teknik göstergeler: Stochastic Oscillator ve ADX (Average Directional Index) artık tüm hisseler için hesaplanıyor. Fibonacci düzeltme seviyeleri de aktif.",
-      "date": "22.03.2026 21:26",
+      "date": "22.03.2026 21:28",
       "category": "güncelleme",
       "icon": "🔔"
     },
     {
       "title": "🎯 Hedef Fiyat Sistemi Aktif",
       "summary": "Her hisse için günlük, haftalık ve aylık hedef fiyatlar, stop-loss seviyeleri ve ekleme noktaları hesaplanıyor.",
-      "date": "22.03.2026 21:26",
+      "date": "22.03.2026 21:28",
       "category": "özellik",
       "icon": "🎯"
     },

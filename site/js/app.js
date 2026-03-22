@@ -123,6 +123,11 @@
         return sign + val.toFixed(2) + '%';
     }
 
+    function formatRange(rangeObj) {
+        if (!rangeObj || rangeObj.min == null || rangeObj.max == null) return '-- / --';
+        return formatPrice(rangeObj.min) + ' - ' + formatPrice(rangeObj.max);
+    }
+
     function getChangeClass(val) {
         if (val > 0) return 'positive';
         if (val < 0) return 'negative';
@@ -660,7 +665,8 @@
             html += '<strong>' + s.ticker + '</strong>';
             html += '<span class="stock-sector">' + s.name + ' · ' + s.sector + '</span>';
             html += '</div></td>';
-            html += '<td data-label="Fiyat" class="price-cell">' + formatPrice(s.price) + '</td>';
+            html += '<td data-label="Fiyat" class="price-cell"><div class="price-main">' + formatPrice(s.price) + '</div>';
+            html += '<div class="price-ranges">3A: ' + formatRange(s.range_3m) + ' | 6A: ' + formatRange(s.range_6m) + '</div></td>';
             html += '<td data-label="Degisim"><span class="stock-change ' + getChangeClass(s.change_pct) + '">' + formatPercent(s.change_pct) + '</span></td>';
             html += '<td data-label="RSI">' + (s.rsi ? s.rsi.toFixed(1) : '--') + '</td>';
             html += '<td data-label="Stoch">' + (s.stoch_k ? s.stoch_k.toFixed(1) : '--') + '</td>';
