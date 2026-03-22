@@ -2137,3 +2137,26 @@ body::after {
         grid-template-columns: 1fr;
     }
 }
+
+
+.freshness-details {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-color);
+    display: grid;
+    gap: 6px;
+}
+
+.freshness-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.freshness-row strong {
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+}

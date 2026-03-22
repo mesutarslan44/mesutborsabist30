@@ -39,6 +39,37 @@
         return map[signalEn] || 'hold';
     }
 
+    function toDateFromTRString(raw) {
+        if (!raw || typeof raw !== 'string') return null;
+        // expected: YYYY-MM-DD HH:MM
+        var normalized = raw.replace(' ', 'T') + ':00';
+        var dt = new Date(normalized);
+        if (isNaN(dt.getTime())) return null;
+        return dt;
+    }
+
+    function formatDateTime(dt) {
+        if (!dt || isNaN(dt.getTime())) return '--';
+        return dt.toLocaleString('tr-TR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+    }
+
+    function calcAgeText(dataDt, nowDt) {
+        if (!dataDt || !nowDt) return '--';
+        var diffMs = nowDt - dataDt;
+        if (diffMs < 0) return 'Saat senkronu kontrol edilmeli';
+        var totalMin = Math.floor(diffMs / 60000);
+        var hours = Math.floor(totalMin / 60);
+        var mins = totalMin % 60;
+        return hours > 0 ? (hours + ' saat ' + mins + ' dk') : (mins + ' dk');
+    }
+
     function getFilterGroup(signalEn) {
         if (['STRONG_BUY', 'BUY', 'WEAK_BUY'].indexOf(signalEn) >= 0) return 'buy';
         if (['STRONG_SELL', 'SELL', 'WEAK_SELL'].indexOf(signalEn) >= 0) return 'sell';
@@ -345,6 +376,25 @@
             lastUpdateEl.textContent = 'Son güncelleme: ' + (summaryData.updated_at || 'Bilinmiyor') +
                 ' | ' + (summaryData.update_frequency || '');
         }
+
+        var generatedAt = summaryData ? summaryData.updated_at : null;
+        var marketUpdatedAt = marketData ? marketData.updated_at : null;
+        var perfUpdatedAt = performanceData ? performanceData.generated_at : null;
+
+        var generatedAtEl = document.getElementById('generatedAtValue');
+        var marketUpdatedAtEl = document.getElementById('marketUpdatedAtValue');
+        var perfUpdatedAtEl = document.getElementById('performanceUpdatedAtValue');
+        var pageLoadedAtEl = document.getElementById('pageLoadedAtValue');
+        var dataAgeEl = document.getElementById('dataAgeValue');
+
+        var now = new Date();
+        var dataDt = toDateFromTRString(generatedAt) || toDateFromTRString(marketUpdatedAt) || toDateFromTRString(perfUpdatedAt);
+
+        if (generatedAtEl) generatedAtEl.textContent = generatedAt || '--';
+        if (marketUpdatedAtEl) marketUpdatedAtEl.textContent = marketUpdatedAt || '--';
+        if (perfUpdatedAtEl) perfUpdatedAtEl.textContent = perfUpdatedAt || '--';
+        if (pageLoadedAtEl) pageLoadedAtEl.textContent = formatDateTime(now);
+        if (dataAgeEl) dataAgeEl.textContent = calcAgeText(dataDt, now);
     }
 
     // ── Events ──
