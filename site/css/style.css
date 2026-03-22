@@ -2172,8 +2172,116 @@ body::after {
     white-space: nowrap;
 }
 
+.perf-link-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-secondary);
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.perf-link-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-cyan);
+}
+
+.perf-hero {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.perf-hero-title {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.perf-hero-desc {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.perf-health-card,
+.perf-kpi-card,
+.perf-audit-card {
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 16px;
+}
+
+.perf-health-label,
+.perf-kpi-label,
+.perf-audit-title {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 8px;
+}
+
+.perf-health-value,
+.perf-kpi-value,
+.perf-audit-value {
+    font-size: 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: var(--accent-cyan);
+}
+
+.perf-health-meta,
+.perf-kpi-meta,
+.perf-audit-meta {
+    margin-top: 6px;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.perf-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.perf-audit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.perf-filter-tabs {
+    margin-left: auto;
+}
+
+.perf-table-wrapper {
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: auto;
+    margin-bottom: 24px;
+}
+
+.perf-table td,
+.perf-table th {
+    white-space: nowrap;
+}
+
 @media (max-width: 900px) {
     .performance-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .perf-kpi-grid,
+    .perf-audit-grid,
+    .perf-hero {
         grid-template-columns: 1fr;
     }
 }

@@ -91,6 +91,9 @@ def _resolve_open_targets(open_targets, current_prices, as_of_dt):
                     "close_price": round(float(current_price), 4),
                     "days_to_result": age_days,
                     "status": "HIT" if hit else "EXPIRED",
+                    "signal": target.get("signal", ""),
+                    "confidence": target.get("confidence", 0),
+                    "score": target.get("score", 0),
                 }
             )
         else:
@@ -127,6 +130,7 @@ def _calc_stats(history):
         stats_by_period[period] = {
             "total": p_total,
             "hits": p_hit_count,
+            "expired": len([h for h in p_records if h.get("status") == "EXPIRED"]),
             "hit_rate": round((p_hit_count / p_total * 100), 1) if p_total else 0.0,
             "avg_days_to_hit": round(
                 sum(h.get("days_to_result", 0) for h in p_hits) / p_hit_count, 1
@@ -137,36 +141,79 @@ def _calc_stats(history):
 
     total = len(history)
     hits = len([h for h in history if h.get("status") == "HIT"])
+    expired = len([h for h in history if h.get("status") == "EXPIRED"])
 
     return {
         "overall": {
             "total": total,
             "hits": hits,
+            "expired": expired,
             "hit_rate": round((hits / total * 100), 1) if total else 0.0,
         },
         "by_period": stats_by_period,
     }
 
 
+def _calc_direction_stats(history):
+    result = {}
+    for direction in ["buy", "sell"]:
+        records = [h for h in history if h.get("direction") == direction]
+        total = len(records)
+        hits = len([h for h in records if h.get("status") == "HIT"])
+        result[direction] = {
+            "total": total,
+            "hits": hits,
+            "hit_rate": round((hits / total * 100), 1) if total else 0.0,
+        }
+    return result
+
+
+def _calc_consistency_score(stats):
+    overall_rate = stats["overall"].get("hit_rate", 0)
+    daily_rate = stats["by_period"].get("daily", {}).get("hit_rate", 0)
+    weekly_rate = stats["by_period"].get("weekly", {}).get("hit_rate", 0)
+
+    consistency_penalty = abs(daily_rate - weekly_rate) * 0.3
+    raw_score = overall_rate - consistency_penalty
+    return round(max(min(raw_score, 100.0), 0.0), 1)
+
+
 def _to_frontend_payload(state, generated_at):
     history = state.get("history", [])
-    recent = sorted(
+    recent_hits = sorted(
         [h for h in history if h.get("status") == "HIT"],
         key=lambda x: x.get("closed_at", ""),
         reverse=True,
-    )[:30]
+    )[:40]
+
+    recent_resolved = sorted(
+        history,
+        key=lambda x: x.get("closed_at", ""),
+        reverse=True,
+    )[:80]
 
     stats = _calc_stats(history)
+    direction_stats = _calc_direction_stats(history)
+    status_summary = {
+        "open": len(state.get("open_targets", [])),
+        "resolved": len(history),
+        "hits": stats["overall"].get("hits", 0),
+        "expired": stats["overall"].get("expired", 0),
+    }
 
     return {
         "generated_at": generated_at,
         "overview": stats["overall"],
         "daily": stats["by_period"]["daily"],
         "weekly": stats["by_period"]["weekly"],
+        "status_summary": status_summary,
+        "direction_stats": direction_stats,
+        "consistency_score": _calc_consistency_score(stats),
         "open_targets": sorted(
             state.get("open_targets", []), key=lambda x: x.get("opened_at", ""), reverse=True
-        )[:30],
-        "recent_hits": recent,
+        )[:60],
+        "recent_hits": recent_hits,
+        "recent_resolved": recent_resolved,
     }
 
 

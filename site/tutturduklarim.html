@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tutturduklarim - Gunluk ve haftalik hedef performans denetim paneli">
+    <title>Tutturduklarim | BIST 30 Analiz</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AF%3C/text%3E%3C/svg%3E">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">B30</div>
+                <div class="logo-text">Mesut <span>BIST30</span></div>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="index.html#stock-table" class="nav-link">Hisseler</a>
+                <a href="tutturduklarim.html" class="nav-link active">Tutturduklarim</a>
+            </div>
+            <div class="update-badge" id="perfUpdateBadge">
+                <span class="update-dot"></span>
+                <span id="perfUpdateText">Yukleniyor...</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="index.html" class="back-link">&larr; Dashboard'a Don</a>
+
+        <section class="perf-hero">
+            <div>
+                <h1 class="perf-hero-title">Tutturduklarim Performans Merkezi</h1>
+                <p class="perf-hero-desc">
+                    Bu panel, sinyal motorunun gercek piyasa sonucunu denetler: hangi hedefler tuttu, hangileri sure doldu,
+                    gunluk/haftalik kalitesi ne durumda ve su an acikta kalan islemler ne kadar saglikli.
+                </p>
+            </div>
+            <div class="perf-health-card">
+                <div class="perf-health-label">Sistem Tutarlilik Skoru</div>
+                <div class="perf-health-value" id="consistencyScore">--</div>
+                <div class="perf-health-meta" id="consistencyMeta">Hesaplaniyor...</div>
+            </div>
+        </section>
+
+        <section class="perf-kpi-grid">
+            <article class="perf-kpi-card">
+                <div class="perf-kpi-label">Genel Isabet</div>
+                <div class="perf-kpi-value" id="overallHitRateLarge">--%</div>
+                <div class="perf-kpi-meta" id="overallHitMetaLarge">--</div>
+            </article>
+            <article class="perf-kpi-card">
+                <div class="perf-kpi-label">Gunluk Isabet</div>
+                <div class="perf-kpi-value" id="dailyHitRateLarge">--%</div>
+                <div class="perf-kpi-meta" id="dailyHitMetaLarge">--</div>
+            </article>
+            <article class="perf-kpi-card">
+                <div class="perf-kpi-label">Haftalik Isabet</div>
+                <div class="perf-kpi-value" id="weeklyHitRateLarge">--%</div>
+                <div class="perf-kpi-meta" id="weeklyHitMetaLarge">--</div>
+            </article>
+            <article class="perf-kpi-card">
+                <div class="perf-kpi-label">Acilan Islem / Cozulen Islem</div>
+                <div class="perf-kpi-value" id="statusSummaryValue">--</div>
+                <div class="perf-kpi-meta" id="statusSummaryMeta">--</div>
+            </article>
+        </section>
+
+        <section class="section-header">
+            <h2 class="section-title"><span class="icon">🧪</span> Sistem Denetim Ozeti</h2>
+        </section>
+        <section class="perf-audit-grid" id="auditGrid">
+            <article class="perf-audit-card">
+                <div class="perf-audit-title">AL Yonlu Basari</div>
+                <div class="perf-audit-value" id="buyHitRate">--%</div>
+                <div class="perf-audit-meta" id="buyHitMeta">--</div>
+            </article>
+            <article class="perf-audit-card">
+                <div class="perf-audit-title">SAT Yonlu Basari</div>
+                <div class="perf-audit-value" id="sellHitRate">--%</div>
+                <div class="perf-audit-meta" id="sellHitMeta">--</div>
+            </article>
+            <article class="perf-audit-card">
+                <div class="perf-audit-title">Sure Asimi Orani</div>
+                <div class="perf-audit-value" id="expiredRate">--%</div>
+                <div class="perf-audit-meta" id="expiredMeta">--</div>
+            </article>
+        </section>
+
+        <section class="section-header">
+            <h2 class="section-title"><span class="icon">🧭</span> Acik Hedefler (Anlik Takip)</h2>
+        </section>
+        <div class="perf-table-wrapper">
+            <table class="performance-table perf-table">
+                <thead>
+                    <tr>
+                        <th>Ticker</th>
+                        <th>Periyot</th>
+                        <th>Yon</th>
+                        <th>Acilis</th>
+                        <th>Baslangic</th>
+                        <th>Hedef</th>
+                        <th>Son Fiyat</th>
+                        <th>Mesafe</th>
+                        <th>Sinyal</th>
+                    </tr>
+                </thead>
+                <tbody id="openTargetsBody">
+                    <tr><td colspan="9" class="loading-cell">Yukleniyor...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <section class="section-header">
+            <h2 class="section-title"><span class="icon">📚</span> Sonuc Defteri (HIT + EXPIRED)</h2>
+            <div class="filter-tabs perf-filter-tabs">
+                <button class="filter-tab active" data-status="ALL">Tum Sonuclar</button>
+                <button class="filter-tab" data-status="HIT">Tutturulanlar</button>
+                <button class="filter-tab" data-status="EXPIRED">Sure Asimi</button>
+            </div>
+        </section>
+        <div class="perf-table-wrapper">
+            <table class="performance-table perf-table">
+                <thead>
+                    <tr>
+                        <th>Ticker</th>
+                        <th>Periyot</th>
+                        <th>Yon</th>
+                        <th>Acilis</th>
+                        <th>Kapanis</th>
+                        <th>Hedef</th>
+                        <th>Kapanis Fiyati</th>
+                        <th>Gun</th>
+                        <th>Durum</th>
+                    </tr>
+                </thead>
+                <tbody id="resolvedBody">
+                    <tr><td colspan="9" class="loading-cell">Yukleniyor...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="disclaimer">
+            <strong>⚠️ Yasal Uyari:</strong> Bu panel egitim amaclidir. Buradaki veriler yatirim tavsiyesi degildir.
+            Amac; model performansini seffaf bicimde olcmektir.
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 Mesut BIST30 | Tutturduklarim denetim paneli</p>
+    </footer>
+
+    <script src="js/tutturduklarim.js"></script>
+</body>
+
+</html>
