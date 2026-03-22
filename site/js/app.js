@@ -12,6 +12,7 @@
     let currentFilter = 'all';
     let currentSort = { key: 'score', dir: 'desc' };
     let refreshTimer = null;
+    let freshnessTimer = null;
 
     let matrixAnimId = null;
 
@@ -166,6 +167,20 @@
         var hours = Math.floor(totalMin / 60);
         var mins = totalMin % 60;
         return hours > 0 ? (hours + ' saat ' + mins + ' dk') : (mins + ' dk');
+    }
+
+    function calcAgeMinutes(dataDt, nowDt) {
+        if (!dataDt || !nowDt) return null;
+        var diffMs = nowDt - dataDt;
+        if (diffMs < 0) return null;
+        return Math.floor(diffMs / 60000);
+    }
+
+    function getFreshnessState(ageMinutes) {
+        if (ageMinutes == null) return { text: 'Bilinmiyor', cls: '' };
+        if (ageMinutes <= 90) return { text: 'Guncel', cls: 'fresh' };
+        if (ageMinutes <= 360) return { text: 'Gecikmeli', cls: 'warn' };
+        return { text: 'Eski Veri', cls: 'stale' };
     }
 
     function getFilterGroup(signalEn) {
@@ -679,15 +694,34 @@
         var perfUpdatedAtEl = document.getElementById('performanceUpdatedAtValue');
         var pageLoadedAtEl = document.getElementById('pageLoadedAtValue');
         var dataAgeEl = document.getElementById('dataAgeValue');
+        var dataAgeTopEl = document.getElementById('dataAgeTop');
+        var dataStatusTopEl = document.getElementById('dataStatusTop');
 
-        var now = new Date();
         var dataDt = toDateFromTRString(generatedAt) || toDateFromTRString(marketUpdatedAt) || toDateFromTRString(perfUpdatedAt);
 
-        if (generatedAtEl) generatedAtEl.textContent = generatedAt || '--';
-        if (marketUpdatedAtEl) marketUpdatedAtEl.textContent = marketUpdatedAt || '--';
-        if (perfUpdatedAtEl) perfUpdatedAtEl.textContent = perfUpdatedAt || '--';
-        if (pageLoadedAtEl) pageLoadedAtEl.textContent = formatDateTime(now);
-        if (dataAgeEl) dataAgeEl.textContent = calcAgeText(dataDt, now);
+        function repaintFreshness() {
+            var now = new Date();
+            var ageText = calcAgeText(dataDt, now);
+            var ageMinutes = calcAgeMinutes(dataDt, now);
+            var state = getFreshnessState(ageMinutes);
+
+            if (generatedAtEl) generatedAtEl.textContent = generatedAt || '--';
+            if (marketUpdatedAtEl) marketUpdatedAtEl.textContent = marketUpdatedAt || '--';
+            if (perfUpdatedAtEl) perfUpdatedAtEl.textContent = perfUpdatedAt || '--';
+            if (pageLoadedAtEl) pageLoadedAtEl.textContent = formatDateTime(now);
+            if (dataAgeEl) dataAgeEl.textContent = ageText;
+            if (dataAgeTopEl) dataAgeTopEl.textContent = ageText;
+
+            if (dataStatusTopEl) {
+                dataStatusTopEl.textContent = state.text;
+                dataStatusTopEl.classList.remove('fresh', 'warn', 'stale');
+                if (state.cls) dataStatusTopEl.classList.add(state.cls);
+            }
+        }
+
+        repaintFreshness();
+        if (freshnessTimer) clearInterval(freshnessTimer);
+        freshnessTimer = setInterval(repaintFreshness, 30000);
     }
 
     // ── Events ──

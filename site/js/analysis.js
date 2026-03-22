@@ -147,6 +147,44 @@
         if (confidenceEl) confidenceEl.textContent = confLabel + ' (%' + confidence.toFixed(0) + ')';
     }
 
+    function renderTradePlaybook(rec, indicators) {
+        var box = document.getElementById('tradePlaybook');
+        if (!box || !rec) return;
+
+        var steps = box.querySelectorAll('.playbook-step');
+        if (!steps || steps.length < 4) return;
+
+        var signal = rec.signal_en || 'HOLD';
+        var confidence = rec.confidence || 0;
+        var price = indicators && indicators.price ? indicators.price : null;
+        var target = rec.targets && rec.targets.target_1 ? rec.targets.target_1 : null;
+        var stop = rec.targets && rec.targets.stop_loss ? rec.targets.stop_loss : null;
+
+        var odulRisk = null;
+        if (price && target && stop) {
+            var reward = Math.abs(target - price);
+            var risk = Math.abs(price - stop);
+            if (risk > 0) odulRisk = reward / risk;
+        }
+
+        var signalLabel = signal === 'HOLD' ? 'BEKLE' : (signal.indexOf('BUY') >= 0 ? 'AL tarafi' : 'SAT/korunma tarafi');
+        steps[0].innerHTML = '<strong>A)</strong> Sinyal: ' + signalLabel + ' | Guven: %' + confidence.toFixed(0) + '. Sadece sinyale degil guven ve skora birlikte bak.';
+
+        var stepB = 'Hedef-stop mesafesini kontrol et: odul/risk dengesi zayifsa islemi pas gec.';
+        if (odulRisk != null) {
+            stepB = 'Hedef-stop dengesi: yaklasik ' + odulRisk.toFixed(2) + 'R. 1.5R altinda lotu kucult veya islem acma.';
+        }
+        steps[1].innerHTML = '<strong>B)</strong> ' + stepB;
+
+        var stepC = 'Kademeli yonet: hedefe giderken parcali kar al, stopu plansiz genisletme.';
+        if (target && stop) {
+            stepC = 'Plan: Hedef 1 yaklasinca parcali kar al. Kalan pozisyonda stopu maliyet/ustu seviyeye cek.';
+        }
+        steps[2].innerHTML = '<strong>C)</strong> ' + stepC;
+
+        steps[3].innerHTML = '<strong>D)</strong> Yanlislanma kuralin net olsun: stop calisirsa yeniden sinyal bekle, ayni gun intikam islemi acma.';
+    }
+
     // ── Render Explanation (YENI) ──
     function renderExplanation(rec) {
         var container = document.getElementById('explanationCard');
@@ -456,6 +494,7 @@
         renderRecommendation(periodData.recommendation);
         renderQuickDecision(periodData.recommendation, periodData.indicators);
         renderDecisionCockpit(periodData.recommendation, periodData.indicators);
+        renderTradePlaybook(periodData.recommendation, periodData.indicators);
         renderExplanation(periodData.recommendation);
         renderTargets(periodData.recommendation, periodData.indicators);
         renderLevels(periodData.recommendation, periodData.indicators);
