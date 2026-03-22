@@ -2160,3 +2160,80 @@ body::after {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 600;
 }
+
+
+.simple-mode-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.simple-mode-btn:hover {
+    border-color: var(--accent-cyan);
+    color: var(--text-primary);
+}
+
+.quick-guide {
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
+    margin: 0 0 18px;
+    display: grid;
+    gap: 8px;
+}
+
+.quick-guide-item {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.quick-decision-card {
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin: 14px 0 20px;
+}
+
+.quick-decision-title {
+    font-size: 12px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.quick-decision-text {
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+body.simple-mode .advanced-block {
+    display: none !important;
+}
+
+body.simple-mode .stock-table th:nth-child(4),
+body.simple-mode .stock-table td:nth-child(4),
+body.simple-mode .stock-table th:nth-child(5),
+body.simple-mode .stock-table td:nth-child(5),
+body.simple-mode .stock-table th:nth-child(6),
+body.simple-mode .stock-table td:nth-child(6),
+body.simple-mode .stock-table th:nth-child(7),
+body.simple-mode .stock-table td:nth-child(7),
+body.simple-mode .stock-table th:nth-child(9),
+body.simple-mode .stock-table td:nth-child(9) {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .simple-mode-btn {
+        padding: 7px 9px;
+        font-size: 11px;
+    }
+}

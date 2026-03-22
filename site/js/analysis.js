@@ -9,6 +9,27 @@
     var stockData = null;
     var currentPeriod = 'daily';
 
+
+    function applySimpleModeState(enabled) {
+        document.body.classList.toggle('simple-mode', !!enabled);
+        var btn = document.getElementById('simpleModeToggle');
+        if (btn) btn.textContent = enabled ? 'Basit Mod: Acik' : 'Basit Mod: Kapali';
+    }
+
+    function setupSimpleModeToggle() {
+        var btn = document.getElementById('simpleModeToggle');
+        if (!btn) return;
+
+        var enabled = localStorage.getItem('simpleMode') === '1';
+        applySimpleModeState(enabled);
+
+        btn.addEventListener('click', function () {
+            enabled = !enabled;
+            localStorage.setItem('simpleMode', enabled ? '1' : '0');
+            applySimpleModeState(enabled);
+        });
+    }
+
     function getTickerFromUrl() {
         var params = new URLSearchParams(window.location.search);
         return params.get('ticker') || '';
@@ -88,6 +109,28 @@
         if (fillEl) {
             setTimeout(function () { fillEl.style.width = (rec.confidence || 0) + '%'; }, 300);
         }
+    }
+
+    function renderQuickDecision(rec, indicators) {
+        var el = document.getElementById('quickDecisionText');
+        if (!el || !rec) return;
+
+        var signal = rec.signal_en || 'HOLD';
+        var confidence = rec.confidence ? rec.confidence.toFixed(0) : '0';
+        var price = indicators && indicators.price != null ? formatPrice(indicators.price) : '--';
+        var target = rec.targets && rec.targets.target_1 != null ? formatPrice(rec.targets.target_1) : '--';
+        var stop = rec.targets && rec.targets.stop_loss != null ? formatPrice(rec.targets.stop_loss) : '--';
+
+        var msg = '';
+        if (signal === 'STRONG_BUY' || signal === 'BUY' || signal === 'WEAK_BUY') {
+            msg = 'Sinyal AL yonunde. Mevcut fiyat ' + price + '. Ilk hedef ' + target + ', zarar-kes ' + stop + '. Guven: %' + confidence + '.';
+        } else if (signal === 'STRONG_SELL' || signal === 'SELL' || signal === 'WEAK_SELL') {
+            msg = 'Sinyal SAT/temkinli yonunde. Mevcut fiyat ' + price + '. Kritik seviye ' + stop + '. Guven: %' + confidence + '.';
+        } else {
+            msg = 'Sinyal BEKLE. Net yon yok. Islem acmadan once fiyatin hedef ve stop seviyelerine yaklasmasini beklemek daha guvenli olabilir.';
+        }
+
+        el.textContent = msg;
     }
 
     // ── Render Explanation (YENI) ──
@@ -397,6 +440,7 @@
 
         renderHeader(stockData, periodData);
         renderRecommendation(periodData.recommendation);
+        renderQuickDecision(periodData.recommendation, periodData.indicators);
         renderExplanation(periodData.recommendation);
         renderTargets(periodData.recommendation, periodData.indicators);
         renderLevels(periodData.recommendation, periodData.indicators);
@@ -422,6 +466,7 @@
     }
 
     async function init() {
+        setupSimpleModeToggle();
         var ticker = getTickerFromUrl();
         if (!ticker) { showError('URL\'de hisse kodu bulunamadı.'); return; }
         if (!window.BistCharts) { showError('Grafik modülü yüklenemedi.'); return; }

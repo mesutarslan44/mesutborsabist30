@@ -12,6 +12,26 @@
     let currentFilter = 'all';
     let currentSort = { key: 'score', dir: 'desc' };
 
+    function applySimpleModeState(enabled) {
+        document.body.classList.toggle('simple-mode', !!enabled);
+        var btn = document.getElementById('simpleModeToggle');
+        if (btn) btn.textContent = enabled ? 'Basit Mod: Acik' : 'Basit Mod: Kapali';
+    }
+
+    function setupSimpleModeToggle() {
+        var btn = document.getElementById('simpleModeToggle');
+        if (!btn) return;
+
+        var enabled = localStorage.getItem('simpleMode') === '1';
+        applySimpleModeState(enabled);
+
+        btn.addEventListener('click', function () {
+            enabled = !enabled;
+            localStorage.setItem('simpleMode', enabled ? '1' : '0');
+            applySimpleModeState(enabled);
+        });
+    }
+
     // ── Helpers ──
     function formatPrice(val) {
         if (val == null || isNaN(val)) return '--';
@@ -434,6 +454,7 @@
 
     // ── Init ──
     function init() {
+        setupSimpleModeToggle();
         setupEvents();
         loadData();
     }

@@ -26,6 +26,7 @@
                 <a href="index.html" class="nav-link">Dashboard</a>
                 <a href="index.html#stock-table" class="nav-link">Hisseler</a>
             </div>
+            <button class="simple-mode-btn" id="simpleModeToggle" type="button">Basit Mod: Kapali</button>
             <div class="update-badge" id="updateBadge">
                 <span class="update-dot"></span>
                 <span id="updateTime">Yükleniyor...</span>
@@ -69,14 +70,19 @@
             </div>
         </div>
 
+        <div class="quick-decision-card" id="quickDecisionCard">
+            <div class="quick-decision-title">Hizli Ozet</div>
+            <div class="quick-decision-text" id="quickDecisionText">Sinyale gore sade ozet yukleniyor...</div>
+        </div>
+
         <!-- DETAILED EXPLANATION -->
-        <div class="section-header">
+        <div class="section-header advanced-block">
             <h2 class="section-title">
                 <span class="icon">📝</span>
                 Neden Bu Sinyal? — Detaylı Açıklama
             </h2>
         </div>
-        <div class="explanation-card" id="explanationCard">
+        <div class="explanation-card advanced-block" id="explanationCard">
             <div class="loading">
                 <div class="spinner"></div>
                 <span class="loading-text">Analiz yükleniyor...</span>
@@ -95,29 +101,29 @@
         </div>
 
         <!-- FIBONACCI LEVELS -->
-        <div class="section-header">
+        <div class="section-header advanced-block">
             <h2 class="section-title">
                 <span class="icon">🔢</span>
                 Fibonacci & Destek/Direnç Seviyeleri
             </h2>
         </div>
-        <div class="levels-grid" id="levelsGrid">
+        <div class="levels-grid advanced-block" id="levelsGrid">
             <!-- JS ile doldurulacak -->
         </div>
 
         <!-- Key Indicators (Genişletilmiş) -->
-        <div class="section-header">
+        <div class="section-header advanced-block">
             <h2 class="section-title">
                 <span class="icon">📊</span>
                 Teknik Göstergeler (9 Gösterge)
             </h2>
         </div>
-        <div class="indicators-grid" id="indicatorsGrid">
+        <div class="indicators-grid advanced-block" id="indicatorsGrid">
             <!-- Dynamically filled -->
         </div>
 
         <!-- Price Chart -->
-        <div class="chart-container">
+        <div class="chart-container advanced-block">
             <div class="chart-title">📈 Fiyat Grafiği & Hareketli Ortalamalar</div>
             <div class="chart-area">
                 <canvas id="priceChart"></canvas>
@@ -125,7 +131,7 @@
         </div>
 
         <!-- RSI & MACD Charts -->
-        <div class="chart-grid">
+        <div class="chart-grid advanced-block">
             <div class="chart-container">
                 <div class="chart-title">📊 RSI (Göreceli Güç Endeksi)</div>
                 <div class="chart-area">
@@ -141,7 +147,7 @@
         </div>
 
         <!-- Volume Chart -->
-        <div class="chart-container">
+        <div class="chart-container advanced-block">
             <div class="chart-title">📊 Hacim Analizi</div>
             <div class="chart-area" style="height: 200px;">
                 <canvas id="volumeChart"></canvas>
@@ -149,13 +155,13 @@
         </div>
 
         <!-- Detailed Signal Analysis -->
-        <div class="section-header">
+        <div class="section-header advanced-block">
             <h2 class="section-title">
                 <span class="icon">🎯</span>
                 Detaylı Sinyal Analizi (9 Gösterge)
             </h2>
         </div>
-        <div class="analysis-details" id="analysisDetails">
+        <div class="analysis-details advanced-block" id="analysisDetails">
             <div class="loading">
                 <div class="spinner"></div>
                 <span class="loading-text">Analiz yükleniyor...</span>
