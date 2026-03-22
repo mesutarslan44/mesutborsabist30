@@ -128,6 +128,30 @@
         return formatPrice(rangeObj.min) + ' - ' + formatPrice(rangeObj.max);
     }
 
+    function calculateRewardRisk(stock) {
+        if (!stock || !stock.targets) return null;
+        var price = Number(stock.price);
+        var target = Number(stock.targets.target_1);
+        var stop = Number(stock.targets.stop_loss);
+        if (!isFinite(price) || !isFinite(target) || !isFinite(stop)) return null;
+
+        var reward = Math.abs(target - price);
+        var risk = Math.abs(price - stop);
+        if (!risk) return null;
+        return reward / risk;
+    }
+
+    function getSetupGrade(stock) {
+        var confidence = Number(stock.confidence || 0);
+        var score = Math.abs(Number(stock.score || 0));
+        var volume = Number(stock.volume_ratio || 0);
+        var rr = calculateRewardRisk(stock) || 0;
+
+        if (confidence >= 70 && score >= 20 && rr >= 1.5 && volume >= 1.1) return { grade: 'A', cls: 'grade-a', hint: 'Guclu setup' };
+        if (confidence >= 55 && score >= 14 && rr >= 1.2) return { grade: 'B', cls: 'grade-b', hint: 'Dengeli setup' };
+        return { grade: 'C', cls: 'grade-c', hint: 'Temkinli setup' };
+    }
+
     function getChangeClass(val) {
         if (val > 0) return 'positive';
         if (val < 0) return 'negative';
@@ -211,7 +235,7 @@
         } catch (err) {
             console.error('Veri hatası:', err);
             document.getElementById('stockTableBody').innerHTML =
-                '<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--bear-red);">⚠️ Veriler yüklenemedi. Lütfen sayfayı yenileyin.</td></tr>';
+                '<tr><td colspan="11" style="text-align:center;padding:40px;color:var(--bear-red);">⚠️ Veriler yüklenemedi. Lütfen sayfayı yenileyin.</td></tr>';
         }
     }
 
@@ -227,6 +251,7 @@
 
     var contentRenderers = [
         renderIndexCommentary,
+        renderAlarmCenter,
         renderTopSignals,
         renderPerformance,
         renderNews,
@@ -558,6 +583,49 @@
         document.getElementById('topSells').innerHTML = sellsHtml || '<div style="padding:16px;color:var(--text-muted);">Güçlü SAT sinyali yok</div>';
     }
 
+    function renderAlarmCenter() {
+        if (!summaryData || !summaryData.stocks) return;
+
+        var targetList = document.getElementById('alertTargetList');
+        var stopList = document.getElementById('alertStopList');
+        var summary = document.getElementById('alarmSummaryText');
+        if (!targetList || !stopList || !summary) return;
+
+        var targetNear = [];
+        var stopNear = [];
+
+        for (var i = 0; i < summaryData.stocks.length; i++) {
+            var s = summaryData.stocks[i];
+            if (!s.targets) continue;
+            var price = Number(s.price);
+            var target = Number(s.targets.target_1);
+            var stop = Number(s.targets.stop_loss);
+            if (!isFinite(price) || !isFinite(target) || !isFinite(stop) || !price) continue;
+
+            var targetDist = Math.abs((target - price) / price) * 100;
+            var stopDist = Math.abs((price - stop) / price) * 100;
+            if (targetDist <= 2.2) targetNear.push({ ticker: s.ticker, dist: targetDist });
+            if (stopDist <= 2.0) stopNear.push({ ticker: s.ticker, dist: stopDist });
+        }
+
+        targetNear.sort(function (a, b) { return a.dist - b.dist; });
+        stopNear.sort(function (a, b) { return a.dist - b.dist; });
+
+        var targetHtml = '';
+        for (var t = 0; t < targetNear.length && t < 6; t++) {
+            targetHtml += '<div class="alarm-item target"><strong>' + targetNear[t].ticker + '</strong> hedefe %' + targetNear[t].dist.toFixed(1) + '</div>';
+        }
+        var stopHtml = '';
+        for (var k = 0; k < stopNear.length && k < 6; k++) {
+            stopHtml += '<div class="alarm-item stop"><strong>' + stopNear[k].ticker + '</strong> stopa %' + stopNear[k].dist.toFixed(1) + '</div>';
+        }
+
+        targetList.innerHTML = targetHtml || '<div class="alarm-empty">Su an hedefe cok yakin hisse yok.</div>';
+        stopList.innerHTML = stopHtml || '<div class="alarm-empty">Su an stopa cok yakin hisse yok.</div>';
+
+        summary.textContent = 'Kisa aciklama: %2 civari mesafeler takip-oncelikli kabul edilir. Bu panel once hangi pozisyonu kontrol etmen gerektigini gosterir.';
+    }
+
     // ── Performance Tracker ──
     function renderPerformance() {
         var tableBody = document.getElementById('performanceTableBody');
@@ -672,6 +740,12 @@
             html += '<td data-label="Stoch">' + (s.stoch_k ? s.stoch_k.toFixed(1) : '--') + '</td>';
             html += '<td data-label="ADX">' + (s.adx ? s.adx.toFixed(1) : '--') + '</td>';
             html += '<td data-label="Hacim">' + volumeText + '</td>';
+            var setup = getSetupGrade(s);
+            var rr = calculateRewardRisk(s);
+            var rrText = rr == null ? '--' : rr.toFixed(2) + 'R';
+            var rrClass = rr == null ? 'rr-neutral' : (rr >= 1.5 ? 'rr-good' : (rr >= 1.2 ? 'rr-mid' : 'rr-low'));
+            html += '<td data-label="Setup"><span class="setup-badge ' + setup.cls + '">' + setup.grade + '</span><span class="setup-hint">' + setup.hint + '</span></td>';
+            html += '<td data-label="R"><span class="rr-badge ' + rrClass + '">' + rrText + '</span></td>';
             html += '<td data-label="Sinyal"><span class="signal-badge ' + getSignalClass(s.signal_en) + '"><span class="dot"></span>' + s.signal + '</span></td>';
             html += '<td data-label="Puan"><div class="score-cell">';
             html += '<span class="score-value" style="color:' + scoreColor + '">' + (s.score >= 0 ? '+' : '') + (s.score || 0).toFixed(1) + '</span>';
@@ -680,7 +754,7 @@
             html += '</tr>';
         }
 
-        tbody.innerHTML = html || '<tr><td colspan="9" style="text-align:center;padding:40px;">Sonuç bulunamadı</td></tr>';
+        tbody.innerHTML = html || '<tr><td colspan="11" style="text-align:center;padding:40px;">Sonuç bulunamadı</td></tr>';
     }
 
     // ── Data Freshness ──

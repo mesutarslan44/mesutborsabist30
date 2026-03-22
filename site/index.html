@@ -333,6 +333,31 @@
 
         <div class="mobile-table-hint">Ipucu: Mobilde her satir kart olarak gorunur. Kartin ustune dokunarak hisse detayina gidebilirsin.</div>
 
+        <div class="table-metrics-guide">
+            <span><strong>Setup:</strong> Sinyalin kalite notu (A iyi, C zayif).</span>
+            <span><strong>R:</strong> Odul/Risk orani. 1.5R ustu daha dengeli kabul edilir.</span>
+            <span><strong>3A/6A Min-Max:</strong> Son 3 ve 6 ay fiyat bandi.</span>
+        </div>
+
+        <div class="alarm-center advanced-block" id="alarmCenter">
+            <div class="alarm-center-header">
+                <h3>Alarm Merkezi</h3>
+                <p id="alarmSummaryText">Hedefe veya stopa yakin hisseler taraniyor...</p>
+            </div>
+            <div class="alarm-grid">
+                <div class="alarm-card">
+                    <div class="alarm-title">Hedefe Yakinlar</div>
+                    <div class="alarm-help">Ne ise yarar? Kar realizasyonu icin oncelik listesi verir.</div>
+                    <div id="alertTargetList" class="alarm-list"></div>
+                </div>
+                <div class="alarm-card">
+                    <div class="alarm-title">Stopa Yakinlar</div>
+                    <div class="alarm-help">Ne ise yarar? Riskli pozisyonlari erken fark ettirir.</div>
+                    <div id="alertStopList" class="alarm-list"></div>
+                </div>
+            </div>
+        </div>
+
         <div class="stock-table-wrapper">
             <table class="stock-table">
                 <thead>
@@ -344,13 +369,15 @@
                         <th data-sort="stoch_k">STOCH</th>
                         <th data-sort="adx">ADX</th>
                         <th data-sort="volume_ratio">HACİM</th>
+                        <th>SETUP</th>
+                        <th>R</th>
                         <th data-sort="signal">SİNYAL</th>
                         <th data-sort="score">PUAN</th>
                     </tr>
                 </thead>
                 <tbody id="stockTableBody">
                     <tr>
-                        <td colspan="9" class="loading-cell">
+                        <td colspan="11" class="loading-cell">
                             <div class="loading">
                                 <div class="spinner"></div>
                                 <span class="loading-text">Veriler yükleniyor...</span>
