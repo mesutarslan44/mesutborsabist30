@@ -96,6 +96,53 @@
             </div>
         </div>
 
+
+        <!-- Performance Tracker -->
+        <div class="section-header" id="performance-section">
+            <h2 class="section-title">
+                <span class="icon">🎯</span>
+                Gunluk & Haftalik Hedef Performansi
+            </h2>
+        </div>
+        <div class="performance-grid" id="performanceGrid">
+            <div class="performance-card">
+                <div class="performance-label">Genel Isabet</div>
+                <div class="performance-value" id="overallHitRate">--%</div>
+                <div class="performance-meta" id="overallHitCount">--/-- hedef</div>
+            </div>
+            <div class="performance-card">
+                <div class="performance-label">Gunluk Isabet</div>
+                <div class="performance-value" id="dailyHitRate">--%</div>
+                <div class="performance-meta" id="dailyHitMeta">--/-- hedef</div>
+            </div>
+            <div class="performance-card">
+                <div class="performance-label">Haftalik Isabet</div>
+                <div class="performance-value" id="weeklyHitRate">--%</div>
+                <div class="performance-meta" id="weeklyHitMeta">--/-- hedef</div>
+            </div>
+        </div>
+
+        <div class="performance-table-wrapper">
+            <table class="stock-table performance-table">
+                <thead>
+                    <tr>
+                        <th>HISSE</th>
+                        <th>PERIYOT</th>
+                        <th>YON</th>
+                        <th>ACILIS</th>
+                        <th>HEDEF</th>
+                        <th>KAC GUNDE</th>
+                        <th>DURUM</th>
+                    </tr>
+                </thead>
+                <tbody id="performanceTableBody">
+                    <tr>
+                        <td colspan="7" class="loading-cell">Hedef performans verisi yukleniyor...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
         <!-- Top Signals -->
         <div class="top-signals-grid">
             <div>

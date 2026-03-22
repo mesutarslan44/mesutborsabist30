@@ -8,6 +8,7 @@
 
     let summaryData = null;
     let marketData = null;
+    let performanceData = null;
     let currentFilter = 'all';
     let currentSort = { key: 'score', dir: 'desc' };
 
@@ -49,9 +50,14 @@
         try {
             var res1 = await fetch('data/summary.json');
             var res2 = await fetch('data/market_overview.json');
+            var res3 = await fetch('data/performance.json');
             if (!res1.ok || !res2.ok) throw new Error('Veri yüklenemedi');
+
             summaryData = await res1.json();
             marketData = await res2.json();
+            if (res3.ok) {
+                performanceData = await res3.json();
+            }
             render();
         } catch (err) {
             console.error('Veri hatası:', err);
@@ -67,6 +73,7 @@
         renderIndexCommentary();
         renderSignalSummary();
         renderTopSignals();
+        renderPerformance();
         renderNews();
         renderTable();
         renderDataFreshness();
@@ -207,6 +214,50 @@
             sellsHtml += '</div></a>';
         }
         document.getElementById('topSells').innerHTML = sellsHtml || '<div style="padding:16px;color:var(--text-muted);">Güçlü SAT sinyali yok</div>';
+    }
+
+    // ── Performance Tracker ──
+    function renderPerformance() {
+        var tableBody = document.getElementById('performanceTableBody');
+        if (!tableBody) return;
+
+        if (!performanceData) {
+            tableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-muted);">Performans verisi henuz olusmadi.</td></tr>';
+            return;
+        }
+
+        var overall = performanceData.overview || {};
+        var daily = performanceData.daily || {};
+        var weekly = performanceData.weekly || {};
+
+        document.getElementById('overallHitRate').textContent = (overall.hit_rate || 0).toFixed(1) + '%';
+        document.getElementById('overallHitCount').textContent = (overall.hits || 0) + '/' + (overall.total || 0) + ' hedef';
+
+        document.getElementById('dailyHitRate').textContent = (daily.hit_rate || 0).toFixed(1) + '%';
+        document.getElementById('dailyHitMeta').textContent = (daily.hits || 0) + '/' + (daily.total || 0) + ' hedef | Ort: ' + (daily.avg_days_to_hit || 0) + ' gun';
+
+        document.getElementById('weeklyHitRate').textContent = (weekly.hit_rate || 0).toFixed(1) + '%';
+        document.getElementById('weeklyHitMeta').textContent = (weekly.hits || 0) + '/' + (weekly.total || 0) + ' hedef | Ort: ' + (weekly.avg_days_to_hit || 0) + ' gun';
+
+        var rows = '';
+        var hits = performanceData.recent_hits || [];
+
+        for (var i = 0; i < hits.length && i < 20; i++) {
+            var h = hits[i];
+            var direction = h.direction === 'buy' ? 'AL' : 'SAT';
+            var period = h.period === 'weekly' ? 'Haftalik' : 'Gunluk';
+            rows += '<tr>';
+            rows += '<td><strong>' + h.ticker + '</strong></td>';
+            rows += '<td>' + period + '</td>';
+            rows += '<td>' + direction + '</td>';
+            rows += '<td>' + formatPrice(h.start_price) + '</td>';
+            rows += '<td>' + formatPrice(h.target_price) + '</td>';
+            rows += '<td>' + (h.days_to_result || 0) + '</td>';
+            rows += '<td><span class="signal-badge buy"><span class="dot"></span>Tutturuldu</span></td>';
+            rows += '</tr>';
+        }
+
+        tableBody.innerHTML = rows || '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-muted);">Henuz tutan hedef kaydi yok.</td></tr>';
     }
 
     // ── News ──

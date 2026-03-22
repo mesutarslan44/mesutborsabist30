@@ -17,6 +17,7 @@ from config import BIST30_TICKERS, MARKET_INDICES, DATA_PERIODS
 from data_fetcher import fetch_stock_data, fetch_all_stocks, fetch_all_periods, get_market_info
 from technical_analysis import calculate_all_indicators, get_latest_indicators
 from recommendation_engine import generate_recommendation
+from performance_tracker import update_performance_tracker
 
 # Çıktı dizini
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "site", "data")
@@ -228,6 +229,7 @@ def main():
     print("█" * 60 + "\n")
 
     ensure_output_dir()
+    generated_at = datetime.now().strftime("%Y-%m-%d %H:%M")
 
     # 1. Endeks bilgileri
     print("📊 Endeks bilgileri alınıyor...")
@@ -248,6 +250,8 @@ def main():
     # 4. Her hisseyi analiz et
     print("\n🔬 Analiz yapılıyor (9 gösterge + hedef fiyatlar)...")
     stocks_summary = []
+    performance_candidates = []
+    current_prices = {}
     signal_counts = {"STRONG_BUY": 0, "BUY": 0, "WEAK_BUY": 0, "HOLD": 0,
                      "WEAK_SELL": 0, "SELL": 0, "STRONG_SELL": 0}
     top_buys = []
@@ -297,6 +301,38 @@ def main():
                 "explanation_short": rec.get("explanation", "")[:200],
             }
             stocks_summary.append(summary_item)
+            current_prices[ticker_clean] = summary_item["price"]
+
+            # Track daily + weekly first target hits for performance page
+            for period_name in ["daily", "weekly"]:
+                period_rec = stock_result["periods"].get(period_name, {}).get("recommendation", {})
+                period_signal = period_rec.get("signal_en", "HOLD")
+                target_1 = period_rec.get("targets", {}).get("target_1")
+
+                if period_signal in ["STRONG_BUY", "BUY", "WEAK_BUY"] and target_1:
+                    performance_candidates.append({
+                        "ticker": ticker_clean,
+                        "period": period_name,
+                        "direction": "buy",
+                        "opened_at": generated_at,
+                        "start_price": round(float(summary_item["price"]), 4),
+                        "target_price": round(float(target_1), 4),
+                        "signal": period_rec.get("signal", "AL"),
+                        "confidence": period_rec.get("confidence", 0),
+                        "score": period_rec.get("score", 0),
+                    })
+                elif period_signal in ["STRONG_SELL", "SELL", "WEAK_SELL"] and target_1:
+                    performance_candidates.append({
+                        "ticker": ticker_clean,
+                        "period": period_name,
+                        "direction": "sell",
+                        "opened_at": generated_at,
+                        "start_price": round(float(summary_item["price"]), 4),
+                        "target_price": round(float(target_1), 4),
+                        "signal": period_rec.get("signal", "SAT"),
+                        "confidence": period_rec.get("confidence", 0),
+                        "score": period_rec.get("score", 0),
+                    })
 
             if rec.get("score", 0) > 10:
                 top_buys.append(summary_item)
@@ -317,7 +353,7 @@ def main():
 
     # 6. Summary JSON
     summary = {
-        "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "updated_at": generated_at,
         "update_frequency": "Borsa saatleri içerisinde her saat başı otomatik güncellenir",
         "total_stocks": len(stocks_summary),
         "signal_counts": signal_counts,
@@ -331,7 +367,7 @@ def main():
 
     # 7. Market Overview JSON
     market_overview = {
-        "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "updated_at": generated_at,
         "update_frequency": "Borsa saatleri içerisinde her saat başı otomatik güncellenir",
         "bist30": bist30_info,
         "indices": indices,
@@ -344,11 +380,19 @@ def main():
     with open(os.path.join(OUTPUT_DIR, "market_overview.json"), "w", encoding="utf-8") as f:
         json.dump(market_overview, f, ensure_ascii=False, indent=2)
 
+    # 8. Performance tracking JSON
+    performance = update_performance_tracker(
+        candidates=performance_candidates,
+        current_prices=current_prices,
+        generated_at=generated_at,
+    )
+
     # Son rapor
     print("\n" + "█" * 60)
     print("  TAMAMLANDI! v2.0")
     print(f"  ✓ summary.json")
     print(f"  ✓ market_overview.json")
+    print(f"  ✓ performance.json")
     for ticker in BIST30_TICKERS:
         clean = ticker.replace(".IS", "")
         if os.path.exists(os.path.join(OUTPUT_DIR, f"{clean}.json")):
@@ -357,6 +401,10 @@ def main():
     for sig, count in sorted(signal_counts.items()):
         if count > 0:
             print(f"  {sig}: {count}")
+    print(
+        f"  Performans: %{performance.get('overview', {}).get('hit_rate', 0)} "
+        f"({performance.get('overview', {}).get('hits', 0)}/{performance.get('overview', {}).get('total', 0)})"
+    )
     print("█" * 60)
 
 
