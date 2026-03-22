@@ -1706,6 +1706,10 @@ body::after {
     margin: 32px 0;
 }
 
+.data-freshness-top {
+    margin: 12px 0 20px;
+}
+
 .freshness-icon {
     font-size: 32px;
     flex-shrink: 0;
