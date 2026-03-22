@@ -72,6 +72,36 @@
             <div class="quick-guide-item"><strong>3)</strong> Derine inmek istersen <strong>Basit Mod'u kapat</strong> ve detaylari ac.</div>
         </div>
 
+        <div class="command-center" id="commandCenter">
+            <div class="command-card pulse">
+                <div class="command-label">Piyasa Nabzi</div>
+                <div class="command-value" id="marketPulseText">Yukleniyor...</div>
+                <div class="command-meta" id="marketPulseMeta">BIST verisi analiz ediliyor</div>
+            </div>
+            <div class="command-card plan">
+                <div class="command-label">Bugunun Oyun Plani</div>
+                <div class="command-value" id="dayPlanText">Yukleniyor...</div>
+                <div class="command-meta" id="dayPlanMeta">Sinyal dagilimina gore ozet</div>
+            </div>
+            <div class="command-card risk">
+                <div class="command-label">Risk Isisi</div>
+                <div class="risk-meter"><div class="risk-meter-fill" id="riskMeterFill"></div></div>
+                <div class="command-meta" id="riskMeterText">Hesaplaniyor...</div>
+            </div>
+            <div class="command-card refresh">
+                <div class="command-label">Sonraki Guncellemeye</div>
+                <div class="command-value" id="nextRefreshText">--:--:--</div>
+                <div class="command-meta" id="nextRefreshMeta">Saatlik otomatik guncelleme</div>
+            </div>
+        </div>
+
+        <div class="watchlist-strip" id="watchlistStrip">
+            <div class="watchlist-title">Bugun Radarina Al</div>
+            <div class="watchlist-chips" id="watchlistChips">
+                <span class="watch-chip">Yukleniyor...</span>
+            </div>
+        </div>
+
         <!-- Endeks Yorumları -->
         <div class="section-header advanced-block">
             <h2 class="section-title">
@@ -175,6 +205,16 @@
         </div>
         <div id="newsContainer" class="news-grid advanced-block">
             <!-- JS ile doldurulacak -->
+        </div>
+
+        <div class="section-header">
+            <h2 class="section-title"><span class="icon">🧭</span> Sinyal Rehberi</h2>
+        </div>
+        <div class="signal-legend">
+            <div class="legend-item"><span class="signal-badge strong-buy"><span class="dot"></span>GucLu AL</span><p>Yuksek ivme + trend uyumu. Risk yonetimi sart.</p></div>
+            <div class="legend-item"><span class="signal-badge buy"><span class="dot"></span>AL</span><p>Pozitif senaryo agir basiyor, hedef/stop takip edilerek ilerlenir.</p></div>
+            <div class="legend-item"><span class="signal-badge hold"><span class="dot"></span>BEKLE</span><p>Net yon yok. En iyi hamle sabir ve teyit beklemek.</p></div>
+            <div class="legend-item"><span class="signal-badge sell"><span class="dot"></span>SAT</span><p>Asagi riskler on planda. Pozisyon azaltma/koruma odakta olur.</p></div>
         </div>
 
         <!-- Stock Table -->

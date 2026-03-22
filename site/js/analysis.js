@@ -133,6 +133,40 @@
         el.textContent = msg;
     }
 
+    function renderDecisionCockpit(rec, indicators) {
+        var scenarioEl = document.getElementById('scenarioText');
+        var disciplineEl = document.getElementById('disciplineText');
+        var confidenceEl = document.getElementById('confidenceLevelText');
+        if (!rec) return;
+
+        var signal = rec.signal_en || 'HOLD';
+        var confidence = rec.confidence || 0;
+        var price = indicators && indicators.price ? indicators.price : null;
+        var target = rec.targets && rec.targets.target_1 ? rec.targets.target_1 : null;
+        var stop = rec.targets && rec.targets.stop_loss ? rec.targets.stop_loss : null;
+
+        var scenarioText = 'Yon teyidi bekleniyor.';
+        if (signal === 'STRONG_BUY' || signal === 'BUY' || signal === 'WEAK_BUY') {
+            scenarioText = 'Yukari yonlu senaryo one cikiyor. Ilk hedef: ' + formatPrice(target) + '.';
+        } else if (signal === 'STRONG_SELL' || signal === 'SELL' || signal === 'WEAK_SELL') {
+            scenarioText = 'Asagi baski riski var. Koruma odakli plan daha saglikli.';
+        }
+
+        var disciplineText = 'Pozisyon almadan once stop seviyesini belirle.';
+        if (price && stop) {
+            var stopDistance = Math.abs((price - stop) / price) * 100;
+            disciplineText = 'Stop mesafesi yaklasik %' + stopDistance.toFixed(1) + '. Kaldirac ve lot boyutunu buna gore ayarla.';
+        }
+
+        var confLabel = 'Dusuk guven';
+        if (confidence >= 75) confLabel = 'Yuksek guven';
+        else if (confidence >= 55) confLabel = 'Orta guven';
+
+        if (scenarioEl) scenarioEl.textContent = scenarioText;
+        if (disciplineEl) disciplineEl.textContent = disciplineText;
+        if (confidenceEl) confidenceEl.textContent = confLabel + ' (%' + confidence.toFixed(0) + ')';
+    }
+
     // ── Render Explanation (YENI) ──
     function renderExplanation(rec) {
         var container = document.getElementById('explanationCard');
@@ -441,6 +475,7 @@
         renderHeader(stockData, periodData);
         renderRecommendation(periodData.recommendation);
         renderQuickDecision(periodData.recommendation, periodData.indicators);
+        renderDecisionCockpit(periodData.recommendation, periodData.indicators);
         renderExplanation(periodData.recommendation);
         renderTargets(periodData.recommendation, periodData.indicators);
         renderLevels(periodData.recommendation, periodData.indicators);

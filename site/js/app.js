@@ -11,6 +11,7 @@
     let performanceData = null;
     let currentFilter = 'all';
     let currentSort = { key: 'score', dir: 'desc' };
+    let refreshTimer = null;
 
     function applySimpleModeState(enabled) {
         document.body.classList.toggle('simple-mode', !!enabled);
@@ -123,6 +124,7 @@
         renderMarketBar();
         renderIndexCommentary();
         renderSignalSummary();
+        renderCommandCenter();
         renderTopSignals();
         renderPerformance();
         renderNews();
@@ -211,6 +213,112 @@
         animateCounter('buyCount', (counts.STRONG_BUY || 0) + (counts.BUY || 0) + (counts.WEAK_BUY || 0));
         animateCounter('holdCount', counts.HOLD || 0);
         animateCounter('sellCount', (counts.STRONG_SELL || 0) + (counts.SELL || 0) + (counts.WEAK_SELL || 0));
+    }
+
+    function renderCommandCenter() {
+        if (!summaryData) return;
+
+        var counts = summaryData.signal_counts || {};
+        var buyCount = (counts.STRONG_BUY || 0) + (counts.BUY || 0) + (counts.WEAK_BUY || 0);
+        var holdCount = counts.HOLD || 0;
+        var sellCount = (counts.STRONG_SELL || 0) + (counts.SELL || 0) + (counts.WEAK_SELL || 0);
+        var total = summaryData.total_stocks || 1;
+
+        var buyRatio = (buyCount / total) * 100;
+        var sellRatio = (sellCount / total) * 100;
+
+        var pulseText = 'Dengeli';
+        var pulseMeta = 'Alici ve satici gucu benzer';
+        if (buyRatio - sellRatio > 20) {
+            pulseText = 'Pozitif Egilim';
+            pulseMeta = 'AL sinyalleri SAT sinyallerinden belirgin yuksek';
+        } else if (sellRatio - buyRatio > 20) {
+            pulseText = 'Temkinli Bolge';
+            pulseMeta = 'SAT tarafi gucleniyor, koruma planina oncelik ver';
+        }
+
+        var dayPlanText = 'Secici ilerle';
+        var dayPlanMeta = 'En yuksek puanli 3 hisseyi takip listene ekle';
+        if (buyRatio > 45) {
+            dayPlanText = 'Kademeli AL penceresi';
+            dayPlanMeta = 'Teyitli hisselerde parcali giris + net stop kullan';
+        } else if (sellRatio > 45) {
+            dayPlanText = 'Risk azaltma gunu';
+            dayPlanMeta = 'Yeni islemde acele etme, mevcutlarda stop disiplini uygula';
+        } else if (holdCount / total > 0.4) {
+            dayPlanText = 'Sabir odakli gun';
+            dayPlanMeta = 'Net sinyal az, teyit gelene kadar nakit agirligi korunabilir';
+        }
+
+        var riskScore = Math.min(100, Math.max(10, Math.round(sellRatio * 1.3 + holdCount / total * 20)));
+        var riskLabel = 'Dusuk';
+        if (riskScore > 70) riskLabel = 'Yuksek';
+        else if (riskScore > 40) riskLabel = 'Orta';
+
+        var pulseEl = document.getElementById('marketPulseText');
+        var pulseMetaEl = document.getElementById('marketPulseMeta');
+        var planEl = document.getElementById('dayPlanText');
+        var planMetaEl = document.getElementById('dayPlanMeta');
+        var riskFillEl = document.getElementById('riskMeterFill');
+        var riskTextEl = document.getElementById('riskMeterText');
+
+        if (pulseEl) pulseEl.textContent = pulseText;
+        if (pulseMetaEl) pulseMetaEl.textContent = pulseMeta;
+        if (planEl) planEl.textContent = dayPlanText;
+        if (planMetaEl) planMetaEl.textContent = dayPlanMeta;
+        if (riskFillEl) riskFillEl.style.width = riskScore + '%';
+        if (riskTextEl) riskTextEl.textContent = 'Risk Seviyesi: ' + riskLabel + ' (%' + riskScore + ')';
+
+        var watch = summaryData.stocks ? summaryData.stocks.slice().sort(function (a, b) {
+            return (b.score || 0) - (a.score || 0);
+        }).slice(0, 3) : [];
+
+        var watchEl = document.getElementById('watchlistChips');
+        if (watchEl) {
+            var html = '';
+            for (var i = 0; i < watch.length; i++) {
+                var w = watch[i];
+                html += '<a class="watch-chip" href="hisse.html?ticker=' + w.ticker + '">' + w.ticker + ' · ' + (w.score >= 0 ? '+' : '') + (w.score || 0).toFixed(1) + '</a>';
+            }
+            watchEl.innerHTML = html || '<span class="watch-chip">Takip listesi olusmadi</span>';
+        }
+
+        startRefreshCountdown(summaryData.updated_at);
+    }
+
+    function startRefreshCountdown(updatedAtRaw) {
+        var valueEl = document.getElementById('nextRefreshText');
+        var metaEl = document.getElementById('nextRefreshMeta');
+        if (!valueEl) return;
+
+        function tick() {
+            var updatedAt = toDateFromTRString(updatedAtRaw);
+            if (!updatedAt) {
+                valueEl.textContent = '--:--:--';
+                if (metaEl) metaEl.textContent = 'Saat bilgisi okunamadi';
+                return;
+            }
+
+            var next = new Date(updatedAt.getTime());
+            next.setMinutes(0);
+            next.setSeconds(0);
+            next.setMilliseconds(0);
+            next.setHours(next.getHours() + 1);
+
+            var diff = next.getTime() - Date.now();
+            if (diff < 0) diff = 0;
+
+            var totalSec = Math.floor(diff / 1000);
+            var h = String(Math.floor(totalSec / 3600)).padStart(2, '0');
+            var m = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
+            var s = String(totalSec % 60).padStart(2, '0');
+            valueEl.textContent = h + ':' + m + ':' + s;
+            if (metaEl) metaEl.textContent = 'Bir sonraki saatlik veri paketine kalan sure';
+        }
+
+        tick();
+        if (refreshTimer) clearInterval(refreshTimer);
+        refreshTimer = setInterval(tick, 1000);
     }
 
     function animateCounter(elementId, target) {
