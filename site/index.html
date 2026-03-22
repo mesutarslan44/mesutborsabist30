@@ -40,7 +40,6 @@
                 <a href="index.html#stock-table" class="nav-link">Hisseler</a>
                 <a href="index.html#news-section" class="nav-link">Haberler</a>
             </div>
-            <button class="simple-mode-btn" id="simpleModeToggle" type="button">Basit Mod: Kapali</button>
             <div class="update-badge" id="updateBadge">
                 <span class="update-dot"></span>
                 <span id="updateTime">Yükleniyor...</span>
@@ -83,7 +82,7 @@
         <div class="quick-guide">
             <div class="quick-guide-item"><strong>1)</strong> Ilk olarak <strong>AL / BEKLE / SAT</strong> dagilimina bak.</div>
             <div class="quick-guide-item"><strong>2)</strong> Sonra tabloda sadece <strong>Sinyal + Fiyat + Degisim</strong> ile karsilastir.</div>
-            <div class="quick-guide-item"><strong>3)</strong> Derine inmek istersen <strong>Basit Mod'u kapat</strong> ve detaylari ac.</div>
+            <div class="quick-guide-item"><strong>3)</strong> Karar verirken once <strong>stop-loss</strong> sonra hedef fiyat kontrol et.</div>
         </div>
 
         <div class="command-center" id="commandCenter">
@@ -114,6 +113,29 @@
             <div class="watchlist-chips" id="watchlistChips">
                 <span class="watch-chip">Yukleniyor...</span>
             </div>
+        </div>
+
+        <div class="discipline-board" id="disciplineBoard">
+            <div class="discipline-title">Profesyonel Islem Disiplini</div>
+            <div class="discipline-grid">
+                <div class="discipline-item">
+                    <div class="discipline-label">Risk / Islem</div>
+                    <div class="discipline-value" id="disciplineRisk">Hesaplaniyor...</div>
+                </div>
+                <div class="discipline-item">
+                    <div class="discipline-label">Pozisyon Boyutu</div>
+                    <div class="discipline-value" id="disciplineAllocation">Hesaplaniyor...</div>
+                </div>
+                <div class="discipline-item">
+                    <div class="discipline-label">Stop Disiplini</div>
+                    <div class="discipline-value" id="disciplineStop">Hesaplaniyor...</div>
+                </div>
+                <div class="discipline-item">
+                    <div class="discipline-label">Sektor Dagilimi</div>
+                    <div class="discipline-value" id="disciplineDiversification">Hesaplaniyor...</div>
+                </div>
+            </div>
+            <div class="discipline-note">Not: Bu panel yatirim tavsiyesi degil, risk yonetimini sistematik hale getirmek icin karar destegidir.</div>
         </div>
 
         <!-- Endeks Yorumları -->
@@ -250,6 +272,8 @@
                 </div>
             </div>
         </div>
+
+        <div class="mobile-table-hint">Ipucu: Mobilde her satir kart olarak gorunur. Kartin ustune dokunarak hisse detayina gidebilirsin.</div>
 
         <div class="stock-table-wrapper">
             <table class="stock-table">

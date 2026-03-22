@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "performance.json",
+  "type": "object",
+  "required": ["generated_at", "overview", "daily", "weekly", "recent_hits"],
+  "properties": {
+    "generated_at": {"type": "string", "minLength": 5},
+    "overview": {
+      "type": "object",
+      "required": ["total", "hits", "hit_rate"],
+      "properties": {
+        "total": {"type": "number"},
+        "hits": {"type": "number"},
+        "hit_rate": {"type": "number"}
+      },
+      "additionalProperties": true
+    },
+    "daily": {"type": "object"},
+    "weekly": {"type": "object"},
+    "recent_hits": {"type": "array"}
+  },
+  "additionalProperties": true
+}

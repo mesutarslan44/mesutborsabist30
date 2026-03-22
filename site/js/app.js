@@ -17,10 +17,22 @@
 
     function setupMatrixIntro() {
         var intro = document.getElementById('matrixIntro');
-        if (!intro) {
+        var hasSeenIntro = false;
+
+        try {
+            hasSeenIntro = localStorage.getItem('matrixIntroSeen') === '1';
+        } catch (e) {
+            hasSeenIntro = false;
+        }
+
+        if (!intro || hasSeenIntro) {
+            if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
             document.body.classList.remove('intro-locked');
+            document.body.classList.add('intro-unlocked');
             return;
         }
+
+        document.body.classList.add('intro-locked');
 
         var blueBtn = document.getElementById('bluePillBtn');
         var redBtn = document.getElementById('redPillBtn');
@@ -39,6 +51,12 @@
 
         if (blueBtn) {
             blueBtn.addEventListener('click', function () {
+                try {
+                    localStorage.setItem('matrixIntroSeen', '1');
+                } catch (e) {
+                    // no-op
+                }
+
                 intro.classList.add('hide');
                 document.body.classList.remove('intro-locked');
                 document.body.classList.add('intro-unlocked');
@@ -92,27 +110,6 @@
         resize();
         draw();
     }
-
-    function applySimpleModeState(enabled) {
-        document.body.classList.toggle('simple-mode', !!enabled);
-        var btn = document.getElementById('simpleModeToggle');
-        if (btn) btn.textContent = enabled ? 'Basit Mod: Acik' : 'Basit Mod: Kapali';
-    }
-
-    function setupSimpleModeToggle() {
-        var btn = document.getElementById('simpleModeToggle');
-        if (!btn) return;
-
-        var enabled = localStorage.getItem('simpleMode') === '1';
-        applySimpleModeState(enabled);
-
-        btn.addEventListener('click', function () {
-            enabled = !enabled;
-            localStorage.setItem('simpleMode', enabled ? '1' : '0');
-            applySimpleModeState(enabled);
-        });
-    }
-
     // ── Helpers ──
     function formatPrice(val) {
         if (val == null || isNaN(val)) return '--';
@@ -199,17 +196,32 @@
     }
 
     // ── Render All ──
+    var coreRenderers = [
+        renderUpdateBadge,
+        renderMarketBar,
+        renderSignalSummary,
+        renderCommandCenter,
+        renderDisciplineGuide,
+        renderDataFreshness,
+    ];
+
+    var contentRenderers = [
+        renderIndexCommentary,
+        renderTopSignals,
+        renderPerformance,
+        renderNews,
+        renderTable,
+    ];
+
+    function runRenderers(renderers) {
+        for (var i = 0; i < renderers.length; i++) {
+            renderers[i]();
+        }
+    }
+
     function render() {
-        renderUpdateBadge();
-        renderMarketBar();
-        renderIndexCommentary();
-        renderSignalSummary();
-        renderCommandCenter();
-        renderTopSignals();
-        renderPerformance();
-        renderNews();
-        renderTable();
-        renderDataFreshness();
+        runRenderers(coreRenderers);
+        runRenderers(contentRenderers);
     }
 
     // ── Update Badge ──
@@ -364,6 +376,77 @@
         }
 
         startRefreshCountdown(summaryData.updated_at);
+    }
+
+
+    function renderDisciplineGuide() {
+        if (!summaryData || !summaryData.stocks) return;
+
+        var stocks = summaryData.stocks.slice();
+        var total = stocks.length || 1;
+        var buyCandidates = stocks.filter(function (s) {
+            return ['STRONG_BUY', 'BUY', 'WEAK_BUY'].indexOf(s.signal_en) >= 0;
+        }).sort(function (a, b) {
+            return (b.score || 0) - (a.score || 0);
+        });
+
+        var riskPerTradeText = 'Her islemde maksimum portfoyun %0.75 riskini kullan.';
+        var allocationText = 'Piyasa dengeli: nakit oranini %35-%45 bandinda koru.';
+
+        var sellCount = stocks.filter(function (s) {
+            return ['STRONG_SELL', 'SELL', 'WEAK_SELL'].indexOf(s.signal_en) >= 0;
+        }).length;
+        var sellRatio = (sellCount / total) * 100;
+
+        if (sellRatio >= 45) {
+            allocationText = 'Savunma modu: nakit oranini %50+ tut, yeni islemde secici ol.';
+        } else if (buyCandidates.length >= Math.floor(total * 0.35)) {
+            allocationText = 'Hucum modu: nakit oranini %25-%35 bandina indir, kademeli giris kullan.';
+        }
+
+        var stopText = 'Her pozisyonda stop seviyesi girilmeden islem acma.';
+        if (buyCandidates.length > 0) {
+            var stopDistances = [];
+            for (var i = 0; i < buyCandidates.length && i < 5; i++) {
+                var c = buyCandidates[i];
+                var stop = c.targets && c.targets.stop_loss;
+                var price = c.price;
+                if (stop && price) {
+                    stopDistances.push(Math.abs((price - stop) / price) * 100);
+                }
+            }
+            if (stopDistances.length > 0) {
+                var avgStop = stopDistances.reduce(function (acc, x) { return acc + x; }, 0) / stopDistances.length;
+                stopText = 'Ortalama teknik stop mesafesi %' + avgStop.toFixed(1) + '. Lot boyutunu buna gore ayarla.';
+            }
+        }
+
+        var diversificationText = 'Ayni sektorde yogunlasma yapma.';
+        if (buyCandidates.length > 0) {
+            var top = buyCandidates.slice(0, 6);
+            var sectorMap = {};
+            for (var j = 0; j < top.length; j++) {
+                var sector = top[j].sector || 'Diger';
+                sectorMap[sector] = (sectorMap[sector] || 0) + 1;
+            }
+            var sectorNames = Object.keys(sectorMap);
+            sectorNames.sort(function (a, b) { return sectorMap[b] - sectorMap[a]; });
+            if (sectorNames.length === 1) {
+                diversificationText = 'AL adaylari tek sektorde toplanmis (' + sectorNames[0] + '). Dagilim eklemeden agirlasma yapma.';
+            } else {
+                diversificationText = 'AL adaylari ' + sectorNames.slice(0, 3).join(', ') + ' sektorlerine yayiliyor. Dengeli dagilim korunabilir.';
+            }
+        }
+
+        var riskEl = document.getElementById('disciplineRisk');
+        var allocationEl = document.getElementById('disciplineAllocation');
+        var stopEl = document.getElementById('disciplineStop');
+        var diversificationEl = document.getElementById('disciplineDiversification');
+
+        if (riskEl) riskEl.textContent = riskPerTradeText;
+        if (allocationEl) allocationEl.textContent = allocationText;
+        if (stopEl) stopEl.textContent = stopText;
+        if (diversificationEl) diversificationEl.textContent = diversificationText;
     }
 
     function startRefreshCountdown(updatedAtRaw) {
@@ -556,18 +639,20 @@
             var scoreColor = (s.score || 0) >= 0 ? 'var(--bull-green)' : 'var(--bear-red)';
 
             html += '<tr class="stock-row" onclick="window.location.href=\'hisse.html?ticker=' + s.ticker + '\'" style="animation-delay:' + (i * 30) + 'ms">';
-            html += '<td><div class="stock-cell-name">';
+            var volumeText = (s.volume_ratio == null || isNaN(s.volume_ratio)) ? '--' : Number(s.volume_ratio).toFixed(1) + 'x';
+
+            html += '<td data-label="Hisse"><div class="stock-cell-name">';
             html += '<strong>' + s.ticker + '</strong>';
             html += '<span class="stock-sector">' + s.name + ' · ' + s.sector + '</span>';
             html += '</div></td>';
-            html += '<td class="price-cell">' + formatPrice(s.price) + '</td>';
-            html += '<td><span class="stock-change ' + getChangeClass(s.change_pct) + '">' + formatPercent(s.change_pct) + '</span></td>';
-            html += '<td>' + (s.rsi ? s.rsi.toFixed(1) : '--') + '</td>';
-            html += '<td>' + (s.stoch_k ? s.stoch_k.toFixed(1) : '--') + '</td>';
-            html += '<td>' + (s.adx ? s.adx.toFixed(1) : '--') + '</td>';
-            html += '<td>' + (s.volume_ratio || '--') + 'x</td>';
-            html += '<td><span class="signal-badge ' + getSignalClass(s.signal_en) + '"><span class="dot"></span>' + s.signal + '</span></td>';
-            html += '<td><div class="score-cell">';
+            html += '<td data-label="Fiyat" class="price-cell">' + formatPrice(s.price) + '</td>';
+            html += '<td data-label="Degisim"><span class="stock-change ' + getChangeClass(s.change_pct) + '">' + formatPercent(s.change_pct) + '</span></td>';
+            html += '<td data-label="RSI">' + (s.rsi ? s.rsi.toFixed(1) : '--') + '</td>';
+            html += '<td data-label="Stoch">' + (s.stoch_k ? s.stoch_k.toFixed(1) : '--') + '</td>';
+            html += '<td data-label="ADX">' + (s.adx ? s.adx.toFixed(1) : '--') + '</td>';
+            html += '<td data-label="Hacim">' + volumeText + '</td>';
+            html += '<td data-label="Sinyal"><span class="signal-badge ' + getSignalClass(s.signal_en) + '"><span class="dot"></span>' + s.signal + '</span></td>';
+            html += '<td data-label="Puan"><div class="score-cell">';
             html += '<span class="score-value" style="color:' + scoreColor + '">' + (s.score >= 0 ? '+' : '') + (s.score || 0).toFixed(1) + '</span>';
             html += '<div class="score-bar"><div class="score-bar-fill" style="width:' + scoreBarWidth + '%;background:' + scoreColor + ';"></div></div>';
             html += '</div></td>';
@@ -643,7 +728,6 @@
     // ── Init ──
     function init() {
         setupMatrixIntro();
-        setupSimpleModeToggle();
         setupEvents();
         loadData();
     }

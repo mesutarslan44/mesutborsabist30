@@ -10,26 +10,6 @@
     var currentPeriod = 'daily';
 
 
-    function applySimpleModeState(enabled) {
-        document.body.classList.toggle('simple-mode', !!enabled);
-        var btn = document.getElementById('simpleModeToggle');
-        if (btn) btn.textContent = enabled ? 'Basit Mod: Acik' : 'Basit Mod: Kapali';
-    }
-
-    function setupSimpleModeToggle() {
-        var btn = document.getElementById('simpleModeToggle');
-        if (!btn) return;
-
-        var enabled = localStorage.getItem('simpleMode') === '1';
-        applySimpleModeState(enabled);
-
-        btn.addEventListener('click', function () {
-            enabled = !enabled;
-            localStorage.setItem('simpleMode', enabled ? '1' : '0');
-            applySimpleModeState(enabled);
-        });
-    }
-
     function getTickerFromUrl() {
         var params = new URLSearchParams(window.location.search);
         return params.get('ticker') || '';
@@ -501,7 +481,6 @@
     }
 
     async function init() {
-        setupSimpleModeToggle();
         var ticker = getTickerFromUrl();
         if (!ticker) { showError('URL\'de hisse kodu bulunamadı.'); return; }
         if (!window.BistCharts) { showError('Grafik modülü yüklenemedi.'); return; }

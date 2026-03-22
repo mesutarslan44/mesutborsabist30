@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "market_overview.json",
+  "type": "object",
+  "required": ["updated_at", "bist30", "indices", "top_buys", "top_sells", "signal_counts", "news"],
+  "properties": {
+    "updated_at": {"type": "string", "minLength": 5},
+    "update_frequency": {"type": "string"},
+    "bist30": {
+      "type": "object",
+      "anyOf": [
+        {"required": ["price", "change_pct"]},
+        {"required": ["index_value", "change_percent"]}
+      ],
+      "properties": {
+        "price": {"type": "number"},
+        "change_pct": {"type": "number"},
+        "index_value": {"type": "number"},
+        "change_percent": {"type": "number"}
+      },
+      "additionalProperties": true
+    },
+    "indices": {"type": "object"},
+    "top_buys": {"type": "array"},
+    "top_sells": {"type": "array"},
+    "signal_counts": {"type": "object"},
+    "news": {"type": "array"}
+  },
+  "additionalProperties": true
+}

@@ -33,6 +33,14 @@ jobs:
         working-directory: python
         run: python generate_data.py
 
+      - name: Validate generated JSON schema
+        working-directory: python
+        run: python validate_data_schema.py
+
+      - name: Run recommendation snapshot tests
+        working-directory: python
+        run: python -m unittest tests.test_recommendation_snapshot -v
+
       - name: Commit and push updated data
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"

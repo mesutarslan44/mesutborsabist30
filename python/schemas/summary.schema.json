@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "summary.json",
+  "type": "object",
+  "required": ["updated_at", "total_stocks", "signal_counts", "stocks", "indices", "news"],
+  "properties": {
+    "updated_at": {"type": "string", "minLength": 5},
+    "update_frequency": {"type": "string"},
+    "total_stocks": {"type": "integer", "minimum": 0},
+    "signal_counts": {
+      "type": "object",
+      "required": ["STRONG_BUY", "BUY", "WEAK_BUY", "HOLD", "WEAK_SELL", "SELL", "STRONG_SELL"],
+      "properties": {
+        "STRONG_BUY": {"type": "integer", "minimum": 0},
+        "BUY": {"type": "integer", "minimum": 0},
+        "WEAK_BUY": {"type": "integer", "minimum": 0},
+        "HOLD": {"type": "integer", "minimum": 0},
+        "WEAK_SELL": {"type": "integer", "minimum": 0},
+        "SELL": {"type": "integer", "minimum": 0},
+        "STRONG_SELL": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": true
+    },
+    "stocks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ticker", "name", "sector", "price", "change_pct", "signal", "signal_en", "score", "confidence", "targets"],
+        "properties": {
+          "ticker": {"type": "string", "minLength": 1},
+          "name": {"type": "string", "minLength": 1},
+          "sector": {"type": "string", "minLength": 1},
+          "price": {"type": "number"},
+          "change_pct": {"type": "number"},
+          "signal": {"type": "string"},
+          "signal_en": {"type": "string"},
+          "score": {"type": "number"},
+          "confidence": {"type": "number"},
+          "targets": {
+            "type": "object",
+            "required": ["target_1", "target_2", "target_3", "stop_loss", "add_level"],
+            "properties": {
+              "target_1": {"type": "number"},
+              "target_2": {"type": "number"},
+              "target_3": {"type": "number"},
+              "stop_loss": {"type": "number"},
+              "add_level": {"type": "number"}
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "indices": {"type": "object"},
+    "news": {"type": "array"}
+  },
+  "additionalProperties": true
+}
