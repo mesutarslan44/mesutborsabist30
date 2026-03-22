@@ -222,6 +222,11 @@ def process_stock(ticker_yahoo, info, all_data):
 
 
 def main():
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
+
     print("\n" + "█" * 60)
     print("  BIST 30 GELİŞMİŞ ANALİZ MOTORU v2.0")
     print(f"  {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
