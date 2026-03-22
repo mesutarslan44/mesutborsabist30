@@ -13,6 +13,86 @@
     let currentSort = { key: 'score', dir: 'desc' };
     let refreshTimer = null;
 
+    let matrixAnimId = null;
+
+    function setupMatrixIntro() {
+        var intro = document.getElementById('matrixIntro');
+        if (!intro) {
+            document.body.classList.remove('intro-locked');
+            return;
+        }
+
+        var blueBtn = document.getElementById('bluePillBtn');
+        var redBtn = document.getElementById('redPillBtn');
+        var canvas = document.getElementById('matrixCanvas');
+        var ctx = canvas ? canvas.getContext('2d') : null;
+
+        if (ctx && canvas) {
+            startMatrixRain(canvas, ctx);
+        }
+
+        if (redBtn) {
+            redBtn.addEventListener('click', function () {
+                // Intentionally no-op.
+            });
+        }
+
+        if (blueBtn) {
+            blueBtn.addEventListener('click', function () {
+                intro.classList.add('hide');
+                document.body.classList.remove('intro-locked');
+                document.body.classList.add('intro-unlocked');
+                window.setTimeout(function () {
+                    if (matrixAnimId) {
+                        cancelAnimationFrame(matrixAnimId);
+                        matrixAnimId = null;
+                    }
+                    if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
+                }, 900);
+            });
+        }
+    }
+
+    function startMatrixRain(canvas, ctx) {
+        var chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*+-/<>=@';
+        var fontSize = 15;
+        var columns = 0;
+        var drops = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            columns = Math.max(1, Math.floor(canvas.width / fontSize));
+            drops = [];
+            for (var i = 0; i < columns; i++) drops[i] = Math.random() * -40;
+        }
+
+        function draw() {
+            ctx.fillStyle = 'rgba(2, 8, 10, 0.12)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.font = fontSize + 'px monospace';
+
+            for (var i = 0; i < drops.length; i++) {
+                var ch = chars.charAt(Math.floor(Math.random() * chars.length));
+                var x = i * fontSize;
+                var y = drops[i] * fontSize;
+                var green = 120 + Math.floor(Math.random() * 135);
+                ctx.fillStyle = 'rgb(0,' + green + ',90)';
+                ctx.fillText(ch, x, y);
+
+                if (y > canvas.height && Math.random() > 0.975) {
+                    drops[i] = Math.random() * -25;
+                }
+                drops[i] += 0.72;
+            }
+            matrixAnimId = requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        draw();
+    }
+
     function applySimpleModeState(enabled) {
         document.body.classList.toggle('simple-mode', !!enabled);
         var btn = document.getElementById('simpleModeToggle');
@@ -562,6 +642,7 @@
 
     // ── Init ──
     function init() {
+        setupMatrixIntro();
         setupSimpleModeToggle();
         setupEvents();
         loadData();

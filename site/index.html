@@ -12,7 +12,21 @@
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%8A%3C/text%3E%3C/svg%3E">
 </head>
 
-<body>
+<body class="intro-locked">
+
+
+    <div class="matrix-intro" id="matrixIntro">
+        <canvas id="matrixCanvas" aria-hidden="true"></canvas>
+        <div class="matrix-center">
+            <div class="matrix-title">Wake up, Mesut...</div>
+            <div class="matrix-subtitle">Choose your path</div>
+            <div class="pill-box">
+                <button class="pill pill-red" id="redPillBtn" type="button" aria-label="Red pill"></button>
+                <button class="pill pill-blue" id="bluePillBtn" type="button" aria-label="Blue pill"></button>
+            </div>
+            <div class="matrix-hint">Blue pill opens the system.</div>
+        </div>
+    </div>
 
     <!-- Navbar -->
     <nav class="navbar">

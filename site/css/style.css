@@ -2436,3 +2436,96 @@ body.simple-mode .stock-table td:nth-child(9) {
         grid-template-columns: 1fr;
     }
 }
+
+
+body.intro-locked {
+    overflow: hidden;
+}
+
+.matrix-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: radial-gradient(circle at 50% 50%, rgba(8, 14, 24, 0.6) 0%, rgba(2, 4, 8, 0.96) 60%, #020308 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    opacity: 1;
+    transition: opacity 0.85s ease;
+}
+
+.matrix-intro.hide {
+    opacity: 0;
+}
+
+#matrixCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.matrix-center {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 22px 24px;
+    border: 1px solid rgba(33, 255, 128, 0.28);
+    border-radius: 16px;
+    background: rgba(5, 10, 16, 0.62);
+    box-shadow: 0 0 28px rgba(14, 255, 129, 0.15), inset 0 0 20px rgba(36, 196, 255, 0.08);
+    backdrop-filter: blur(3px);
+}
+
+.matrix-title {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: #b9ffd9;
+}
+
+.matrix-subtitle {
+    margin-top: 6px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(185, 255, 217, 0.75);
+}
+
+.pill-box {
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pill {
+    width: 24px;
+    height: 12px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.2s ease;
+}
+
+.pill:hover {
+    transform: translateY(-1px) scale(1.06);
+}
+
+.pill-red {
+    background: linear-gradient(90deg, #ff5a61, #be1427);
+    box-shadow: 0 0 12px rgba(255, 63, 87, 0.55);
+}
+
+.pill-blue {
+    background: linear-gradient(90deg, #49a9ff, #1459cc);
+    box-shadow: 0 0 14px rgba(49, 137, 255, 0.65);
+}
+
+.matrix-hint {
+    margin-top: 12px;
+    font-size: 11px;
+    color: rgba(196, 254, 255, 0.75);
+    letter-spacing: 0.5px;
+}
