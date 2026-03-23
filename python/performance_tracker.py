@@ -7,6 +7,7 @@ and publishes a frontend-friendly performance.json file.
 """
 
 import json
+import math
 import os
 from datetime import datetime
 
@@ -15,6 +16,10 @@ ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATE_DIR = os.path.join(ROOT_DIR, "python", "data")
 STATE_FILE = os.path.join(STATE_DIR, "target_tracking_state.json")
 FRONTEND_FILE = os.path.join(ROOT_DIR, "site", "data", "performance.json")
+
+DAILY_EXPIRY_DAYS = 5
+WEEKLY_EXPIRY_DAYS = 20
+MAX_HISTORY_SIZE = 4000
 
 
 def _ensure_dirs():
@@ -52,6 +57,10 @@ def _days_between(start_dt, end_dt):
     return max((end_dt.date() - start_dt.date()).days, 0)
 
 
+def _target_key(item):
+    return (item.get("ticker"), item.get("period"))
+
+
 def _resolve_open_targets(open_targets, current_prices, as_of_dt):
     still_open = []
     resolved = []
@@ -74,7 +83,7 @@ def _resolve_open_targets(open_targets, current_prices, as_of_dt):
         elif direction == "sell" and current_price <= target_price:
             hit = True
 
-        max_days = 5 if period == "daily" else 20
+        max_days = DAILY_EXPIRY_DAYS if period == "daily" else WEEKLY_EXPIRY_DAYS
         age_days = _days_between(opened_at, as_of_dt)
         expired = age_days > max_days
 
@@ -103,17 +112,15 @@ def _resolve_open_targets(open_targets, current_prices, as_of_dt):
 
 
 def _add_new_targets(open_targets, candidates):
-    seen = {
-        (t.get("ticker"), t.get("period"), t.get("opened_at"), t.get("direction"))
-        for t in open_targets
-    }
+    """Keep only one active target per (ticker, period)."""
+    open_by_key = {_target_key(t): t for t in open_targets}
 
     for c in candidates:
-        key = (c.get("ticker"), c.get("period"), c.get("opened_at"), c.get("direction"))
-        if key in seen:
+        key = _target_key(c)
+        if key in open_by_key:
             continue
-        seen.add(key)
         open_targets.append(c)
+        open_by_key[key] = c
 
     return open_targets
 
@@ -168,18 +175,73 @@ def _calc_direction_stats(history):
     return result
 
 
-def _calc_consistency_score(stats):
+def _calc_rolling_stats(history, as_of_dt):
+    windows = [7, 30, 90]
+    by_window = {}
+
+    for days in windows:
+        records = []
+        for item in history:
+            closed_at = _parse_dt(item.get("closed_at", ""))
+            age_days = _days_between(closed_at, as_of_dt)
+            if age_days <= days:
+                records.append(item)
+
+        total = len(records)
+        hits = len([r for r in records if r.get("status") == "HIT"])
+        by_window[f"{days}d"] = {
+            "total": total,
+            "hits": hits,
+            "expired": len([r for r in records if r.get("status") == "EXPIRED"]),
+            "hit_rate": round((hits / total * 100), 1) if total else 0.0,
+        }
+
+    weighted_total = 0.0
+    weighted_hits = 0.0
+    half_life_days = 30.0
+    for item in history:
+        closed_at = _parse_dt(item.get("closed_at", ""))
+        age_days = _days_between(closed_at, as_of_dt)
+        weight = math.exp((-math.log(2) * age_days) / half_life_days)
+        weighted_total += weight
+        if item.get("status") == "HIT":
+            weighted_hits += weight
+
+    weighted_hit_rate = (weighted_hits / weighted_total * 100) if weighted_total else 0.0
+
+    return {
+        "7d": by_window["7d"],
+        "30d": by_window["30d"],
+        "90d": by_window["90d"],
+        "weighted": {
+            "hit_rate": round(weighted_hit_rate, 1),
+            "half_life_days": int(half_life_days),
+        },
+    }
+
+
+def _calc_consistency_score(stats, rolling):
     overall_rate = stats["overall"].get("hit_rate", 0)
     daily_rate = stats["by_period"].get("daily", {}).get("hit_rate", 0)
     weekly_rate = stats["by_period"].get("weekly", {}).get("hit_rate", 0)
+    recent_rate = rolling.get("30d", {}).get("hit_rate", overall_rate)
 
     consistency_penalty = abs(daily_rate - weekly_rate) * 0.3
-    raw_score = overall_rate - consistency_penalty
+    recency_bonus = (recent_rate - overall_rate) * 0.15
+    raw_score = overall_rate - consistency_penalty + recency_bonus
     return round(max(min(raw_score, 100.0), 0.0), 1)
 
 
+def _trim_history(history):
+    if len(history) <= MAX_HISTORY_SIZE:
+        return history
+    sorted_items = sorted(history, key=lambda x: x.get("closed_at", ""), reverse=True)
+    return sorted_items[:MAX_HISTORY_SIZE]
+
+
 def _to_frontend_payload(state, generated_at):
-    history = state.get("history", [])
+    history = _trim_history(state.get("history", []))
+    as_of_dt = _parse_dt(generated_at)
     recent_hits = sorted(
         [h for h in history if h.get("status") == "HIT"],
         key=lambda x: x.get("closed_at", ""),
@@ -194,6 +256,7 @@ def _to_frontend_payload(state, generated_at):
 
     stats = _calc_stats(history)
     direction_stats = _calc_direction_stats(history)
+    rolling = _calc_rolling_stats(history, as_of_dt)
     status_summary = {
         "open": len(state.get("open_targets", [])),
         "resolved": len(history),
@@ -206,9 +269,15 @@ def _to_frontend_payload(state, generated_at):
         "overview": stats["overall"],
         "daily": stats["by_period"]["daily"],
         "weekly": stats["by_period"]["weekly"],
+        "rolling": rolling,
         "status_summary": status_summary,
         "direction_stats": direction_stats,
-        "consistency_score": _calc_consistency_score(stats),
+        "consistency_score": _calc_consistency_score(stats, rolling),
+        "policy": {
+            "single_active_target_per_ticker_period": True,
+            "daily_expiry_days": DAILY_EXPIRY_DAYS,
+            "weekly_expiry_days": WEEKLY_EXPIRY_DAYS,
+        },
         "open_targets": sorted(
             state.get("open_targets", []), key=lambda x: x.get("opened_at", ""), reverse=True
         )[:60],
@@ -235,7 +304,7 @@ def update_performance_tracker(candidates, current_prices, generated_at):
     open_targets = _add_new_targets(open_targets, candidates)
 
     state["open_targets"] = open_targets
-    state["history"] = history
+    state["history"] = _trim_history(history)
     _save_state(state)
 
     frontend_payload = _to_frontend_payload(state, generated_at)

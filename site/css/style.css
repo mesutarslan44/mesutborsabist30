@@ -2472,6 +2472,12 @@ body.nav-open .nav-toggle-bar:nth-child(4) {
     white-space: nowrap;
 }
 
+@media (max-width: 1200px) {
+    .perf-audit-grid {
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
+    }
+}
+
 @media (max-width: 900px) {
     .performance-grid {
         grid-template-columns: 1fr;
@@ -3588,5 +3594,67 @@ body.advanced-enabled:not(.advanced-open) .advanced-block {
 
     .focus-flow {
         gap: 8px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .perf-table-wrapper {
+        overflow: visible;
+        border: none;
+        background: transparent;
+    }
+
+    .perf-table {
+        width: 100%;
+        border-collapse: separate;
+    }
+
+    .perf-table thead {
+        display: none;
+    }
+
+    .perf-table tbody {
+        display: block;
+    }
+
+    .perf-table tbody tr {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 6px;
+        margin-bottom: 12px;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        background: var(--gradient-card);
+    }
+
+    .perf-table tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        white-space: normal;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+        padding: 7px 0;
+        font-size: 13px;
+    }
+
+    .perf-table tbody td:last-child {
+        border-bottom: none;
+        padding-bottom: 2px;
+    }
+
+    .perf-table tbody td::before {
+        content: attr(data-label);
+        color: var(--text-muted);
+        font-size: 11px;
+        letter-spacing: 0.25px;
+        text-transform: uppercase;
+    }
+
+    .perf-filter-tabs {
+        margin-left: 0;
+        width: 100%;
     }
 }

@@ -81,6 +81,7 @@
     function renderAudit() {
         var direction = (performanceData && performanceData.direction_stats) || {};
         var overview = (performanceData && performanceData.overview) || {};
+        var rolling = (performanceData && performanceData.rolling) || {};
 
         var buy = direction.buy || {};
         var sell = direction.sell || {};
@@ -96,6 +97,19 @@
         var expiredRate = total > 0 ? (expired / total) * 100 : 0;
         document.getElementById('expiredRate').textContent = formatPct(expiredRate);
         document.getElementById('expiredMeta').textContent = expired + ' sure asimi / ' + total + ' kapanan hedef';
+
+        var r30 = rolling['30d'] || {};
+        var r90 = rolling['90d'] || {};
+        var weighted = rolling.weighted || {};
+
+        document.getElementById('rolling30Rate').textContent = formatPct(r30.hit_rate || 0);
+        document.getElementById('rolling30Meta').textContent = (r30.hits || 0) + '/' + (r30.total || 0) + ' son 30 gun';
+
+        document.getElementById('rolling90Rate').textContent = formatPct(r90.hit_rate || 0);
+        document.getElementById('rolling90Meta').textContent = (r90.hits || 0) + '/' + (r90.total || 0) + ' son 90 gun';
+
+        document.getElementById('weightedRate').textContent = formatPct(weighted.hit_rate || 0);
+        document.getElementById('weightedMeta').textContent = 'Yari omur: ' + Number(weighted.half_life_days || 30) + ' gun';
     }
 
     function renderOpenTargets() {
@@ -111,15 +125,15 @@
             var latest = priceMap[t.ticker];
             var statusClass = t.direction === 'buy' ? 'buy' : 'sell';
             rows += '<tr>';
-            rows += '<td><strong>' + t.ticker + '</strong></td>';
-            rows += '<td>' + formatPeriod(t.period) + '</td>';
-            rows += '<td>' + formatDirection(t.direction) + '</td>';
-            rows += '<td>' + (t.opened_at || '--') + '</td>';
-            rows += '<td>' + formatPrice(t.start_price) + '</td>';
-            rows += '<td>' + formatPrice(t.target_price) + '</td>';
-            rows += '<td>' + formatPrice(latest) + '</td>';
-            rows += '<td>' + calcDistance(t.direction, t.target_price, latest) + '</td>';
-            rows += '<td><span class="signal-badge ' + statusClass + '"><span class="dot"></span>' + (t.signal || '--') + '</span></td>';
+            rows += '<td data-label="Ticker"><strong>' + t.ticker + '</strong></td>';
+            rows += '<td data-label="Periyot">' + formatPeriod(t.period) + '</td>';
+            rows += '<td data-label="Yon">' + formatDirection(t.direction) + '</td>';
+            rows += '<td data-label="Acilis">' + (t.opened_at || '--') + '</td>';
+            rows += '<td data-label="Baslangic">' + formatPrice(t.start_price) + '</td>';
+            rows += '<td data-label="Hedef">' + formatPrice(t.target_price) + '</td>';
+            rows += '<td data-label="Son Fiyat">' + formatPrice(latest) + '</td>';
+            rows += '<td data-label="Mesafe">' + calcDistance(t.direction, t.target_price, latest) + '</td>';
+            rows += '<td data-label="Sinyal"><span class="signal-badge ' + statusClass + '"><span class="dot"></span>' + (t.signal || '--') + '</span></td>';
             rows += '</tr>';
         }
 
@@ -141,15 +155,15 @@
             var badgeText = r.status === 'HIT' ? 'Tutturuldu' : 'Sure Asimi';
 
             rows += '<tr>';
-            rows += '<td><strong>' + r.ticker + '</strong></td>';
-            rows += '<td>' + formatPeriod(r.period) + '</td>';
-            rows += '<td>' + formatDirection(r.direction) + '</td>';
-            rows += '<td>' + (r.opened_at || '--') + '</td>';
-            rows += '<td>' + (r.closed_at || '--') + '</td>';
-            rows += '<td>' + formatPrice(r.target_price) + '</td>';
-            rows += '<td>' + formatPrice(r.close_price) + '</td>';
-            rows += '<td>' + Number(r.days_to_result || 0) + '</td>';
-            rows += '<td><span class="signal-badge ' + badgeClass + '"><span class="dot"></span>' + badgeText + '</span></td>';
+            rows += '<td data-label="Ticker"><strong>' + r.ticker + '</strong></td>';
+            rows += '<td data-label="Periyot">' + formatPeriod(r.period) + '</td>';
+            rows += '<td data-label="Yon">' + formatDirection(r.direction) + '</td>';
+            rows += '<td data-label="Acilis">' + (r.opened_at || '--') + '</td>';
+            rows += '<td data-label="Kapanis">' + (r.closed_at || '--') + '</td>';
+            rows += '<td data-label="Hedef">' + formatPrice(r.target_price) + '</td>';
+            rows += '<td data-label="Kapanis Fiyati">' + formatPrice(r.close_price) + '</td>';
+            rows += '<td data-label="Gun">' + Number(r.days_to_result || 0) + '</td>';
+            rows += '<td data-label="Durum"><span class="signal-badge ' + badgeClass + '"><span class="dot"></span>' + badgeText + '</span></td>';
             rows += '</tr>';
         }
 
