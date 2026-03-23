@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-03-23 11:49",
+  "generated_at": "2026-03-23 11:55",
   "overview": {
-    "total": 100,
-    "hits": 100,
+    "total": 101,
+    "hits": 101,
     "expired": 0,
     "hit_rate": 100.0
   },
   "daily": {
-    "total": 93,
-    "hits": 93,
+    "total": 94,
+    "hits": 94,
     "expired": 0,
     "hit_rate": 100.0,
     "avg_days_to_hit": 0.6
@@ -22,20 +22,20 @@
   },
   "rolling": {
     "7d": {
-      "total": 100,
-      "hits": 100,
+      "total": 101,
+      "hits": 101,
       "expired": 0,
       "hit_rate": 100.0
     },
     "30d": {
-      "total": 100,
-      "hits": 100,
+      "total": 101,
+      "hits": 101,
       "expired": 0,
       "hit_rate": 100.0
     },
     "90d": {
-      "total": 100,
-      "hits": 100,
+      "total": 101,
+      "hits": 101,
       "expired": 0,
       "hit_rate": 100.0
     },
@@ -45,15 +45,15 @@
     }
   },
   "status_summary": {
-    "open": 29,
-    "resolved": 100,
-    "hits": 100,
+    "open": 28,
+    "resolved": 101,
+    "hits": 101,
     "expired": 0
   },
   "direction_stats": {
     "buy": {
-      "total": 40,
-      "hits": 40,
+      "total": 41,
+      "hits": 41,
       "hit_rate": 100.0
     },
     "sell": {
@@ -69,17 +69,6 @@
     "weekly_expiry_days": 20
   },
   "open_targets": [
-    {
-      "ticker": "ASELS",
-      "period": "daily",
-      "direction": "buy",
-      "opened_at": "2026-03-23 12:58",
-      "start_price": 347.5,
-      "target_price": 352.71,
-      "signal": "HAFİF AL",
-      "confidence": 24.1,
-      "score": 11.5
-    },
     {
       "ticker": "ENKAI",
       "period": "daily",
@@ -136,12 +125,23 @@
       "score": -16.7
     },
     {
+      "ticker": "ASELS",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-03-23 11:55",
+      "start_price": 353.0,
+      "target_price": 358.29,
+      "signal": "HAFİF AL",
+      "confidence": 24.1,
+      "score": 11.5
+    },
+    {
       "ticker": "EKGYO",
       "period": "daily",
       "direction": "sell",
-      "opened_at": "2026-03-23 11:49",
-      "start_price": 20.32,
-      "target_price": 20.02,
+      "opened_at": "2026-03-23 11:55",
+      "start_price": 20.2,
+      "target_price": 19.9,
       "signal": "HAFİF SAT",
       "confidence": 30.9,
       "score": -12.1
@@ -150,9 +150,9 @@
       "ticker": "GARAN",
       "period": "daily",
       "direction": "sell",
-      "opened_at": "2026-03-23 11:49",
-      "start_price": 134.7,
-      "target_price": 132.68,
+      "opened_at": "2026-03-23 11:55",
+      "start_price": 133.2,
+      "target_price": 131.2,
       "signal": "HAFİF SAT",
       "confidence": 49.3,
       "score": -16.9
@@ -161,40 +161,29 @@
       "ticker": "ISCTR",
       "period": "daily",
       "direction": "sell",
-      "opened_at": "2026-03-23 11:49",
-      "start_price": 13.92,
-      "target_price": 13.71,
+      "opened_at": "2026-03-23 11:55",
+      "start_price": 13.69,
+      "target_price": 13.48,
       "signal": "HAFİF SAT",
       "confidence": 30.9,
       "score": -12.1
     },
     {
-      "ticker": "MGROS",
-      "period": "daily",
-      "direction": "sell",
-      "opened_at": "2026-03-23 11:49",
-      "start_price": 593.5,
-      "target_price": 584.6,
-      "signal": "HAFİF SAT",
-      "confidence": 46.1,
-      "score": -13.0
-    },
-    {
       "ticker": "SAHOL",
       "period": "daily",
       "direction": "sell",
-      "opened_at": "2026-03-23 11:49",
-      "start_price": 93.2,
-      "target_price": 91.8,
+      "opened_at": "2026-03-23 11:55",
+      "start_price": 92.05,
+      "target_price": 90.67,
       "signal": "HAFİF SAT",
-      "confidence": 66.1,
-      "score": -16.4
+      "confidence": 40.6,
+      "score": -11.9
     },
     {
       "ticker": "SASA",
       "period": "daily",
       "direction": "buy",
-      "opened_at": "2026-03-23 11:49",
+      "opened_at": "2026-03-23 11:55",
       "start_price": 2.48,
       "target_price": 2.52,
       "signal": "AL",
@@ -205,31 +194,20 @@
       "ticker": "TAVHL",
       "period": "daily",
       "direction": "sell",
-      "opened_at": "2026-03-23 11:49",
-      "start_price": 296.25,
-      "target_price": 291.81,
+      "opened_at": "2026-03-23 11:55",
+      "start_price": 292.25,
+      "target_price": 287.87,
       "signal": "HAFİF SAT",
       "confidence": 39.2,
       "score": -11.6
     },
     {
-      "ticker": "TCELL",
-      "period": "daily",
-      "direction": "sell",
-      "opened_at": "2026-03-23 11:49",
-      "start_price": 108.0,
-      "target_price": 106.38,
-      "signal": "HAFİF SAT",
-      "confidence": 46.1,
-      "score": -13.0
-    },
-    {
       "ticker": "TKFEN",
       "period": "daily",
       "direction": "buy",
-      "opened_at": "2026-03-23 11:49",
-      "start_price": 83.8,
-      "target_price": 85.06,
+      "opened_at": "2026-03-23 11:55",
+      "start_price": 83.5,
+      "target_price": 84.75,
       "signal": "HAFİF AL",
       "confidence": 48.2,
       "score": 13.4
@@ -238,12 +216,23 @@
       "ticker": "TUPRS",
       "period": "daily",
       "direction": "buy",
-      "opened_at": "2026-03-23 11:49",
-      "start_price": 254.5,
-      "target_price": 258.32,
+      "opened_at": "2026-03-23 11:55",
+      "start_price": 256.25,
+      "target_price": 260.09,
       "signal": "HAFİF AL",
       "confidence": 66.8,
       "score": 23.7
+    },
+    {
+      "ticker": "YKBNK",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-23 11:55",
+      "start_price": 34.4,
+      "target_price": 33.88,
+      "signal": "HAFİF SAT",
+      "confidence": 30.9,
+      "score": -12.1
     },
     {
       "ticker": "ARCLK",
