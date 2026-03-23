@@ -12,34 +12,20 @@
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%8A%3C/text%3E%3C/svg%3E">
 </head>
 
-<body class="intro-locked">
-
-
-    <div class="matrix-intro" id="matrixIntro">
-        <canvas id="matrixCanvas" aria-hidden="true"></canvas>
-        <div class="matrix-center">
-            <div class="matrix-title">Wake up, Mesut...</div>
-            <div class="matrix-subtitle">Choose your path</div>
-            <div class="pill-box">
-                <button class="pill pill-red" id="redPillBtn" type="button" aria-label="Red pill"></button>
-                <button class="pill pill-blue" id="bluePillBtn" type="button" aria-label="Blue pill"></button>
-            </div>
-            <div class="matrix-hint">Blue pill opens the system.</div>
-        </div>
-    </div>
+<body>
 
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-inner">
             <a href="index.html" class="logo">
-                <div class="logo-icon">B30</div>
-                <div class="logo-text">Mesut <span>BIST30</span></div>
+                <div class="logo-icon" style="background:var(--accent-orange);">AG</div>
+                <div class="logo-text">A-G-B-E <span>Piyasa</span></div>
             </a>
             <div class="nav-links">
                 <a href="index.html" class="nav-link">BIST30 Dashboard</a>
-                <a href="agbe.html" class="nav-link active">A-G-B-E Piyasası</a>
-                <a href="index.html#stock-table" class="nav-link">Hisseler</a>
-                <a href="tutturduklarim.html" class="nav-link">Tutturduklarim</a>
+                <a href="agbe.html" class="nav-link active" style="color:var(--accent-orange);">A-G-B-E Piyasası</a>
+                <a href="agbe_tutturduklarim.html" class="nav-link">A-G-B-E Sonuçlar</a>
+                <a href="tutturduklarim.html" class="nav-link">BIST30 Sonuçlar</a>
             </div>
             <button class="nav-toggle" id="navToggle" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mobileNavPanel">
                 <span class="sr-only">Menu</span>
@@ -53,26 +39,23 @@
             </div>
         </div>
         <div class="mobile-nav-panel" id="mobileNavPanel">
-            <a href="index.html" class="mobile-nav-link active">Dashboard</a>
-            <a href="index.html#stock-table" class="mobile-nav-link">Hisseler</a>
-            <a href="index.html#news-section" class="mobile-nav-link">Haberler</a>
-            <a href="tutturduklarim.html" class="mobile-nav-link">Tutturduklarim</a>
+            <a href="index.html" class="mobile-nav-link">BIST30 Dashboard</a>
+            <a href="agbe.html" class="mobile-nav-link active" style="color:var(--accent-orange);">A-G-B-E Piyasası</a>
+            <a href="agbe_tutturduklarim.html" class="mobile-nav-link">A-G-B-E Sonuçlar</a>
+            <a href="tutturduklarim.html" class="mobile-nav-link">BIST30 Sonuçlar</a>
         </div>
     </nav>
 
     <!-- Market Bar -->
     <div class="market-bar" id="marketBar">
         <div class="market-bar-inner">
-
             <div class="market-item" id="agbeBar">
-                <!-- AGBE doesn't have an index, so we just show a label -->
                 <span class="market-label" style="color:var(--accent-orange);">A-G-B-E</span>
-                <span class="market-value" style="font-size:12px;">Aktif Piyasalar</span>
+                <span class="market-value" style="font-size:12px;">Altın • Gümüş • Bitcoin • Ethereum</span>
             </div>
             <div class="market-item">
                 <span class="market-label">Güncelleme</span>
-                <span class="market-value" id="updateFreq" style="font-size:11px;color:var(--accent-cyan);">Saatlik
-                    (10:00 - 18:30)</span>
+                <span class="market-value" id="updateFreq" style="font-size:11px;color:var(--accent-cyan);">7/24 Kesintisiz</span>
             </div>
             <div class="market-item market-item-freshness">
                 <span class="market-label">Veri Yaşı</span>
@@ -85,194 +68,19 @@
 
     <div class="container">
 
-        <!-- Data Freshness Info -->
-        <div class="data-freshness data-freshness-top" id="dataFreshness">
-            <div class="freshness-icon">⏰</div>
-            <div class="freshness-info">
-                <strong>Veri Güncellik Bilgisi:</strong>
-                <span id="freshnessText">A-G-B-E piyasaları açık olduğu sürece kesintisiz güncellenir.</span>
-                <br><small id="lastUpdateText">Son güncelleme: Yükleniyor...</small>
-                <br><small id="manualRefreshStatus">Butona basarak en guncel dosyalari yeniden cekebilirsin.</small>
-
-                <div class="freshness-details" id="freshnessDetails">
-                    <div class="freshness-row"><span>Analiz motoru üretim zamanı</span><strong id="generatedAtValue">Yükleniyor...</strong></div>
-                    <div class="freshness-row"><span>Piyasa özet üretim zamanı</span><strong id="marketUpdatedAtValue">Yükleniyor...</strong></div>
-                    <div class="freshness-row"><span>Performans dosya zamanı</span><strong id="performanceUpdatedAtValue">Yükleniyor...</strong></div>
-                    <div class="freshness-row"><span>Sayfa yenilenme zamanı</span><strong id="pageLoadedAtValue">Yükleniyor...</strong></div>
-                    <div class="freshness-row"><span>Veri yaşı</span><strong id="dataAgeValue">Hesaplanıyor...</strong></div>
-                </div>
-            </div>
-        </div>
-
-
         <!-- Hero -->
         <div class="hero">
             <h1 class="hero-title">A-G-B-E Piyasası <span class="gradient-text">Teknik Analiz</span></h1>
             <p class="hero-desc">
-                Karar akisini once sade gor: sinyal, risk ve aksiyon tek bakista onunde.
+                Altın, Gümüş, Bitcoin ve Ethereum için 9 gösterge bazlı profesyonel AL/SAT sinyalleri.
             </p>
         </div>
-
-        <div class="focus-flow">
-            <div class="focus-step active">1) Firsatlari Tara</div>
-            <div class="focus-step">2) Riske Bak</div>
-            <div class="focus-step">3) Plani Uygula</div>
-        </div>
-
-        <div class="first-decision" id="firstDecision">
-            <div class="first-decision-head">
-                <h2>Bugunun Karar Panosu</h2>
-                <p>En once bakman gereken hisseler ve tek satir aksiyon ozetleri.</p>
-                <div class="first-decision-meta" id="firstDecisionMeta">Piyasa dagilimi hazirlaniyor...</div>
-            </div>
-            <div class="first-decision-list" id="firstDecisionList">
-                <div class="first-decision-empty">Oncelikli hisseler hazirlaniyor...</div>
-            </div>
-        </div>
-
-        <div class="quick-guide">
-            <div class="quick-guide-item"><strong>1)</strong> Ilk olarak <strong>AL / BEKLE / SAT</strong> dagilimina bak.</div>
-            <div class="quick-guide-item"><strong>2)</strong> Sonra tabloda sadece <strong>Sinyal + Fiyat + Degisim</strong> ile karsilastir.</div>
-            <div class="quick-guide-item"><strong>3)</strong> Karar verirken once <strong>stop-loss</strong> sonra hedef fiyat kontrol et.</div>
-        </div>
-
-        <div class="command-center" id="commandCenter">
-            <div class="command-card pulse">
-                <div class="command-label">Piyasa Nabzi</div>
-                <div class="command-value" id="marketPulseText">Yukleniyor...</div>
-                <div class="command-meta" id="marketPulseMeta">BIST verisi analiz ediliyor</div>
-            </div>
-            <div class="command-card plan">
-                <div class="command-label">Bugunun Oyun Plani</div>
-                <div class="command-value" id="dayPlanText">Yukleniyor...</div>
-                <div class="command-meta" id="dayPlanMeta">Sinyal dagilimina gore ozet</div>
-            </div>
-            <div class="command-card risk">
-                <div class="command-label">Risk Isisi</div>
-                <div class="risk-meter"><div class="risk-meter-fill" id="riskMeterFill"></div></div>
-                <div class="command-meta" id="riskMeterText">Hesaplaniyor...</div>
-            </div>
-            <div class="command-card refresh">
-                <div class="command-label">Sonraki Guncellemeye</div>
-                <div class="command-value" id="nextRefreshText">--:--:--</div>
-                <div class="command-meta" id="nextRefreshMeta">Saatlik otomatik guncelleme</div>
-            </div>
-        </div>
-
-        <div class="watchlist-strip" id="watchlistStrip">
-            <div class="watchlist-title">Bugun Radarina Al</div>
-            <div class="watchlist-chips" id="watchlistChips">
-                <span class="watch-chip">Yukleniyor...</span>
-            </div>
-        </div>
-
-        <div class="discipline-board" id="disciplineBoard">
-            <div class="discipline-title">Profesyonel Islem Disiplini</div>
-            <div class="discipline-grid">
-                <div class="discipline-item">
-                    <div class="discipline-label">Risk / Islem</div>
-                    <div class="discipline-value" id="disciplineRisk">Hesaplaniyor...</div>
-                </div>
-                <div class="discipline-item">
-                    <div class="discipline-label">Pozisyon Boyutu</div>
-                    <div class="discipline-value" id="disciplineAllocation">Hesaplaniyor...</div>
-                </div>
-                <div class="discipline-item">
-                    <div class="discipline-label">Stop Disiplini</div>
-                    <div class="discipline-value" id="disciplineStop">Hesaplaniyor...</div>
-                </div>
-                <div class="discipline-item">
-                    <div class="discipline-label">Sektor Dagilimi</div>
-                    <div class="discipline-value" id="disciplineDiversification">Hesaplaniyor...</div>
-                </div>
-            </div>
-            <div class="discipline-note">Not: Bu panel yatirim tavsiyesi degil, risk yonetimini sistematik hale getirmek icin karar destegidir.</div>
-        </div>
-
-        <div class="decision-coach" id="decisionCoach">
-            <div class="decision-coach-head">
-                <div>
-                    <div class="decision-coach-title">Karar Kalitesi Paneli</div>
-                    <div class="decision-coach-sub" id="coachRegimeText">Piyasa rejimi hesaplanıyor...</div>
-                </div>
-                <div class="decision-coach-score-wrap">
-                    <div class="decision-coach-score" id="coachQualityScore">--</div>
-                    <div class="decision-coach-grade" id="coachQualityGrade">--</div>
-                </div>
-            </div>
-            <div class="decision-coach-note" id="coachQualityNote">Kalite notu hazırlanıyor...</div>
-
-            <div class="decision-diagnostics">
-                <div class="decision-diagnostic-card">
-                    <div class="decision-diagnostic-title">Kural Ihlal Skoru</div>
-                    <div class="decision-diagnostic-value" id="ruleViolationScore">--</div>
-                    <div class="decision-diagnostic-meta" id="ruleViolationMeta">Hazirlaniyor...</div>
-                    <div class="decision-diagnostic-help">Ne ise yarar? Kural disi islemlerin performansi ne kadar bozdugunu gosterir.</div>
-                </div>
-                <div class="decision-diagnostic-card">
-                    <div class="decision-diagnostic-title">Hata Paternleri</div>
-                    <div class="decision-patterns" id="errorPatternList">
-                        <div class="decision-pattern-item">Yukleniyor...</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="decision-coach-grid" id="coachCards">
-                <div class="decision-coach-card">Yukleniyor...</div>
-            </div>
-
-            <div class="decision-checklist-wrap">
-                <div class="decision-checklist-title">Islem Oncesi Kontrol Listesi (Ne ise yarar? Yanlis karari azaltir.)</div>
-                <ul class="decision-checklist" id="coachChecklist">
-                    <li>Yukleniyor...</li>
-                </ul>
-            </div>
-            <div class="decision-coach-disclaimer" id="coachDisclaimer">Bu panel karar destegi icindir.</div>
-        </div>
-
-        <div class="tactic-center" id="tacticCenter">
-            <div class="tactic-title">Taktik Merkezi: Siteden Maksimum Verim Alma</div>
-            <div class="tactic-grid">
-                <div class="tactic-card">
-                    <h3>1) Sadece Guncel Veriyle Islem Planla</h3>
-                    <p>Veri Yasi alanini kontrol et. Guncel degilse yeni islemde acele etme, once veri tazelensin.</p>
-                </div>
-                <div class="tactic-card">
-                    <h3>2) Once Piyasa, Sonra Hisse</h3>
-                    <p>Ust bardaki BIST 30 / BIST 100 yonu ayniysa trend daha temiz olur. Ayrisma varsa lotu kucult.</p>
-                </div>
-                <div class="tactic-card">
-                    <h3>3) Islem Oncesi 3 Soru</h3>
-                    <p>Sinyal ne? Stop nerede? Ilk hedef nerede? Bu ucunu netlestirmeden emir verme.</p>
-                </div>
-                <div class="tactic-card">
-                    <h3>4) Kademeli Kar Al</h3>
-                    <p>Hedef 1'de parcali realize et, kalan pozisyonda stopu maliyete cek. Tek hamlede tum pozisyonu yonetme.</p>
-                </div>
-                <div class="tactic-card">
-                    <h3>5) Tek Islemde Buyuk Risk Alma</h3>
-                    <p>Portfoy riskini islem basina sinirla. Arka arkaya 2 zarar varsa ara ver ve plani yeniden oku.</p>
-                </div>
-                <div class="tactic-card">
-                    <h3>6) Performansi Haftalik Degerlendir</h3>
-                    <p>Tek bir isleme degil, 15-20 islem ortalamasina bak. Kural disi islemleri ayrica not et.</p>
-                </div>
-            </div>
-            <div class="tactic-note">Bu icerik egitim amaclidir; kesin alim-satim emri degildir.</div>
-        </div>
-
-        <div class="advanced-toggle-wrap">
-            <button class="advanced-toggle-btn" id="advancedToggleButton" type="button">Detayli modu ac</button>
-            <p id="advancedToggleText">Basit mod acik: sadece karar icin gerekli alanlar gorunuyor.</p>
-        </div>
-
-
 
         <!-- Signal Summary -->
         <div class="signal-summary" id="signalSummary">
             <div class="signal-card total">
                 <div class="signal-count" id="totalCount">0</div>
-                <div class="signal-label">TOPLAM HİSSE</div>
+                <div class="signal-label">TOPLAM VARLIK</div>
             </div>
             <div class="signal-card buy">
                 <div class="signal-count" id="buyCount">0</div>
@@ -288,14 +96,13 @@
             </div>
         </div>
 
-
         <!-- Performance Tracker -->
         <div class="section-header" id="performance-section">
             <h2 class="section-title">
                 <span class="icon">🎯</span>
-                Gunluk & Haftalik Hedef Performansi
+                A-G-B-E Hedef Performansı
             </h2>
-            <a href="tutturduklarim.html" class="perf-link-btn">Detayli Analiz</a>
+            <a href="agbe_tutturduklarim.html" class="perf-link-btn">Detaylı Analiz</a>
         </div>
         <div class="performance-grid" id="performanceGrid">
             <div class="performance-card">
@@ -315,116 +122,19 @@
             </div>
         </div>
 
-        <div class="performance-table-wrapper advanced-block">
-            <table class="stock-table performance-table">
-                <thead>
-                    <tr>
-                        <th>HISSE</th>
-                        <th>PERIYOT</th>
-                        <th>YON</th>
-                        <th>ACILIS</th>
-                        <th>HEDEF</th>
-                        <th>KAC GUNDE</th>
-                        <th>DURUM</th>
-                    </tr>
-                </thead>
-                <tbody id="performanceTableBody">
-                    <tr>
-                        <td colspan="7" class="loading-cell">Hedef performans verisi yukleniyor...</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Top Signals -->
-        <div class="top-signals-grid advanced-block">
-            <div>
-                <div class="section-header">
-                    <h2 class="section-title"><span class="icon">🟢</span> En Güçlü AL Sinyalleri</h2>
-                </div>
-                <div id="topBuys" class="top-signals-list"></div>
-            </div>
-            <div>
-                <div class="section-header">
-                    <h2 class="section-title"><span class="icon">🔴</span> En Güçlü SAT Sinyalleri</h2>
-                </div>
-                <div id="topSells" class="top-signals-list"></div>
-            </div>
-        </div>
-
-        <!-- News -->
-        <div class="section-header advanced-block" id="news-section">
-            <h2 class="section-title">
-                <span class="icon">📰</span>
-                Haberler & Güncellemeler
-            </h2>
-        </div>
-        <div id="newsContainer" class="news-grid advanced-block">
-            <!-- JS ile doldurulacak -->
-        </div>
-
-        <div class="section-header">
-            <h2 class="section-title"><span class="icon">🧭</span> Sinyal Rehberi</h2>
-        </div>
-        <div class="signal-legend">
-            <div class="legend-item"><span class="signal-badge strong-buy"><span class="dot"></span>GucLu AL</span><p>Yuksek ivme + trend uyumu. Risk yonetimi sart.</p></div>
-            <div class="legend-item"><span class="signal-badge buy"><span class="dot"></span>AL</span><p>Pozitif senaryo agir basiyor, hedef/stop takip edilerek ilerlenir.</p></div>
-            <div class="legend-item"><span class="signal-badge hold"><span class="dot"></span>BEKLE</span><p>Net yon yok. En iyi hamle sabir ve teyit beklemek.</p></div>
-            <div class="legend-item"><span class="signal-badge sell"><span class="dot"></span>SAT</span><p>Asagi riskler on planda. Pozisyon azaltma/koruma odakta olur.</p></div>
-        </div>
-
-        <!-- Stock Table -->
+        <!-- Varlık Tablosu -->
         <div class="section-header" id="stock-table">
             <h2 class="section-title">
                 <span class="icon">📋</span>
-                A-G-B-E / Emtia ve Kripto Canlı Tablo
+                A-G-B-E Canlı Tablo
             </h2>
-            <div class="table-controls">
-                <div class="search-box">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" id="searchInput" placeholder="Hisse ara..." class="search-input">
-                </div>
-                <div class="filter-tabs">
-                    <button class="filter-tab active" data-filter="all">Tümü</button>
-                    <button class="filter-tab" data-filter="buy">AL</button>
-                    <button class="filter-tab" data-filter="hold">BEKLE</button>
-                    <button class="filter-tab" data-filter="sell">SAT</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="mobile-table-hint">Ipucu: Mobilde her satir kart olarak gorunur. Kartin ustune dokunarak hisse detayina gidebilirsin.</div>
-
-        <div class="table-metrics-guide">
-            <span><strong>Sinyal:</strong> AL / BEKLE / SAT genel yonu gosterir.</span>
-            <span><strong>Guven:</strong> Sinyalin istikrar puani, tek basina karar degildir.</span>
-            <span><strong>3A/6A Min-Max:</strong> Son 3 ve 6 ay fiyat bandini hizli gormeni saglar.</span>
-        </div>
-
-        <div class="alarm-center advanced-block" id="alarmCenter">
-            <div class="alarm-center-header">
-                <h3>Alarm Merkezi</h3>
-                <p id="alarmSummaryText">Hedefe veya stopa yakin hisseler taraniyor...</p>
-            </div>
-            <div class="alarm-grid">
-                <div class="alarm-card">
-                    <div class="alarm-title">Hedefe Yakinlar</div>
-                    <div class="alarm-help">Ne ise yarar? Kar realizasyonu icin oncelik listesi verir.</div>
-                    <div id="alertTargetList" class="alarm-list"></div>
-                </div>
-                <div class="alarm-card">
-                    <div class="alarm-title">Stopa Yakinlar</div>
-                    <div class="alarm-help">Ne ise yarar? Riskli pozisyonlari erken fark ettirir.</div>
-                    <div id="alertStopList" class="alarm-list"></div>
-                </div>
-            </div>
         </div>
 
         <div class="stock-table-wrapper">
             <table class="stock-table">
                 <thead>
                     <tr>
-                        <th data-sort="ticker">HİSSE</th>
+                        <th data-sort="ticker">VARLIK</th>
                         <th data-sort="price">FİYAT (₺)</th>
                         <th data-sort="change_pct">DEĞİŞİM</th>
                         <th data-sort="signal">SİNYAL</th>
@@ -437,7 +147,7 @@
                         <td colspan="6" class="loading-cell">
                             <div class="loading">
                                 <div class="spinner"></div>
-                                <span class="loading-text">Veriler yükleniyor...</span>
+                                <span class="loading-text">A-G-B-E verileri yükleniyor...</span>
                             </div>
                         </td>
                     </tr>
@@ -457,12 +167,11 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>© 2026 Mesut A-G-B-E Analiz Platformu | 9 Gösterge | Hedef Fiyatlar | Veriler Yahoo Finance üzerinden
+        <p>© 2026 Mesut A-G-B-E Analiz Platformu | Altın, Gümüş, Bitcoin, Ethereum | Veriler Yahoo Finance üzerinden
             sağlanmaktadır</p>
     </footer>
 
     <script src="js/app.js"></script>
-
 
     <!-- Floating Action & Bottom Nav -->
     <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Yukari Cik">
@@ -507,6 +216,5 @@
         })();
     </script>
 </body>
-
 
 </html>

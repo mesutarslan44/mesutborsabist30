@@ -329,7 +329,7 @@
         }
 
         var reqOpts = force ? { cache: 'no-store' } : undefined;
-        var isAgbe = window.location.pathname.includes('agbe.html');
+        var isAgbe = window.location.pathname.includes('/agbe');
 
         try {
             var summaryUrl = isAgbe ? 'data/agbe_overview.json' : 'data/summary.json';
