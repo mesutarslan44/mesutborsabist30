@@ -61,7 +61,7 @@ def _target_key(item):
     return (item.get("ticker"), item.get("period"))
 
 
-def _resolve_open_targets(open_targets, current_prices, as_of_dt):
+def _resolve_open_targets(open_targets, current_prices, as_of_dt, historical_data=None):
     still_open = []
     resolved = []
 
@@ -78,10 +78,35 @@ def _resolve_open_targets(open_targets, current_prices, as_of_dt):
             continue
 
         hit = False
-        if direction == "buy" and current_price >= target_price:
-            hit = True
-        elif direction == "sell" and current_price <= target_price:
-            hit = True
+        hit_date_str = as_of_dt.strftime("%Y-%m-%d %H:%M")
+
+        # Geçmiş iğneleri (High/Low) kontrol et
+        if historical_data and ticker in historical_data:
+            df_dict = historical_data[ticker]
+            if period in df_dict:
+                df = df_dict[period]
+                try:
+                    # Açılış tarihinden sonraki (veya o günkü) verileri kontrol et
+                    for idx, row in df.iterrows():
+                        row_date = idx.date() if hasattr(idx, 'date') else idx
+                        if not isinstance(row_date, str) and row_date >= opened_at.date():
+                            if direction == "buy" and row.get("High", current_price) >= target_price:
+                                hit = True
+                                hit_date_str = idx.strftime("%Y-%m-%d %H:%M") if hasattr(idx, 'strftime') else str(idx)
+                                break
+                            elif direction == "sell" and row.get("Low", current_price) <= target_price:
+                                hit = True
+                                hit_date_str = idx.strftime("%Y-%m-%d %H:%M") if hasattr(idx, 'strftime') else str(idx)
+                                break
+                except Exception as e:
+                    pass
+
+        # Geçmişte vurmadıysa, şu anki (güncel) fiyatla son bir kez dene
+        if not hit:
+            if direction == "buy" and current_price >= target_price:
+                hit = True
+            elif direction == "sell" and current_price <= target_price:
+                hit = True
 
         max_days = DAILY_EXPIRY_DAYS if period == "daily" else WEEKLY_EXPIRY_DAYS
         age_days = _days_between(opened_at, as_of_dt)
@@ -94,10 +119,10 @@ def _resolve_open_targets(open_targets, current_prices, as_of_dt):
                     "period": period,
                     "direction": direction,
                     "opened_at": target.get("opened_at"),
-                    "closed_at": as_of_dt.strftime("%Y-%m-%d %H:%M"),
+                    "closed_at": hit_date_str if hit else as_of_dt.strftime("%Y-%m-%d %H:%M"),
                     "start_price": target.get("start_price"),
                     "target_price": target_price,
-                    "close_price": round(float(current_price), 4),
+                    "close_price": round(float(target_price if hit else current_price), 4),
                     "days_to_result": age_days,
                     "status": "HIT" if hit else "EXPIRED",
                     "signal": target.get("signal", ""),
@@ -299,7 +324,7 @@ def _to_frontend_payload(state, generated_at):
     }
 
 
-def update_performance_tracker(candidates, current_prices, generated_at):
+def update_performance_tracker(candidates, current_prices, generated_at, historical_data=None):
     """
     candidates: list of target candidates with required fields.
     current_prices: dict[ticker] = current price.
@@ -311,7 +336,7 @@ def update_performance_tracker(candidates, current_prices, generated_at):
     open_targets = _dedupe_open_targets(state.get("open_targets", []))
     history = state.get("history", [])
 
-    open_targets, resolved = _resolve_open_targets(open_targets, current_prices, as_of_dt)
+    open_targets, resolved = _resolve_open_targets(open_targets, current_prices, as_of_dt, historical_data)
     history.extend(resolved)
 
     open_targets = _add_new_targets(open_targets, candidates)

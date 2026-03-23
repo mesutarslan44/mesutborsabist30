@@ -8,7 +8,7 @@ import pandas as pd
 import time
 import pytz
 from datetime import datetime, timedelta
-from config import BIST30_TICKERS, DATA_PERIODS
+from config import BIST30_TICKERS, AGBE_TICKERS, DATA_PERIODS
 
 
 def fetch_stock_data(ticker, period="1y", interval="1d", retries=1):
@@ -45,16 +45,19 @@ def fetch_stock_data(ticker, period="1y", interval="1d", retries=1):
             return None
 
 
-def fetch_all_stocks(period="1y", interval="1d"):
-    """Tüm BIST 30 hisseleri için veri çeker."""
+def fetch_all_stocks(period="1y", interval="1d", tickers_dict=None):
+    """Verilen hisse/varlık sözlüğü için veri çeker."""
+    if tickers_dict is None:
+        tickers_dict = BIST30_TICKERS
+
     all_data = {}
-    total = len(BIST30_TICKERS)
+    total = len(tickers_dict)
     
     print(f"\n{'='*50}")
-    print(f"  BIST 30 Verileri Çekiliyor ({period}, {interval})")
+    print(f"  Veriler Çekiliyor ({period}, {interval})")
     print(f"{'='*50}\n")
     
-    for i, (ticker, info) in enumerate(BIST30_TICKERS.items(), 1):
+    for i, (ticker, info) in enumerate(tickers_dict.items(), 1):
         print(f"  [{i}/{total}] {info['name']} ({ticker})...", end=" ")
         df = fetch_stock_data(ticker, period, interval)
         if df is not None and len(df) > 0:
@@ -71,8 +74,11 @@ def fetch_all_stocks(period="1y", interval="1d"):
     return all_data
 
 
-def fetch_all_periods():
+def fetch_all_periods(tickers_dict=None):
     """Tüm periyotlar için veri çeker (günlük, haftalık, aylık)."""
+    if tickers_dict is None:
+        tickers_dict = BIST30_TICKERS
+
     all_period_data = {}
     
     for period_name, params in DATA_PERIODS.items():
@@ -81,7 +87,8 @@ def fetch_all_periods():
         print(f"{'#'*60}")
         all_period_data[period_name] = fetch_all_stocks(
             period=params["period"],
-            interval=params["interval"]
+            interval=params["interval"],
+            tickers_dict=tickers_dict
         )
     
     return all_period_data

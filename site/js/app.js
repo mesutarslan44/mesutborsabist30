@@ -329,22 +329,27 @@
         }
 
         var reqOpts = force ? { cache: 'no-store' } : undefined;
+        var isAgbe = window.location.pathname.includes('agbe.html');
 
         try {
-            var res1 = await fetch(withCacheBust('data/summary.json'), reqOpts);
-            var res2 = await fetch(withCacheBust('data/market_overview.json'), reqOpts);
+            var summaryUrl = isAgbe ? 'data/agbe_overview.json' : 'data/summary.json';
+            var marketUrl = isAgbe ? 'data/agbe_overview.json' : 'data/market_overview.json';
+
+            var res1 = await fetch(withCacheBust(summaryUrl), reqOpts);
+            var res2 = await fetch(withCacheBust(marketUrl), reqOpts);
             var res3 = await fetch(withCacheBust('data/performance.json'), reqOpts);
             var res4 = await fetch(withCacheBust('data/decision_coach.json'), reqOpts);
+
             if (!res1.ok || !res2.ok) throw new Error('Veri yüklenemedi');
 
-            summaryData = await res1.json();
+            var rawSummary = await res1.json();
+            // Map assets to stocks manually for AGBE to reuse the exact same frontend loops
+            summaryData = isAgbe ? Object.assign({}, rawSummary, { stocks: rawSummary.assets || [] }) : rawSummary;
             marketData = await res2.json();
-            if (res3.ok) {
-                performanceData = await res3.json();
-            }
-            if (res4.ok) {
-                decisionCoachData = await res4.json();
-            }
+
+            if (res3.ok) performanceData = await res3.json();
+            if (res4.ok) decisionCoachData = await res4.json();
+
             render();
             return true;
         } catch (err) {
@@ -966,9 +971,14 @@
             var actionText = getActionText(s.signal_en, s.confidence);
             var confidenceText = '%' + Number(s.confidence || 0).toFixed(0);
 
+            var tlInfoHtml = '';
+            if (s.tl_info) {
+                tlInfoHtml = ' | <span style="font-weight: 500; color: var(--color-primary);">' + s.tl_info + '</span>';
+            }
+
             html += '<td data-label="Hisse"><div class="stock-cell-name">';
             html += '<strong>' + s.ticker + '</strong>';
-            html += '<span class="stock-sector">' + s.name + ' · ' + s.sector + '</span>';
+            html += '<span class="stock-sector">' + s.name + ' · ' + s.sector + tlInfoHtml + '</span>';
             html += '</div></td>';
             html += '<td data-label="Fiyat" class="price-cell"><div class="price-main">' + formatPrice(s.price) + '</div>';
             html += '<div class="price-ranges">3A: ' + formatRange(s.range_3m) + ' | 6A: ' + formatRange(s.range_6m) + '</div></td>';

@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 import pandas as pd
 import yfinance as yf
 
-from config import BIST30_TICKERS, MARKET_INDICES, DATA_PERIODS
+from config import BIST30_TICKERS, AGBE_TICKERS, MARKET_INDICES, DATA_PERIODS
 from data_fetcher import fetch_stock_data, fetch_all_stocks, fetch_all_periods, get_market_info
 from technical_analysis import calculate_all_indicators, get_latest_indicators
 from recommendation_engine import generate_recommendation
@@ -434,6 +434,105 @@ def main():
         summary=summary,
         performance=performance,
     )
+
+    # =========================================================================
+    # A-G-B-E (Altın, Gümüş, Kripto) İŞLEMLERİ
+    # =========================================================================
+    print("\n" + "=" * 60)
+    print("  A-G-B-E (Altın, Gümüş, Kripto) ANALİZİ BAŞLIYOR...")
+    print("=" * 60)
+    
+    print("\n💵 USD/TRY kuru çekiliyor...")
+    try:
+        usdtry_df = yf.Ticker("TRY=X").history(period="1d")
+        usd_rate = float(usdtry_df["Close"].iloc[-1])
+        print(f"  ✓ Güncel Kur: ₺{usd_rate:.4f}")
+    except Exception as e:
+        print("  ✗ Kur çekilemedi, varsayılan değer 35.0 kullanılacak.")
+        usd_rate = 35.0
+
+    print("\n📈 A-G-B-E verileri çekiliyor (tüm periyotlar)...")
+    all_agbe_data = fetch_all_periods(tickers_dict=AGBE_TICKERS)
+    
+    print("\n🔬 A-G-B-E Analizi yapılıyor...")
+    agbe_summary_list = []
+    agbe_signal_counts = {"STRONG_BUY": 0, "BUY": 0, "WEAK_BUY": 0, "HOLD": 0,
+                          "WEAK_SELL": 0, "SELL": 0, "STRONG_SELL": 0}
+                          
+    agbe_tickers = list(AGBE_TICKERS.items())
+    for i, (ticker_yahoo, info) in enumerate(agbe_tickers, 1):
+        ticker_clean = ticker_yahoo.replace(".IS", "")
+        print(f"  [{i}/{len(agbe_tickers)}] {info['name']} ({ticker_yahoo})...", end=" ")
+
+        stock_result = process_stock(ticker_yahoo, info, all_agbe_data)
+        if not stock_result["periods"]:
+            print("⚠ Veri yok")
+            continue
+
+        output_file = os.path.join(OUTPUT_DIR, f"{ticker_clean}.json")
+        with open(output_file, "w", encoding="utf-8") as f:
+            json.dump(clean_nan(stock_result), f, ensure_ascii=False, indent=None)
+
+        daily = stock_result["periods"].get("daily", {})
+        rec = daily.get("recommendation", {})
+        ind = daily.get("indicators", {})
+
+        if rec:
+            signal_en = rec.get("signal_en", "HOLD")
+            agbe_signal_counts[signal_en] = agbe_signal_counts.get(signal_en, 0) + 1
+            daily_chart = daily.get("chart_data", [])
+            range_3m = get_range_metrics(daily_chart, 63)
+            range_6m = get_range_metrics(daily_chart, 126)
+
+            summary_item = {
+                "ticker": ticker_clean,
+                "name": info["name"],
+                "sector": info["sector"],
+                "price": ind.get("price", 0),
+                "change_pct": ind.get("change_pct", 0),
+                "rsi": ind.get("rsi", 0),
+                "stoch_k": ind.get("stoch_k", 0),
+                "adx": ind.get("adx", 0),
+                "volume_ratio": round(ind.get("volume_ratio", 1), 1),
+                "signal": rec.get("signal", "BEKLE"),
+                "signal_en": signal_en,
+                "score": rec.get("score", 0),
+                "confidence": rec.get("confidence", 0),
+                "color": rec.get("color", "#ffd740"),
+                "targets": rec.get("targets", {}),
+                "range_3m": range_3m,
+                "range_6m": range_6m,
+                "explanation_short": rec.get("explanation", "")[:200],
+            }
+            
+            # TL Deger Hesaplamalari (Ons -> Gram, USD -> TL)
+            if ticker_clean == "GC=F":
+                gram_tl = (summary_item["price"] / 31.1034768) * usd_rate
+                summary_item["tl_info"] = f"Gram: ₺{gram_tl:,.0f}"
+            elif ticker_clean == "SI=F":
+                gram_tl = (summary_item["price"] / 31.1034768) * usd_rate
+                summary_item["tl_info"] = f"Gram: ₺{gram_tl:,.0f}"
+            elif ticker_clean in ["BTC-USD", "ETH-USD"]:
+                coin_tl = summary_item["price"] * usd_rate
+                summary_item["tl_info"] = f"₺{coin_tl:,.0f}"
+
+            agbe_summary_list.append(summary_item)
+            print(f"✓ {rec.get('signal', 'BEKLE')} ({rec.get('score', 0):+.1f})")
+        else:
+            print("✓")
+            
+    agbe_summary_list.sort(key=lambda x: x["score"], reverse=True)
+    
+    agbe_overview = {
+        "updated_at": generated_at,
+        "update_frequency": "7/24 Kesintisiz Güncellenir",
+        "total_assets": len(agbe_summary_list),
+        "signal_counts": agbe_signal_counts,
+        "assets": agbe_summary_list,
+    }
+
+    with open(os.path.join(OUTPUT_DIR, "agbe_overview.json"), "w", encoding="utf-8") as f:
+        json.dump(clean_nan(agbe_overview), f, ensure_ascii=False, indent=2)
 
     # Son rapor
     print("\n" + "█" * 60)

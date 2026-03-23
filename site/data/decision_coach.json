@@ -3,7 +3,7 @@
   "quality_grade": "A",
   "quality_note": "Sistem su an daha tutarli; yine de risk sabit kalmali.",
   "rule_violation": {
-    "score": 84.0,
+    "score": 84.6,
     "label": "Iyi",
     "summary": "Kural ihlali riski dusuk; disiplin korunuyor.",
     "components": [
@@ -14,7 +14,7 @@
       },
       {
         "name": "Zayif Skorlu Islemler",
-        "value": "%25.0",
+        "value": "%22.5",
         "help": "Ne ise yarar? Setup filtresini ne kadar sikilastirman gerektigini gosterir."
       },
       {

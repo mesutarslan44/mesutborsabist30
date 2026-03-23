@@ -9,8 +9,10 @@ BIST30_TICKERS = {
     "AKBNK.IS": {"name": "Akbank", "sector": "Bankacılık"},
     "ARCLK.IS": {"name": "Arçelik", "sector": "Dayanıklı Tüketim"},
     "ASELS.IS": {"name": "Aselsan", "sector": "Savunma"},
+    "ASTOR.IS": {"name": "Astor Enerji", "sector": "Enerji"},
     "BIMAS.IS": {"name": "BİM", "sector": "Perakende"},
     "EKGYO.IS": {"name": "Emlak Konut GYO", "sector": "GYO"},
+    "ENJSA.IS": {"name": "Enerjisa", "sector": "Enerji"},
     "ENKAI.IS": {"name": "Enka İnşaat", "sector": "İnşaat"},
     "EREGL.IS": {"name": "Ereğli Demir Çelik", "sector": "Metal"},
     "FROTO.IS": {"name": "Ford Otosan", "sector": "Otomotiv"},
@@ -22,6 +24,7 @@ BIST30_TICKERS = {
     "KOZAA.IS": {"name": "Koza Altın", "sector": "Madencilik"},
     "KOZAL.IS": {"name": "Koza Anadolu Metal", "sector": "Madencilik"},
     "KRDMD.IS": {"name": "Kardemir D", "sector": "Metal"},
+    "MAVI.IS": {"name": "Mavi Giyim", "sector": "Perakende"},
     "MGROS.IS": {"name": "Migros", "sector": "Perakende"},
     "ODAS.IS": {"name": "Odaş Elektrik", "sector": "Enerji"},
     "PETKM.IS": {"name": "Petkim", "sector": "Kimya"},
@@ -36,6 +39,14 @@ BIST30_TICKERS = {
     "TOASO.IS": {"name": "Tofaş", "sector": "Otomotiv"},
     "TUPRS.IS": {"name": "Tüpraş", "sector": "Enerji"},
     "YKBNK.IS": {"name": "Yapı Kredi", "sector": "Bankacılık"},
+}
+
+# A-G-B-E (Altın, Gümüş, Bitcoin, Ethereum) Kodları
+AGBE_TICKERS = {
+    "GC=F": {"name": "Altın (Ons)", "sector": "Emtia"},
+    "SI=F": {"name": "Gümüş (Ons)", "sector": "Emtia"},
+    "BTC-USD": {"name": "Bitcoin", "sector": "Kripto"},
+    "ETH-USD": {"name": "Ethereum", "sector": "Kripto"}
 }
 
 # Endeksler
