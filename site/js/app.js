@@ -9,6 +9,7 @@
     let summaryData = null;
     let marketData = null;
     let performanceData = null;
+    let decisionCoachData = null;
     let currentFilter = 'all';
     let currentSort = { key: 'score', dir: 'desc' };
     let refreshTimer = null;
@@ -224,12 +225,16 @@
             var res1 = await fetch('data/summary.json');
             var res2 = await fetch('data/market_overview.json');
             var res3 = await fetch('data/performance.json');
+            var res4 = await fetch('data/decision_coach.json');
             if (!res1.ok || !res2.ok) throw new Error('Veri yüklenemedi');
 
             summaryData = await res1.json();
             marketData = await res2.json();
             if (res3.ok) {
                 performanceData = await res3.json();
+            }
+            if (res4.ok) {
+                decisionCoachData = await res4.json();
             }
             render();
         } catch (err) {
@@ -250,6 +255,7 @@
     ];
 
     var contentRenderers = [
+        renderDecisionCoach,
         renderIndexCommentary,
         renderAlarmCenter,
         renderTopSignals,
@@ -581,6 +587,51 @@
             sellsHtml += '</div></a>';
         }
         document.getElementById('topSells').innerHTML = sellsHtml || '<div style="padding:16px;color:var(--text-muted);">Güçlü SAT sinyali yok</div>';
+    }
+
+    function renderDecisionCoach() {
+        if (!decisionCoachData) return;
+
+        var scoreEl = document.getElementById('coachQualityScore');
+        var gradeEl = document.getElementById('coachQualityGrade');
+        var noteEl = document.getElementById('coachQualityNote');
+        var regimeEl = document.getElementById('coachRegimeText');
+        var cardsEl = document.getElementById('coachCards');
+        var checklistEl = document.getElementById('coachChecklist');
+        var disclaimerEl = document.getElementById('coachDisclaimer');
+
+        if (scoreEl) scoreEl.textContent = Number(decisionCoachData.quality_score || 0).toFixed(1);
+        if (gradeEl) gradeEl.textContent = 'Not: ' + (decisionCoachData.quality_grade || '--');
+        if (noteEl) noteEl.textContent = decisionCoachData.quality_note || '';
+
+        var regime = decisionCoachData.market_regime || {};
+        if (regimeEl) {
+            regimeEl.textContent = 'Rejim: ' + (regime.name || 'N/A') + ' | Neden: ' + (regime.why || '--') + ' | Nasil: ' + (regime.how || '--');
+        }
+
+        if (cardsEl && decisionCoachData.coaching_cards) {
+            var cards = decisionCoachData.coaching_cards;
+            var html = '';
+            for (var i = 0; i < cards.length; i++) {
+                html += '<div class="decision-coach-card">';
+                html += '<h4>' + cards[i].title + '</h4>';
+                html += '<p class="coach-desc">' + cards[i].desc + '</p>';
+                html += '<p class="coach-rule"><strong>Kural:</strong> ' + cards[i].rule + '</p>';
+                html += '</div>';
+            }
+            cardsEl.innerHTML = html;
+        }
+
+        if (checklistEl && decisionCoachData.execution_checklist) {
+            var list = decisionCoachData.execution_checklist;
+            var li = '';
+            for (var j = 0; j < list.length; j++) {
+                li += '<li>' + list[j] + '</li>';
+            }
+            checklistEl.innerHTML = li;
+        }
+
+        if (disclaimerEl) disclaimerEl.textContent = decisionCoachData.disclaimer || '';
     }
 
     function renderAlarmCenter() {

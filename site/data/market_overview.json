@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-22 21:28",
+  "updated_at": "2026-03-23 04:10",
   "update_frequency": "Borsa saatleri içerisinde her saat başı otomatik güncellenir",
   "bist30": {
     "index_value": 14847.03,
@@ -54,7 +54,7 @@
       "ticker": "TOASO",
       "name": "Tofaş",
       "sector": "Otomotiv",
-      "price": 310.25,
+      "price": 290.25,
       "change_pct": 0.5673,
       "rsi": 50.8022,
       "stoch_k": 78.1818,
@@ -66,19 +66,19 @@
       "confidence": 65.9,
       "color": "#00c853",
       "targets": {
-        "target_1": 314.9,
-        "target_2": 319.56,
-        "target_3": 324.21,
-        "stop_loss": 304.05,
-        "add_level": 307.15
+        "target_1": 294.6,
+        "target_2": 298.96,
+        "target_3": 303.31,
+        "stop_loss": 284.44,
+        "add_level": 287.35
       },
       "range_3m": {
-        "min": 241.2,
-        "max": 349.5
+        "min": 225.65,
+        "max": 326.97
       },
       "range_6m": {
-        "min": 223.9,
-        "max": 349.5
+        "min": 209.47,
+        "max": 326.97
       },
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: GÜÇLÜ AL — MACD yukarı kesişim (Golden Cross). Yükseliş başlangıcı! | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim"
     },
@@ -385,29 +385,29 @@
   "news": [
     {
       "title": "📊 BIST 30 Teknik Analiz Raporu Güncellendi",
-      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 22.03.2026 21:28 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
-      "date": "22.03.2026 21:28",
+      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 23.03.2026 04:11 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
+      "date": "23.03.2026 04:11",
       "category": "analiz",
       "icon": "📊"
     },
     {
       "title": "🔔 Stochastic & ADX Göstergeleri Eklendi",
       "summary": "Yeni teknik göstergeler: Stochastic Oscillator ve ADX (Average Directional Index) artık tüm hisseler için hesaplanıyor. Fibonacci düzeltme seviyeleri de aktif.",
-      "date": "22.03.2026 21:28",
+      "date": "23.03.2026 04:11",
       "category": "güncelleme",
       "icon": "🔔"
     },
     {
       "title": "🎯 Hedef Fiyat Sistemi Aktif",
       "summary": "Her hisse için günlük, haftalık ve aylık hedef fiyatlar, stop-loss seviyeleri ve ekleme noktaları hesaplanıyor.",
-      "date": "22.03.2026 21:28",
+      "date": "23.03.2026 04:11",
       "category": "özellik",
       "icon": "🎯"
     },
     {
       "title": "⏰ Veriler Borsa Saatlerinde Saatlik Güncelleniyor",
       "summary": "Piyasa açıkken (10:00 - 18:30) veriler her saat başı otomatik güncellenir. Son güncelleme saatini sayfanın üstünde görebilirsiniz.",
-      "date": "22.03.2026",
+      "date": "23.03.2026",
       "category": "bilgi",
       "icon": "⏰"
     }

@@ -2542,6 +2542,112 @@ body::after {
     color: var(--text-secondary);
 }
 
+.decision-coach {
+    margin: 0 0 22px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: linear-gradient(140deg, rgba(10, 22, 38, 0.92), rgba(8, 18, 30, 0.86));
+    padding: 14px;
+}
+
+.decision-coach-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.decision-coach-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+.decision-coach-sub {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.decision-coach-score-wrap {
+    text-align: right;
+}
+
+.decision-coach-score {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent-cyan);
+}
+
+.decision-coach-grade {
+    font-size: 12px;
+    color: var(--text-primary);
+}
+
+.decision-coach-note {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.decision-coach-grid {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    gap: 10px;
+}
+
+.decision-coach-card {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 10px 12px;
+}
+
+.decision-coach-card h4 {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+}
+
+.coach-desc,
+.coach-rule {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.decision-checklist-wrap {
+    margin-top: 10px;
+}
+
+.decision-checklist-title {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.decision-checklist {
+    margin: 0;
+    padding-left: 18px;
+    display: grid;
+    gap: 4px;
+}
+
+.decision-checklist li {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.decision-coach-disclaimer {
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
 .tactic-center {
     margin: 0 0 22px;
     border: 1px solid var(--border-color);
@@ -2824,6 +2930,18 @@ body::after {
 
 @media (max-width: 768px) {
     .discipline-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .decision-coach-head {
+        flex-direction: column;
+    }
+
+    .decision-coach-score-wrap {
+        text-align: left;
+    }
+
+    .decision-coach-grid {
         grid-template-columns: 1fr;
     }
 

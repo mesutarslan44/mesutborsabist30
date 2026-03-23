@@ -1,0 +1,40 @@
+{
+  "quality_score": 0.0,
+  "quality_grade": "C",
+  "quality_note": "Sistem dalgali; secicilik ve lot kontrolu artmali.",
+  "market_regime": {
+    "name": "Nötr",
+    "tone": "neutral",
+    "why": "AL/SAT dengesi karisik veya endeks onayi zayif.",
+    "how": "Sadece A/B setup ve net hedef-stop oranli islemleri sec."
+  },
+  "coaching_cards": [
+    {
+      "title": "1) Islem Filtresi",
+      "desc": "Ne ise yarar? Dusuk kaliteli sinyalleri eleyerek gereksiz islem sayisini azaltir.",
+      "rule": "Sadece Setup A/B ve R >= 1.5 islemleri oncele."
+    },
+    {
+      "title": "2) Zamanlama Disiplini",
+      "desc": "Ne ise yarar? Veri gecikmesi kaynakli yanlis kararlari azaltir.",
+      "rule": "Veri yasi gecikmeli/eski ise yeni pozisyon acma."
+    },
+    {
+      "title": "3) Pozisyon Boyutu",
+      "desc": "Ne ise yarar? Tek bir hatanin portfoyu bozmasini engeller.",
+      "rule": "Islem basi riski sabit tut (or: portfoyun %0.5-%1.0 arasi)."
+    },
+    {
+      "title": "4) Kalibrasyon",
+      "desc": "Ne ise yarar? Dalgali performansta kaybi sinirlar.",
+      "rule": "En az 20 islem logu birikmeden lot buyutme."
+    }
+  ],
+  "execution_checklist": [
+    "Sinyal + Setup + R birlikte kontrol edildi mi?",
+    "Stop seviyesi emirden once net mi?",
+    "Hedef 1 gorulurse parcali kar plani hazir mi?",
+    "Islem gunlugu notu acildi mi?"
+  ],
+  "disclaimer": "Bu panel karar destegidir, kesin alim-satim emri degildir."
+}

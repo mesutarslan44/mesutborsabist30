@@ -18,6 +18,7 @@ from data_fetcher import fetch_stock_data, fetch_all_stocks, fetch_all_periods, 
 from technical_analysis import calculate_all_indicators, get_latest_indicators
 from recommendation_engine import generate_recommendation
 from performance_tracker import update_performance_tracker
+from decision_coach import write_decision_coach
 
 # Çıktı dizini
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "site", "data")
@@ -414,12 +415,20 @@ def main():
         generated_at=generated_at,
     )
 
+    # 9. Decision coach JSON (karar kalitesini artiran rehber)
+    write_decision_coach(
+        output_path=os.path.join(OUTPUT_DIR, "decision_coach.json"),
+        summary=summary,
+        performance=performance,
+    )
+
     # Son rapor
     print("\n" + "█" * 60)
     print("  TAMAMLANDI! v2.0")
     print(f"  ✓ summary.json")
     print(f"  ✓ market_overview.json")
     print(f"  ✓ performance.json")
+    print(f"  ✓ decision_coach.json")
     for ticker in BIST30_TICKERS:
         clean = ticker.replace(".IS", "")
         if os.path.exists(os.path.join(OUTPUT_DIR, f"{clean}.json")):
