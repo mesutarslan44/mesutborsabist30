@@ -220,12 +220,17 @@
 
     function init() {
         setupMobileNav();
+        var isAgbe = window.location.pathname.includes('agbe');
+        var perfFile = isAgbe ? 'data/performance_agbe.json' : 'data/performance.json';
+        var sumFile = isAgbe ? 'data/agbe_overview.json' : 'data/summary.json';
+
         Promise.all([
-            fetch('data/performance.json').then(function (r) { return r.json(); }),
-            fetch('data/summary.json').then(function (r) { return r.json(); })
+            fetch(perfFile).then(function (r) { return r.json(); }),
+            fetch(sumFile).then(function (r) { return r.json(); })
         ]).then(function (results) {
             performanceData = results[0] || {};
-            summaryData = results[1] || {};
+            var rawSummary = results[1] || {};
+            summaryData = isAgbe ? Object.assign({}, rawSummary, { stocks: rawSummary.assets || [] }) : rawSummary;
             bindFilters();
             renderAll();
         }).catch(function () {

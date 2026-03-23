@@ -456,6 +456,8 @@ def main():
     
     print("\n🔬 A-G-B-E Analizi yapılıyor...")
     agbe_summary_list = []
+    agbe_performance_candidates = []
+    agbe_current_prices = {}
     agbe_signal_counts = {"STRONG_BUY": 0, "BUY": 0, "WEAK_BUY": 0, "HOLD": 0,
                           "WEAK_SELL": 0, "SELL": 0, "STRONG_SELL": 0}
                           
@@ -517,6 +519,39 @@ def main():
                 summary_item["tl_info"] = f"₺{coin_tl:,.0f}"
 
             agbe_summary_list.append(summary_item)
+            agbe_current_prices[ticker_clean] = summary_item["price"]
+
+            # Track daily + weekly first target hits for AGBE performance page
+            for period_name in ["daily", "weekly"]:
+                period_rec = stock_result["periods"].get(period_name, {}).get("recommendation", {})
+                period_signal = period_rec.get("signal_en", "HOLD")
+                target_1 = period_rec.get("targets", {}).get("target_1")
+
+                if period_signal in ["STRONG_BUY", "BUY", "WEAK_BUY"] and target_1:
+                    agbe_performance_candidates.append({
+                        "ticker": ticker_clean,
+                        "period": period_name,
+                        "direction": "buy",
+                        "opened_at": generated_at,
+                        "start_price": round(float(summary_item["price"]), 4),
+                        "target_price": round(float(target_1), 4),
+                        "signal": period_rec.get("signal", "AL"),
+                        "confidence": period_rec.get("confidence", 0),
+                        "score": period_rec.get("score", 0),
+                    })
+                elif period_signal in ["STRONG_SELL", "SELL", "WEAK_SELL"] and target_1:
+                    agbe_performance_candidates.append({
+                        "ticker": ticker_clean,
+                        "period": period_name,
+                        "direction": "sell",
+                        "opened_at": generated_at,
+                        "start_price": round(float(summary_item["price"]), 4),
+                        "target_price": round(float(target_1), 4),
+                        "signal": period_rec.get("signal", "SAT"),
+                        "confidence": period_rec.get("confidence", 0),
+                        "score": period_rec.get("score", 0),
+                    })
+
             print(f"✓ {rec.get('signal', 'BEKLE')} ({rec.get('score', 0):+.1f})")
         else:
             print("✓")
@@ -533,6 +568,14 @@ def main():
 
     with open(os.path.join(OUTPUT_DIR, "agbe_overview.json"), "w", encoding="utf-8") as f:
         json.dump(clean_nan(agbe_overview), f, ensure_ascii=False, indent=2)
+
+    # A-G-B-E Performance tracking JSON
+    agbe_performance = update_performance_tracker(
+        candidates=agbe_performance_candidates, 
+        current_prices=agbe_current_prices, 
+        generated_at=generated_at, 
+        market_type="agbe"
+    )
 
     # Son rapor
     print("\n" + "█" * 60)

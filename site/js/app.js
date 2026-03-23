@@ -334,10 +334,11 @@
         try {
             var summaryUrl = isAgbe ? 'data/agbe_overview.json' : 'data/summary.json';
             var marketUrl = isAgbe ? 'data/agbe_overview.json' : 'data/market_overview.json';
+            var perfUrl = isAgbe ? 'data/performance_agbe.json' : 'data/performance.json';
 
             var res1 = await fetch(withCacheBust(summaryUrl), reqOpts);
             var res2 = await fetch(withCacheBust(marketUrl), reqOpts);
-            var res3 = await fetch(withCacheBust('data/performance.json'), reqOpts);
+            var res3 = await fetch(withCacheBust(perfUrl), reqOpts);
             var res4 = await fetch(withCacheBust('data/decision_coach.json'), reqOpts);
 
             if (!res1.ok || !res2.ok) throw new Error('Veri yüklenemedi');

@@ -2319,6 +2319,159 @@ body.nav-open .nav-toggle-bar:nth-child(4) {
     .indicator-value {
         font-size: 20px;
     }
+
+    /* ── Mobile Table Stacked Cards ── */
+    .stock-table-wrapper, .performance-table-wrapper {
+        border: none;
+        background: transparent;
+        border-radius: 0;
+        margin-bottom: 80px; /* Room for bottom nav */
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    table thead {
+        display: none;
+    }
+
+    table tr {
+        display: flex;
+        flex-direction: column;
+        background: var(--gradient-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        margin-bottom: 16px;
+        padding: 16px;
+    }
+
+    table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 13px;
+        white-space: normal;
+    }
+
+    table td:last-child {
+        border-bottom: none;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        font-size: 11px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-right: auto;
+    }
+
+    /* Ensure badges scale nicely inside cards */
+    .signal-badge {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+    
+    .loading-cell, .loading-cell::before {
+        content: none !important;
+        justify-content: center !important;
+        border: none !important;
+        display: block !important;
+        text-align: center;
+    }
+}
+
+/* ── Bottom Navigation Bar ── */
+.bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border-color);
+    z-index: 1000;
+    padding: 10px 16px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+}
+
+.bottom-nav-inner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.bottom-nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 10px;
+    gap: 4px;
+    transition: var(--transition);
+}
+
+.bottom-nav-link.active {
+    color: var(--accent-cyan);
+}
+.bottom-nav-link.active-agbe {
+    color: var(--accent-orange);
+}
+
+.bottom-nav-link svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+@media (max-width: 768px) {
+    .bottom-nav {
+        display: block;
+    }
+    .footer {
+        padding-bottom: 80px; /* Room for nav */
+    }
+}
+
+/* ── Scroll to Top Button ── */
+.scroll-top-btn {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background: var(--gradient-primary);
+    color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+}
+
+.scroll-top-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-top-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
 }
 
 /* ── Performance Tracker ── */

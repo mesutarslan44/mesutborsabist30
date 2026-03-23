@@ -26,13 +26,19 @@ def _ensure_dirs():
     os.makedirs(STATE_DIR, exist_ok=True)
 
 
-def _load_state():
+def _get_files(market_type):
+    state_file = os.path.join(STATE_DIR, f"target_tracking_state_{market_type}.json" if market_type != "bist30" else "target_tracking_state.json")
+    frontend_file = os.path.join(ROOT_DIR, "site", "data", f"performance_{market_type}.json" if market_type != "bist30" else "performance.json")
+    return state_file, frontend_file
+
+def _load_state(market_type):
     _ensure_dirs()
-    if not os.path.exists(STATE_FILE):
+    state_file, _ = _get_files(market_type)
+    if not os.path.exists(state_file):
         return {"open_targets": [], "history": []}
 
     try:
-        with open(STATE_FILE, "r", encoding="utf-8") as f:
+        with open(state_file, "r", encoding="utf-8") as f:
             data = json.load(f)
             data.setdefault("open_targets", [])
             data.setdefault("history", [])
@@ -41,8 +47,9 @@ def _load_state():
         return {"open_targets": [], "history": []}
 
 
-def _save_state(state):
-    with open(STATE_FILE, "w", encoding="utf-8") as f:
+def _save_state(state, market_type):
+    state_file, _ = _get_files(market_type)
+    with open(state_file, "w", encoding="utf-8") as f:
         json.dump(state, f, ensure_ascii=False, indent=2)
 
 
@@ -324,14 +331,14 @@ def _to_frontend_payload(state, generated_at):
     }
 
 
-def update_performance_tracker(candidates, current_prices, generated_at, historical_data=None):
+def update_performance_tracker(candidates, current_prices, generated_at, historical_data=None, market_type="bist30"):
     """
     candidates: list of target candidates with required fields.
     current_prices: dict[ticker] = current price.
     generated_at: datetime string in "%Y-%m-%d %H:%M".
     """
     as_of_dt = _parse_dt(generated_at)
-    state = _load_state()
+    state = _load_state(market_type)
 
     open_targets = _dedupe_open_targets(state.get("open_targets", []))
     history = state.get("history", [])
@@ -343,10 +350,11 @@ def update_performance_tracker(candidates, current_prices, generated_at, histori
 
     state["open_targets"] = open_targets
     state["history"] = _trim_history(history)
-    _save_state(state)
+    _save_state(state, market_type)
 
     frontend_payload = _to_frontend_payload(state, generated_at)
-    with open(FRONTEND_FILE, "w", encoding="utf-8") as f:
+    _, frontend_file = _get_files(market_type)
+    with open(frontend_file, "w", encoding="utf-8") as f:
         json.dump(frontend_payload, f, ensure_ascii=False, indent=2)
 
     return frontend_payload
