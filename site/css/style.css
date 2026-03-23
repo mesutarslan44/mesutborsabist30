@@ -1319,10 +1319,9 @@ body.nav-open .nav-toggle-bar:nth-child(4) {
     }
 
     .market-bar-inner {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 8px;
-        /* Room for scrollbar */
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
     }
 
     .market-item-freshness {
