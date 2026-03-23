@@ -17,7 +17,7 @@ export async function onRequestPost(context) {
   const repo = env.GITHUB_REPO || 'mesutborsabist30';
   const workflow = env.GITHUB_WORKFLOW || 'update-data.yml';
   const ref = env.GITHUB_REF || 'main';
-  const requiredKey = env.REFRESH_API_KEY || '';
+  const requiredKey = env.REFRESH_API_KEY || 'Malatya44';
 
   if (!token) {
     return json(
