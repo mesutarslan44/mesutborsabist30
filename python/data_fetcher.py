@@ -23,6 +23,9 @@ def fetch_stock_data(ticker, period="1y", interval="1d", retries=1):
                     continue
                 print(f"  ⚠ {ticker}: Veri bulunamadı")
                 return None
+            df.dropna(subset=['Close'], inplace=True)
+            if df.empty:
+                return None
             # Sütun isimlerini standartlaştır
             df = df.rename(columns={
                 "Open": "open",

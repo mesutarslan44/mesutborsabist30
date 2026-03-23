@@ -21,8 +21,20 @@ from recommendation_engine import generate_recommendation
 from performance_tracker import update_performance_tracker
 from decision_coach import write_decision_coach
 
+import math
+
 # Çıktı dizini
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "site", "data")
+
+def clean_nan(obj):
+    if isinstance(obj, dict):
+        return {k: clean_nan(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [clean_nan(v) for v in obj]
+    elif isinstance(obj, float):
+        if math.isnan(obj) or math.isinf(obj):
+            return None
+    return obj
 
 
 def ensure_output_dir():
@@ -295,7 +307,7 @@ def main():
         # JSON kaydet
         output_file = os.path.join(OUTPUT_DIR, f"{ticker_clean}.json")
         with open(output_file, "w", encoding="utf-8") as f:
-            json.dump(stock_result, f, ensure_ascii=False, indent=None)
+            json.dump(clean_nan(stock_result), f, ensure_ascii=False, indent=None)
 
         # Summary bilgileri topla
         daily = stock_result["periods"].get("daily", {})
@@ -392,7 +404,7 @@ def main():
     }
 
     with open(os.path.join(OUTPUT_DIR, "summary.json"), "w", encoding="utf-8") as f:
-        json.dump(summary, f, ensure_ascii=False, indent=2)
+        json.dump(clean_nan(summary), f, ensure_ascii=False, indent=2)
 
     # 7. Market Overview JSON
     market_overview = {
@@ -407,7 +419,7 @@ def main():
     }
 
     with open(os.path.join(OUTPUT_DIR, "market_overview.json"), "w", encoding="utf-8") as f:
-        json.dump(market_overview, f, ensure_ascii=False, indent=2)
+        json.dump(clean_nan(market_overview), f, ensure_ascii=False, indent=2)
 
     # 8. Performance tracking JSON
     performance = update_performance_tracker(
