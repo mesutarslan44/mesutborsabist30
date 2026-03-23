@@ -1,41 +1,41 @@
 {
-  "generated_at": "2026-03-23 11:20",
+  "generated_at": "2026-03-23 11:49",
   "overview": {
-    "total": 96,
-    "hits": 96,
+    "total": 100,
+    "hits": 100,
     "expired": 0,
     "hit_rate": 100.0
   },
   "daily": {
-    "total": 90,
-    "hits": 90,
+    "total": 93,
+    "hits": 93,
     "expired": 0,
     "hit_rate": 100.0,
-    "avg_days_to_hit": 0.7
+    "avg_days_to_hit": 0.6
   },
   "weekly": {
-    "total": 6,
-    "hits": 6,
+    "total": 7,
+    "hits": 7,
     "expired": 0,
     "hit_rate": 100.0,
-    "avg_days_to_hit": 0.7
+    "avg_days_to_hit": 0.6
   },
   "rolling": {
     "7d": {
-      "total": 96,
-      "hits": 96,
+      "total": 100,
+      "hits": 100,
       "expired": 0,
       "hit_rate": 100.0
     },
     "30d": {
-      "total": 96,
-      "hits": 96,
+      "total": 100,
+      "hits": 100,
       "expired": 0,
       "hit_rate": 100.0
     },
     "90d": {
-      "total": 96,
-      "hits": 96,
+      "total": 100,
+      "hits": 100,
       "expired": 0,
       "hit_rate": 100.0
     },
@@ -45,15 +45,15 @@
     }
   },
   "status_summary": {
-    "open": 24,
-    "resolved": 96,
-    "hits": 96,
+    "open": 29,
+    "resolved": 100,
+    "hits": 100,
     "expired": 0
   },
   "direction_stats": {
     "buy": {
-      "total": 36,
-      "hits": 36,
+      "total": 40,
+      "hits": 40,
       "hit_rate": 100.0
     },
     "sell": {
@@ -103,17 +103,6 @@
       "score": -16.2
     },
     {
-      "ticker": "GUBRF",
-      "period": "daily",
-      "direction": "buy",
-      "opened_at": "2026-03-23 12:58",
-      "start_price": 459.5,
-      "target_price": 466.39,
-      "signal": "HAFİF AL",
-      "confidence": 25.6,
-      "score": 11.7
-    },
-    {
       "ticker": "KCHOL",
       "period": "daily",
       "direction": "sell",
@@ -147,26 +136,114 @@
       "score": -16.7
     },
     {
+      "ticker": "EKGYO",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-23 11:49",
+      "start_price": 20.32,
+      "target_price": 20.02,
+      "signal": "HAFİF SAT",
+      "confidence": 30.9,
+      "score": -12.1
+    },
+    {
+      "ticker": "GARAN",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-23 11:49",
+      "start_price": 134.7,
+      "target_price": 132.68,
+      "signal": "HAFİF SAT",
+      "confidence": 49.3,
+      "score": -16.9
+    },
+    {
+      "ticker": "ISCTR",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-23 11:49",
+      "start_price": 13.92,
+      "target_price": 13.71,
+      "signal": "HAFİF SAT",
+      "confidence": 30.9,
+      "score": -12.1
+    },
+    {
+      "ticker": "MGROS",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-23 11:49",
+      "start_price": 593.5,
+      "target_price": 584.6,
+      "signal": "HAFİF SAT",
+      "confidence": 46.1,
+      "score": -13.0
+    },
+    {
+      "ticker": "SAHOL",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-23 11:49",
+      "start_price": 93.2,
+      "target_price": 91.8,
+      "signal": "HAFİF SAT",
+      "confidence": 66.1,
+      "score": -16.4
+    },
+    {
+      "ticker": "SASA",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-03-23 11:49",
+      "start_price": 2.48,
+      "target_price": 2.52,
+      "signal": "AL",
+      "confidence": 64.1,
+      "score": 28.6
+    },
+    {
+      "ticker": "TAVHL",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-23 11:49",
+      "start_price": 296.25,
+      "target_price": 291.81,
+      "signal": "HAFİF SAT",
+      "confidence": 39.2,
+      "score": -11.6
+    },
+    {
+      "ticker": "TCELL",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-23 11:49",
+      "start_price": 108.0,
+      "target_price": 106.38,
+      "signal": "HAFİF SAT",
+      "confidence": 46.1,
+      "score": -13.0
+    },
+    {
       "ticker": "TKFEN",
       "period": "daily",
       "direction": "buy",
-      "opened_at": "2026-03-23 12:58",
-      "start_price": 81.8,
-      "target_price": 83.03,
-      "signal": "AL",
-      "confidence": 100.0,
-      "score": 25.4
+      "opened_at": "2026-03-23 11:49",
+      "start_price": 83.8,
+      "target_price": 85.06,
+      "signal": "HAFİF AL",
+      "confidence": 48.2,
+      "score": 13.4
     },
     {
-      "ticker": "KRDMD",
+      "ticker": "TUPRS",
       "period": "daily",
       "direction": "buy",
-      "opened_at": "2026-03-23 11:20",
-      "start_price": 28.28,
-      "target_price": 28.7,
+      "opened_at": "2026-03-23 11:49",
+      "start_price": 254.5,
+      "target_price": 258.32,
       "signal": "HAFİF AL",
-      "confidence": 22.7,
-      "score": 10.0
+      "confidence": 66.8,
+      "score": 23.7
     },
     {
       "ticker": "ARCLK",
@@ -268,17 +345,6 @@
       "score": 14.2
     },
     {
-      "ticker": "SASA",
-      "period": "daily",
-      "direction": "buy",
-      "opened_at": "2026-03-23 04:15",
-      "start_price": 2.42,
-      "target_price": 2.46,
-      "signal": "HAFİF AL",
-      "confidence": 36.8,
-      "score": 12.8
-    },
-    {
       "ticker": "THYAO",
       "period": "weekly",
       "direction": "sell",
@@ -288,17 +354,6 @@
       "signal": "SAT",
       "confidence": 60.4,
       "score": -25.6
-    },
-    {
-      "ticker": "TKFEN",
-      "period": "weekly",
-      "direction": "buy",
-      "opened_at": "2026-03-23 04:15",
-      "start_price": 79.45,
-      "target_price": 82.63,
-      "signal": "HAFİF AL",
-      "confidence": 74.0,
-      "score": 22.8
     },
     {
       "ticker": "TOASO",
