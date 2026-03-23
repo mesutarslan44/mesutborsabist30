@@ -240,7 +240,7 @@
         } catch (err) {
             console.error('Veri hatası:', err);
             document.getElementById('stockTableBody').innerHTML =
-                '<tr><td colspan="11" style="text-align:center;padding:40px;color:var(--bear-red);">⚠️ Veriler yüklenemedi. Lütfen sayfayı yenileyin.</td></tr>';
+                '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--bear-red);">⚠️ Veriler yüklenemedi. Lütfen sayfayı yenileyin.</td></tr>';
         }
     }
 
@@ -250,6 +250,7 @@
         renderMarketBar,
         renderSignalSummary,
         renderCommandCenter,
+        renderFirstDecision,
         renderDisciplineGuide,
         renderDataFreshness,
     ];
@@ -427,6 +428,46 @@
         }
 
         startRefreshCountdown(summaryData.updated_at);
+    }
+
+    function getActionText(signalEn, confidence) {
+        var conf = Number(confidence || 0);
+        if (['STRONG_BUY', 'BUY'].indexOf(signalEn) >= 0) {
+            return conf >= 70 ? 'Kademeli al ve stop koy' : 'Kucuk lotla izle';
+        }
+        if (signalEn === 'WEAK_BUY') return 'Teyit bekle, acele etme';
+        if (['STRONG_SELL', 'SELL'].indexOf(signalEn) >= 0) return 'Pozisyonu azalt/korun';
+        if (signalEn === 'WEAK_SELL') return 'Temkinli ol, stopu sikilastir';
+        return 'Bekle ve teyit ara';
+    }
+
+    function renderFirstDecision() {
+        if (!summaryData || !summaryData.stocks) return;
+        var container = document.getElementById('firstDecisionList');
+        if (!container) return;
+
+        var prioritized = summaryData.stocks.slice().sort(function (a, b) {
+            return (b.score || 0) - (a.score || 0);
+        });
+
+        var html = '';
+        for (var i = 0; i < prioritized.length && i < 3; i++) {
+            var s = prioritized[i];
+            var action = getActionText(s.signal_en, s.confidence);
+            html += '<a class="first-decision-item" href="hisse.html?ticker=' + s.ticker + '">';
+            html += '<div class="first-decision-left">';
+            html += '<strong>' + s.ticker + '</strong>';
+            html += '<span>' + (s.name || '') + '</span>';
+            html += '</div>';
+            html += '<div class="first-decision-mid">';
+            html += '<span class="signal-badge ' + getSignalClass(s.signal_en) + '"><span class="dot"></span>' + (s.signal || 'BEKLE') + '</span>';
+            html += '<span class="first-decision-confidence">Guven %' + (Number(s.confidence || 0)).toFixed(0) + '</span>';
+            html += '</div>';
+            html += '<div class="first-decision-right">' + action + '</div>';
+            html += '</a>';
+        }
+
+        container.innerHTML = html || '<div class="first-decision-empty">Oncelikli hisse bulunamadi.</div>';
     }
 
 
@@ -801,11 +842,9 @@
         var html = '';
         for (var i = 0; i < stocks.length; i++) {
             var s = stocks[i];
-            var scoreBarWidth = Math.min(Math.abs(s.score || 0), 100);
-            var scoreColor = (s.score || 0) >= 0 ? 'var(--bull-green)' : 'var(--bear-red)';
-
             html += '<tr class="stock-row" onclick="window.location.href=\'hisse.html?ticker=' + s.ticker + '\'" style="animation-delay:' + (i * 30) + 'ms">';
-            var volumeText = (s.volume_ratio == null || isNaN(s.volume_ratio)) ? '--' : Number(s.volume_ratio).toFixed(1) + 'x';
+            var actionText = getActionText(s.signal_en, s.confidence);
+            var confidenceText = '%' + Number(s.confidence || 0).toFixed(0);
 
             html += '<td data-label="Hisse"><div class="stock-cell-name">';
             html += '<strong>' + s.ticker + '</strong>';
@@ -814,25 +853,13 @@
             html += '<td data-label="Fiyat" class="price-cell"><div class="price-main">' + formatPrice(s.price) + '</div>';
             html += '<div class="price-ranges">3A: ' + formatRange(s.range_3m) + ' | 6A: ' + formatRange(s.range_6m) + '</div></td>';
             html += '<td data-label="Degisim"><span class="stock-change ' + getChangeClass(s.change_pct) + '">' + formatPercent(s.change_pct) + '</span></td>';
-            html += '<td data-label="RSI">' + (s.rsi ? s.rsi.toFixed(1) : '--') + '</td>';
-            html += '<td data-label="Stoch">' + (s.stoch_k ? s.stoch_k.toFixed(1) : '--') + '</td>';
-            html += '<td data-label="ADX">' + (s.adx ? s.adx.toFixed(1) : '--') + '</td>';
-            html += '<td data-label="Hacim">' + volumeText + '</td>';
-            var setup = getSetupGrade(s);
-            var rr = calculateRewardRisk(s);
-            var rrText = rr == null ? '--' : rr.toFixed(2) + 'R';
-            var rrClass = rr == null ? 'rr-neutral' : (rr >= 1.5 ? 'rr-good' : (rr >= 1.2 ? 'rr-mid' : 'rr-low'));
-            html += '<td data-label="Setup"><span class="setup-badge ' + setup.cls + '">' + setup.grade + '</span><span class="setup-hint">' + setup.hint + '</span></td>';
-            html += '<td data-label="R"><span class="rr-badge ' + rrClass + '">' + rrText + '</span></td>';
             html += '<td data-label="Sinyal"><span class="signal-badge ' + getSignalClass(s.signal_en) + '"><span class="dot"></span>' + s.signal + '</span></td>';
-            html += '<td data-label="Puan"><div class="score-cell">';
-            html += '<span class="score-value" style="color:' + scoreColor + '">' + (s.score >= 0 ? '+' : '') + (s.score || 0).toFixed(1) + '</span>';
-            html += '<div class="score-bar"><div class="score-bar-fill" style="width:' + scoreBarWidth + '%;background:' + scoreColor + ';"></div></div>';
-            html += '</div></td>';
+            html += '<td data-label="Guven"><span class="table-confidence">' + confidenceText + '</span></td>';
+            html += '<td data-label="Aksiyon"><span class="table-action">' + actionText + '</span></td>';
             html += '</tr>';
         }
 
-        tbody.innerHTML = html || '<tr><td colspan="11" style="text-align:center;padding:40px;">Sonuç bulunamadı</td></tr>';
+        tbody.innerHTML = html || '<tr><td colspan="6" style="text-align:center;padding:40px;">Sonuç bulunamadı</td></tr>';
     }
 
     // ── Data Freshness ──
@@ -917,10 +944,43 @@
         }
     }
 
+    function setupAdvancedModeToggle() {
+        var btn = document.getElementById('advancedToggleButton');
+        var text = document.getElementById('advancedToggleText');
+        if (!btn || !text) return;
+
+        function setState(showAdvanced) {
+            document.body.classList.add('advanced-enabled');
+            document.body.classList.toggle('advanced-open', showAdvanced);
+            btn.textContent = showAdvanced ? 'Detayli modu kapat' : 'Detayli modu ac';
+            text.textContent = showAdvanced
+                ? 'Detayli mod acik: tum teknik icerikler gorunuyor.'
+                : 'Basit mod acik: sadece karar icin gerekli alanlar gorunuyor.';
+            try {
+                localStorage.setItem('advancedMode', showAdvanced ? '1' : '0');
+            } catch (e) {
+                // no-op
+            }
+        }
+
+        var show = false;
+        try {
+            show = localStorage.getItem('advancedMode') === '1';
+        } catch (e) {
+            show = false;
+        }
+        setState(show);
+
+        btn.addEventListener('click', function () {
+            setState(!document.body.classList.contains('advanced-open'));
+        });
+    }
+
     // ── Init ──
     function init() {
         setupMatrixIntro();
         setupEvents();
+        setupAdvancedModeToggle();
         loadData();
     }
 

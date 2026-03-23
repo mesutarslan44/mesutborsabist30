@@ -113,6 +113,118 @@
         el.textContent = msg;
     }
 
+    function renderActionPlan(rec, indicators) {
+        if (!rec) return;
+
+        var resultEl = document.getElementById('planResult');
+        var whyEl = document.getElementById('planWhy');
+        var riskEl = document.getElementById('planRisk');
+        var actionEl = document.getElementById('planAction');
+        if (!resultEl || !whyEl || !riskEl || !actionEl) return;
+
+        var signal = rec.signal_en || 'HOLD';
+        var details = rec.details || [];
+        var positives = [];
+        var negatives = [];
+        for (var i = 0; i < details.length; i++) {
+            if (details[i].score > 0) positives.push(details[i].indicator);
+            if (details[i].score < 0) negatives.push(details[i].indicator);
+        }
+
+        var resultText = 'Sonuc: Bekle';
+        var actionText = 'Aksiyon: Net teyit gelene kadar yeni pozisyonda acele etme.';
+        if (['STRONG_BUY', 'BUY', 'WEAK_BUY'].indexOf(signal) >= 0) {
+            resultText = 'Sonuc: Al yonu agir basiyor';
+            actionText = 'Aksiyon: Kademeli giris yap, stop seviyesini emirle birlikte tanimla.';
+        } else if (['STRONG_SELL', 'SELL', 'WEAK_SELL'].indexOf(signal) >= 0) {
+            resultText = 'Sonuc: Satis riski yuksek';
+            actionText = 'Aksiyon: Pozisyonu azalt veya korunma planini one al.';
+        }
+
+        var whyText = 'Neden: ' + (positives.length ? positives.slice(0, 3).join(', ') + ' pozitif.' : 'Guclu pozitif sinyal yok.');
+        var riskText = 'Risk: ' + (negatives.length ? negatives.slice(0, 3).join(', ') + ' tarafi baski olusturuyor.' : 'Belirgin negatif baski zayif.');
+
+        if (indicators && indicators.adx != null && indicators.adx < 20) {
+            riskText += ' Trend gucu dusuk (ADX<20), yalanci hareket riski artar.';
+        }
+
+        resultEl.textContent = resultText;
+        whyEl.textContent = whyText;
+        riskEl.textContent = riskText;
+        actionEl.textContent = actionText;
+    }
+
+    function renderIndicatorGuide(indicators) {
+        var grid = document.getElementById('indicatorGuideGrid');
+        if (!grid || !indicators) return;
+
+        function buildItem(title, status, meaning, impact) {
+            return '<div class="indicator-guide-item">'
+                + '<div class="indicator-guide-name">' + title + '</div>'
+                + '<div class="indicator-guide-status">Durum: ' + status + '</div>'
+                + '<div class="indicator-guide-text">Anlami: ' + meaning + '</div>'
+                + '<div class="indicator-guide-text">Kullaniciya etkisi: ' + impact + '</div>'
+                + '</div>';
+        }
+
+        var html = '';
+        var rsi = Number(indicators.rsi);
+        html += buildItem(
+            'RSI',
+            rsi >= 70 ? 'Asiri alim' : (rsi <= 30 ? 'Asiri satim' : 'Notr'),
+            'RSI fiyatin yorulup yorulmadigini gosterir.',
+            rsi >= 70 ? 'Yukselis surse de duzeltme riski artar.' : (rsi <= 30 ? 'Tepki alimi ihtimali artar, teyit beklenir.' : 'Tek basina karar verdirmez, diger sinyallerle okunur.')
+        );
+
+        var macd = Number(indicators.macd);
+        var macdSignal = Number(indicators.macd_signal);
+        html += buildItem(
+            'MACD',
+            macd > macdSignal ? 'Pozitif ivme' : 'Negatif ivme',
+            'MACD trend ivmesinin guclenip guclenmedigini gosterir.',
+            macd > macdSignal ? 'Alis momentumu desteklenir, kademeli plan tercih edilir.' : 'Dusus baskisi suruyor olabilir, korunma onceliklidir.'
+        );
+
+        var adx = Number(indicators.adx);
+        html += buildItem(
+            'ADX',
+            adx >= 25 ? 'Trend guclu' : 'Trend zayif',
+            'ADX yonu degil trend gucunu olcer.',
+            adx >= 25 ? 'Trend yonunde pozisyonlar daha anlamli olur.' : 'Yatay piyasada yalanci kirilimlar artabilir.'
+        );
+
+        var stoch = Number(indicators.stoch_k);
+        html += buildItem(
+            'Stochastic',
+            stoch >= 80 ? 'Asiri alim' : (stoch <= 20 ? 'Asiri satim' : 'Notr'),
+            'Kisa vadeli asiri alim/satim bolgesini gosterir.',
+            stoch >= 80 ? 'Hizli duzeltme riski icin stop disiplini onemli.' : (stoch <= 20 ? 'Tepki ihtimali var, teyitsiz erken giris riskli.' : 'Kisa vadede yon teyidi beklenmeli.')
+        );
+
+        var volumeRatio = Number(indicators.volume_ratio);
+        html += buildItem(
+            'Hacim',
+            volumeRatio >= 1 ? 'Ortalama ustu' : 'Zayif hacim',
+            'Hacim fiyat hareketinin guvenilirligini destekler.',
+            volumeRatio >= 1 ? 'Sinyal daha guvenilir olabilir.' : 'Hareketin devami zayif kalabilir, temkin gerekir.'
+        );
+
+        var bbUpper = Number(indicators.bb_upper);
+        var bbLower = Number(indicators.bb_lower);
+        var price = Number(indicators.price);
+        var bbStatus = 'Bant ortasi';
+        if (price >= bbUpper) bbStatus = 'Ust banda yakin';
+        if (price <= bbLower) bbStatus = 'Alt banda yakin';
+        html += buildItem(
+            'Bollinger',
+            bbStatus,
+            'Bantlar normal fiyat oynaklik araligini gosterir.',
+            price >= bbUpper ? 'Yukselis guclu ama kar realizasyonu riski artis gosterebilir.' : (price <= bbLower ? 'Tepki ihtimali var ama dusus trendi bitmis sayilmaz.' : 'Fiyat dengeli bolgede, tek basina sinyal degil.')
+        );
+
+        grid.innerHTML = html;
+    }
+
     function renderDecisionCockpit(rec, indicators) {
         var scenarioEl = document.getElementById('scenarioText');
         var disciplineEl = document.getElementById('disciplineText');
@@ -493,8 +605,10 @@
         renderHeader(stockData, periodData);
         renderRecommendation(periodData.recommendation);
         renderQuickDecision(periodData.recommendation, periodData.indicators);
+        renderActionPlan(periodData.recommendation, periodData.indicators);
         renderDecisionCockpit(periodData.recommendation, periodData.indicators);
         renderTradePlaybook(periodData.recommendation, periodData.indicators);
+        renderIndicatorGuide(periodData.indicators);
         renderExplanation(periodData.recommendation);
         renderTargets(periodData.recommendation, periodData.indicators);
         renderLevels(periodData.recommendation, periodData.indicators);
@@ -519,7 +633,40 @@
         }
     }
 
+    function setupAdvancedModeToggle() {
+        var btn = document.getElementById('advancedToggleButton');
+        var text = document.getElementById('advancedToggleText');
+        if (!btn || !text) return;
+
+        function setState(showAdvanced) {
+            document.body.classList.add('advanced-enabled');
+            document.body.classList.toggle('advanced-open', showAdvanced);
+            btn.textContent = showAdvanced ? 'Detayli modu kapat' : 'Detayli modu ac';
+            text.textContent = showAdvanced
+                ? 'Detayli mod acik: tum teknik icerikler gorunuyor.'
+                : 'Basit mod acik: teknik bloklar gizli.';
+            try {
+                localStorage.setItem('advancedMode', showAdvanced ? '1' : '0');
+            } catch (e) {
+                // no-op
+            }
+        }
+
+        var show = false;
+        try {
+            show = localStorage.getItem('advancedMode') === '1';
+        } catch (e) {
+            show = false;
+        }
+        setState(show);
+
+        btn.addEventListener('click', function () {
+            setState(!document.body.classList.contains('advanced-open'));
+        });
+    }
+
     async function init() {
+        setupAdvancedModeToggle();
         var ticker = getTickerFromUrl();
         if (!ticker) { showError('URL\'de hisse kodu bulunamadı.'); return; }
         if (!window.BistCharts) { showError('Grafik modülü yüklenemedi.'); return; }
