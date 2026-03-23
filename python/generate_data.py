@@ -8,6 +8,7 @@ import json
 import os
 import sys
 import time
+import pytz
 from datetime import datetime, timedelta
 
 import pandas as pd
@@ -170,7 +171,7 @@ def fetch_index_analysis(ticker, name):
 
 def generate_news_feed():
     """Piyasa durumuna göre otomatik haber/yorum üretir."""
-    now = datetime.now()
+    now = datetime.now(pytz.timezone('Europe/Istanbul'))
     news = [
         {
             "title": "📊 BIST 30 Teknik Analiz Raporu Güncellendi",
@@ -212,7 +213,7 @@ def process_stock(ticker_yahoo, info, all_data):
         "ticker_yahoo": ticker_yahoo,
         "name": info["name"],
         "sector": info["sector"],
-        "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "updated_at": datetime.now(pytz.timezone('Europe/Istanbul')).strftime("%Y-%m-%d %H:%M"),
         "update_frequency": "Borsa saatleri içerisinde (10:00 - 18:30) her saat başı otomatik güncellenir.",
         "periods": {}
     }
@@ -247,12 +248,12 @@ def main():
 
     print("\n" + "█" * 60)
     print("  BIST 30 GELİŞMİŞ ANALİZ MOTORU v2.0")
-    print(f"  {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"  {datetime.now(pytz.timezone('Europe/Istanbul')).strftime('%Y-%m-%d %H:%M:%S')}")
     print("  9 Gösterge | Hedef Fiyatlar | Detaylı Açıklamalar")
     print("█" * 60 + "\n")
 
     ensure_output_dir()
-    generated_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+    generated_at = datetime.now(pytz.timezone('Europe/Istanbul')).strftime("%Y-%m-%d %H:%M")
 
     # 1. Endeks bilgileri
     print("📊 Endeks bilgileri alınıyor...")

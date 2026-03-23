@@ -5,32 +5,41 @@ Yahoo Finance'den BIST 30 hisse verilerini çekme modülü
 
 import yfinance as yf
 import pandas as pd
+import time
+import pytz
 from datetime import datetime, timedelta
 from config import BIST30_TICKERS, DATA_PERIODS
 
 
-def fetch_stock_data(ticker, period="1y", interval="1d"):
-    """Tek bir hisse için veri çeker."""
-    try:
-        stock = yf.Ticker(ticker)
-        df = stock.history(period=period, interval=interval)
-        if df.empty:
-            print(f"  ⚠ {ticker}: Veri bulunamadı")
+def fetch_stock_data(ticker, period="1y", interval="1d", retries=1):
+    """Tek bir hisse için veri çeker. Hata durumunda tekrar dener."""
+    for attempt in range(retries + 1):
+        try:
+            stock = yf.Ticker(ticker)
+            df = stock.history(period=period, interval=interval)
+            if df.empty:
+                if attempt < retries:
+                    time.sleep(1)
+                    continue
+                print(f"  ⚠ {ticker}: Veri bulunamadı")
+                return None
+            # Sütun isimlerini standartlaştır
+            df = df.rename(columns={
+                "Open": "open",
+                "High": "high",
+                "Low": "low",
+                "Close": "close",
+                "Volume": "volume",
+            })
+            df.index = df.index.tz_localize(None)
+            df = df[["open", "high", "low", "close", "volume"]]
+            return df
+        except Exception as e:
+            if attempt < retries:
+                time.sleep(1)
+                continue
+            print(f"  ✗ {ticker}: Hata - {e}")
             return None
-        # Sütun isimlerini standartlaştır
-        df = df.rename(columns={
-            "Open": "open",
-            "High": "high",
-            "Low": "low",
-            "Close": "close",
-            "Volume": "volume",
-        })
-        df.index = df.index.tz_localize(None)
-        df = df[["open", "high", "low", "close", "volume"]]
-        return df
-    except Exception as e:
-        print(f"  ✗ {ticker}: Hata - {e}")
-        return None
 
 
 def fetch_all_stocks(period="1y", interval="1d"):
@@ -51,6 +60,9 @@ def fetch_all_stocks(period="1y", interval="1d"):
             print(f"✓ {len(df)} kayıt - Son: ₺{last_price:.2f}")
         else:
             print("✗ Atlandı")
+        
+        # Rate limiting için kısa bir bekleme (Yahoo Finance banlamasını önler)
+        time.sleep(0.5)
     
     print(f"\n  Toplam: {len(all_data)}/{total} hisse başarıyla çekildi\n")
     return all_data
@@ -93,11 +105,12 @@ def get_market_info():
     except Exception as e:
         print(f"  ✗ XU030 endeks bilgisi alınamadı: {e}")
     
+    tz_istanbul = pytz.timezone('Europe/Istanbul')
     return {
         "index_value": 0,
         "change_percent": 0,
         "volume": 0,
         "high": 0,
         "low": 0,
-        "date": str(datetime.now().date()),
+        "date": str(datetime.now(tz_istanbul).date()),
     }

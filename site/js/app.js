@@ -290,7 +290,8 @@
         }
 
         if (!res.ok) {
-            return { ok: false, message: payload.message || 'Yenileme tetiklenemedi.' };
+            var detailMsg = payload.detail ? ' Detay: ' + payload.detail : '';
+            return { ok: false, message: (payload.message || 'Yenileme tetiklenemedi.') + detailMsg };
         }
 
         return { ok: true, runUrl: payload.run_url || '', message: payload.message || '' };

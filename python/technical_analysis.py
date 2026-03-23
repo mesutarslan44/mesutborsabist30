@@ -148,6 +148,13 @@ def calculate_targets(indicators, period_name="daily"):
         return {}
 
     multipliers = TARGET_MULTIPLIERS.get(period_name, TARGET_MULTIPLIERS["daily"])
+    atr_pct = indicators.get("atr_pct", multipliers.get("stop_pct", 0.02))
+    
+    dynamic_stop = max(0.015, min(0.08, atr_pct))
+    dynamic_target = dynamic_stop * 1.5
+    
+    multipliers = {"target_pct": dynamic_target, "stop_pct": dynamic_stop}
+    
     score = indicators.get("_score", 0)
 
     # Score'a göre hedef ayarla
@@ -197,6 +204,13 @@ def calculate_all_indicators(df):
     result["stoch_k"], result["stoch_d"] = calculate_stochastic(df)
     result["adx"], result["plus_di"], result["minus_di"] = calculate_adx(df)
     result["volume_avg"], result["volume_ratio"] = calculate_volume_analysis(df)
+    tr1 = df["high"] - df["low"]
+    tr2 = (df["high"] - df["close"].shift(1)).abs()
+    tr3 = (df["low"] - df["close"].shift(1)).abs()
+    tr = pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
+    result["atr"] = tr.rolling(window=14, min_periods=1).mean()
+    result["atr_pct"] = result["atr"] / df["close"]
+    
     result["change_pct"] = df["close"].pct_change() * 100
     result["change_pct_5d"] = df["close"].pct_change(periods=5) * 100
     result["change_pct_20d"] = df["close"].pct_change(periods=20) * 100
