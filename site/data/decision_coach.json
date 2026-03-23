@@ -3,18 +3,18 @@
   "quality_grade": "A",
   "quality_note": "Sistem su an daha tutarli; yine de risk sabit kalmali.",
   "rule_violation": {
-    "score": 84.0,
+    "score": 84.7,
     "label": "Iyi",
     "summary": "Kural ihlali riski dusuk; disiplin korunuyor.",
     "components": [
       {
         "name": "Dusuk Guvenli Islemler",
-        "value": "%32.5",
+        "value": "%31.2",
         "help": "Ne ise yarar? Guveni dusuk islemleri azaltman gerekip gerekmedigini soyler."
       },
       {
         "name": "Zayif Skorlu Islemler",
-        "value": "%25.0",
+        "value": "%23.8",
         "help": "Ne ise yarar? Setup filtresini ne kadar sikilastirman gerektigini gosterir."
       },
       {
