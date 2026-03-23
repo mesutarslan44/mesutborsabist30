@@ -476,7 +476,7 @@
         if (!summaryData) return;
         var counts = summaryData.signal_counts || {};
 
-        animateCounter('totalCount', summaryData.total_stocks || 0);
+        animateCounter('totalCount', summaryData.total_stocks || summaryData.total_assets || 0);
         animateCounter('buyCount', (counts.STRONG_BUY || 0) + (counts.BUY || 0) + (counts.WEAK_BUY || 0));
         animateCounter('holdCount', counts.HOLD || 0);
         animateCounter('sellCount', (counts.STRONG_SELL || 0) + (counts.SELL || 0) + (counts.WEAK_SELL || 0));
@@ -728,6 +728,9 @@
     // ── Top Signals ──
     function renderTopSignals() {
         if (!marketData) return;
+        var topBuysEl = document.getElementById('topBuys');
+        var topSellsEl = document.getElementById('topSells');
+        if (!topBuysEl || !topSellsEl) return;
 
         var buysHtml = '';
         var buys = marketData.top_buys || [];
@@ -743,7 +746,7 @@
             buysHtml += '<span class="score-value" style="color:' + s.color + '">+' + s.score.toFixed(1) + '</span>';
             buysHtml += '</div></a>';
         }
-        document.getElementById('topBuys').innerHTML = buysHtml || '<div style="padding:16px;color:var(--text-muted);">Güçlü AL sinyali yok</div>';
+        topBuysEl.innerHTML = buysHtml || '<div style="padding:16px;color:var(--text-muted);">Güçlü AL sinyali yok</div>';
 
         var sellsHtml = '';
         var sells = marketData.top_sells || [];
@@ -759,7 +762,7 @@
             sellsHtml += '<span class="score-value" style="color:' + t.color + '">' + t.score.toFixed(1) + '</span>';
             sellsHtml += '</div></a>';
         }
-        document.getElementById('topSells').innerHTML = sellsHtml || '<div style="padding:16px;color:var(--text-muted);">Güçlü SAT sinyali yok</div>';
+        topSellsEl.innerHTML = sellsHtml || '<div style="padding:16px;color:var(--text-muted);">Güçlü SAT sinyali yok</div>';
     }
 
     function renderDecisionCoach() {
