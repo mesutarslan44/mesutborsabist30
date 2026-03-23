@@ -14,6 +14,8 @@
     let currentSort = { key: 'score', dir: 'desc' };
     let refreshTimer = null;
     let freshnessTimer = null;
+    const REFRESH_ENDPOINT = '/api/refresh';
+    const REFRESH_KEY_STORAGE = 'refreshApiKey';
 
     let matrixAnimId = null;
 
@@ -224,6 +226,95 @@
         if (!statusEl) return;
         statusEl.textContent = message;
         statusEl.style.color = isError ? 'var(--bear-red)' : 'var(--text-muted)';
+    }
+
+
+    function getStoredRefreshKey() {
+        try {
+            return localStorage.getItem(REFRESH_KEY_STORAGE) || '';
+        } catch (e) {
+            return '';
+        }
+    }
+
+    function setStoredRefreshKey(val) {
+        try {
+            if (val) localStorage.setItem(REFRESH_KEY_STORAGE, val);
+        } catch (e) {
+            // no-op
+        }
+    }
+
+    function clearStoredRefreshKey() {
+        try {
+            localStorage.removeItem(REFRESH_KEY_STORAGE);
+        } catch (e) {
+            // no-op
+        }
+    }
+
+    async function triggerServerRefresh() {
+        var key = getStoredRefreshKey();
+
+        async function sendRequest(secret) {
+            var headers = { 'Content-Type': 'application/json' };
+            if (secret) headers['x-refresh-key'] = secret;
+            return fetch(REFRESH_ENDPOINT, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({ source: 'dashboard_manual' })
+            });
+        }
+
+        var res = await sendRequest(key);
+
+        if (res.status === 401) {
+            var inputKey = window.prompt('Yenileme anahtarini gir (tek sefer kaydedilir):', '');
+            if (!inputKey) {
+                return { ok: false, cancelled: true, message: 'Yenileme iptal edildi.' };
+            }
+            res = await sendRequest(inputKey.trim());
+            if (res.ok) setStoredRefreshKey(inputKey.trim());
+        }
+
+        var payload = {};
+        try {
+            payload = await res.json();
+        } catch (e) {
+            payload = {};
+        }
+
+        if (res.status === 401) {
+            clearStoredRefreshKey();
+            return { ok: false, message: payload.message || 'Yenileme anahtari gecersiz.' };
+        }
+
+        if (!res.ok) {
+            return { ok: false, message: payload.message || 'Yenileme tetiklenemedi.' };
+        }
+
+        return { ok: true, runUrl: payload.run_url || '', message: payload.message || '' };
+    }
+
+    async function waitForFreshSnapshot(previousUpdatedAt) {
+        var maxAttempts = 24;
+        var delayMs = 15000;
+
+        for (var i = 0; i < maxAttempts; i++) {
+            await new Promise(function (resolve) { setTimeout(resolve, delayMs); });
+            var ok = await loadData(true);
+            if (!ok || !summaryData) continue;
+
+            var nextUpdatedAt = summaryData.updated_at || '';
+            if (nextUpdatedAt && nextUpdatedAt !== previousUpdatedAt) {
+                return { ok: true, updatedAt: nextUpdatedAt };
+            }
+
+            var remaining = Math.max(0, Math.ceil(((maxAttempts - i - 1) * delayMs) / 60000));
+            setManualRefreshStatus('Analiz calisiyor... yeni veri bekleniyor (yaklasik ' + remaining + ' dk).', false);
+        }
+
+        return { ok: false };
     }
 
     // ── Load Data ──
@@ -979,17 +1070,38 @@
                 if (manualRefreshBtn.disabled) return;
                 manualRefreshBtn.disabled = true;
                 manualRefreshBtn.textContent = 'Yenileniyor...';
-                setManualRefreshStatus('Sunucudan en guncel veriler cekiliyor...', false);
+                setManualRefreshStatus('Canli analiz tetikleniyor...', false);
 
-                var ok = await loadData(true);
-                if (ok) {
-                    setManualRefreshStatus('Veriler yenilendi. Son kontrol: ' + formatDateTime(new Date()), false);
-                } else {
-                    setManualRefreshStatus('Yenileme basarisiz oldu. Biraz sonra tekrar dene.', true);
+                try {
+                    var previousUpdatedAt = (summaryData && summaryData.updated_at) || '';
+                    var triggerResult = await triggerServerRefresh();
+
+                    if (!triggerResult.ok) {
+                        if (!triggerResult.cancelled) {
+                            setManualRefreshStatus(triggerResult.message || 'Canli yenileme basarisiz.', true);
+                        }
+                        return;
+                    }
+
+                    setManualRefreshStatus('Analiz basladi. Yeni veri olusunca otomatik yuklenecek...', false);
+                    var refreshResult = await waitForFreshSnapshot(previousUpdatedAt);
+
+                    if (refreshResult.ok) {
+                        var extra = triggerResult.runUrl ? ' | Is akisi: ' + triggerResult.runUrl : '';
+                        setManualRefreshStatus('Yeni veri alindi: ' + refreshResult.updatedAt + extra, false);
+                    } else {
+                        var fallback = triggerResult.runUrl
+                            ? 'Is akisini ac: ' + triggerResult.runUrl
+                            : 'GitHub Actions ekranindan calisma durumunu kontrol et.';
+                        setManualRefreshStatus('Analiz suruyor olabilir. ' + fallback, true);
+                    }
+                } catch (e) {
+                    console.error('Manual refresh error:', e);
+                    setManualRefreshStatus('Canli yenileme sirasinda hata olustu.', true);
+                } finally {
+                    manualRefreshBtn.disabled = false;
+                    manualRefreshBtn.textContent = 'Simdi Yenile';
                 }
-
-                manualRefreshBtn.disabled = false;
-                manualRefreshBtn.textContent = 'Simdi Yenile';
             });
         }
 
