@@ -5,9 +5,16 @@
     var summaryData = null;
     var currentStatusFilter = 'ALL';
 
-    function formatPrice(val) {
+    function formatPrice(val, ticker) {
         if (val == null || isNaN(val)) return '--';
-        return 'TL ' + Number(val).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        var isAgbe = window.location.pathname.includes('/agbe');
+        var prefix = 'TL ';
+        if (isAgbe && ticker && (ticker === 'BTC-USD' || ticker === 'ETH-USD')) {
+            prefix = '$';
+        } else if (isAgbe && ticker && (ticker === 'GC=F' || ticker === 'SI=F')) {
+            prefix = '₺';
+        }
+        return prefix + Number(val).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     function formatPct(val) {
@@ -129,9 +136,9 @@
             rows += '<td data-label="Periyot">' + formatPeriod(t.period) + '</td>';
             rows += '<td data-label="Yon">' + formatDirection(t.direction) + '</td>';
             rows += '<td data-label="Acilis">' + (t.opened_at || '--') + '</td>';
-            rows += '<td data-label="Baslangic">' + formatPrice(t.start_price) + '</td>';
-            rows += '<td data-label="Hedef">' + formatPrice(t.target_price) + '</td>';
-            rows += '<td data-label="Son Fiyat">' + formatPrice(latest) + '</td>';
+            rows += '<td data-label="Baslangic">' + formatPrice(t.start_price, t.ticker) + '</td>';
+            rows += '<td data-label="Hedef">' + formatPrice(t.target_price, t.ticker) + '</td>';
+            rows += '<td data-label="Son Fiyat">' + formatPrice(latest, t.ticker) + '</td>';
             rows += '<td data-label="Mesafe">' + calcDistance(t.direction, t.target_price, latest) + '</td>';
             rows += '<td data-label="Sinyal"><span class="signal-badge ' + statusClass + '"><span class="dot"></span>' + (t.signal || '--') + '</span></td>';
             rows += '</tr>';
@@ -160,8 +167,8 @@
             rows += '<td data-label="Yon">' + formatDirection(r.direction) + '</td>';
             rows += '<td data-label="Acilis">' + (r.opened_at || '--') + '</td>';
             rows += '<td data-label="Kapanis">' + (r.closed_at || '--') + '</td>';
-            rows += '<td data-label="Hedef">' + formatPrice(r.target_price) + '</td>';
-            rows += '<td data-label="Kapanis Fiyati">' + formatPrice(r.close_price) + '</td>';
+            rows += '<td data-label="Hedef">' + formatPrice(r.target_price, r.ticker) + '</td>';
+            rows += '<td data-label="Kapanis Fiyati">' + formatPrice(r.close_price, r.ticker) + '</td>';
             rows += '<td data-label="Gun">' + Number(r.days_to_result || 0) + '</td>';
             rows += '<td data-label="Durum"><span class="signal-badge ' + badgeClass + '"><span class="dot"></span>' + badgeText + '</span></td>';
             rows += '</tr>';
