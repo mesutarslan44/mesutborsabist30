@@ -987,11 +987,25 @@
                 tlInfoHtml = ' | <span style="font-weight: 500; color: var(--color-primary);">' + s.tl_info + '</span>';
             }
 
+            // Currency-aware price display for AGBE
+            var isAgbePage = window.location.pathname.includes('/agbe');
+            var displayPrice = '';
+            if (isAgbePage && (s.ticker === 'GC=F' || s.ticker === 'SI=F')) {
+                // Altın/Gümüş: TL gram fiyatı göster
+                var tlMatch = s.tl_info ? s.tl_info.match(/[\d.,]+/) : null;
+                displayPrice = '₺' + (tlMatch ? tlMatch[0] : formatPrice(s.price));
+            } else if (isAgbePage && (s.ticker === 'BTC-USD' || s.ticker === 'ETH-USD')) {
+                // Kripto: USD göster
+                displayPrice = '$' + Number(s.price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            } else {
+                displayPrice = formatPrice(s.price);
+            }
+
             html += '<td data-label="Hisse"><div class="stock-cell-name">';
             html += '<strong>' + s.ticker + '</strong>';
             html += '<span class="stock-sector">' + s.name + ' · ' + s.sector + tlInfoHtml + '</span>';
             html += '</div></td>';
-            html += '<td data-label="Fiyat" class="price-cell"><div class="price-main">' + formatPrice(s.price) + '</div>';
+            html += '<td data-label="Fiyat" class="price-cell"><div class="price-main">' + displayPrice + '</div>';
             html += '<div class="price-ranges">3A: ' + formatRange(s.range_3m) + ' | 6A: ' + formatRange(s.range_6m) + '</div></td>';
             html += '<td data-label="Degisim"><span class="stock-change ' + getChangeClass(s.change_pct) + '">' + formatPercent(s.change_pct) + '</span></td>';
             html += '<td data-label="Sinyal"><span class="signal-badge ' + getSignalClass(s.signal_en) + '"><span class="dot"></span>' + s.signal + '</span></td>';
