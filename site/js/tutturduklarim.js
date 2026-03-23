@@ -156,6 +156,34 @@
         tbody.innerHTML = rows || '<tr><td colspan="9" class="loading-cell">Bu filtreye uygun kayit yok.</td></tr>';
     }
 
+    function setupMobileNav() {
+        var btn = document.getElementById('navToggle');
+        var panel = document.getElementById('mobileNavPanel');
+        if (!btn || !panel) return;
+
+        function closeNav() {
+            document.body.classList.remove('nav-open');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+
+        btn.addEventListener('click', function () {
+            var isOpen = document.body.classList.toggle('nav-open');
+            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        panel.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', closeNav);
+        });
+
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 768) closeNav();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeNav();
+        });
+    }
+
     function bindFilters() {
         var tabs = document.querySelectorAll('.perf-filter-tabs .filter-tab');
         for (var i = 0; i < tabs.length; i++) {
@@ -177,6 +205,7 @@
     }
 
     function init() {
+        setupMobileNav();
         Promise.all([
             fetch('data/performance.json').then(function (r) { return r.json(); }),
             fetch('data/summary.json').then(function (r) { return r.json(); })

@@ -41,10 +41,22 @@
                 <a href="index.html#news-section" class="nav-link">Haberler</a>
                 <a href="tutturduklarim.html" class="nav-link">Tutturduklarim</a>
             </div>
+            <button class="nav-toggle" id="navToggle" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mobileNavPanel">
+                <span class="sr-only">Menu</span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
             <div class="update-badge" id="updateBadge">
                 <span class="update-dot"></span>
                 <span id="updateTime">Yükleniyor...</span>
             </div>
+        </div>
+        <div class="mobile-nav-panel" id="mobileNavPanel">
+            <a href="index.html" class="mobile-nav-link active">Dashboard</a>
+            <a href="index.html#stock-table" class="mobile-nav-link">Hisseler</a>
+            <a href="index.html#news-section" class="mobile-nav-link">Haberler</a>
+            <a href="tutturduklarim.html" class="mobile-nav-link">Tutturduklarim</a>
         </div>
     </nav>
 
@@ -100,20 +112,21 @@
         <div class="hero">
             <h1 class="hero-title">BIST 30 <span class="gradient-text">Teknik Analiz</span></h1>
             <p class="hero-desc">
-                Once ne yapman gerektigini gosteririz. Teknik detaylara istersen sonra gecersin.
+                Karar akisini once sade gor: sinyal, risk ve aksiyon tek bakista onunde.
             </p>
         </div>
 
         <div class="focus-flow">
-            <div class="focus-step active">1) Hisse sec</div>
-            <div class="focus-step">2) Yorumu oku</div>
-            <div class="focus-step">3) Aksiyonu uygula</div>
+            <div class="focus-step active">1) Firsatlari Tara</div>
+            <div class="focus-step">2) Riske Bak</div>
+            <div class="focus-step">3) Plani Uygula</div>
         </div>
 
         <div class="first-decision" id="firstDecision">
             <div class="first-decision-head">
-                <h2>Bugun Ne Yapmaliyim?</h2>
+                <h2>Bugunun Karar Panosu</h2>
                 <p>En once bakman gereken hisseler ve tek satir aksiyon ozetleri.</p>
+                <div class="first-decision-meta" id="firstDecisionMeta">Piyasa dagilimi hazirlaniyor...</div>
             </div>
             <div class="first-decision-list" id="firstDecisionList">
                 <div class="first-decision-empty">Oncelikli hisseler hazirlaniyor...</div>

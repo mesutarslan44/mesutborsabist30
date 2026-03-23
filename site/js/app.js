@@ -444,11 +444,20 @@
     function renderFirstDecision() {
         if (!summaryData || !summaryData.stocks) return;
         var container = document.getElementById('firstDecisionList');
+        var meta = document.getElementById('firstDecisionMeta');
         if (!container) return;
 
         var prioritized = summaryData.stocks.slice().sort(function (a, b) {
             return (b.score || 0) - (a.score || 0);
         });
+
+        if (meta) {
+            var counts = summaryData.signal_counts || {};
+            var buyCount = Number(counts.BUY || 0) + Number(counts.WEAK_BUY || 0) + Number(counts.STRONG_BUY || 0);
+            var sellCount = Number(counts.SELL || 0) + Number(counts.WEAK_SELL || 0) + Number(counts.STRONG_SELL || 0);
+            var holdCount = Number(counts.HOLD || 0);
+            meta.textContent = 'AL yonlu ' + buyCount + ' | BEKLE ' + holdCount + ' | SAT yonlu ' + sellCount;
+        }
 
         var html = '';
         for (var i = 0; i < prioritized.length && i < 3; i++) {
@@ -909,6 +918,34 @@
         freshnessTimer = setInterval(repaintFreshness, 30000);
     }
 
+    function setupMobileNav() {
+        var btn = document.getElementById('navToggle');
+        var panel = document.getElementById('mobileNavPanel');
+        if (!btn || !panel) return;
+
+        function closeNav() {
+            document.body.classList.remove('nav-open');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+
+        btn.addEventListener('click', function () {
+            var isOpen = document.body.classList.toggle('nav-open');
+            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        panel.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', closeNav);
+        });
+
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 768) closeNav();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeNav();
+        });
+    }
+
     // ── Events ──
     function setupEvents() {
         // Search
@@ -979,6 +1016,7 @@
     // ── Init ──
     function init() {
         setupMatrixIntro();
+        setupMobileNav();
         setupEvents();
         setupAdvancedModeToggle();
         loadData();

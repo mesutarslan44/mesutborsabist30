@@ -24,13 +24,24 @@
             </a>
             <div class="nav-links">
                 <a href="index.html" class="nav-link">Dashboard</a>
-                <a href="index.html#stock-table" class="nav-link">Hisseler</a>
+                <a href="index.html#stock-table" class="nav-link active">Hisseler</a>
                 <a href="tutturduklarim.html" class="nav-link">Tutturduklarim</a>
             </div>
+            <button class="nav-toggle" id="navToggle" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mobileNavPanel">
+                <span class="sr-only">Menu</span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
             <div class="update-badge" id="updateBadge">
                 <span class="update-dot"></span>
                 <span id="updateTime">Yükleniyor...</span>
             </div>
+        </div>
+        <div class="mobile-nav-panel" id="mobileNavPanel">
+            <a href="index.html" class="mobile-nav-link">Dashboard</a>
+            <a href="index.html#stock-table" class="mobile-nav-link active">Hisseler</a>
+            <a href="tutturduklarim.html" class="mobile-nav-link">Tutturduklarim</a>
         </div>
     </nav>
 
