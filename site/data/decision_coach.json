@@ -2,6 +2,25 @@
   "quality_score": 0.0,
   "quality_grade": "C",
   "quality_note": "Sistem dalgali; secicilik ve lot kontrolu artmali.",
+  "rule_violation": {
+    "score": 50.0,
+    "label": "Orta",
+    "summary": "Yeterli kapanan islem yok; ihlal skoru varsayilan seviyede.",
+    "components": [
+      {
+        "name": "Sample",
+        "value": "Dusuk",
+        "help": "Ne ise yarar? Skorun guvenilirligini gosterir."
+      }
+    ]
+  },
+  "error_patterns": [
+    {
+      "title": "Yeterli Islem Yok",
+      "detail": "Hata paterni cikarimi icin en az 20 kapanan islem gerekir.",
+      "action": "Ne ise yarar? Erken donemde asiri guvenli karar hatasini onler."
+    }
+  ],
   "market_regime": {
     "name": "Nötr",
     "tone": "neutral",

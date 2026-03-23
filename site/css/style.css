@@ -2593,6 +2593,77 @@ body::after {
     color: var(--text-secondary);
 }
 
+.decision-diagnostics {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.decision-diagnostic-card {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 10px 12px;
+}
+
+.decision-diagnostic-title {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.decision-diagnostic-value {
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent-cyan);
+}
+
+.decision-diagnostic-meta {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.decision-diagnostic-help {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.decision-patterns {
+    margin-top: 8px;
+    display: grid;
+    gap: 8px;
+}
+
+.decision-pattern-item {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.decision-pattern-item strong {
+    font-size: 12px;
+    color: var(--text-primary);
+}
+
+.decision-pattern-item p {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.45;
+}
+
+.decision-pattern-item .pattern-action {
+    color: var(--text-muted);
+}
+
 .decision-coach-grid {
     margin-top: 10px;
     display: grid;
@@ -2942,6 +3013,10 @@ body::after {
     }
 
     .decision-coach-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .decision-diagnostics {
         grid-template-columns: 1fr;
     }
 

@@ -599,6 +599,9 @@
         var cardsEl = document.getElementById('coachCards');
         var checklistEl = document.getElementById('coachChecklist');
         var disclaimerEl = document.getElementById('coachDisclaimer');
+        var violationScoreEl = document.getElementById('ruleViolationScore');
+        var violationMetaEl = document.getElementById('ruleViolationMeta');
+        var patternListEl = document.getElementById('errorPatternList');
 
         if (scoreEl) scoreEl.textContent = Number(decisionCoachData.quality_score || 0).toFixed(1);
         if (gradeEl) gradeEl.textContent = 'Not: ' + (decisionCoachData.quality_grade || '--');
@@ -632,6 +635,30 @@
         }
 
         if (disclaimerEl) disclaimerEl.textContent = decisionCoachData.disclaimer || '';
+
+        var violation = decisionCoachData.rule_violation || {};
+        if (violationScoreEl) {
+            var vScore = Number(violation.score || 0);
+            violationScoreEl.textContent = vScore.toFixed(1) + ' / 100';
+        }
+        if (violationMetaEl) {
+            var vLabel = violation.label || 'N/A';
+            var vSummary = violation.summary || '';
+            violationMetaEl.textContent = 'Seviye: ' + vLabel + ' | ' + vSummary;
+        }
+
+        if (patternListEl && decisionCoachData.error_patterns) {
+            var patterns = decisionCoachData.error_patterns;
+            var pHtml = '';
+            for (var p = 0; p < patterns.length; p++) {
+                pHtml += '<div class="decision-pattern-item">';
+                pHtml += '<strong>' + patterns[p].title + '</strong>';
+                pHtml += '<p>' + (patterns[p].detail || '') + '</p>';
+                pHtml += '<p class="pattern-action">' + (patterns[p].action || '') + '</p>';
+                pHtml += '</div>';
+            }
+            patternListEl.innerHTML = pHtml;
+        }
     }
 
     function renderAlarmCenter() {
