@@ -948,7 +948,8 @@
     function renderTable() {
         if (!summaryData || !summaryData.stocks) return;
         var tbody = document.getElementById('stockTableBody');
-        var search = (document.getElementById('searchInput').value || '').toUpperCase();
+        var searchEl = document.getElementById('searchInput');
+        var search = (searchEl ? searchEl.value : '').toUpperCase();
 
         var stocks = summaryData.stocks.slice();
 
