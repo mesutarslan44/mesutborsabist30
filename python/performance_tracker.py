@@ -111,6 +111,19 @@ def _resolve_open_targets(open_targets, current_prices, as_of_dt):
     return still_open, resolved
 
 
+def _dedupe_open_targets(open_targets):
+    deduped = []
+    seen = set()
+    ordered = sorted(open_targets, key=lambda x: x.get("opened_at", ""), reverse=True)
+    for target in ordered:
+        key = _target_key(target)
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(target)
+    return deduped
+
+
 def _add_new_targets(open_targets, candidates):
     """Keep only one active target per (ticker, period)."""
     open_by_key = {_target_key(t): t for t in open_targets}
@@ -295,7 +308,7 @@ def update_performance_tracker(candidates, current_prices, generated_at):
     as_of_dt = _parse_dt(generated_at)
     state = _load_state()
 
-    open_targets = state.get("open_targets", [])
+    open_targets = _dedupe_open_targets(state.get("open_targets", []))
     history = state.get("history", [])
 
     open_targets, resolved = _resolve_open_targets(open_targets, current_prices, as_of_dt)
