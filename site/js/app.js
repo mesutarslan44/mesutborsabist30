@@ -219,13 +219,30 @@
         return 'hold';
     }
 
+    function setManualRefreshStatus(message, isError) {
+        var statusEl = document.getElementById('manualRefreshStatus');
+        if (!statusEl) return;
+        statusEl.textContent = message;
+        statusEl.style.color = isError ? 'var(--bear-red)' : 'var(--text-muted)';
+    }
+
     // ── Load Data ──
-    async function loadData() {
+    async function loadData(forceRefresh) {
+        var force = !!forceRefresh;
+
+        function withCacheBust(url) {
+            if (!force) return url;
+            var sep = url.indexOf('?') >= 0 ? '&' : '?';
+            return url + sep + 'ts=' + Date.now();
+        }
+
+        var reqOpts = force ? { cache: 'no-store' } : undefined;
+
         try {
-            var res1 = await fetch('data/summary.json');
-            var res2 = await fetch('data/market_overview.json');
-            var res3 = await fetch('data/performance.json');
-            var res4 = await fetch('data/decision_coach.json');
+            var res1 = await fetch(withCacheBust('data/summary.json'), reqOpts);
+            var res2 = await fetch(withCacheBust('data/market_overview.json'), reqOpts);
+            var res3 = await fetch(withCacheBust('data/performance.json'), reqOpts);
+            var res4 = await fetch(withCacheBust('data/decision_coach.json'), reqOpts);
             if (!res1.ok || !res2.ok) throw new Error('Veri yüklenemedi');
 
             summaryData = await res1.json();
@@ -237,10 +254,12 @@
                 decisionCoachData = await res4.json();
             }
             render();
+            return true;
         } catch (err) {
             console.error('Veri hatası:', err);
             document.getElementById('stockTableBody').innerHTML =
                 '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--bear-red);">⚠️ Veriler yüklenemedi. Lütfen sayfayı yenileyin.</td></tr>';
+            return false;
         }
     }
 
@@ -952,6 +971,26 @@
         var searchInput = document.getElementById('searchInput');
         if (searchInput) {
             searchInput.addEventListener('input', function () { renderTable(); });
+        }
+
+        var manualRefreshBtn = document.getElementById('manualRefreshBtn');
+        if (manualRefreshBtn) {
+            manualRefreshBtn.addEventListener('click', async function () {
+                if (manualRefreshBtn.disabled) return;
+                manualRefreshBtn.disabled = true;
+                manualRefreshBtn.textContent = 'Yenileniyor...';
+                setManualRefreshStatus('Sunucudan en guncel veriler cekiliyor...', false);
+
+                var ok = await loadData(true);
+                if (ok) {
+                    setManualRefreshStatus('Veriler yenilendi. Son kontrol: ' + formatDateTime(new Date()), false);
+                } else {
+                    setManualRefreshStatus('Yenileme basarisiz oldu. Biraz sonra tekrar dene.', true);
+                }
+
+                manualRefreshBtn.disabled = false;
+                manualRefreshBtn.textContent = 'Simdi Yenile';
+            });
         }
 
         // Filter tabs
