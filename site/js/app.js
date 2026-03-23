@@ -407,18 +407,24 @@
 
         var bist30 = indices.XU030;
         if (bist30) {
-            document.getElementById('bist30Value').textContent = bist30.value ? bist30.value.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) : '--';
+            var b30v = document.getElementById('bist30Value');
+            if (b30v) b30v.textContent = bist30.value ? bist30.value.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) : '--';
             var ch30 = document.getElementById('bist30Change');
-            ch30.textContent = formatPercent(bist30.change_pct);
-            ch30.className = 'market-change ' + getChangeClass(bist30.change_pct);
+            if (ch30) {
+                ch30.textContent = formatPercent(bist30.change_pct);
+                ch30.className = 'market-change ' + getChangeClass(bist30.change_pct);
+            }
         }
 
         var bist100 = indices.XU100;
         if (bist100) {
-            document.getElementById('bist100Value').textContent = bist100.value ? bist100.value.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) : '--';
+            var b100v = document.getElementById('bist100Value');
+            if (b100v) b100v.textContent = bist100.value ? bist100.value.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) : '--';
             var ch100 = document.getElementById('bist100Change');
-            ch100.textContent = formatPercent(bist100.change_pct);
-            ch100.className = 'market-change ' + getChangeClass(bist100.change_pct);
+            if (ch100) {
+                ch100.textContent = formatPercent(bist100.change_pct);
+                ch100.className = 'market-change ' + getChangeClass(bist100.change_pct);
+            }
         }
     }
 
