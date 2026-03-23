@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-23 10:09",
+  "generated_at": "2026-03-23 11:20",
   "overview": {
     "total": 96,
     "hits": 96,
@@ -45,7 +45,7 @@
     }
   },
   "status_summary": {
-    "open": 23,
+    "open": 24,
     "resolved": 96,
     "hits": 96,
     "expired": 0
@@ -156,6 +156,17 @@
       "signal": "AL",
       "confidence": 100.0,
       "score": 25.4
+    },
+    {
+      "ticker": "KRDMD",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-03-23 11:20",
+      "start_price": 28.28,
+      "target_price": 28.7,
+      "signal": "HAFİF AL",
+      "confidence": 22.7,
+      "score": 10.0
     },
     {
       "ticker": "ARCLK",
