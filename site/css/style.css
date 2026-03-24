@@ -3842,6 +3842,48 @@ body.advanced-enabled:not(.advanced-open) .advanced-block {
     }
 }
 
+/* ── Performance Table (Desktop) ── */
+.perf-table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    margin-bottom: 24px;
+    border-radius: var(--radius-lg);
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-card);
+}
+
+.perf-table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+}
+
+.perf-table th {
+    font-size: 12px;
+    padding: 14px 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: rgba(15, 23, 42, 0.6);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    text-align: left;
+    white-space: nowrap;
+}
+
+.perf-table td {
+    padding: 12px 10px;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+
+.perf-table tbody tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+
 
 @media (max-width: 768px) {
     .perf-table-wrapper {
@@ -3866,12 +3908,13 @@ body.advanced-enabled:not(.advanced-open) .advanced-block {
     .perf-table tbody tr {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 6px;
-        margin-bottom: 12px;
-        padding: 12px;
+        gap: 8px;
+        margin-bottom: 16px;
+        padding: 16px;
         border-radius: 12px;
-        border: 1px solid var(--border-color);
-        background: var(--gradient-card);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.6));
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .perf-table tbody td {
@@ -3881,8 +3924,9 @@ body.advanced-enabled:not(.advanced-open) .advanced-block {
         gap: 12px;
         white-space: normal;
         border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
-        padding: 7px 0;
+        padding: 8px 0;
         font-size: 13px;
+        font-weight: 500;
     }
 
     .perf-table tbody td:last-child {

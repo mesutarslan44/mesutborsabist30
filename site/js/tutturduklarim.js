@@ -197,12 +197,12 @@
             rows += '<td data-label="Hisse"><strong>' + t.ticker + '</strong></td>';
             rows += '<td data-label="Periyot">' + formatPeriod(t.period) + '</td>';
             rows += '<td data-label="Yön"><span class="dir-badge ' + statusClass + '">' + formatDirection(t.direction) + '</span></td>';
-            rows += '<td data-label="Sinyal Tarihi">' + (t.opened_at || '--') + '</td>';
-            rows += '<td data-label="Giriş Fiyatı">' + formatPrice(t.start_price, t.ticker) + '</td>';
+            rows += '<td data-label="Açılış Tarihi">' + (t.opened_at || '--') + '</td>';
+            rows += '<td data-label="Giriş">' + formatPrice(t.start_price, t.ticker) + '</td>';
             rows += '<td data-label="Hedef No"><span class="target-level-badge ' + badgeCls + '">' + targetLevel + '</span></td>';
-            rows += '<td data-label="Hedef Fiyat">' + formatPrice(t.target_price, t.ticker) + '</td>';
-            rows += '<td data-label="Güncel Fiyat">' + formatPrice(latest, t.ticker) + '</td>';
-            rows += '<td data-label="Hedefe Mesafe">' + calcDistance(t.direction, t.target_price, latest) + '</td>';
+            rows += '<td data-label="Hedef">' + formatPrice(t.target_price, t.ticker) + '</td>';
+            rows += '<td data-label="Güncel">' + formatPrice(latest, t.ticker) + '</td>';
+            rows += '<td data-label="Mesafe">' + calcDistance(t.direction, t.target_price, latest) + '</td>';
             rows += '<td data-label="Sinyal"><span class="signal-badge ' + statusClass + '"><span class="dot"></span>' + (t.signal || '--') + '</span></td>';
             rows += '</tr>';
         }
@@ -290,13 +290,13 @@
             rows += '<td data-label="Hisse"><strong>' + r.ticker + '</strong></td>';
             rows += '<td data-label="Periyot">' + formatPeriod(r.period) + '</td>';
             rows += '<td data-label="Yön"><span class="dir-badge ' + (r.direction === 'buy' ? 'buy' : 'sell') + '">' + formatDirection(r.direction) + '</span></td>';
-            rows += '<td data-label="Sinyal Tarihi">' + (r.opened_at || '--') + '</td>';
-            rows += '<td data-label="Kapanış Tarihi">' + (r.closed_at || '--') + '</td>';
-            rows += '<td data-label="Giriş Fiyatı">' + formatPrice(r.start_price, r.ticker) + '</td>';
+            rows += '<td data-label="Açılış Tp.">' + (r.opened_at || '--') + '</td>';
+            rows += '<td data-label="Kapanış Tp.">' + (r.closed_at || '--') + '</td>';
+            rows += '<td data-label="Giriş">' + formatPrice(r.start_price, r.ticker) + '</td>';
             rows += '<td data-label="Hedef No"><span class="target-level-badge ' + tBadgeCls + '">' + targetLevel + '</span></td>';
-            rows += '<td data-label="Hedef Fiyat">' + formatPrice(r.target_price, r.ticker) + '</td>';
-            rows += '<td data-label="Kapanış Fiyatı">' + formatPrice(r.close_price, r.ticker) + '</td>';
-            rows += '<td data-label="Kâr/Zarar %" class="' + plClass + '"><strong>' + plText + '</strong></td>';
+            rows += '<td data-label="Hedef">' + formatPrice(r.target_price, r.ticker) + '</td>';
+            rows += '<td data-label="Kapanış">' + formatPrice(r.close_price, r.ticker) + '</td>';
+            rows += '<td data-label="Kâr/Zarar" class="' + plClass + '"><strong>' + plText + '</strong></td>';
             rows += '<td data-label="Gün">' + Number(r.days_to_result || 0) + '</td>';
             rows += '<td data-label="Durum"><span class="signal-badge ' + badgeClass + '"><span class="dot"></span>' + badgeText + '</span></td>';
             rows += '</tr>';
