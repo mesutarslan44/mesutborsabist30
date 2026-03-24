@@ -5,6 +5,8 @@
     var summaryData = null;
     var currentStatusFilter = 'ALL';
 
+    /* ── helpers ─────────────────────────────────── */
+
     function formatPrice(val, ticker) {
         if (val == null || isNaN(val)) return '--';
         var isAgbe = window.location.pathname.includes('/agbe');
@@ -42,6 +44,41 @@
         return map;
     }
 
+    /** Build a map of ticker → {target_1, target_2, target_3} from summary */
+    function getTargetsMap() {
+        var map = {};
+        if (!summaryData || !summaryData.stocks) return map;
+        for (var i = 0; i < summaryData.stocks.length; i++) {
+            var s = summaryData.stocks[i];
+            if (s.targets) {
+                map[s.ticker] = s.targets;
+            }
+        }
+        return map;
+    }
+
+    /** Determine which target level (1/2/3) the target_price matches */
+    function detectTargetLevel(ticker, targetPrice, targetsMap) {
+        if (!targetPrice || !targetsMap[ticker]) return '--';
+        var t = targetsMap[ticker];
+        var tp = Number(targetPrice);
+        var tolerance = 0.005; // 0.5% tolerance for matching
+
+        if (t.target_1 && Math.abs(tp - t.target_1) / t.target_1 < tolerance) return 'H1';
+        if (t.target_2 && Math.abs(tp - t.target_2) / t.target_2 < tolerance) return 'H2';
+        if (t.target_3 && Math.abs(tp - t.target_3) / t.target_3 < tolerance) return 'H3';
+
+        // If no exact match, determine by proximity
+        var diffs = [];
+        if (t.target_1) diffs.push({ level: 'H1', diff: Math.abs(tp - t.target_1) });
+        if (t.target_2) diffs.push({ level: 'H2', diff: Math.abs(tp - t.target_2) });
+        if (t.target_3) diffs.push({ level: 'H3', diff: Math.abs(tp - t.target_3) });
+
+        if (diffs.length === 0) return '--';
+        diffs.sort(function (a, b) { return a.diff - b.diff; });
+        return diffs[0].level;
+    }
+
     function calcDistance(direction, target, current) {
         if (target == null || current == null || target === 0) return '--';
         var pct;
@@ -49,6 +86,27 @@
         else pct = ((current - target) / target) * 100;
         return formatPct(pct);
     }
+
+    /** Calculate profit/loss % based on position direction */
+    function calcProfitLoss(direction, startPrice, closePrice) {
+        if (!startPrice || !closePrice || startPrice === 0) return null;
+        var pct;
+        if (direction === 'buy') {
+            pct = ((closePrice - startPrice) / startPrice) * 100;
+        } else {
+            pct = ((startPrice - closePrice) / startPrice) * 100;
+        }
+        return pct;
+    }
+
+    function getTargetBadgeClass(level) {
+        if (level === 'H1') return 'target-h1';
+        if (level === 'H2') return 'target-h2';
+        if (level === 'H3') return 'target-h3';
+        return '';
+    }
+
+    /* ── rendering ─────────────────────────────────── */
 
     function renderHeroMeta() {
         var stamp = (performanceData && performanceData.generated_at) || '--';
@@ -125,26 +183,31 @@
 
         var open = (performanceData && performanceData.open_targets) || [];
         var priceMap = getCurrentPriceMap();
+        var targetsMap = getTargetsMap();
         var rows = '';
 
         for (var i = 0; i < open.length; i++) {
             var t = open[i];
             var latest = priceMap[t.ticker];
             var statusClass = t.direction === 'buy' ? 'buy' : 'sell';
+            var targetLevel = detectTargetLevel(t.ticker, t.target_price, targetsMap);
+            var badgeCls = getTargetBadgeClass(targetLevel);
+
             rows += '<tr>';
-            rows += '<td data-label="Ticker"><strong>' + t.ticker + '</strong></td>';
+            rows += '<td data-label="Hisse"><strong>' + t.ticker + '</strong></td>';
             rows += '<td data-label="Periyot">' + formatPeriod(t.period) + '</td>';
-            rows += '<td data-label="Yon">' + formatDirection(t.direction) + '</td>';
-            rows += '<td data-label="Acilis">' + (t.opened_at || '--') + '</td>';
-            rows += '<td data-label="Baslangic">' + formatPrice(t.start_price, t.ticker) + '</td>';
-            rows += '<td data-label="Hedef">' + formatPrice(t.target_price, t.ticker) + '</td>';
-            rows += '<td data-label="Son Fiyat">' + formatPrice(latest, t.ticker) + '</td>';
-            rows += '<td data-label="Mesafe">' + calcDistance(t.direction, t.target_price, latest) + '</td>';
+            rows += '<td data-label="Yön"><span class="dir-badge ' + statusClass + '">' + formatDirection(t.direction) + '</span></td>';
+            rows += '<td data-label="Sinyal Tarihi">' + (t.opened_at || '--') + '</td>';
+            rows += '<td data-label="Giriş Fiyatı">' + formatPrice(t.start_price, t.ticker) + '</td>';
+            rows += '<td data-label="Hedef No"><span class="target-level-badge ' + badgeCls + '">' + targetLevel + '</span></td>';
+            rows += '<td data-label="Hedef Fiyat">' + formatPrice(t.target_price, t.ticker) + '</td>';
+            rows += '<td data-label="Güncel Fiyat">' + formatPrice(latest, t.ticker) + '</td>';
+            rows += '<td data-label="Hedefe Mesafe">' + calcDistance(t.direction, t.target_price, latest) + '</td>';
             rows += '<td data-label="Sinyal"><span class="signal-badge ' + statusClass + '"><span class="dot"></span>' + (t.signal || '--') + '</span></td>';
             rows += '</tr>';
         }
 
-        tbody.innerHTML = rows || '<tr><td colspan="9" class="loading-cell">Acik hedef bulunmuyor.</td></tr>';
+        tbody.innerHTML = rows || '<tr><td colspan="10" class="loading-cell">Acik hedef bulunmuyor.</td></tr>';
     }
 
     function renderResolved() {
@@ -152,30 +215,91 @@
         if (!tbody) return;
 
         var items = (performanceData && performanceData.recent_resolved) || [];
-        var rows = '';
+        var targetsMap = getTargetsMap();
 
-        for (var i = 0; i < items.length && i < 80; i++) {
+        // Calculate profit/loss for each item and group
+        var highProfit = []; // >5%
+        var lowProfit = [];  // <=5%
+
+        for (var i = 0; i < items.length && i < 200; i++) {
             var r = items[i];
             if (currentStatusFilter !== 'ALL' && r.status !== currentStatusFilter) continue;
 
+            var pl = calcProfitLoss(r.direction, r.start_price, r.close_price);
+            var absPl = pl !== null ? Math.abs(pl) : 0;
+            r._profitLoss = pl;
+            r._absProfitLoss = absPl;
+
+            if (absPl > 5) {
+                highProfit.push(r);
+            } else {
+                lowProfit.push(r);
+            }
+        }
+
+        // Sort within each group by absolute profit descending
+        highProfit.sort(function (a, b) { return b._absProfitLoss - a._absProfitLoss; });
+        lowProfit.sort(function (a, b) { return b._absProfitLoss - a._absProfitLoss; });
+
+        var rows = '';
+
+        // High profit group (>5%)
+        if (highProfit.length > 0) {
+            rows += '<tr class="group-header-row"><td colspan="12" class="group-header">';
+            rows += '<span class="group-icon">🚀</span> Yüksek Getirili İşlemler <span class="group-badge high">%5 üzeri</span>';
+            rows += '<span class="group-count">' + highProfit.length + ' işlem</span>';
+            rows += '</td></tr>';
+            rows += buildResolvedRows(highProfit, targetsMap);
+        }
+
+        // Low profit group (<=5%)
+        if (lowProfit.length > 0) {
+            rows += '<tr class="group-header-row"><td colspan="12" class="group-header">';
+            rows += '<span class="group-icon">📊</span> Standart İşlemler <span class="group-badge low">%5 ve altı</span>';
+            rows += '<span class="group-count">' + lowProfit.length + ' işlem</span>';
+            rows += '</td></tr>';
+            rows += buildResolvedRows(lowProfit, targetsMap);
+        }
+
+        tbody.innerHTML = rows || '<tr><td colspan="12" class="loading-cell">Bu filtreye uygun kayit yok.</td></tr>';
+    }
+
+    function buildResolvedRows(items, targetsMap) {
+        var rows = '';
+        for (var i = 0; i < items.length; i++) {
+            var r = items[i];
             var badgeClass = r.status === 'HIT' ? 'buy' : 'sell';
             var badgeText = r.status === 'HIT' ? 'Tutturuldu' : 'Sure Asimi';
+            var targetLevel = detectTargetLevel(r.ticker, r.target_price, targetsMap);
+            var tBadgeCls = getTargetBadgeClass(targetLevel);
+
+            var pl = r._profitLoss;
+            var plClass = '';
+            var plText = '--';
+            if (pl !== null) {
+                plClass = pl >= 0 ? 'profit-positive' : 'profit-negative';
+                plText = (pl >= 0 ? '+' : '') + pl.toFixed(2) + '%';
+            }
 
             rows += '<tr>';
-            rows += '<td data-label="Ticker"><strong>' + r.ticker + '</strong></td>';
+            rows += '<td data-label="Hisse"><strong>' + r.ticker + '</strong></td>';
             rows += '<td data-label="Periyot">' + formatPeriod(r.period) + '</td>';
-            rows += '<td data-label="Yon">' + formatDirection(r.direction) + '</td>';
-            rows += '<td data-label="Acilis">' + (r.opened_at || '--') + '</td>';
-            rows += '<td data-label="Kapanis">' + (r.closed_at || '--') + '</td>';
-            rows += '<td data-label="Hedef">' + formatPrice(r.target_price, r.ticker) + '</td>';
-            rows += '<td data-label="Kapanis Fiyati">' + formatPrice(r.close_price, r.ticker) + '</td>';
-            rows += '<td data-label="Gun">' + Number(r.days_to_result || 0) + '</td>';
+            rows += '<td data-label="Yön"><span class="dir-badge ' + (r.direction === 'buy' ? 'buy' : 'sell') + '">' + formatDirection(r.direction) + '</span></td>';
+            rows += '<td data-label="Sinyal Tarihi">' + (r.opened_at || '--') + '</td>';
+            rows += '<td data-label="Kapanış Tarihi">' + (r.closed_at || '--') + '</td>';
+            rows += '<td data-label="Giriş Fiyatı">' + formatPrice(r.start_price, r.ticker) + '</td>';
+            rows += '<td data-label="Hedef No"><span class="target-level-badge ' + tBadgeCls + '">' + targetLevel + '</span></td>';
+            rows += '<td data-label="Hedef Fiyat">' + formatPrice(r.target_price, r.ticker) + '</td>';
+            rows += '<td data-label="Kapanış Fiyatı">' + formatPrice(r.close_price, r.ticker) + '</td>';
+            rows += '<td data-label="Kâr/Zarar %" class="' + plClass + '"><strong>' + plText + '</strong></td>';
+            rows += '<td data-label="Gün">' + Number(r.days_to_result || 0) + '</td>';
             rows += '<td data-label="Durum"><span class="signal-badge ' + badgeClass + '"><span class="dot"></span>' + badgeText + '</span></td>';
             rows += '</tr>';
         }
-
-        tbody.innerHTML = rows || '<tr><td colspan="9" class="loading-cell">Bu filtreye uygun kayit yok.</td></tr>';
+        return rows;
     }
+
+    /* ── setup ─────────────────────────────────── */
 
     function setupMobileNav() {
         var btn = document.getElementById('navToggle');
@@ -243,8 +367,8 @@
         }).catch(function () {
             var body1 = document.getElementById('openTargetsBody');
             var body2 = document.getElementById('resolvedBody');
-            if (body1) body1.innerHTML = '<tr><td colspan="9" class="loading-cell">Veri alinamadi.</td></tr>';
-            if (body2) body2.innerHTML = '<tr><td colspan="9" class="loading-cell">Veri alinamadi.</td></tr>';
+            if (body1) body1.innerHTML = '<tr><td colspan="10" class="loading-cell">Veri alinamadi.</td></tr>';
+            if (body2) body2.innerHTML = '<tr><td colspan="12" class="loading-cell">Veri alinamadi.</td></tr>';
             var txt = document.getElementById('perfUpdateText');
             if (txt) txt.textContent = 'Performans verisi yuklenemedi';
         });
