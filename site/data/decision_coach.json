@@ -3,18 +3,18 @@
   "quality_grade": "A",
   "quality_note": "Sistem su an daha tutarli; yine de risk sabit kalmali.",
   "rule_violation": {
-    "score": 86.2,
+    "score": 86.9,
     "label": "Iyi",
     "summary": "Kural ihlali riski dusuk; disiplin korunuyor.",
     "components": [
       {
         "name": "Dusuk Guvenli Islemler",
-        "value": "%31.2",
+        "value": "%30.0",
         "help": "Ne ise yarar? Guveni dusuk islemleri azaltman gerekip gerekmedigini soyler."
       },
       {
         "name": "Zayif Skorlu Islemler",
-        "value": "%17.5",
+        "value": "%16.2",
         "help": "Ne ise yarar? Setup filtresini ne kadar sikilastirman gerektigini gosterir."
       },
       {
@@ -37,10 +37,10 @@
     }
   ],
   "market_regime": {
-    "name": "Nötr",
-    "tone": "neutral",
-    "why": "AL/SAT dengesi karisik veya endeks onayi zayif.",
-    "how": "Sadece A/B setup ve net hedef-stop oranli islemleri sec."
+    "name": "Risk-Off",
+    "tone": "negative",
+    "why": "SAT baskisi yuksek, endeks yonu zayif.",
+    "how": "Pozisyon boyutunu azalt, stopu gevsetme, yeni islemde secici ol."
   },
   "coaching_cards": [
     {
@@ -59,9 +59,9 @@
       "rule": "Islem basi riski sabit tut (or: portfoyun %0.5-%1.0 arasi)."
     },
     {
-      "title": "4) Verimi Artirma",
-      "desc": "Ne ise yarar? Yuksek kaliteli donemde sistem avantajini buyutur.",
-      "rule": "A setup geldikce kademeli giris + parcali kar al plani kullan."
+      "title": "4) Koruma Modu",
+      "desc": "Ne ise yarar? Dusus doneminde duygusal islemleri kisar.",
+      "rule": "Yeni islem sayisini yarıya indir, mevcutlarda stop disiplini uygula."
     }
   ],
   "execution_checklist": [

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-24 10:00",
+  "generated_at": "2026-03-24 13:34",
   "overview": {
     "total": 0,
     "hits": 0,
@@ -45,7 +45,7 @@
     }
   },
   "status_summary": {
-    "open": 6,
+    "open": 5,
     "resolved": 0,
     "hits": 0,
     "expired": 0
@@ -71,33 +71,22 @@
   "open_targets": [
     {
       "ticker": "GC=F",
-      "period": "weekly",
-      "direction": "buy",
-      "opened_at": "2026-03-24 10:00",
-      "start_price": 4386.0,
-      "target_price": 4550.16,
-      "signal": "HAFİF AL",
-      "confidence": 33.0,
-      "score": 11.8
-    },
-    {
-      "ticker": "SI=F",
       "period": "daily",
-      "direction": "sell",
-      "opened_at": "2026-03-24 10:00",
-      "start_price": 68.975,
-      "target_price": 67.94,
-      "signal": "HAFİF SAT",
-      "confidence": 41.3,
-      "score": -19.3
+      "direction": "buy",
+      "opened_at": "2026-03-24 13:34",
+      "start_price": 4426.6001,
+      "target_price": 4493.0,
+      "signal": "HAFİF AL",
+      "confidence": 25.5,
+      "score": 15.5
     },
     {
       "ticker": "ETH-USD",
       "period": "weekly",
       "direction": "sell",
-      "opened_at": "2026-03-24 10:00",
-      "start_price": 2144.3987,
-      "target_price": 2063.98,
+      "opened_at": "2026-03-24 13:34",
+      "start_price": 2157.8943,
+      "target_price": 2077.1,
       "signal": "HAFİF SAT",
       "confidence": 49.3,
       "score": -16.9
