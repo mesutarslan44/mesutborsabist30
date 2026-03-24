@@ -344,11 +344,15 @@ def main():
             stocks_summary.append(summary_item)
             current_prices[ticker_clean] = summary_item["price"]
 
-            # Track daily + weekly first target hits for performance page
+            # Track daily + weekly targets for performance page
             for period_name in ["daily", "weekly"]:
                 period_rec = stock_result["periods"].get(period_name, {}).get("recommendation", {})
                 period_signal = period_rec.get("signal_en", "HOLD")
-                target_1 = period_rec.get("targets", {}).get("target_1")
+                targets = period_rec.get("targets", {})
+                target_1 = targets.get("target_1")
+                target_2 = targets.get("target_2")
+                target_3 = targets.get("target_3")
+                stop_loss = targets.get("stop_loss")
 
                 if period_signal in ["STRONG_BUY", "BUY", "WEAK_BUY"] and target_1:
                     performance_candidates.append({
@@ -358,6 +362,9 @@ def main():
                         "opened_at": generated_at,
                         "start_price": round(float(summary_item["price"]), 4),
                         "target_price": round(float(target_1), 4),
+                        "target_2": round(float(target_2), 4) if target_2 else None,
+                        "target_3": round(float(target_3), 4) if target_3 else None,
+                        "stop_loss": round(float(stop_loss), 4) if stop_loss else None,
                         "signal": period_rec.get("signal", "AL"),
                         "confidence": period_rec.get("confidence", 0),
                         "score": period_rec.get("score", 0),
@@ -370,6 +377,9 @@ def main():
                         "opened_at": generated_at,
                         "start_price": round(float(summary_item["price"]), 4),
                         "target_price": round(float(target_1), 4),
+                        "target_2": round(float(target_2), 4) if target_2 else None,
+                        "target_3": round(float(target_3), 4) if target_3 else None,
+                        "stop_loss": round(float(stop_loss), 4) if stop_loss else None,
                         "signal": period_rec.get("signal", "SAT"),
                         "confidence": period_rec.get("confidence", 0),
                         "score": period_rec.get("score", 0),
@@ -521,11 +531,15 @@ def main():
             agbe_summary_list.append(summary_item)
             agbe_current_prices[ticker_clean] = summary_item["price"]
 
-            # Track daily + weekly first target hits for AGBE performance page
+            # Track daily + weekly targets for AGBE performance page
             for period_name in ["daily", "weekly"]:
                 period_rec = stock_result["periods"].get(period_name, {}).get("recommendation", {})
                 period_signal = period_rec.get("signal_en", "HOLD")
-                target_1 = period_rec.get("targets", {}).get("target_1")
+                targets = period_rec.get("targets", {})
+                target_1 = targets.get("target_1")
+                target_2 = targets.get("target_2")
+                target_3 = targets.get("target_3")
+                stop_loss = targets.get("stop_loss")
 
                 if period_signal in ["STRONG_BUY", "BUY", "WEAK_BUY"] and target_1:
                     agbe_performance_candidates.append({
@@ -535,6 +549,9 @@ def main():
                         "opened_at": generated_at,
                         "start_price": round(float(summary_item["price"]), 4),
                         "target_price": round(float(target_1), 4),
+                        "target_2": round(float(target_2), 4) if target_2 else None,
+                        "target_3": round(float(target_3), 4) if target_3 else None,
+                        "stop_loss": round(float(stop_loss), 4) if stop_loss else None,
                         "signal": period_rec.get("signal", "AL"),
                         "confidence": period_rec.get("confidence", 0),
                         "score": period_rec.get("score", 0),
@@ -547,6 +564,9 @@ def main():
                         "opened_at": generated_at,
                         "start_price": round(float(summary_item["price"]), 4),
                         "target_price": round(float(target_1), 4),
+                        "target_2": round(float(target_2), 4) if target_2 else None,
+                        "target_3": round(float(target_3), 4) if target_3 else None,
+                        "stop_loss": round(float(stop_loss), 4) if stop_loss else None,
                         "signal": period_rec.get("signal", "SAT"),
                         "confidence": period_rec.get("confidence", 0),
                         "score": period_rec.get("score", 0),

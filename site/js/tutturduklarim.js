@@ -140,7 +140,7 @@
         document.getElementById('weeklyHitMetaLarge').textContent = (weekly.hits || 0) + '/' + (weekly.total || 0) + ' | Ort: ' + Number(weekly.avg_days_to_hit || 0).toFixed(1) + ' gun';
 
         document.getElementById('statusSummaryValue').textContent = (status.open || 0) + ' / ' + (status.resolved || 0);
-        document.getElementById('statusSummaryMeta').textContent = 'HIT: ' + (status.hits || 0) + ' • EXPIRED: ' + (status.expired || 0);
+        document.getElementById('statusSummaryMeta').textContent = 'HIT: ' + (status.hits || 0) + ' • STOPPED: ' + (status.stopped || 0) + ' • EXPIRED: ' + (status.expired || 0);
     }
 
     function renderAudit() {
@@ -268,17 +268,22 @@
         var rows = '';
         for (var i = 0; i < items.length; i++) {
             var r = items[i];
-            var badgeClass = r.status === 'HIT' ? 'buy' : 'sell';
-            var badgeText = r.status === 'HIT' ? 'Tutturuldu' : 'Sure Asimi';
-            var targetLevel = detectTargetLevel(r.ticker, r.target_price, targetsMap);
+            var badgeClass, badgeText;
+            if (r.status === 'HIT') { badgeClass = 'buy'; badgeText = 'Tutturuldu'; }
+            else if (r.status === 'STOPPED') { badgeClass = 'stopped'; badgeText = 'Stop-Loss'; }
+            else { badgeClass = 'sell'; badgeText = 'Sure Asimi'; }
+
+            // Use backend hit_level if available, else detect from targets
+            var targetLevel = r.hit_level || detectTargetLevel(r.ticker, r.target_price, targetsMap);
             var tBadgeCls = getTargetBadgeClass(targetLevel);
 
-            var pl = r._profitLoss;
+            // Use backend profit_pct if available
+            var pl = (r.profit_pct != null) ? r.profit_pct : r._profitLoss;
             var plClass = '';
             var plText = '--';
-            if (pl !== null) {
+            if (pl != null) {
                 plClass = pl >= 0 ? 'profit-positive' : 'profit-negative';
-                plText = (pl >= 0 ? '+' : '') + pl.toFixed(2) + '%';
+                plText = (pl >= 0 ? '+' : '') + Number(pl).toFixed(2) + '%';
             }
 
             rows += '<tr>';

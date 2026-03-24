@@ -1,37 +1,74 @@
 {
   "open_targets": [
     {
+      "ticker": "GC=F",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-03-24 20:08",
+      "start_price": 4421.7998,
+      "target_price": 4488.13,
+      "target_2": 4554.45,
+      "target_3": 4620.78,
+      "stop_loss": 4333.36,
+      "signal": "HAFİF AL",
+      "confidence": 25.5,
+      "score": 15.5
+    },
+    {
       "ticker": "SI=F",
       "period": "weekly",
       "direction": "buy",
-      "opened_at": "2026-03-23 20:55",
-      "start_price": 69.615,
-      "target_price": 71.96,
-      "signal": "HAFİF AL",
-      "confidence": 53.8,
-      "score": 18.6
+      "opened_at": "2026-03-24 20:08",
+      "start_price": 69.975,
+      "target_price": 72.6,
+      "target_2": 75.22,
+      "target_3": 77.85,
+      "stop_loss": 66.48,
+      "signal": "AL",
+      "confidence": 61.0,
+      "score": 25.0
     },
     {
       "ticker": "BTC-USD",
       "period": "weekly",
       "direction": "sell",
-      "opened_at": "2026-03-23 20:55",
-      "start_price": 71054.5547,
-      "target_price": 65301.02,
+      "opened_at": "2026-03-24 20:08",
+      "start_price": 69144.625,
+      "target_price": 66551.7,
+      "target_2": 63958.78,
+      "target_3": 61365.85,
+      "stop_loss": 72601.86,
       "signal": "HAFİF SAT",
-      "confidence": 37.9,
-      "score": -16.7
+      "confidence": 49.3,
+      "score": -16.9
     },
     {
       "ticker": "ETH-USD",
       "period": "daily",
       "direction": "buy",
-      "opened_at": "2026-03-23 20:55",
-      "start_price": 2151.8921,
-      "target_price": 2184.17,
-      "signal": "AL",
-      "confidence": 100.0,
-      "score": 29.6
+      "opened_at": "2026-03-24 20:08",
+      "start_price": 2114.8042,
+      "target_price": 2146.53,
+      "target_2": 2178.25,
+      "target_3": 2209.97,
+      "stop_loss": 2072.51,
+      "signal": "HAFİF AL",
+      "confidence": 67.6,
+      "score": 20.0
+    },
+    {
+      "ticker": "ETH-USD",
+      "period": "weekly",
+      "direction": "sell",
+      "opened_at": "2026-03-24 20:08",
+      "start_price": 2114.8042,
+      "target_price": 2035.5,
+      "target_2": 1956.19,
+      "target_3": 1876.89,
+      "stop_loss": 2220.54,
+      "signal": "HAFİF SAT",
+      "confidence": 49.3,
+      "score": -16.9
     }
   ],
   "history": []
