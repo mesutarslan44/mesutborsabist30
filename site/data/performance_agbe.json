@@ -1,69 +1,69 @@
 {
-  "generated_at": "2026-03-24 20:08",
+  "generated_at": "2026-03-25 12:30",
   "overview": {
-    "total": 0,
-    "hits": 0,
+    "total": 3,
+    "hits": 3,
     "stopped": 0,
     "expired": 0,
-    "hit_rate": 0.0,
+    "hit_rate": 100.0,
     "stop_rate": 0.0
   },
   "daily": {
-    "total": 0,
-    "hits": 0,
+    "total": 2,
+    "hits": 2,
     "stopped": 0,
     "expired": 0,
-    "hit_rate": 0.0,
-    "avg_days_to_hit": 0.0
+    "hit_rate": 100.0,
+    "avg_days_to_hit": 1.0
   },
   "weekly": {
-    "total": 0,
-    "hits": 0,
+    "total": 1,
+    "hits": 1,
     "stopped": 0,
     "expired": 0,
-    "hit_rate": 0.0,
-    "avg_days_to_hit": 0.0
+    "hit_rate": 100.0,
+    "avg_days_to_hit": 1.0
   },
   "rolling": {
     "7d": {
-      "total": 0,
-      "hits": 0,
+      "total": 3,
+      "hits": 3,
       "stopped": 0,
       "expired": 0,
-      "hit_rate": 0.0
+      "hit_rate": 100.0
     },
     "30d": {
-      "total": 0,
-      "hits": 0,
+      "total": 3,
+      "hits": 3,
       "stopped": 0,
       "expired": 0,
-      "hit_rate": 0.0
+      "hit_rate": 100.0
     },
     "90d": {
-      "total": 0,
-      "hits": 0,
+      "total": 3,
+      "hits": 3,
       "stopped": 0,
       "expired": 0,
-      "hit_rate": 0.0
+      "hit_rate": 100.0
     },
     "weighted": {
-      "hit_rate": 0.0,
+      "hit_rate": 100.0,
       "half_life_days": 30
     }
   },
   "status_summary": {
-    "open": 5,
-    "resolved": 0,
-    "hits": 0,
+    "open": 6,
+    "resolved": 3,
+    "hits": 3,
     "stopped": 0,
     "expired": 0
   },
   "direction_stats": {
     "buy": {
-      "total": 0,
-      "hits": 0,
+      "total": 3,
+      "hits": 3,
       "stopped": 0,
-      "hit_rate": 0.0
+      "hit_rate": 100.0
     },
     "sell": {
       "total": 0,
@@ -73,22 +73,22 @@
     }
   },
   "target_level_stats": {
-    "total_hits": 0,
-    "H1": 0,
-    "H2": 0,
+    "total_hits": 3,
+    "H1": 1,
+    "H2": 2,
     "H3": 0,
-    "H1_pct": 0.0,
-    "H2_pct": 0.0,
+    "H1_pct": 33.3,
+    "H2_pct": 66.7,
     "H3_pct": 0.0
   },
   "profit_stats": {
-    "avg_win_pct": 0.0,
+    "avg_win_pct": 3.66,
     "avg_loss_pct": 0.0,
-    "total_pct": 0,
-    "win_count": 0,
+    "total_pct": 10.97,
+    "win_count": 3,
     "loss_count": 0
   },
-  "consistency_score": 0.0,
+  "consistency_score": 100.0,
   "policy": {
     "single_active_target_per_ticker_period": true,
     "daily_expiry_days": 5,
@@ -97,32 +97,60 @@
   },
   "open_targets": [
     {
-      "ticker": "GC=F",
+      "ticker": "SI=F",
       "period": "daily",
-      "direction": "buy",
-      "opened_at": "2026-03-24 20:08",
-      "start_price": 4421.7998,
-      "target_price": 4488.13,
-      "target_2": 4554.45,
-      "target_3": 4620.78,
-      "stop_loss": 4333.36,
-      "signal": "HAFİF AL",
-      "confidence": 25.5,
-      "score": 15.5
+      "direction": "sell",
+      "opened_at": "2026-03-25 12:30",
+      "start_price": 73.2,
+      "target_price": 72.1,
+      "target_2": 71.0,
+      "target_3": 69.91,
+      "stop_loss": 74.66,
+      "signal": "HAFİF SAT",
+      "confidence": 32.1,
+      "score": -10.0
     },
     {
       "ticker": "SI=F",
       "period": "weekly",
       "direction": "buy",
-      "opened_at": "2026-03-24 20:08",
-      "start_price": 69.975,
-      "target_price": 72.6,
-      "target_2": 75.22,
-      "target_3": 77.85,
-      "stop_loss": 66.48,
+      "opened_at": "2026-03-25 12:30",
+      "start_price": 73.2,
+      "target_price": 75.95,
+      "target_2": 78.69,
+      "target_3": 81.44,
+      "stop_loss": 69.54,
+      "signal": "HAFİF AL",
+      "confidence": 49.0,
+      "score": 15.4
+    },
+    {
+      "ticker": "BTC-USD",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-03-25 12:30",
+      "start_price": 71268.9844,
+      "target_price": 72338.02,
+      "target_2": 73407.05,
+      "target_3": 74476.09,
+      "stop_loss": 69843.6,
       "signal": "AL",
-      "confidence": 61.0,
-      "score": 25.0
+      "confidence": 100.0,
+      "score": 34.8
+    },
+    {
+      "ticker": "ETH-USD",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-03-25 12:30",
+      "start_price": 2181.8115,
+      "target_price": 2214.54,
+      "target_2": 2247.27,
+      "target_3": 2279.99,
+      "stop_loss": 2138.18,
+      "signal": "HAFİF AL",
+      "confidence": 100.0,
+      "score": 24.8
     },
     {
       "ticker": "BTC-USD",
@@ -140,20 +168,6 @@
     },
     {
       "ticker": "ETH-USD",
-      "period": "daily",
-      "direction": "buy",
-      "opened_at": "2026-03-24 20:08",
-      "start_price": 2114.8042,
-      "target_price": 2146.53,
-      "target_2": 2178.25,
-      "target_3": 2209.97,
-      "stop_loss": 2072.51,
-      "signal": "HAFİF AL",
-      "confidence": 67.6,
-      "score": 20.0
-    },
-    {
-      "ticker": "ETH-USD",
       "period": "weekly",
       "direction": "sell",
       "opened_at": "2026-03-24 20:08",
@@ -167,5 +181,128 @@
       "score": -16.9
     }
   ],
-  "recent_resolved": []
+  "recent_resolved": [
+    {
+      "ticker": "GC=F",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-03-24 20:08",
+      "closed_at": "2026-03-25 12:30",
+      "start_price": 4421.7998,
+      "target_price": 4488.13,
+      "target_2": 4554.45,
+      "target_3": 4620.78,
+      "stop_loss": 4333.36,
+      "close_price": 4562.7998,
+      "profit_pct": 3.19,
+      "days_to_result": 1,
+      "hit_level": "H2",
+      "status": "HIT",
+      "signal": "HAFİF AL",
+      "confidence": 25.5,
+      "score": 15.5
+    },
+    {
+      "ticker": "SI=F",
+      "period": "weekly",
+      "direction": "buy",
+      "opened_at": "2026-03-24 20:08",
+      "closed_at": "2026-03-25 12:30",
+      "start_price": 69.975,
+      "target_price": 72.6,
+      "target_2": 75.22,
+      "target_3": 77.85,
+      "stop_loss": 66.48,
+      "close_price": 73.2,
+      "profit_pct": 4.61,
+      "days_to_result": 1,
+      "hit_level": "H1",
+      "status": "HIT",
+      "signal": "AL",
+      "confidence": 61.0,
+      "score": 25.0
+    },
+    {
+      "ticker": "ETH-USD",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-03-24 20:08",
+      "closed_at": "2026-03-25 12:30",
+      "start_price": 2114.8042,
+      "target_price": 2146.53,
+      "target_2": 2178.25,
+      "target_3": 2209.97,
+      "stop_loss": 2072.51,
+      "close_price": 2181.8115,
+      "profit_pct": 3.17,
+      "days_to_result": 1,
+      "hit_level": "H2",
+      "status": "HIT",
+      "signal": "HAFİF AL",
+      "confidence": 67.6,
+      "score": 20.0
+    }
+  ],
+  "recent_hits": [
+    {
+      "ticker": "GC=F",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-03-24 20:08",
+      "closed_at": "2026-03-25 12:30",
+      "start_price": 4421.7998,
+      "target_price": 4488.13,
+      "target_2": 4554.45,
+      "target_3": 4620.78,
+      "stop_loss": 4333.36,
+      "close_price": 4562.7998,
+      "profit_pct": 3.19,
+      "days_to_result": 1,
+      "hit_level": "H2",
+      "status": "HIT",
+      "signal": "HAFİF AL",
+      "confidence": 25.5,
+      "score": 15.5
+    },
+    {
+      "ticker": "SI=F",
+      "period": "weekly",
+      "direction": "buy",
+      "opened_at": "2026-03-24 20:08",
+      "closed_at": "2026-03-25 12:30",
+      "start_price": 69.975,
+      "target_price": 72.6,
+      "target_2": 75.22,
+      "target_3": 77.85,
+      "stop_loss": 66.48,
+      "close_price": 73.2,
+      "profit_pct": 4.61,
+      "days_to_result": 1,
+      "hit_level": "H1",
+      "status": "HIT",
+      "signal": "AL",
+      "confidence": 61.0,
+      "score": 25.0
+    },
+    {
+      "ticker": "ETH-USD",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-03-24 20:08",
+      "closed_at": "2026-03-25 12:30",
+      "start_price": 2114.8042,
+      "target_price": 2146.53,
+      "target_2": 2178.25,
+      "target_3": 2209.97,
+      "stop_loss": 2072.51,
+      "close_price": 2181.8115,
+      "profit_pct": 3.17,
+      "days_to_result": 1,
+      "hit_level": "H2",
+      "status": "HIT",
+      "signal": "HAFİF AL",
+      "confidence": 67.6,
+      "score": 20.0
+    }
+  ]
 }
