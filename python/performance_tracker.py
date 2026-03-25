@@ -417,6 +417,7 @@ def _to_frontend_payload(state, generated_at):
             state.get("open_targets", []), key=lambda x: x.get("opened_at", ""), reverse=True
         )[:60],
         "recent_resolved": recent_resolved,
+        "recent_hits": [r for r in recent_resolved if r.get("status") == "HIT"],
     }
 
 
