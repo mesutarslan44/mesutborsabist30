@@ -269,9 +269,15 @@
         for (var i = 0; i < items.length; i++) {
             var r = items[i];
             var badgeClass, badgeText;
-            if (r.status === 'HIT') { badgeClass = 'buy'; badgeText = 'Tutturuldu'; }
+            if (r.status === 'HIT') {
+                badgeClass = 'buy';
+                var hl = r.hit_level || 'H1';
+                if (hl === 'H3') badgeText = 'Hedef 3 ✓✓✓';
+                else if (hl === 'H2') badgeText = 'Hedef 2 ✓✓';
+                else badgeText = 'Hedef 1 ✓';
+            }
             else if (r.status === 'STOPPED') { badgeClass = 'stopped'; badgeText = 'Stop-Loss'; }
-            else { badgeClass = 'sell'; badgeText = 'Sure Asimi'; }
+            else { badgeClass = 'sell'; badgeText = 'Süre Aşımı'; }
 
             // Use backend hit_level if available, else detect from targets
             var targetLevel = r.hit_level || detectTargetLevel(r.ticker, r.target_price, targetsMap);
