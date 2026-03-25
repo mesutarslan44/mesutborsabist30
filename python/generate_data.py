@@ -369,21 +369,8 @@ def main():
                         "confidence": period_rec.get("confidence", 0),
                         "score": period_rec.get("score", 0),
                     })
-                elif period_signal in ["STRONG_SELL", "SELL", "WEAK_SELL"] and target_1:
-                    performance_candidates.append({
-                        "ticker": ticker_clean,
-                        "period": period_name,
-                        "direction": "sell",
-                        "opened_at": generated_at,
-                        "start_price": round(float(summary_item["price"]), 4),
-                        "target_price": round(float(target_1), 4),
-                        "target_2": round(float(target_2), 4) if target_2 else None,
-                        "target_3": round(float(target_3), 4) if target_3 else None,
-                        "stop_loss": round(float(stop_loss), 4) if stop_loss else None,
-                        "signal": period_rec.get("signal", "SAT"),
-                        "confidence": period_rec.get("confidence", 0),
-                        "score": period_rec.get("score", 0),
-                    })
+                # KULLANICI İSTEĞİ: "sat işlemleri çok da umrumda değil" dendiği için
+                # SAT (Short) işlemlerini performans takibine (Tutturduklarım'a) dahil etmiyoruz.
 
             if rec.get("score", 0) > 10:
                 top_buys.append(summary_item)
