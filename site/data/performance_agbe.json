@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-03-25 22:37",
+  "generated_at": "2026-03-26 10:12",
   "overview": {
-    "total": 3,
-    "hits": 3,
+    "total": 4,
+    "hits": 4,
     "stopped": 0,
     "expired": 0,
     "hit_rate": 100.0,
     "stop_rate": 0.0
   },
   "daily": {
-    "total": 2,
-    "hits": 2,
+    "total": 3,
+    "hits": 3,
     "stopped": 0,
     "expired": 0,
     "hit_rate": 100.0,
@@ -26,22 +26,22 @@
   },
   "rolling": {
     "7d": {
-      "total": 3,
-      "hits": 3,
+      "total": 4,
+      "hits": 4,
       "stopped": 0,
       "expired": 0,
       "hit_rate": 100.0
     },
     "30d": {
-      "total": 3,
-      "hits": 3,
+      "total": 4,
+      "hits": 4,
       "stopped": 0,
       "expired": 0,
       "hit_rate": 100.0
     },
     "90d": {
-      "total": 3,
-      "hits": 3,
+      "total": 4,
+      "hits": 4,
       "stopped": 0,
       "expired": 0,
       "hit_rate": 100.0
@@ -52,9 +52,9 @@
     }
   },
   "status_summary": {
-    "open": 6,
-    "resolved": 3,
-    "hits": 3,
+    "open": 7,
+    "resolved": 4,
+    "hits": 4,
     "stopped": 0,
     "expired": 0
   },
@@ -66,26 +66,26 @@
       "hit_rate": 100.0
     },
     "sell": {
-      "total": 0,
-      "hits": 0,
+      "total": 1,
+      "hits": 1,
       "stopped": 0,
-      "hit_rate": 0.0
+      "hit_rate": 100.0
     }
   },
   "target_level_stats": {
-    "total_hits": 3,
+    "total_hits": 4,
     "H1": 2,
-    "H2": 1,
+    "H2": 2,
     "H3": 0,
-    "H1_pct": 66.7,
-    "H2_pct": 33.3,
+    "H1_pct": 50.0,
+    "H2_pct": 50.0,
     "H3_pct": 0.0
   },
   "profit_stats": {
-    "avg_win_pct": 3.36,
+    "avg_win_pct": 3.45,
     "avg_loss_pct": 0.0,
-    "total_pct": 10.08,
-    "win_count": 3,
+    "total_pct": 13.79,
+    "win_count": 4,
     "loss_count": 0
   },
   "consistency_score": 100.0,
@@ -97,18 +97,32 @@
   },
   "open_targets": [
     {
+      "ticker": "GC=F",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-26 10:12",
+      "start_price": 4455.2002,
+      "target_price": 4388.37,
+      "target_2": 4321.54,
+      "target_3": 4254.72,
+      "stop_loss": 4544.3,
+      "signal": "HAFİF SAT",
+      "confidence": 46.8,
+      "score": -24.1
+    },
+    {
       "ticker": "SI=F",
       "period": "daily",
       "direction": "sell",
-      "opened_at": "2026-03-25 12:46",
-      "start_price": 72.775,
-      "target_price": 71.68,
-      "target_2": 70.59,
-      "target_3": 69.5,
-      "stop_loss": 74.23,
+      "opened_at": "2026-03-26 10:12",
+      "start_price": 70.075,
+      "target_price": 69.02,
+      "target_2": 67.97,
+      "target_3": 66.92,
+      "stop_loss": 71.48,
       "signal": "HAFİF SAT",
-      "confidence": 32.1,
-      "score": -10.0
+      "confidence": 39.8,
+      "score": -18.1
     },
     {
       "ticker": "SI=F",
@@ -183,6 +197,26 @@
   ],
   "recent_resolved": [
     {
+      "ticker": "SI=F",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-25 12:46",
+      "closed_at": "2026-03-26 10:12",
+      "start_price": 72.775,
+      "target_price": 71.68,
+      "target_2": 70.59,
+      "target_3": 69.5,
+      "stop_loss": 74.23,
+      "close_price": 70.075,
+      "profit_pct": 3.71,
+      "days_to_result": 1,
+      "hit_level": "H2",
+      "status": "HIT",
+      "signal": "HAFİF SAT",
+      "confidence": 32.1,
+      "score": -10.0
+    },
+    {
       "ticker": "GC=F",
       "period": "daily",
       "direction": "buy",
@@ -244,6 +278,26 @@
     }
   ],
   "recent_hits": [
+    {
+      "ticker": "SI=F",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-25 12:46",
+      "closed_at": "2026-03-26 10:12",
+      "start_price": 72.775,
+      "target_price": 71.68,
+      "target_2": 70.59,
+      "target_3": 69.5,
+      "stop_loss": 74.23,
+      "close_price": 70.075,
+      "profit_pct": 3.71,
+      "days_to_result": 1,
+      "hit_level": "H2",
+      "status": "HIT",
+      "signal": "HAFİF SAT",
+      "confidence": 32.1,
+      "score": -10.0
+    },
     {
       "ticker": "GC=F",
       "period": "daily",
