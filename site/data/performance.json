@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-27 17:19",
+  "generated_at": "2026-03-27 17:56",
   "overview": {
     "total": 0,
     "hits": 0,
@@ -52,7 +52,7 @@
     }
   },
   "status_summary": {
-    "open": 10,
+    "open": 12,
     "resolved": 0,
     "hits": 0,
     "stopped": 0,
@@ -96,6 +96,38 @@
     "min_hold_minutes": 60
   },
   "open_targets": [
+    {
+      "ticker": "EREGL",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-27 17:56",
+      "start_price": 27.5,
+      "target_price": 25.77,
+      "target_2": 23.88,
+      "target_3": 23.35,
+      "stop_loss": 28.14,
+      "signal": "HAFİF SAT",
+      "confidence": 58.3,
+      "score": -19.9,
+      "regime_key": "trend_down",
+      "rr_ratio": 2.7031
+    },
+    {
+      "ticker": "TOASO",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-27 17:56",
+      "start_price": 279.75,
+      "target_price": 251.82,
+      "target_2": 231.75,
+      "target_3": 225.25,
+      "stop_loss": 291.57,
+      "signal": "HAFİF SAT",
+      "confidence": 62.2,
+      "score": -15.8,
+      "regime_key": "neutral",
+      "rr_ratio": 2.3629
+    },
     {
       "ticker": "BIMAS",
       "period": "weekly",
