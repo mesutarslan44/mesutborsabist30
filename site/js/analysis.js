@@ -711,7 +711,7 @@
 
         var stockUpdateTime = document.getElementById('stockUpdateTime');
         if (stockUpdateTime) {
-            stockUpdateTime.textContent = 'Son güncelleme: ' + (stockData.updated_at || '--') + ' | ' + (stockData.update_frequency || '');
+            stockUpdateTime.textContent = 'Son guncelleme: ' + (stockData.updated_at || '--') + ' | Otomatik: Hafta ici 10:01 | Manuel: Admin';
         }
 
         // Setup tabs

@@ -678,21 +678,25 @@
         var metaEl = document.getElementById('nextRefreshMeta');
         if (!valueEl) return;
 
-        function tick() {
-            var updatedAt = toDateFromTRString(updatedAtRaw);
-            if (!updatedAt) {
-                valueEl.textContent = '--:--:--';
-                if (metaEl) metaEl.textContent = 'Saat bilgisi okunamadi';
-                return;
+        function getNextWeekdayRefresh(now) {
+            var next = new Date(now.getTime());
+            next.setHours(10, 1, 0, 0);
+
+            while (
+                next.getDay() === 0 ||
+                next.getDay() === 6 ||
+                next.getTime() <= now.getTime()
+            ) {
+                next.setDate(next.getDate() + 1);
+                next.setHours(10, 1, 0, 0);
             }
+            return next;
+        }
 
-            var next = new Date(updatedAt.getTime());
-            next.setMinutes(0);
-            next.setSeconds(0);
-            next.setMilliseconds(0);
-            next.setHours(next.getHours() + 1);
-
-            var diff = next.getTime() - Date.now();
+        function tick() {
+            var now = new Date();
+            var next = getNextWeekdayRefresh(now);
+            var diff = next.getTime() - now.getTime();
             if (diff < 0) diff = 0;
 
             var totalSec = Math.floor(diff / 1000);
@@ -700,7 +704,7 @@
             var m = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
             var s = String(totalSec % 60).padStart(2, '0');
             valueEl.textContent = h + ':' + m + ':' + s;
-            if (metaEl) metaEl.textContent = 'Bir sonraki saatlik veri paketine kalan sure';
+            if (metaEl) metaEl.textContent = 'Hafta ici 10:01 otomatik guncellemeye kalan sure';
         }
 
         tick();
@@ -1021,8 +1025,8 @@
     function renderDataFreshness() {
         var lastUpdateEl = document.getElementById('lastUpdateText');
         if (lastUpdateEl && summaryData) {
-            lastUpdateEl.textContent = 'Son güncelleme: ' + (summaryData.updated_at || 'Bilinmiyor') +
-                ' | ' + (summaryData.update_frequency || '');
+            lastUpdateEl.textContent = 'Son guncelleme: ' + (summaryData.updated_at || 'Bilinmiyor') +
+                ' | Otomatik: Hafta ici 10:01 | Manuel: Admin';
         }
 
         var generatedAt = summaryData ? summaryData.updated_at : null;
