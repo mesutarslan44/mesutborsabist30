@@ -151,6 +151,16 @@
         return 'Temkin: ' + parts.join(', ');
     }
 
+    function getReliabilityBadgeConfig(perfData) {
+        var rel = (perfData && perfData.reliability) || {};
+        var level = String(rel.level || '').toLowerCase();
+
+        if (level === 'high') return { text: 'Guven: Yuksek', cls: 'is-high' };
+        if (level === 'medium') return { text: 'Guven: Orta', cls: 'is-medium' };
+        if (level === 'low') return { text: 'Guven: Dusuk', cls: 'is-low' };
+        return { text: 'Guven: Hesaplaniyor', cls: 'is-neutral' };
+    }
+
     function formatRange(rangeObj) {
         if (!rangeObj || rangeObj.min == null || rangeObj.max == null) return '-- / --';
         return formatPrice(rangeObj.min) + ' - ' + formatPrice(rangeObj.max);
@@ -1080,6 +1090,13 @@
         var weekly = performanceData.weekly || {};
 
         document.getElementById('overallHitRate').textContent = (overall.hit_rate || 0).toFixed(1) + '%';
+        var reliabilityBadge = document.getElementById('reliabilityBadge');
+        if (reliabilityBadge) {
+            var badgeCfg = getReliabilityBadgeConfig(performanceData);
+            reliabilityBadge.textContent = badgeCfg.text;
+            reliabilityBadge.classList.remove('is-high', 'is-medium', 'is-low', 'is-neutral');
+            reliabilityBadge.classList.add(badgeCfg.cls);
+        }
         var overallMeta = (overall.hits || 0) + '/' + (overall.total || 0) + ' hedef';
         overallMeta += ' | CI95: ' + formatCI(overall.hit_rate_ci95);
         if (overall.sample_sufficiency && !overall.sample_sufficiency.is_sufficient) {

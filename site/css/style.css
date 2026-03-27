@@ -2593,6 +2593,42 @@ body.nav-open .nav-toggle-bar:nth-child(4) {
     color: var(--accent-cyan);
 }
 
+.performance-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    border-radius: 999px;
+    padding: 4px 10px;
+    border: 1px solid var(--border-color);
+    margin: 2px 0 8px;
+}
+
+.performance-badge.is-high {
+    color: #34d399;
+    border-color: rgba(52, 211, 153, 0.5);
+    background: rgba(16, 185, 129, 0.12);
+}
+
+.performance-badge.is-medium {
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, 0.45);
+    background: rgba(245, 158, 11, 0.14);
+}
+
+.performance-badge.is-low {
+    color: #f87171;
+    border-color: rgba(248, 113, 113, 0.5);
+    background: rgba(239, 68, 68, 0.14);
+}
+
+.performance-badge.is-neutral {
+    color: var(--text-muted);
+    border-color: var(--border-color);
+    background: rgba(148, 163, 184, 0.08);
+}
+
 .performance-meta {
     font-size: 12px;
     color: var(--text-secondary);
