@@ -19,6 +19,7 @@
     const REFRESH_PROGRESS_STORAGE = 'manualRefreshProgress';
     const REFRESH_POLL_DELAY_MS = 15000;
     const REFRESH_MAX_ATTEMPTS = 24;
+    const SNAPSHOT_STORAGE_KEY = 'dashboardLastSnapshot';
 
     let matrixAnimId = null;
     let manualRefreshTicker = null;
@@ -538,6 +539,8 @@
     var coreRenderers = [
         renderUpdateBadge,
         renderMarketBar,
+        renderMarketModeBand,
+        renderTodayChanges,
         renderSignalSummary,
         renderCommandCenter,
         renderFirstDecision,
@@ -600,6 +603,119 @@
                 ch100.className = 'market-change ' + getChangeClass(bist100.change_pct);
             }
         }
+    }
+
+    function renderMarketModeBand() {
+        var band = document.getElementById('marketModeBand');
+        var textEl = document.getElementById('marketModeText');
+        if (!band || !textEl || !summaryData) return;
+
+        var counts = summaryData.signal_counts || {};
+        var buyCount = (counts.STRONG_BUY || 0) + (counts.BUY || 0) + (counts.WEAK_BUY || 0);
+        var sellCount = (counts.STRONG_SELL || 0) + (counts.SELL || 0) + (counts.WEAK_SELL || 0);
+        var holdCount = counts.HOLD || 0;
+        var total = Math.max(1, summaryData.total_stocks || summaryData.total_assets || 1);
+
+        var buyRatio = (buyCount / total) * 100;
+        var sellRatio = (sellCount / total) * 100;
+        var holdRatio = (holdCount / total) * 100;
+
+        var modeClass = 'is-neutral';
+        var modeText = 'Denge modu: AL/SAT dagilimi yakin, secici ilerlemek uygun.';
+
+        if (buyRatio >= 46 && buyRatio - sellRatio >= 14) {
+            modeClass = 'is-bull';
+            modeText = 'Trend modu: AL agirlik belirgin, kademeli giris ve net stop disiplini one cikiyor.';
+        } else if (sellRatio >= 46 && sellRatio - buyRatio >= 14) {
+            modeClass = 'is-bear';
+            modeText = 'Koruma modu: SAT baskisi yuksek, yeni islemde acele etmeden risk azaltma odakli ilerle.';
+        } else if (holdRatio >= 42) {
+            modeClass = 'is-caution';
+            modeText = 'Teyit modu: BEKLE yogunlugu yuksek, guclu sinyal gelmeden pozisyonu zorlamamak daha saglikli.';
+        }
+
+        band.classList.remove('is-bull', 'is-bear', 'is-neutral', 'is-caution');
+        band.classList.add(modeClass);
+        textEl.textContent = modeText;
+    }
+
+    function readLastSnapshot() {
+        try {
+            var raw = localStorage.getItem(SNAPSHOT_STORAGE_KEY);
+            if (!raw) return null;
+            return JSON.parse(raw);
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function saveLastSnapshot(snapshot) {
+        try {
+            localStorage.setItem(SNAPSHOT_STORAGE_KEY, JSON.stringify(snapshot));
+        } catch (e) {
+            // no-op
+        }
+    }
+
+    function renderTodayChanges() {
+        var panel = document.getElementById('todayChangePanel');
+        if (!panel || !summaryData) return;
+
+        var timeEl = document.getElementById('todayChangeTime');
+        var signalEl = document.getElementById('todaySignalDelta');
+        var signalMetaEl = document.getElementById('todaySignalDeltaMeta');
+        var confEl = document.getElementById('todayConfidenceDelta');
+        var confMetaEl = document.getElementById('todayConfidenceDeltaMeta');
+        var moversEl = document.getElementById('todayTopMovers');
+        if (!timeEl || !signalEl || !signalMetaEl || !confEl || !confMetaEl || !moversEl) return;
+
+        var stocks = summaryData.stocks || [];
+        var counts = summaryData.signal_counts || {};
+        var currSignalTotal = Number(counts.STRONG_BUY || 0) + Number(counts.BUY || 0)
+            + Number(counts.SELL || 0) + Number(counts.STRONG_SELL || 0);
+
+        var confSum = 0;
+        for (var i = 0; i < stocks.length; i++) confSum += Number(stocks[i].confidence || 0);
+        var currAvgConf = stocks.length ? (confSum / stocks.length) : 0;
+
+        var movers = stocks.slice().sort(function (a, b) {
+            return Math.abs(Number(b.change_pct || 0)) - Math.abs(Number(a.change_pct || 0));
+        }).slice(0, 3);
+        var moverText = '';
+        for (var m = 0; m < movers.length; m++) {
+            if (m > 0) moverText += ' · ';
+            moverText += movers[m].ticker + ' ' + formatPercent(Number(movers[m].change_pct || 0));
+        }
+        moversEl.textContent = moverText || '--';
+
+        var prev = readLastSnapshot();
+        var currUpdatedAt = String(summaryData.updated_at || '');
+        var hasComparablePrev = prev && prev.updated_at && prev.updated_at !== currUpdatedAt;
+
+        if (hasComparablePrev) {
+            var signalDelta = currSignalTotal - Number(prev.signal_total || 0);
+            var confDelta = currAvgConf - Number(prev.avg_confidence || 0);
+
+            signalEl.textContent = (signalDelta >= 0 ? '+' : '') + signalDelta;
+            signalMetaEl.textContent = 'AL+SAT toplaminda onceki snapshota gore fark';
+
+            confEl.textContent = (confDelta >= 0 ? '+' : '') + confDelta.toFixed(1);
+            confMetaEl.textContent = 'Ortalama guven degisimi (onceki snapshota gore)';
+            timeEl.textContent = 'Karsilastirma: ' + prev.updated_at + ' -> ' + currUpdatedAt;
+        } else {
+            signalEl.textContent = String(currSignalTotal);
+            signalMetaEl.textContent = 'Anlik AL+SAT toplam sinyal sayisi';
+
+            confEl.textContent = currAvgConf.toFixed(1);
+            confMetaEl.textContent = 'Anlik ortalama guven puani';
+            timeEl.textContent = 'Ilk snapshot kaydi alindi: ' + (currUpdatedAt || 'bilinmiyor');
+        }
+
+        saveLastSnapshot({
+            updated_at: currUpdatedAt,
+            signal_total: currSignalTotal,
+            avg_confidence: Number(currAvgConf.toFixed(4)),
+        });
     }
 
     // ── Index Commentary ──
