@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-27 17:59",
+  "generated_at": "2026-03-27 17:56",
   "overview": {
     "total": 0,
     "hits": 0,
@@ -52,7 +52,7 @@
     }
   },
   "status_summary": {
-    "open": 13,
+    "open": 12,
     "resolved": 0,
     "hits": 0,
     "stopped": 0,
@@ -100,39 +100,23 @@
       "ticker": "EREGL",
       "period": "daily",
       "direction": "sell",
-      "opened_at": "2026-03-27 17:59",
-      "start_price": 27.54,
+      "opened_at": "2026-03-27 17:56",
+      "start_price": 27.5,
       "target_price": 25.77,
       "target_2": 23.88,
-      "target_3": 23.37,
-      "stop_loss": 28.16,
+      "target_3": 23.35,
+      "stop_loss": 28.14,
       "signal": "HAFİF SAT",
       "confidence": 58.3,
       "score": -19.9,
       "regime_key": "trend_down",
-      "rr_ratio": 2.8548
-    },
-    {
-      "ticker": "KRDMD",
-      "period": "daily",
-      "direction": "sell",
-      "opened_at": "2026-03-27 17:59",
-      "start_price": 29.16,
-      "target_price": 28.4,
-      "target_2": 27.07,
-      "target_3": 25.38,
-      "stop_loss": 29.39,
-      "signal": "HAFİF SAT",
-      "confidence": 78.0,
-      "score": -19.8,
-      "regime_key": "neutral",
-      "rr_ratio": 3.3043
+      "rr_ratio": 2.7031
     },
     {
       "ticker": "TOASO",
       "period": "daily",
       "direction": "sell",
-      "opened_at": "2026-03-27 17:59",
+      "opened_at": "2026-03-27 17:56",
       "start_price": 279.75,
       "target_price": 251.82,
       "target_2": 231.75,
