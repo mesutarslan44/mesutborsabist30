@@ -114,3 +114,12 @@ TARGET_MULTIPLIERS = {
     "weekly": {"target_pct": 0.08, "stop_pct": 0.05},      # %8 hedef, %5 stop
     "monthly": {"target_pct": 0.20, "stop_pct": 0.10},     # %20 hedef, %10 stop
 }
+
+# Performans takip aday filtreleri (isabet oranini artirmak icin)
+PERFORMANCE_STRICT_FILTERS = {
+    "enabled": True,
+    "min_confidence": 45.0,
+    "min_abs_score": 14.0,
+    "min_rr": 1.2,
+    "high_vol_only_strong": True,
+}

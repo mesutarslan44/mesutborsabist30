@@ -17,6 +17,8 @@ from datetime import datetime, timedelta
 import pytz
 import yfinance as yf
 
+from config import PERFORMANCE_STRICT_FILTERS
+
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATE_DIR = os.path.join(ROOT_DIR, "python", "data")
@@ -446,6 +448,101 @@ def _add_new_targets(open_targets, candidates):
     return open_targets
 
 
+def _passes_strict_filters(target):
+    strict = PERFORMANCE_STRICT_FILTERS or {}
+    if not strict.get("enabled", False):
+        return True
+
+    confidence = float(target.get("confidence", 0) or 0)
+    score = float(target.get("score", 0) or 0)
+
+    if confidence < float(strict.get("min_confidence", 0)):
+        return False
+    if abs(score) < float(strict.get("min_abs_score", 0)):
+        return False
+
+    start_price = float(target.get("start_price", 0) or 0)
+    target_price = float(target.get("target_price", 0) or 0)
+    stop_loss = target.get("stop_loss")
+    if stop_loss is None:
+        return False
+
+    stop_loss = float(stop_loss)
+    risk = abs(start_price - stop_loss)
+    reward = abs(target_price - start_price)
+    if risk <= 0:
+        return False
+
+    rr_ratio = reward / risk
+    if rr_ratio < float(strict.get("min_rr", 0)):
+        return False
+
+    if strict.get("high_vol_only_strong", False):
+        regime_key = target.get("regime_key", "neutral")
+        signal_en = target.get("signal_en")
+        if not signal_en:
+            signal_text = str(target.get("signal", "")).upper()
+            if "GÜÇLÜ" in signal_text or "GUCLU" in signal_text:
+                signal_en = "STRONG_BUY" if "AL" in signal_text else "STRONG_SELL"
+            elif "AL" in signal_text:
+                signal_en = "BUY"
+            elif "SAT" in signal_text:
+                signal_en = "SELL"
+            else:
+                signal_en = "HOLD"
+        if regime_key == "high_volatility" and signal_en not in ("STRONG_BUY", "STRONG_SELL"):
+            return False
+
+    return True
+
+
+def _migrate_open_targets_for_strict(open_targets, current_prices, as_of_dt):
+    strict = PERFORMANCE_STRICT_FILTERS or {}
+    if not strict.get("enabled", False):
+        return open_targets, []
+
+    kept = []
+    migrated = []
+    for target in open_targets:
+        if _passes_strict_filters(target):
+            kept.append(target)
+            continue
+
+        opened_at = _parse_dt(target.get("opened_at", ""))
+        ticker = target.get("ticker")
+        current_price = current_prices.get(ticker)
+        if current_price is None:
+            current_price = target.get("start_price")
+
+        try:
+            close_price = round(float(current_price), 4)
+        except Exception:
+            close_price = None
+
+        migrated.append({
+            "ticker": ticker,
+            "period": target.get("period", "daily"),
+            "direction": target.get("direction"),
+            "opened_at": target.get("opened_at"),
+            "closed_at": as_of_dt.strftime("%Y-%m-%d %H:%M"),
+            "start_price": target.get("start_price"),
+            "target_price": target.get("target_price"),
+            "target_2": target.get("target_2"),
+            "target_3": target.get("target_3"),
+            "stop_loss": target.get("stop_loss"),
+            "close_price": close_price,
+            "profit_pct": 0.0,
+            "days_to_result": _days_between(opened_at, as_of_dt),
+            "hit_level": None,
+            "status": "EXPIRED",
+            "signal": target.get("signal", ""),
+            "confidence": target.get("confidence", 0),
+            "score": target.get("score", 0),
+        })
+
+    return kept, migrated
+
+
 def _calc_stats(history):
     periods = ["daily", "weekly"]
     stats_by_period = {}
@@ -723,6 +820,9 @@ def update_performance_tracker(candidates, current_prices, generated_at, histori
 
     open_targets, resolved = _resolve_open_targets_realtime(open_targets, current_prices, as_of_dt, historical_data, market_type=market_type)
     history.extend(resolved)
+
+    open_targets, migrated = _migrate_open_targets_for_strict(open_targets, current_prices, as_of_dt)
+    history.extend(migrated)
 
     open_targets = _add_new_targets(open_targets, candidates)
 

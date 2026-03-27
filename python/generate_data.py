@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 import pandas as pd
 import yfinance as yf
 
-from config import BIST30_TICKERS, AGBE_TICKERS, MARKET_INDICES, DATA_PERIODS
+from config import BIST30_TICKERS, AGBE_TICKERS, MARKET_INDICES, DATA_PERIODS, PERFORMANCE_STRICT_FILTERS
 from data_fetcher import fetch_stock_data, fetch_all_stocks, fetch_all_periods, get_market_info
 from technical_analysis import calculate_all_indicators, get_latest_indicators
 from recommendation_engine import generate_recommendation
@@ -84,6 +84,95 @@ def get_range_metrics(chart_data, period_len):
     return {
         "min": round(float(min(lows)), 2),
         "max": round(float(max(highs)), 2),
+    }
+
+
+def _to_float(value):
+    try:
+        if value is None:
+            return None
+        return float(value)
+    except Exception:
+        return None
+
+
+def _calc_rr_ratio(direction, start_price, target_price, stop_loss):
+    sp = _to_float(start_price)
+    tp = _to_float(target_price)
+    sl = _to_float(stop_loss)
+    if sp is None or tp is None or sl is None:
+        return None
+
+    reward = abs(tp - sp)
+    risk = abs(sp - sl)
+    if risk <= 0:
+        return None
+
+    return reward / risk
+
+
+def build_performance_candidate(ticker_clean, period_name, period_rec, start_price, opened_at):
+    signal_en = period_rec.get("signal_en", "HOLD")
+    buy_signals = {"STRONG_BUY", "BUY", "WEAK_BUY"}
+    sell_signals = {"STRONG_SELL", "SELL", "WEAK_SELL"}
+
+    if signal_en not in buy_signals and signal_en not in sell_signals:
+        return None
+
+    targets = period_rec.get("targets", {})
+    target_1 = targets.get("target_1")
+    target_2 = targets.get("target_2")
+    target_3 = targets.get("target_3")
+    stop_loss = targets.get("stop_loss")
+
+    if not target_1:
+        return None
+
+    direction = "buy" if signal_en in buy_signals else "sell"
+    sp = _to_float(start_price)
+    tp1 = _to_float(target_1)
+    tp2 = _to_float(target_2)
+    tp3 = _to_float(target_3)
+    sl = _to_float(stop_loss)
+
+    if sp is None or tp1 is None:
+        return None
+
+    confidence = _to_float(period_rec.get("confidence", 0)) or 0.0
+    score = _to_float(period_rec.get("score", 0)) or 0.0
+    regime_key = period_rec.get("regime_key", "neutral")
+    rr_ratio = _calc_rr_ratio(direction, sp, tp1, sl)
+
+    strict = PERFORMANCE_STRICT_FILTERS or {}
+    if strict.get("enabled", False):
+        if confidence < float(strict.get("min_confidence", 0)):
+            return None
+        if abs(score) < float(strict.get("min_abs_score", 0)):
+            return None
+
+        min_rr = float(strict.get("min_rr", 0))
+        if rr_ratio is None or rr_ratio < min_rr:
+            return None
+
+        if strict.get("high_vol_only_strong", False):
+            if regime_key == "high_volatility" and signal_en not in {"STRONG_BUY", "STRONG_SELL"}:
+                return None
+
+    return {
+        "ticker": ticker_clean,
+        "period": period_name,
+        "direction": direction,
+        "opened_at": opened_at,
+        "start_price": round(sp, 4),
+        "target_price": round(tp1, 4),
+        "target_2": round(tp2, 4) if tp2 is not None else None,
+        "target_3": round(tp3, 4) if tp3 is not None else None,
+        "stop_loss": round(sl, 4) if sl is not None else None,
+        "signal": period_rec.get("signal", "AL" if direction == "buy" else "SAT"),
+        "confidence": confidence,
+        "score": score,
+        "regime_key": regime_key,
+        "rr_ratio": round(rr_ratio, 4) if rr_ratio is not None else None,
     }
 
 
@@ -344,46 +433,18 @@ def main():
             stocks_summary.append(summary_item)
             current_prices[ticker_clean] = summary_item["price"]
 
-            # Track daily + weekly targets for performance page
+            # Track daily + weekly targets for performance page (strict filtreler aktif)
             for period_name in ["daily", "weekly"]:
                 period_rec = stock_result["periods"].get(period_name, {}).get("recommendation", {})
-                period_signal = period_rec.get("signal_en", "HOLD")
-                targets = period_rec.get("targets", {})
-                target_1 = targets.get("target_1")
-                target_2 = targets.get("target_2")
-                target_3 = targets.get("target_3")
-                stop_loss = targets.get("stop_loss")
-
-                if period_signal in ["STRONG_BUY", "BUY", "WEAK_BUY"] and target_1:
-                    performance_candidates.append({
-                        "ticker": ticker_clean,
-                        "period": period_name,
-                        "direction": "buy",
-                        "opened_at": generated_at,
-                        "start_price": round(float(summary_item["price"]), 4),
-                        "target_price": round(float(target_1), 4),
-                        "target_2": round(float(target_2), 4) if target_2 else None,
-                        "target_3": round(float(target_3), 4) if target_3 else None,
-                        "stop_loss": round(float(stop_loss), 4) if stop_loss else None,
-                        "signal": period_rec.get("signal", "AL"),
-                        "confidence": period_rec.get("confidence", 0),
-                        "score": period_rec.get("score", 0),
-                    })
-                elif period_signal in ["STRONG_SELL", "SELL", "WEAK_SELL"] and target_1:
-                    performance_candidates.append({
-                        "ticker": ticker_clean,
-                        "period": period_name,
-                        "direction": "sell",
-                        "opened_at": generated_at,
-                        "start_price": round(float(summary_item["price"]), 4),
-                        "target_price": round(float(target_1), 4),
-                        "target_2": round(float(target_2), 4) if target_2 else None,
-                        "target_3": round(float(target_3), 4) if target_3 else None,
-                        "stop_loss": round(float(stop_loss), 4) if stop_loss else None,
-                        "signal": period_rec.get("signal", "SAT"),
-                        "confidence": period_rec.get("confidence", 0),
-                        "score": period_rec.get("score", 0),
-                    })
+                candidate = build_performance_candidate(
+                    ticker_clean=ticker_clean,
+                    period_name=period_name,
+                    period_rec=period_rec,
+                    start_price=summary_item["price"],
+                    opened_at=generated_at,
+                )
+                if candidate:
+                    performance_candidates.append(candidate)
 
             if rec.get("score", 0) > 10:
                 top_buys.append(summary_item)
@@ -531,46 +592,18 @@ def main():
             agbe_summary_list.append(summary_item)
             agbe_current_prices[ticker_clean] = summary_item["price"]
 
-            # Track daily + weekly targets for AGBE performance page
+            # Track daily + weekly targets for AGBE performance page (strict filtreler aktif)
             for period_name in ["daily", "weekly"]:
                 period_rec = stock_result["periods"].get(period_name, {}).get("recommendation", {})
-                period_signal = period_rec.get("signal_en", "HOLD")
-                targets = period_rec.get("targets", {})
-                target_1 = targets.get("target_1")
-                target_2 = targets.get("target_2")
-                target_3 = targets.get("target_3")
-                stop_loss = targets.get("stop_loss")
-
-                if period_signal in ["STRONG_BUY", "BUY", "WEAK_BUY"] and target_1:
-                    agbe_performance_candidates.append({
-                        "ticker": ticker_clean,
-                        "period": period_name,
-                        "direction": "buy",
-                        "opened_at": generated_at,
-                        "start_price": round(float(summary_item["price"]), 4),
-                        "target_price": round(float(target_1), 4),
-                        "target_2": round(float(target_2), 4) if target_2 else None,
-                        "target_3": round(float(target_3), 4) if target_3 else None,
-                        "stop_loss": round(float(stop_loss), 4) if stop_loss else None,
-                        "signal": period_rec.get("signal", "AL"),
-                        "confidence": period_rec.get("confidence", 0),
-                        "score": period_rec.get("score", 0),
-                    })
-                elif period_signal in ["STRONG_SELL", "SELL", "WEAK_SELL"] and target_1:
-                    agbe_performance_candidates.append({
-                        "ticker": ticker_clean,
-                        "period": period_name,
-                        "direction": "sell",
-                        "opened_at": generated_at,
-                        "start_price": round(float(summary_item["price"]), 4),
-                        "target_price": round(float(target_1), 4),
-                        "target_2": round(float(target_2), 4) if target_2 else None,
-                        "target_3": round(float(target_3), 4) if target_3 else None,
-                        "stop_loss": round(float(stop_loss), 4) if stop_loss else None,
-                        "signal": period_rec.get("signal", "SAT"),
-                        "confidence": period_rec.get("confidence", 0),
-                        "score": period_rec.get("score", 0),
-                    })
+                candidate = build_performance_candidate(
+                    ticker_clean=ticker_clean,
+                    period_name=period_name,
+                    period_rec=period_rec,
+                    start_price=summary_item["price"],
+                    opened_at=generated_at,
+                )
+                if candidate:
+                    agbe_performance_candidates.append(candidate)
 
             print(f"✓ {rec.get('signal', 'BEKLE')} ({rec.get('score', 0):+.1f})")
         else:
