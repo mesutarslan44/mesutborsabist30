@@ -18,13 +18,13 @@
     <div class="matrix-intro" id="matrixIntro">
         <canvas id="matrixCanvas" aria-hidden="true"></canvas>
         <div class="matrix-center">
-            <div class="matrix-title">Wake up, Mesut...</div>
-            <div class="matrix-subtitle">Choose your path</div>
+            <div class="matrix-title">Hos geldin Mesut</div>
+            <div class="matrix-subtitle">Canli analiz paneline gir</div>
             <div class="pill-box">
                 <button class="pill pill-red" id="redPillBtn" type="button" aria-label="Red pill"></button>
                 <button class="pill pill-blue" id="bluePillBtn" type="button" aria-label="Blue pill"></button>
             </div>
-            <div class="matrix-hint">Blue pill opens the system.</div>
+            <div class="matrix-hint">Mavi tusa basarak dashboard'u acabilirsin.</div>
         </div>
     </div>
 
@@ -95,9 +95,9 @@
             <div class="freshness-icon">⏰</div>
             <div class="freshness-info">
                 <strong>Veri Güncellik Bilgisi:</strong>
-                <span id="freshnessText">Veriler hafta ici her gun saat 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin isterse Simdi Yenile ile manuel olarak anlik yenileyebilir.</span>
+                <span id="freshnessText">Veriler hafta ici 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Gerektiginde admin panelden anlik yenileme yapabilir.</span>
                 <br><small id="lastUpdateText">Son güncelleme: Yükleniyor...</small>
-                <br><small id="manualRefreshStatus">Otomatik: Hafta ici 10:01 / 12:30 / 17:00 / 19:30 | Manuel: Admin istedigi anda Simdi Yenile.</small>
+                <br><small id="manualRefreshStatus">Otomatik takvim acik. Gecikme olursa once veri yasi alanini kontrol et.</small>
 
                 <div class="freshness-details" id="freshnessDetails">
                     <div class="freshness-row"><span>Analiz motoru üretim zamanı</span><strong id="generatedAtValue">Yükleniyor...</strong></div>
@@ -136,9 +136,34 @@
         </div>
 
         <div class="quick-guide">
-            <div class="quick-guide-item"><strong>1)</strong> Ilk olarak <strong>AL / BEKLE / SAT</strong> dagilimina bak.</div>
-            <div class="quick-guide-item"><strong>2)</strong> Sonra tabloda sadece <strong>Sinyal + Fiyat + Degisim</strong> ile karsilastir.</div>
-            <div class="quick-guide-item"><strong>3)</strong> Karar verirken once <strong>stop-loss</strong> sonra hedef fiyat kontrol et.</div>
+            <div class="quick-guide-item"><strong>1)</strong> Once sinyali gor: <strong>AL / BEKLE / SAT</strong>.</div>
+            <div class="quick-guide-item"><strong>2)</strong> Sonra hedef-stop mesafesine bak.</div>
+            <div class="quick-guide-item"><strong>3)</strong> Son adimda guven ve performans guvenirligini kontrol et.</div>
+        </div>
+
+        <div class="transparency-panel" id="transparencyPanel">
+            <div class="transparency-head">
+                <h2>Sistem Nasil Calisir?</h2>
+                <p>Bu bolumde hedeflerin hangi kurallarla uretildigini acik ve olculebilir sekilde gorursun.</p>
+            </div>
+            <div class="transparency-grid">
+                <div class="transparency-card">
+                    <div class="transparency-title">1) Hedefler Neye Gore Uretilir?</div>
+                    <p id="targetLogicText">Yukleniyor...</p>
+                </div>
+                <div class="transparency-card">
+                    <div class="transparency-title">2) Hangi Sinyaller Elenir?</div>
+                    <p id="strictFilterText">Yukleniyor...</p>
+                </div>
+                <div class="transparency-card">
+                    <div class="transparency-title">3) Sonuclar Nasil Dogrulaniyor?</div>
+                    <p id="qualityControlText">Yukleniyor...</p>
+                </div>
+                <div class="transparency-card">
+                    <div class="transparency-title">4) Veri Kaynagi ve Sinirlar</div>
+                    <p id="dataSourceText">Yukleniyor...</p>
+                </div>
+            </div>
         </div>
 
         <div class="command-center" id="commandCenter">
@@ -227,43 +252,12 @@
             </div>
 
             <div class="decision-checklist-wrap">
-                <div class="decision-checklist-title">Islem Oncesi Kontrol Listesi (Ne ise yarar? Yanlis karari azaltir.)</div>
+                <div class="decision-checklist-title">Islem Oncesi Kontrol Listesi</div>
                 <ul class="decision-checklist" id="coachChecklist">
                     <li>Yukleniyor...</li>
                 </ul>
             </div>
             <div class="decision-coach-disclaimer" id="coachDisclaimer">Bu panel karar destegi icindir.</div>
-        </div>
-
-        <div class="tactic-center" id="tacticCenter">
-            <div class="tactic-title">Taktik Merkezi: Siteden Maksimum Verim Alma</div>
-            <div class="tactic-grid">
-                <div class="tactic-card">
-                    <h3>1) Sadece Guncel Veriyle Islem Planla</h3>
-                    <p>Veri Yasi alanini kontrol et. Guncel degilse yeni islemde acele etme, once veri tazelensin.</p>
-                </div>
-                <div class="tactic-card">
-                    <h3>2) Once Piyasa, Sonra Hisse</h3>
-                    <p>Ust bardaki BIST 30 / BIST 100 yonu ayniysa trend daha temiz olur. Ayrisma varsa lotu kucult.</p>
-                </div>
-                <div class="tactic-card">
-                    <h3>3) Islem Oncesi 3 Soru</h3>
-                    <p>Sinyal ne? Stop nerede? Ilk hedef nerede? Bu ucunu netlestirmeden emir verme.</p>
-                </div>
-                <div class="tactic-card">
-                    <h3>4) Kademeli Kar Al</h3>
-                    <p>Hedef 1'de parcali realize et, kalan pozisyonda stopu maliyete cek. Tek hamlede tum pozisyonu yonetme.</p>
-                </div>
-                <div class="tactic-card">
-                    <h3>5) Tek Islemde Buyuk Risk Alma</h3>
-                    <p>Portfoy riskini islem basina sinirla. Arka arkaya 2 zarar varsa ara ver ve plani yeniden oku.</p>
-                </div>
-                <div class="tactic-card">
-                    <h3>6) Performansi Haftalik Degerlendir</h3>
-                    <p>Tek bir isleme degil, 15-20 islem ortalamasina bak. Kural disi islemleri ayrica not et.</p>
-                </div>
-            </div>
-            <div class="tactic-note">Bu icerik egitim amaclidir; kesin alim-satim emri degildir.</div>
         </div>
 
         <div class="advanced-toggle-wrap">
@@ -381,10 +375,10 @@
             <h2 class="section-title"><span class="icon">🧭</span> Sinyal Rehberi</h2>
         </div>
         <div class="signal-legend">
-            <div class="legend-item"><span class="signal-badge strong-buy"><span class="dot"></span>GucLu AL</span><p>Yuksek ivme + trend uyumu. Risk yonetimi sart.</p></div>
-            <div class="legend-item"><span class="signal-badge buy"><span class="dot"></span>AL</span><p>Pozitif senaryo agir basiyor, hedef/stop takip edilerek ilerlenir.</p></div>
-            <div class="legend-item"><span class="signal-badge hold"><span class="dot"></span>BEKLE</span><p>Net yon yok. En iyi hamle sabir ve teyit beklemek.</p></div>
-            <div class="legend-item"><span class="signal-badge sell"><span class="dot"></span>SAT</span><p>Asagi riskler on planda. Pozisyon azaltma/koruma odakta olur.</p></div>
+            <div class="legend-item"><span class="signal-badge strong-buy"><span class="dot"></span>GucLu AL</span><p>Trend + momentum birlikte guclu.</p></div>
+            <div class="legend-item"><span class="signal-badge buy"><span class="dot"></span>AL</span><p>Olumlu senaryo agir basiyor.</p></div>
+            <div class="legend-item"><span class="signal-badge hold"><span class="dot"></span>BEKLE</span><p>Net yon zayif, teyit beklenir.</p></div>
+            <div class="legend-item"><span class="signal-badge sell"><span class="dot"></span>SAT</span><p>Asagi yon riski daha yuksek.</p></div>
         </div>
 
         <!-- Stock Table -->
@@ -410,9 +404,9 @@
         <div class="mobile-table-hint">Ipucu: Mobilde her satir kart olarak gorunur. Kartin ustune dokunarak hisse detayina gidebilirsin.</div>
 
         <div class="table-metrics-guide">
-            <span><strong>Sinyal:</strong> AL / BEKLE / SAT genel yonu gosterir.</span>
-            <span><strong>Guven:</strong> Sinyalin istikrar puani, tek basina karar degildir.</span>
-            <span><strong>3A/6A Min-Max:</strong> Son 3 ve 6 ay fiyat bandini hizli gormeni saglar.</span>
+            <span><strong>Sinyal:</strong> Olasi yonu verir.</span>
+            <span><strong>Guven:</strong> Sinyalin istikrar puanidir, tek basina yeterli degildir.</span>
+            <span><strong>Hedef/Stop:</strong> Risk-getiri planini gosterir.</span>
         </div>
 
         <div class="alarm-center advanced-block" id="alarmCenter">
@@ -461,10 +455,8 @@
 
         <!-- Disclaimer -->
         <div class="disclaimer">
-            <strong>⚠️ Yasal Uyarı:</strong> Bu platform yalnızca eğitim ve bilgi amaçlıdır.
-            Burada yer alan analiz ve sinyaller yatırım tavsiyesi niteliği taşımaz.
-            Yatırım kararlarınızı almadan önce mutlaka lisanslı bir yatırım danışmanına başvurunuz.
-            Geçmiş performans gelecek sonuçların garantisi değildir. Tüm yatırım riskleri yatırımcıya aittir.
+            <strong>⚠️ Yasal Uyari:</strong> Bu platform egitim ve bilgi amaclidir; yatirim tavsiyesi vermez.
+            Gecmis performans gelecegi garanti etmez. Tum karar ve risk yatirimciya aittir.
         </div>
 
     </div>

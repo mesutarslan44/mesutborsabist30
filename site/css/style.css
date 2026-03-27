@@ -2793,6 +2793,55 @@ body.nav-open .nav-toggle-bar:nth-child(4) {
     font-size: 14px;
 }
 
+.transparency-panel {
+    margin: 0 0 20px;
+    padding: 16px;
+    border: 1px solid rgba(34, 211, 238, 0.3);
+    border-radius: 14px;
+    background: linear-gradient(140deg, rgba(8, 18, 30, 0.94), rgba(10, 24, 36, 0.88));
+    box-shadow: 0 10px 34px rgba(5, 12, 22, 0.42);
+}
+
+.transparency-head h2 {
+    font-size: 18px;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+}
+
+.transparency-head p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.transparency-grid {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    gap: 10px;
+}
+
+.transparency-card {
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 11px 12px;
+}
+
+.transparency-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: var(--accent-cyan);
+    margin-bottom: 6px;
+}
+
+.transparency-card p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+}
+
 .quick-decision-card {
     background: var(--gradient-card);
     border: 1px solid var(--border-color);
@@ -3409,7 +3458,8 @@ body.nav-open .nav-toggle-bar:nth-child(4) {
     }
 
     .decision-cockpit,
-    .term-grid {
+    .term-grid,
+    .transparency-grid {
         grid-template-columns: 1fr;
     }
 }

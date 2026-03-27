@@ -541,6 +541,7 @@
         renderAlarmCenter,
         renderTopSignals,
         renderPerformance,
+        renderTransparencyPanel,
         renderNews,
         renderTable,
     ];
@@ -1125,6 +1126,64 @@
         }
 
         tableBody.innerHTML = rows || '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-muted);">Henuz tutan hedef kaydi yok.</td></tr>';
+    }
+
+    function renderTransparencyPanel() {
+        var panel = document.getElementById('transparencyPanel');
+        if (!panel) return;
+
+        var targetLogicEl = document.getElementById('targetLogicText');
+        var strictFilterEl = document.getElementById('strictFilterText');
+        var qualityControlEl = document.getElementById('qualityControlText');
+        var dataSourceEl = document.getElementById('dataSourceText');
+
+        if (!targetLogicEl || !strictFilterEl || !qualityControlEl || !dataSourceEl) return;
+
+        var policy = (performanceData && performanceData.policy) || {};
+        var strict = policy.strict_filters || {};
+        var reliability = (performanceData && performanceData.reliability) || {};
+        var walkForward = (performanceData && performanceData.walk_forward) || {};
+
+        var dailyExpiry = Number(policy.daily_expiry_days || 0);
+        var weeklyExpiry = Number(policy.weekly_expiry_days || 0);
+        var minHold = Number(policy.min_hold_minutes || 0);
+
+        targetLogicEl.textContent =
+            'Hedefler teknik sinyal yonu + hedef/stop mesafesi ile uretilir. Acilan hedeflerde minimum bekleme suresi '
+            + minHold + ' dk, gunluk hedefte maksimum ' + dailyExpiry + ' gun, haftalik hedefte maksimum '
+            + weeklyExpiry + ' gun takip uygulanir.';
+
+        var minConf = Number(strict.min_confidence || 0).toFixed(0);
+        var minScore = Number(strict.min_abs_score || 0).toFixed(0);
+        var minRr = Number(strict.min_rr || 0).toFixed(2);
+        var minMeta = Number(strict.min_meta_score || 0).toFixed(0);
+        var regimes = (strict.regime_whitelist || []).join(', ') || 'tum rejimler';
+
+        strictFilterEl.textContent =
+            'Dusuk kaliteli sinyaller otomatik elenir: minimum guven %' + minConf
+            + ', minimum skor |' + minScore + '|, minimum R/R ' + minRr
+            + ', minimum meta kalite ' + minMeta
+            + '. Uygun rejimler: ' + regimes + '.';
+
+        var ci = ((performanceData && performanceData.overview) || {}).hit_rate_ci95 || {};
+        var ciText = formatCI(ci);
+        var relLevel = String(reliability.level || 'unknown').toUpperCase();
+        var wfText = 'hazir degil';
+        if (walkForward.available && walkForward.summary) {
+            wfText = '%'+ Number(walkForward.summary.avg_test_hit_rate || 0).toFixed(1)
+                + ' (OOS), fark '
+                + Number(walkForward.summary.degradation || 0).toFixed(1) + ' puan';
+        }
+
+        qualityControlEl.textContent =
+            'Sonuclar sadece isabet oraniyla degil CI95 (' + ciText + '), orneklem yeterliligi ve walk-forward OOS metrikleriyle dogrulanir. '
+            + 'Mevcut guven seviyesi: ' + relLevel + ', walk-forward: ' + wfText + '.';
+
+        var summaryTs = (summaryData && summaryData.updated_at) || '--';
+        var perfTs = (performanceData && performanceData.generated_at) || '--';
+        dataSourceEl.textContent =
+            'Fiyat ve piyasa verileri Yahoo Finance akisi uzerinden derlenir. Son genel guncelleme: '
+            + summaryTs + ', performans dosyasi: ' + perfTs + '. Bu sistem karar destegi sunar; yatirim tavsiyesi vermez.';
     }
 
     // ── News ──
