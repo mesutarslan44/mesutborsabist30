@@ -111,6 +111,17 @@ def _calc_rr_ratio(direction, start_price, target_price, stop_loss):
     return reward / risk
 
 
+def _calc_meta_quality(confidence, score, rr_ratio):
+    conf = max(0.0, min(100.0, float(confidence or 0.0)))
+    score_abs = min(abs(float(score or 0.0)), 40.0)
+    rr = max(0.0, min(float(rr_ratio or 0.0), 3.0))
+
+    conf_component = conf
+    score_component = (score_abs / 40.0) * 100.0
+    rr_component = (rr / 3.0) * 100.0
+    return round((0.55 * conf_component) + (0.20 * score_component) + (0.25 * rr_component), 1)
+
+
 def build_performance_candidate(ticker_clean, period_name, period_rec, start_price, opened_at):
     signal_en = period_rec.get("signal_en", "HOLD")
     buy_signals = {"STRONG_BUY", "BUY", "WEAK_BUY"}
@@ -145,6 +156,15 @@ def build_performance_candidate(ticker_clean, period_name, period_rec, start_pri
 
     strict = PERFORMANCE_STRICT_FILTERS or {}
     if strict.get("enabled", False):
+        meta_score = _calc_meta_quality(confidence, score, rr_ratio)
+
+        if strict.get("enable_no_trade_zone", False):
+            conf_min = float(strict.get("no_trade_confidence_min", 0.0))
+            conf_max = float(strict.get("no_trade_confidence_max", 0.0))
+            score_abs_max = float(strict.get("no_trade_score_abs_max", 0.0))
+            if conf_min <= confidence <= conf_max and abs(score) <= score_abs_max:
+                return None
+
         if confidence < float(strict.get("min_confidence", 0)):
             return None
         if abs(score) < float(strict.get("min_abs_score", 0)):
@@ -164,6 +184,9 @@ def build_performance_candidate(ticker_clean, period_name, period_rec, start_pri
 
         regime_whitelist = set(strict.get("regime_whitelist", []))
         if regime_whitelist and regime_key not in regime_whitelist:
+            return None
+
+        if meta_score < float(strict.get("min_meta_score", 0.0)):
             return None
 
     return {

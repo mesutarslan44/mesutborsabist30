@@ -131,6 +131,11 @@
         return sign + val.toFixed(2) + '%';
     }
 
+    function formatCI(ciObj) {
+        if (!ciObj || ciObj.lower == null || ciObj.upper == null) return '--';
+        return '%' + Number(ciObj.lower).toFixed(1) + ' - %' + Number(ciObj.upper).toFixed(1);
+    }
+
     function formatRange(rangeObj) {
         if (!rangeObj || rangeObj.min == null || rangeObj.max == null) return '-- / --';
         return formatPrice(rangeObj.min) + ' - ' + formatPrice(rangeObj.max);
@@ -1059,13 +1064,30 @@
         var weekly = performanceData.weekly || {};
 
         document.getElementById('overallHitRate').textContent = (overall.hit_rate || 0).toFixed(1) + '%';
-        document.getElementById('overallHitCount').textContent = (overall.hits || 0) + '/' + (overall.total || 0) + ' hedef';
+        var overallMeta = (overall.hits || 0) + '/' + (overall.total || 0) + ' hedef';
+        overallMeta += ' | CI95: ' + formatCI(overall.hit_rate_ci95);
+        if (overall.sample_sufficiency && !overall.sample_sufficiency.is_sufficient) {
+            overallMeta += ' | Orneklem dusuk';
+        }
+        document.getElementById('overallHitCount').textContent = overallMeta;
 
         document.getElementById('dailyHitRate').textContent = (daily.hit_rate || 0).toFixed(1) + '%';
-        document.getElementById('dailyHitMeta').textContent = (daily.hits || 0) + '/' + (daily.total || 0) + ' hedef | Ort: ' + (daily.avg_days_to_hit || 0) + ' gun';
+        var dailyMeta = (daily.hits || 0) + '/' + (daily.total || 0) + ' hedef | Ort: ' + (daily.avg_days_to_hit || 0) + ' gun';
+        dailyMeta += ' | CI95: ' + formatCI(daily.hit_rate_ci95);
+        document.getElementById('dailyHitMeta').textContent = dailyMeta;
 
         document.getElementById('weeklyHitRate').textContent = (weekly.hit_rate || 0).toFixed(1) + '%';
-        document.getElementById('weeklyHitMeta').textContent = (weekly.hits || 0) + '/' + (weekly.total || 0) + ' hedef | Ort: ' + (weekly.avg_days_to_hit || 0) + ' gun';
+        var weeklyMeta = (weekly.hits || 0) + '/' + (weekly.total || 0) + ' hedef | Ort: ' + (weekly.avg_days_to_hit || 0) + ' gun';
+        weeklyMeta += ' | CI95: ' + formatCI(weekly.hit_rate_ci95);
+        document.getElementById('weeklyHitMeta').textContent = weeklyMeta;
+
+        if (performanceData.walk_forward && performanceData.walk_forward.summary) {
+            var wf = performanceData.walk_forward.summary;
+            var wfText = 'WF OOS: %' + Number(wf.avg_test_hit_rate || 0).toFixed(1)
+                + ' | IS: %' + Number(wf.avg_train_hit_rate || 0).toFixed(1)
+                + ' | Fark: ' + Number(wf.degradation || 0).toFixed(1) + ' puan';
+            document.getElementById('weeklyHitMeta').textContent += ' | ' + wfText;
+        }
 
         var rows = '';
         var hits = performanceData.recent_hits || [];

@@ -477,6 +477,19 @@ def _passes_strict_filters(target):
     if rr_ratio < float(strict.get("min_rr", 0)):
         return False
 
+    confidence = float(target.get("confidence", 0) or 0)
+    score = float(target.get("score", 0) or 0)
+    meta_score = (0.55 * max(0.0, min(100.0, confidence))) + (
+        0.20 * (min(abs(score), 40.0) / 40.0 * 100.0)
+    ) + (0.25 * (min(max(rr_ratio, 0.0), 3.0) / 3.0 * 100.0))
+
+    if strict.get("enable_no_trade_zone", False):
+        conf_min = float(strict.get("no_trade_confidence_min", 0.0))
+        conf_max = float(strict.get("no_trade_confidence_max", 0.0))
+        score_abs_max = float(strict.get("no_trade_score_abs_max", 0.0))
+        if conf_min <= confidence <= conf_max and abs(score) <= score_abs_max:
+            return False
+
     regime_key = target.get("regime_key", "neutral")
     signal_en = target.get("signal_en")
     if not signal_en:
@@ -500,6 +513,9 @@ def _passes_strict_filters(target):
 
     regime_whitelist = set(strict.get("regime_whitelist", []))
     if regime_whitelist and regime_key not in regime_whitelist:
+        return False
+
+    if meta_score < float(strict.get("min_meta_score", 0.0)):
         return False
 
     return True
@@ -591,6 +607,98 @@ def _calc_stats(history):
             "stop_rate": round((stopped / total * 100), 1) if total else 0.0,
         },
         "by_period": stats_by_period,
+    }
+
+
+def _wilson_interval(hits, total, z=1.96):
+    if total <= 0:
+        return {"lower": 0.0, "upper": 0.0}
+
+    p = hits / total
+    denom = 1.0 + (z * z) / total
+    center = p + (z * z) / (2 * total)
+    spread = z * math.sqrt((p * (1 - p) / total) + ((z * z) / (4 * total * total)))
+    lower = max(0.0, (center - spread) / denom)
+    upper = min(1.0, (center + spread) / denom)
+    return {
+        "lower": round(lower * 100, 1),
+        "upper": round(upper * 100, 1),
+    }
+
+
+def _attach_confidence_band(stats_obj, min_sample=30):
+    total = int(stats_obj.get("total", 0) or 0)
+    hits = int(stats_obj.get("hits", 0) or 0)
+    stats_obj["hit_rate_ci95"] = _wilson_interval(hits, total)
+    stats_obj["sample_sufficiency"] = {
+        "min_recommended": int(min_sample),
+        "is_sufficient": total >= int(min_sample),
+        "remaining": max(int(min_sample) - total, 0),
+    }
+    return stats_obj
+
+
+def _calc_walk_forward(history, min_train=20, test_size=10):
+    resolved = [h for h in history if h.get("status") in ("HIT", "STOPPED", "EXPIRED")]
+    resolved = sorted(resolved, key=lambda x: x.get("closed_at", ""))
+
+    splits = []
+    total = len(resolved)
+    idx = min_train
+    while idx + test_size <= total:
+        train = resolved[:idx]
+        test = resolved[idx: idx + test_size]
+        train_hits = len([r for r in train if r.get("status") == "HIT"])
+        test_hits = len([r for r in test if r.get("status") == "HIT"])
+        train_rate = round((train_hits / len(train) * 100), 1) if train else 0.0
+        test_rate = round((test_hits / len(test) * 100), 1) if test else 0.0
+        splits.append(
+            {
+                "train_size": len(train),
+                "test_size": len(test),
+                "train_hit_rate": train_rate,
+                "test_hit_rate": test_rate,
+                "test_start": test[0].get("closed_at", ""),
+                "test_end": test[-1].get("closed_at", ""),
+            }
+        )
+        idx += test_size
+
+    if not splits:
+        return {
+            "available": False,
+            "splits": [],
+            "summary": {
+                "avg_train_hit_rate": 0.0,
+                "avg_test_hit_rate": 0.0,
+                "degradation": 0.0,
+            },
+            "requirements": {
+                "min_train": min_train,
+                "test_size": test_size,
+                "min_records_needed": min_train + test_size,
+                "current_records": total,
+                "remaining": max((min_train + test_size) - total, 0),
+            },
+        }
+
+    avg_train = round(sum(s["train_hit_rate"] for s in splits) / len(splits), 1)
+    avg_test = round(sum(s["test_hit_rate"] for s in splits) / len(splits), 1)
+    return {
+        "available": True,
+        "splits": splits[-6:],
+        "summary": {
+            "avg_train_hit_rate": avg_train,
+            "avg_test_hit_rate": avg_test,
+            "degradation": round(avg_test - avg_train, 1),
+        },
+        "requirements": {
+            "min_train": min_train,
+            "test_size": test_size,
+            "min_records_needed": min_train + test_size,
+            "current_records": total,
+            "remaining": max((min_train + test_size) - total, 0),
+        },
     }
 
 
@@ -778,10 +886,14 @@ def _to_frontend_payload(state, generated_at):
     )[:200]
 
     stats = _calc_stats(history)
+    stats["overall"] = _attach_confidence_band(stats["overall"], min_sample=30)
+    stats["by_period"]["daily"] = _attach_confidence_band(stats["by_period"]["daily"], min_sample=20)
+    stats["by_period"]["weekly"] = _attach_confidence_band(stats["by_period"]["weekly"], min_sample=20)
     direction_stats = _calc_direction_stats(history)
     target_level_stats = _calc_target_level_stats(history)
     profit_stats = _calc_profit_stats(history)
     rolling = _calc_rolling_stats(history, as_of_dt)
+    walk_forward = _calc_walk_forward(history, min_train=20, test_size=10)
     status_summary = {
         "open": len(state.get("open_targets", [])),
         "resolved": len(history),
@@ -801,6 +913,7 @@ def _to_frontend_payload(state, generated_at):
         "target_level_stats": target_level_stats,
         "profit_stats": profit_stats,
         "consistency_score": _calc_consistency_score(stats, rolling),
+        "walk_forward": walk_forward,
         "policy": {
             "single_active_target_per_ticker_period": True,
             "daily_expiry_days": DAILY_EXPIRY_DAYS,

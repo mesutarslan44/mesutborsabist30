@@ -34,22 +34,6 @@
     },
     {
       "ticker": "SISE",
-      "period": "daily",
-      "direction": "buy",
-      "opened_at": "2026-03-27 17:19",
-      "start_price": 44.98,
-      "target_price": 45.99,
-      "target_2": 47.87,
-      "target_3": 50.9,
-      "stop_loss": 44.46,
-      "signal": "AL",
-      "confidence": 78.4,
-      "score": 24.8,
-      "regime_key": "trend_up",
-      "rr_ratio": 1.9423
-    },
-    {
-      "ticker": "SISE",
       "period": "weekly",
       "direction": "buy",
       "opened_at": "2026-03-27 17:19",
@@ -63,6 +47,22 @@
       "score": 29.6,
       "regime_key": "trend_up",
       "rr_ratio": 3.3446
+    },
+    {
+      "ticker": "SISE",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-03-27 18:53",
+      "start_price": 44.88,
+      "target_price": 45.99,
+      "target_2": 47.87,
+      "target_3": 50.9,
+      "stop_loss": 44.43,
+      "signal": "AL",
+      "confidence": 78.4,
+      "score": 24.8,
+      "regime_key": "trend_up",
+      "rr_ratio": 2.4667
     }
   ],
   "history": [
@@ -245,6 +245,26 @@
       "signal": "HAFİF SAT",
       "confidence": 66.1,
       "score": -16.4
+    },
+    {
+      "ticker": "SISE",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-03-27 17:19",
+      "closed_at": "2026-03-27 18:53",
+      "start_price": 44.98,
+      "target_price": 45.99,
+      "target_2": 47.87,
+      "target_3": 50.9,
+      "stop_loss": 44.46,
+      "close_price": 44.88,
+      "profit_pct": 0.0,
+      "days_to_result": 0,
+      "hit_level": null,
+      "status": "EXPIRED",
+      "signal": "AL",
+      "confidence": 78.4,
+      "score": 24.8
     }
   ]
 }

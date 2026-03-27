@@ -121,7 +121,12 @@ PERFORMANCE_STRICT_FILTERS = {
     "min_confidence": 70.0,
     "min_abs_score": 22.0,
     "min_rr": 1.8,
+    "min_meta_score": 72.0,
     "high_vol_only_strong": True,
+    "enable_no_trade_zone": True,
+    "no_trade_confidence_min": 45.0,
+    "no_trade_confidence_max": 63.0,
+    "no_trade_score_abs_max": 18.0,
     "allowed_signals": ["STRONG_BUY", "BUY", "SELL", "STRONG_SELL"],
     "regime_whitelist": ["trend_up", "trend_down"],
 }

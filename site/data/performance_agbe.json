@@ -1,12 +1,21 @@
 {
-  "generated_at": "2026-03-27 18:08",
+  "generated_at": "2026-03-27 18:53",
   "overview": {
     "total": 1,
     "hits": 0,
     "stopped": 0,
     "expired": 1,
     "hit_rate": 0.0,
-    "stop_rate": 0.0
+    "stop_rate": 0.0,
+    "hit_rate_ci95": {
+      "lower": 0.0,
+      "upper": 79.3
+    },
+    "sample_sufficiency": {
+      "min_recommended": 30,
+      "is_sufficient": false,
+      "remaining": 29
+    }
   },
   "daily": {
     "total": 0,
@@ -14,7 +23,16 @@
     "stopped": 0,
     "expired": 0,
     "hit_rate": 0.0,
-    "avg_days_to_hit": 0.0
+    "avg_days_to_hit": 0.0,
+    "hit_rate_ci95": {
+      "lower": 0.0,
+      "upper": 0.0
+    },
+    "sample_sufficiency": {
+      "min_recommended": 20,
+      "is_sufficient": false,
+      "remaining": 20
+    }
   },
   "weekly": {
     "total": 1,
@@ -22,7 +40,16 @@
     "stopped": 0,
     "expired": 1,
     "hit_rate": 0.0,
-    "avg_days_to_hit": 0.0
+    "avg_days_to_hit": 0.0,
+    "hit_rate_ci95": {
+      "lower": 0.0,
+      "upper": 79.3
+    },
+    "sample_sufficiency": {
+      "min_recommended": 20,
+      "is_sufficient": false,
+      "remaining": 19
+    }
   },
   "rolling": {
     "7d": {
@@ -89,6 +116,22 @@
     "loss_count": 0
   },
   "consistency_score": 0.0,
+  "walk_forward": {
+    "available": false,
+    "splits": [],
+    "summary": {
+      "avg_train_hit_rate": 0.0,
+      "avg_test_hit_rate": 0.0,
+      "degradation": 0.0
+    },
+    "requirements": {
+      "min_train": 20,
+      "test_size": 10,
+      "min_records_needed": 30,
+      "current_records": 1,
+      "remaining": 29
+    }
+  },
   "policy": {
     "single_active_target_per_ticker_period": true,
     "daily_expiry_days": 5,
@@ -99,7 +142,12 @@
       "min_confidence": 70.0,
       "min_abs_score": 22.0,
       "min_rr": 1.8,
+      "min_meta_score": 72.0,
       "high_vol_only_strong": true,
+      "enable_no_trade_zone": true,
+      "no_trade_confidence_min": 45.0,
+      "no_trade_confidence_max": 63.0,
+      "no_trade_score_abs_max": 18.0,
       "allowed_signals": [
         "STRONG_BUY",
         "BUY",
