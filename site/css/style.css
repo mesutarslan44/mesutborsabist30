@@ -3495,6 +3495,9 @@ body.nav-open .nav-toggle-bar:nth-child(4) {
 
 .quick-action-btn {
     flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     border: 1px solid rgba(148, 163, 184, 0.28);
     background: rgba(15, 23, 34, 0.86);
     color: var(--text-secondary);
@@ -3505,10 +3508,38 @@ body.nav-open .nav-toggle-bar:nth-child(4) {
     letter-spacing: 0.2px;
 }
 
+.qa-icon {
+    display: inline-block;
+    line-height: 1;
+    transform-origin: center;
+}
+
 .quick-action-btn.active {
     color: var(--text-primary);
     border-color: rgba(34, 211, 238, 0.44);
     background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(59, 130, 246, 0.18));
+}
+
+.quick-action-btn.active .qa-icon {
+    animation: qaPulse 1.35s ease-in-out infinite;
+}
+
+@keyframes qaPulse {
+    0%,
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    50% {
+        transform: scale(1.16);
+        filter: brightness(1.18);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .quick-action-btn.active .qa-icon {
+        animation: none;
+    }
 }
 
 .alarm-center {
