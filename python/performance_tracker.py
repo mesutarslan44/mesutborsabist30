@@ -14,6 +14,9 @@ import math
 import os
 from datetime import datetime, timedelta
 
+import pytz
+import yfinance as yf
+
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATE_DIR = os.path.join(ROOT_DIR, "python", "data")
@@ -75,6 +78,117 @@ def _minutes_between(start_dt, end_dt):
 
 def _target_key(item):
     return (item.get("ticker"), item.get("period"))
+
+
+ISTANBUL_TZ = pytz.timezone("Europe/Istanbul")
+
+
+def _to_yahoo_ticker(ticker, market_type):
+    if market_type == "bist30":
+        if ticker.endswith(".IS"):
+            return ticker
+        return f"{ticker}.IS"
+    return ticker
+
+
+def _normalize_bar_index(df):
+    if df is None or df.empty:
+        return df
+
+    idx = df.index
+    try:
+        if idx.tz is not None:
+            idx = idx.tz_convert(ISTANBUL_TZ).tz_localize(None)
+        else:
+            idx = idx.tz_localize(None)
+    except Exception:
+        idx = idx.tz_localize(None) if getattr(idx, "tz", None) is not None else idx
+
+    df = df.copy()
+    df.index = idx
+    return df
+
+
+def _fetch_ticker_bars(yahoo_ticker, opened_at, as_of_dt):
+    start_dt = opened_at - timedelta(hours=2)
+    end_dt = as_of_dt + timedelta(hours=2)
+
+    try:
+        df = yf.Ticker(yahoo_ticker).history(start=start_dt, end=end_dt, interval="60m")
+        if df is not None and not df.empty:
+            df = df.rename(columns={"Open": "open", "High": "high", "Low": "low", "Close": "close"})
+            return _normalize_bar_index(df[["open", "high", "low", "close"]])
+    except Exception:
+        pass
+
+    try:
+        df = yf.Ticker(yahoo_ticker).history(start=start_dt.date(), end=(end_dt + timedelta(days=1)).date(), interval="1d")
+        if df is not None and not df.empty:
+            df = df.rename(columns={"Open": "open", "High": "high", "Low": "low", "Close": "close"})
+            return _normalize_bar_index(df[["open", "high", "low", "close"]])
+    except Exception:
+        return None
+
+    return None
+
+
+def _first_touch_event(target, bars, opened_at, as_of_dt):
+    if bars is None or bars.empty:
+        return None
+
+    direction = target.get("direction")
+    stop_loss = target.get("stop_loss")
+    target_1 = target.get("target_price")
+    target_2 = target.get("target_2")
+    target_3 = target.get("target_3")
+
+    window = bars[(bars.index >= opened_at) & (bars.index <= as_of_dt)]
+    if window.empty:
+        return None
+
+    for ts, row in window.iterrows():
+        high = float(row.get("high"))
+        low = float(row.get("low"))
+
+        if direction == "buy":
+            stop_hit = stop_loss is not None and low <= float(stop_loss)
+            hit_h1 = target_1 is not None and high >= float(target_1)
+
+            if stop_hit and hit_h1:
+                return {"status": "STOPPED", "hit_level": None, "event_dt": ts, "close_price": round(float(stop_loss), 4)}
+            if stop_hit:
+                return {"status": "STOPPED", "hit_level": None, "event_dt": ts, "close_price": round(float(stop_loss), 4)}
+            if hit_h1:
+                hit_level = "H1"
+                close_price = float(target_1)
+                if target_2 is not None and high >= float(target_2):
+                    hit_level = "H2"
+                    close_price = float(target_2)
+                if target_3 is not None and high >= float(target_3):
+                    hit_level = "H3"
+                    close_price = float(target_3)
+                return {"status": "HIT", "hit_level": hit_level, "event_dt": ts, "close_price": round(close_price, 4)}
+
+        else:
+            stop_hit = stop_loss is not None and high >= float(stop_loss)
+            hit_h1 = target_1 is not None and low <= float(target_1)
+
+            if stop_hit and hit_h1:
+                return {"status": "STOPPED", "hit_level": None, "event_dt": ts, "close_price": round(float(stop_loss), 4)}
+            if stop_hit:
+                return {"status": "STOPPED", "hit_level": None, "event_dt": ts, "close_price": round(float(stop_loss), 4)}
+            if hit_h1:
+                hit_level = "H1"
+                close_price = float(target_1)
+                if target_2 is not None and low <= float(target_2):
+                    hit_level = "H2"
+                    close_price = float(target_2)
+                if target_3 is not None and low <= float(target_3):
+                    hit_level = "H3"
+                    close_price = float(target_3)
+                return {"status": "HIT", "hit_level": hit_level, "event_dt": ts, "close_price": round(close_price, 4)}
+
+    return None
 
 
 def _resolve_open_targets(open_targets, current_prices, as_of_dt, historical_data=None):
@@ -174,6 +288,133 @@ def _resolve_open_targets(open_targets, current_prices, as_of_dt, historical_dat
             })
         else:
             still_open.append(target)
+
+    return still_open, resolved
+
+
+def _resolve_open_targets_realtime(open_targets, current_prices, as_of_dt, historical_data=None, market_type="bist30"):
+    """Resolve targets using first-touch timestamps from historical candles."""
+    still_open = []
+    resolved = []
+    bars_cache = {}
+
+    for target in open_targets:
+        ticker = target.get("ticker")
+        direction = target.get("direction")
+        target_price = target.get("target_price")
+        stop_loss = target.get("stop_loss")
+        target_2 = target.get("target_2")
+        target_3 = target.get("target_3")
+        opened_at = _parse_dt(target.get("opened_at", ""))
+        period = target.get("period", "daily")
+
+        current_price = current_prices.get(ticker)
+        if current_price is None or target_price is None:
+            still_open.append(target)
+            continue
+
+        minutes_held = _minutes_between(opened_at, as_of_dt)
+        if minutes_held < MIN_HOLD_MINUTES:
+            still_open.append(target)
+            continue
+
+        max_days = DAILY_EXPIRY_DAYS if period == "daily" else WEEKLY_EXPIRY_DAYS
+        age_days = _days_between(opened_at, as_of_dt)
+        expired = age_days > max_days
+
+        cache_key = (ticker, opened_at.strftime("%Y-%m-%d %H:%M"), as_of_dt.strftime("%Y-%m-%d %H:%M"), market_type)
+        bars = bars_cache.get(cache_key)
+        if bars is None:
+            yahoo_ticker = _to_yahoo_ticker(ticker, market_type)
+            bars = _fetch_ticker_bars(yahoo_ticker, opened_at, as_of_dt)
+            bars_cache[cache_key] = bars
+
+        event = _first_touch_event(target, bars, opened_at, as_of_dt)
+
+        status = None
+        hit_level = None
+        close_price = current_price
+        closed_dt = as_of_dt
+
+        if event:
+            status = event.get("status")
+            hit_level = event.get("hit_level")
+            close_price = event.get("close_price", current_price)
+            closed_dt = event.get("event_dt", as_of_dt)
+        elif expired:
+            status = "EXPIRED"
+            close_price = current_price
+            closed_dt = as_of_dt
+        else:
+            # İntraday mum varsa yalnızca o mumlardan kapanış üret; yoksa fallback yap.
+            if bars is None or bars.empty:
+                stopped = False
+                if stop_loss is not None:
+                    if direction == "buy" and current_price <= stop_loss:
+                        stopped = True
+                    elif direction == "sell" and current_price >= stop_loss:
+                        stopped = True
+
+                if not stopped:
+                    if direction == "buy":
+                        if current_price >= target_price:
+                            hit_level = "H1"
+                            if target_2 and current_price >= target_2:
+                                hit_level = "H2"
+                            if target_3 and current_price >= target_3:
+                                hit_level = "H3"
+                    else:
+                        if current_price <= target_price:
+                            hit_level = "H1"
+                            if target_2 and current_price <= target_2:
+                                hit_level = "H2"
+                            if target_3 and current_price <= target_3:
+                                hit_level = "H3"
+
+                if stopped:
+                    status = "STOPPED"
+                    close_price = stop_loss if stop_loss is not None else current_price
+                    closed_dt = as_of_dt
+                elif hit_level:
+                    status = "HIT"
+                    if hit_level == "H3" and target_3 is not None:
+                        close_price = target_3
+                    elif hit_level == "H2" and target_2 is not None:
+                        close_price = target_2
+                    else:
+                        close_price = target_price
+                    closed_dt = as_of_dt
+
+        if status is None:
+            still_open.append(target)
+            continue
+
+        start_price = target.get("start_price", current_price)
+        if direction == "buy":
+            profit_pct = ((close_price - start_price) / start_price) * 100 if start_price else 0
+        else:
+            profit_pct = ((start_price - close_price) / start_price) * 100 if start_price else 0
+
+        resolved.append({
+            "ticker": ticker,
+            "period": period,
+            "direction": direction,
+            "opened_at": target.get("opened_at"),
+            "closed_at": closed_dt.strftime("%Y-%m-%d %H:%M"),
+            "start_price": target.get("start_price"),
+            "target_price": target_price,
+            "target_2": target_2,
+            "target_3": target_3,
+            "stop_loss": stop_loss,
+            "close_price": round(float(close_price), 4),
+            "profit_pct": round(profit_pct, 2),
+            "days_to_result": _days_between(opened_at, closed_dt),
+            "hit_level": hit_level,
+            "status": status,
+            "signal": target.get("signal", ""),
+            "confidence": target.get("confidence", 0),
+            "score": target.get("score", 0),
+        })
 
     return still_open, resolved
 
@@ -366,6 +607,53 @@ def _calc_consistency_score(stats, rolling):
     return round(max(min(raw_score, 100.0), 0.0), 1)
 
 
+def _backfill_history_timestamps(history, as_of_dt, market_type):
+    """Repair older records by finding first touch time from candles."""
+    repaired = []
+    bars_cache = {}
+
+    for item in history:
+        status = item.get("status")
+        if status not in ("HIT", "STOPPED"):
+            repaired.append(item)
+            continue
+
+        opened_at = _parse_dt(item.get("opened_at", ""))
+        closed_at = _parse_dt(item.get("closed_at", ""))
+        if closed_at <= opened_at:
+            repaired.append(item)
+            continue
+
+        end_dt = min(closed_at, as_of_dt)
+        cache_key = (item.get("ticker"), opened_at.strftime("%Y-%m-%d %H:%M"), end_dt.strftime("%Y-%m-%d %H:%M"), market_type)
+        bars = bars_cache.get(cache_key)
+        if bars is None:
+            yahoo_ticker = _to_yahoo_ticker(item.get("ticker"), market_type)
+            bars = _fetch_ticker_bars(yahoo_ticker, opened_at, end_dt)
+            bars_cache[cache_key] = bars
+
+        target = {
+            "direction": item.get("direction"),
+            "target_price": item.get("target_price"),
+            "target_2": item.get("target_2"),
+            "target_3": item.get("target_3"),
+            "stop_loss": item.get("stop_loss"),
+        }
+        event = _first_touch_event(target, bars, opened_at, end_dt)
+
+        if event and event.get("event_dt") and event["event_dt"] < closed_at:
+            item = dict(item)
+            item["closed_at"] = event["event_dt"].strftime("%Y-%m-%d %H:%M")
+            item["close_price"] = round(float(event.get("close_price", item.get("close_price", 0))), 4)
+            item["days_to_result"] = _days_between(opened_at, event["event_dt"])
+            if item.get("status") == "HIT":
+                item["hit_level"] = event.get("hit_level", item.get("hit_level"))
+
+        repaired.append(item)
+
+    return repaired
+
+
 def _trim_history(history):
     if len(history) <= MAX_HISTORY_SIZE:
         return history
@@ -433,11 +721,12 @@ def update_performance_tracker(candidates, current_prices, generated_at, histori
     open_targets = _dedupe_open_targets(state.get("open_targets", []))
     history = state.get("history", [])
 
-    open_targets, resolved = _resolve_open_targets(open_targets, current_prices, as_of_dt, historical_data)
+    open_targets, resolved = _resolve_open_targets_realtime(open_targets, current_prices, as_of_dt, historical_data, market_type=market_type)
     history.extend(resolved)
 
     open_targets = _add_new_targets(open_targets, candidates)
 
+    history = _backfill_history_timestamps(history, as_of_dt, market_type)
     state["open_targets"] = open_targets
     state["history"] = _trim_history(history)
     _save_state(state, market_type)
