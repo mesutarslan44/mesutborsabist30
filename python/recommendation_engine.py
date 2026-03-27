@@ -594,6 +594,7 @@ def generate_recommendation(indicators, period_name="daily"):
 
     max_possible = sum(abs(d["score"]) * d["weight"] for d in details)
     confidence = (abs(total_score) / max_possible * 100) if max_possible > 0 else 0
+    confidence = max(0, min(100, confidence))
 
     signal, signal_en, color = classify_signal(total_score, profile["thresholds"])
 
