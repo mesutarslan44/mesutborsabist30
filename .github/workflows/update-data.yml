@@ -38,12 +38,10 @@ jobs:
       - name: Validate generated JSON schema
         working-directory: python
         run: python validate_data_schema.py
-        continue-on-error: true
 
       - name: Run recommendation snapshot tests
         working-directory: python
         run: python -m unittest tests.test_recommendation_snapshot -v
-        continue-on-error: true
 
       - name: Commit and push updated data
         run: |
