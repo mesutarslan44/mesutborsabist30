@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-27 11:42",
+  "generated_at": "2026-03-27 12:00",
   "overview": {
     "total": 7,
     "hits": 4,
@@ -52,7 +52,7 @@
     }
   },
   "status_summary": {
-    "open": 4,
+    "open": 5,
     "resolved": 7,
     "hits": 4,
     "stopped": 3,
@@ -96,6 +96,20 @@
     "min_hold_minutes": 60
   },
   "open_targets": [
+    {
+      "ticker": "BTC-USD",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-27 12:00",
+      "start_price": 67926.8359,
+      "target_price": 60074.2,
+      "target_2": 55187.6,
+      "target_3": 42448.36,
+      "stop_loss": 71945.38,
+      "signal": "HAFİF SAT",
+      "confidence": 28.4,
+      "score": -12.2
+    },
     {
       "ticker": "SI=F",
       "period": "weekly",
