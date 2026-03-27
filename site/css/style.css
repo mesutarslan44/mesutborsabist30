@@ -4200,3 +4200,106 @@ body.advanced-enabled:not(.advanced-open) .advanced-block {
         line-height: 1.2;
     }
 }
+
+
+/* ── Mobile Quick Scan Tuning (Sonuc A/B + Global) ── */
+@media (max-width: 768px) {
+    .perf-table tbody tr {
+        padding: 12px;
+        gap: 6px;
+        border-radius: 14px;
+    }
+
+    .perf-table tbody td {
+        grid-template-columns: 88px 1fr;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 0;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+    }
+
+    .perf-table tbody td::before {
+        margin: 0;
+        font-size: 10px;
+        letter-spacing: 0.35px;
+        color: rgba(148, 163, 184, 0.95);
+    }
+
+    .perf-table tbody td[data-label="Hisse"],
+    .perf-table tbody td[data-label="Periyot"],
+    .perf-table tbody td[data-label="Yön"],
+    .perf-table tbody td[data-label="Hedef No"],
+    .perf-table tbody td[data-label="Durum"],
+    .perf-table tbody td[data-label="Mesafe"],
+    .perf-table tbody td[data-label="Kâr/Zarar"] {
+        background: rgba(99, 102, 241, 0.06);
+        border: 1px solid rgba(99, 102, 241, 0.15);
+        border-radius: 10px;
+        padding: 8px 10px;
+        border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+    }
+
+    .perf-table tbody td[data-label="Açılış Tarihi"],
+    .perf-table tbody td[data-label="Açılış Tp."],
+    .perf-table tbody td[data-label="Kapanış Tp."],
+    .perf-table tbody td[data-label="Acilis Tarihi"],
+    .perf-table tbody td[data-label="Acilis Tp."],
+    .perf-table tbody td[data-label="Kapanis Tp."] {
+        opacity: 0.9;
+        font-size: 12px;
+    }
+
+    .perf-table tbody td strong {
+        font-size: 14px;
+        letter-spacing: 0.2px;
+    }
+
+    .perf-table tbody td .signal-badge {
+        padding: 4px 9px;
+        font-size: 10px;
+        letter-spacing: 0.2px;
+    }
+
+    .perf-table tbody td .dir-badge,
+    .perf-table tbody td .target-level-badge {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+
+    .stock-table-wrapper .stock-table tbody td {
+        grid-template-columns: 86px 1fr;
+        display: grid;
+        align-items: start;
+        gap: 8px;
+        padding: 7px 0;
+    }
+
+    .stock-table-wrapper .stock-table tbody td::before {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .perf-table tbody tr {
+        padding: 10px;
+    }
+
+    .perf-table tbody td {
+        grid-template-columns: 76px 1fr;
+        gap: 6px;
+        padding: 6px 0;
+    }
+
+    .perf-table tbody td::before {
+        font-size: 9px;
+    }
+
+    .perf-table tbody td[data-label="Açılış Tarihi"],
+    .perf-table tbody td[data-label="Açılış Tp."],
+    .perf-table tbody td[data-label="Kapanış Tp."],
+    .perf-table tbody td[data-label="Acilis Tarihi"],
+    .perf-table tbody td[data-label="Acilis Tp."],
+    .perf-table tbody td[data-label="Kapanis Tp."] {
+        display: none;
+    }
+}
