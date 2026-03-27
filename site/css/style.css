@@ -1503,6 +1503,31 @@ body.nav-open .nav-toggle-bar:nth-child(4) {
 
 #manualRefreshStatus {
     color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 16px;
+}
+
+#manualRefreshStatus.loading::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    border: 2px solid rgba(34, 211, 238, 0.25);
+    border-top-color: var(--accent-cyan);
+    animation: refreshSpin 0.8s linear infinite;
+    flex: 0 0 auto;
+}
+
+#manualRefreshStatus.error {
+    color: var(--bear-red);
+}
+
+@keyframes refreshSpin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .market-freshness-state {

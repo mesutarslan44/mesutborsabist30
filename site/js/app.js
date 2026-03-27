@@ -16,8 +16,13 @@
     let freshnessTimer = null;
     const REFRESH_ENDPOINT = '/api/refresh';
     const REFRESH_KEY_STORAGE = 'refreshApiKey';
+    const REFRESH_PROGRESS_STORAGE = 'manualRefreshProgress';
+    const REFRESH_POLL_DELAY_MS = 15000;
+    const REFRESH_MAX_ATTEMPTS = 24;
 
     let matrixAnimId = null;
+    let manualRefreshTicker = null;
+    let activeRefreshProgress = null;
 
     function setupMatrixIntro() {
         var intro = document.getElementById('matrixIntro');
@@ -221,11 +226,114 @@
         return 'hold';
     }
 
-    function setManualRefreshStatus(message, isError) {
+    function setManualRefreshStatus(message, isError, isLoading) {
         var statusEl = document.getElementById('manualRefreshStatus');
         if (!statusEl) return;
         statusEl.textContent = message;
         statusEl.style.color = isError ? 'var(--bear-red)' : 'var(--text-muted)';
+        statusEl.classList.toggle('loading', !!isLoading);
+        statusEl.classList.toggle('error', !!isError);
+    }
+
+    function getManualRefreshButton() {
+        return document.getElementById('manualRefreshBtn');
+    }
+
+    function setManualRefreshButtonState(isBusy) {
+        var btn = getManualRefreshButton();
+        if (!btn) return;
+        btn.disabled = !!isBusy;
+        btn.textContent = isBusy ? 'Yenileniyor...' : 'Simdi Yenile';
+    }
+
+    function readRefreshProgress() {
+        try {
+            var raw = localStorage.getItem(REFRESH_PROGRESS_STORAGE);
+            if (!raw) return null;
+            var parsed = JSON.parse(raw);
+            return parsed && parsed.inProgress ? parsed : null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function saveRefreshProgress(progress) {
+        try {
+            localStorage.setItem(REFRESH_PROGRESS_STORAGE, JSON.stringify(progress));
+        } catch (e) {
+            // no-op
+        }
+    }
+
+    function clearRefreshProgress() {
+        try {
+            localStorage.removeItem(REFRESH_PROGRESS_STORAGE);
+        } catch (e) {
+            // no-op
+        }
+    }
+
+    function formatDurationCompact(totalSeconds) {
+        var sec = Math.max(0, Math.floor(totalSeconds || 0));
+        var minutes = Math.floor(sec / 60);
+        var seconds = sec % 60;
+        if (minutes > 0) return minutes + ' dk ' + String(seconds).padStart(2, '0') + ' sn';
+        return seconds + ' sn';
+    }
+
+    function renderRefreshProgressStatus(progress) {
+        if (!progress) return;
+
+        var now = Date.now();
+        var elapsed = Math.max(0, Math.floor((now - (progress.startedAt || now)) / 1000));
+        var nextCheckIn = Math.max(0, Math.ceil(((progress.nextCheckAt || now) - now) / 1000));
+        var attemptsDone = Math.max(0, progress.attempt || 0);
+        var checksLeft = Math.max(0, REFRESH_MAX_ATTEMPTS - attemptsDone);
+        var message = 'Analiz calisiyor... gecen sure: ' + formatDurationCompact(elapsed)
+            + ' | sonraki kontrol: ' + nextCheckIn + ' sn'
+            + ' | kalan kontrol: ' + checksLeft;
+
+        setManualRefreshStatus(message, false, true);
+    }
+
+    function stopRefreshProgressTicker() {
+        if (manualRefreshTicker) {
+            clearInterval(manualRefreshTicker);
+            manualRefreshTicker = null;
+        }
+    }
+
+    function startRefreshProgressTicker(progress) {
+        stopRefreshProgressTicker();
+        activeRefreshProgress = progress;
+        renderRefreshProgressStatus(progress);
+        manualRefreshTicker = setInterval(function () {
+            if (!activeRefreshProgress || !activeRefreshProgress.inProgress) return;
+            renderRefreshProgressStatus(activeRefreshProgress);
+        }, 1000);
+    }
+
+    function beginRefreshProgress(previousUpdatedAt, runUrl) {
+        activeRefreshProgress = {
+            inProgress: true,
+            startedAt: Date.now(),
+            previousUpdatedAt: previousUpdatedAt || '',
+            nextCheckAt: Date.now() + REFRESH_POLL_DELAY_MS,
+            attempt: 0,
+            runUrl: runUrl || ''
+        };
+
+        saveRefreshProgress(activeRefreshProgress);
+        setManualRefreshButtonState(true);
+        startRefreshProgressTicker(activeRefreshProgress);
+        return activeRefreshProgress;
+    }
+
+    function finishRefreshProgress() {
+        stopRefreshProgressTicker();
+        activeRefreshProgress = null;
+        clearRefreshProgress();
+        setManualRefreshButtonState(false);
     }
 
 
@@ -297,25 +405,60 @@
         return { ok: true, runUrl: payload.run_url || '', message: payload.message || '' };
     }
 
-    async function waitForFreshSnapshot(previousUpdatedAt) {
-        var maxAttempts = 24;
-        var delayMs = 15000;
+    async function waitForFreshSnapshot(previousUpdatedAt, persistedProgress) {
+        var progress = persistedProgress || activeRefreshProgress || beginRefreshProgress(previousUpdatedAt, '');
+        progress.inProgress = true;
+        progress.previousUpdatedAt = previousUpdatedAt || progress.previousUpdatedAt || '';
+        var startAttempt = Math.max(0, progress.attempt || 0);
 
-        for (var i = 0; i < maxAttempts; i++) {
-            await new Promise(function (resolve) { setTimeout(resolve, delayMs); });
+        setManualRefreshButtonState(true);
+        startRefreshProgressTicker(progress);
+
+        for (var i = startAttempt; i < REFRESH_MAX_ATTEMPTS; i++) {
+            progress.attempt = i;
+            progress.nextCheckAt = Date.now() + REFRESH_POLL_DELAY_MS;
+            activeRefreshProgress = progress;
+            saveRefreshProgress(progress);
+            renderRefreshProgressStatus(progress);
+
+            await new Promise(function (resolve) { setTimeout(resolve, REFRESH_POLL_DELAY_MS); });
             var ok = await loadData(true);
             if (!ok || !summaryData) continue;
 
             var nextUpdatedAt = summaryData.updated_at || '';
-            if (nextUpdatedAt && nextUpdatedAt !== previousUpdatedAt) {
+            if (nextUpdatedAt && nextUpdatedAt !== progress.previousUpdatedAt) {
                 return { ok: true, updatedAt: nextUpdatedAt };
             }
-
-            var remaining = Math.max(0, Math.ceil(((maxAttempts - i - 1) * delayMs) / 60000));
-            setManualRefreshStatus('Analiz calisiyor... yeni veri bekleniyor (yaklasik ' + remaining + ' dk).', false);
         }
 
-        return { ok: false };
+        return { ok: false, runUrl: progress.runUrl || '' };
+    }
+
+    async function resumePendingRefreshIfAny() {
+        var persisted = readRefreshProgress();
+        if (!persisted) return;
+
+        persisted.inProgress = true;
+        activeRefreshProgress = persisted;
+        setManualRefreshStatus('Yenileme takibi geri yuklendi. Veri bekleniyor...', false, true);
+
+        try {
+            var refreshResult = await waitForFreshSnapshot(persisted.previousUpdatedAt || '', persisted);
+            if (refreshResult.ok) {
+                var extra = persisted.runUrl ? ' | Is akisi: ' + persisted.runUrl : '';
+                setManualRefreshStatus('Yeni veri alindi: ' + refreshResult.updatedAt + extra, false, false);
+            } else {
+                var fallback = persisted.runUrl
+                    ? 'Is akisini ac: ' + persisted.runUrl
+                    : 'GitHub Actions ekranindan calisma durumunu kontrol et.';
+                setManualRefreshStatus('Analiz suruyor olabilir. ' + fallback, true, false);
+            }
+        } catch (e) {
+            console.error('Resume refresh error:', e);
+            setManualRefreshStatus('Yenileme takibi sirasinda hata olustu.', true, false);
+        } finally {
+            finishRefreshProgress();
+        }
     }
 
     // ── Load Data ──
@@ -1125,39 +1268,39 @@
         if (manualRefreshBtn) {
             manualRefreshBtn.addEventListener('click', async function () {
                 if (manualRefreshBtn.disabled) return;
-                manualRefreshBtn.disabled = true;
-                manualRefreshBtn.textContent = 'Yenileniyor...';
-                setManualRefreshStatus('Canli analiz tetikleniyor...', false);
+
+                setManualRefreshButtonState(true);
+                setManualRefreshStatus('Canli analiz tetikleniyor...', false, true);
 
                 try {
                     var previousUpdatedAt = (summaryData && summaryData.updated_at) || '';
                     var triggerResult = await triggerServerRefresh();
 
                     if (!triggerResult.ok) {
+                        finishRefreshProgress();
                         if (!triggerResult.cancelled) {
-                            setManualRefreshStatus(triggerResult.message || 'Canli yenileme basarisiz.', true);
+                            setManualRefreshStatus(triggerResult.message || 'Canli yenileme basarisiz.', true, false);
                         }
                         return;
                     }
 
-                    setManualRefreshStatus('Analiz basladi. Yeni veri olusunca otomatik yuklenecek...', false);
-                    var refreshResult = await waitForFreshSnapshot(previousUpdatedAt);
+                    var progress = beginRefreshProgress(previousUpdatedAt, triggerResult.runUrl);
+                    var refreshResult = await waitForFreshSnapshot(previousUpdatedAt, progress);
 
                     if (refreshResult.ok) {
                         var extra = triggerResult.runUrl ? ' | Is akisi: ' + triggerResult.runUrl : '';
-                        setManualRefreshStatus('Yeni veri alindi: ' + refreshResult.updatedAt + extra, false);
+                        setManualRefreshStatus('Yeni veri alindi: ' + refreshResult.updatedAt + extra, false, false);
                     } else {
                         var fallback = triggerResult.runUrl
                             ? 'Is akisini ac: ' + triggerResult.runUrl
                             : 'GitHub Actions ekranindan calisma durumunu kontrol et.';
-                        setManualRefreshStatus('Analiz suruyor olabilir. ' + fallback, true);
+                        setManualRefreshStatus('Analiz suruyor olabilir. ' + fallback, true, false);
                     }
                 } catch (e) {
                     console.error('Manual refresh error:', e);
-                    setManualRefreshStatus('Canli yenileme sirasinda hata olustu.', true);
+                    setManualRefreshStatus('Canli yenileme sirasinda hata olustu.', true, false);
                 } finally {
-                    manualRefreshBtn.disabled = false;
-                    manualRefreshBtn.textContent = 'Simdi Yenile';
+                    finishRefreshProgress();
                 }
             });
         }
@@ -1228,6 +1371,7 @@
         setupEvents();
         setupAdvancedModeToggle();
         loadData();
+        resumePendingRefreshIfAny();
     }
 
     if (document.readyState === 'loading') {
