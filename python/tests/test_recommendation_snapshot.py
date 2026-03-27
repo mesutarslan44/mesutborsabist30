@@ -45,7 +45,7 @@ BASE_INDICATORS = {
         "0.5": 100.0,
         "0.618": 97.0,
         "0.786": 94.0,
-        "1.0": 90.0
+        "1.0": 90.0,
     },
     "support_resistance": {
         "r3": 109.0,
@@ -54,7 +54,7 @@ BASE_INDICATORS = {
         "pivot": 100.0,
         "s1": 97.0,
         "s2": 94.0,
-        "s3": 91.0
+        "s3": 91.0,
     },
 }
 
@@ -73,45 +73,83 @@ class RecommendationSnapshotTest(unittest.TestCase):
 
         self.assertIn("target_1", rec["targets"])
         self.assertIn("stop_loss", rec["targets"])
+        self.assertIn("regime_key", rec)
+        self.assertIn("raw_score", rec)
 
     def test_weekly_bearish_snapshot(self):
         bearish = dict(BASE_INDICATORS)
-        bearish.update({
-            "change_pct": -3.4,
-            "rsi": 78.0,
-            "macd": -1.4,
-            "macd_signal": -1.0,
-            "macd_histogram": -0.4,
-            "macd_prev": -0.9,
-            "macd_signal_prev": -0.8,
-            "stoch_k": 86.0,
-            "stoch_d": 89.0,
-            "stoch_k_prev": 92.0,
-            "stoch_d_prev": 88.0,
-            "adx": 36.0,
-            "plus_di": 14.0,
-            "minus_di": 33.0,
-            "volume_ratio": 2.3,
-            "sma_20": 104.0,
-            "sma_50": 106.0,
-            "sma_200": 109.0,
-            "price": 100.0,
-            "fibonacci": {
-                "0": 115.0,
-                "0.236": 111.0,
-                "0.382": 108.0,
-                "0.5": 105.0,
-                "0.618": 102.0,
-                "0.786": 99.0,
-                "1.0": 95.0
-            },
-        })
+        bearish.update(
+            {
+                "change_pct": -3.4,
+                "rsi": 78.0,
+                "macd": -1.4,
+                "macd_signal": -1.0,
+                "macd_histogram": -0.4,
+                "macd_prev": -0.9,
+                "macd_signal_prev": -0.8,
+                "stoch_k": 86.0,
+                "stoch_d": 89.0,
+                "stoch_k_prev": 92.0,
+                "stoch_d_prev": 88.0,
+                "adx": 36.0,
+                "plus_di": 14.0,
+                "minus_di": 33.0,
+                "volume_ratio": 2.3,
+                "sma_20": 104.0,
+                "sma_50": 106.0,
+                "sma_200": 109.0,
+                "price": 100.0,
+                "fibonacci": {
+                    "0": 115.0,
+                    "0.236": 111.0,
+                    "0.382": 108.0,
+                    "0.5": 105.0,
+                    "0.618": 102.0,
+                    "0.786": 99.0,
+                    "1.0": 95.0,
+                },
+            }
+        )
 
         rec = generate_recommendation(bearish, "weekly")
         self.assertIn(rec["signal_en"], {"STRONG_SELL", "SELL", "WEAK_SELL"})
         self.assertLessEqual(rec["score"], -20)
         self.assertGreaterEqual(rec["confidence"], 40)
         self.assertIn("support_resistance", rec)
+
+    def test_high_volatility_regime_dampens_score(self):
+        vol = dict(BASE_INDICATORS)
+        vol.update(
+            {
+                "adx": 14.0,
+                "plus_di": 20.0,
+                "minus_di": 19.0,
+                "atr_pct": 0.045,
+                "bb_upper": 112.0,
+                "bb_lower": 88.0,
+            }
+        )
+        rec = generate_recommendation(vol, "daily")
+
+        self.assertEqual(rec["regime_key"], "high_volatility")
+        self.assertLess(abs(rec["score"]), abs(rec["raw_score"]))
+
+    def test_trend_up_regime_boosts_score(self):
+        trend = dict(BASE_INDICATORS)
+        trend.update(
+            {
+                "adx": 40.0,
+                "plus_di": 36.0,
+                "minus_di": 16.0,
+                "atr_pct": 0.012,
+                "bb_upper": 103.0,
+                "bb_lower": 95.0,
+            }
+        )
+        rec = generate_recommendation(trend, "daily")
+
+        self.assertEqual(rec["regime_key"], "trend_up")
+        self.assertGreater(abs(rec["score"]), abs(rec["raw_score"]))
 
 
 if __name__ == "__main__":

@@ -12,6 +12,117 @@ from config import (
 )
 
 
+REGIME_PROFILES = {
+    "trend_up": {
+        "label": "TREND_YUKARI",
+        "score_factor": 1.05,
+        "thresholds": {
+            "strong_buy": 45,
+            "buy": 20,
+            "weak_buy": 8,
+            "weak_sell": -14,
+            "sell": -30,
+            "strong_sell": -48,
+        },
+    },
+    "trend_down": {
+        "label": "TREND_ASAGI",
+        "score_factor": 1.05,
+        "thresholds": {
+            "strong_buy": 60,
+            "buy": 33,
+            "weak_buy": 15,
+            "weak_sell": -8,
+            "sell": -20,
+            "strong_sell": -45,
+        },
+    },
+    "range_low_vol": {
+        "label": "YATAY_DUSUK_VOL",
+        "score_factor": 0.90,
+        "thresholds": {
+            "strong_buy": 58,
+            "buy": 30,
+            "weak_buy": 12,
+            "weak_sell": -12,
+            "sell": -30,
+            "strong_sell": -58,
+        },
+    },
+    "high_volatility": {
+        "label": "YUKSEK_VOL",
+        "score_factor": 0.85,
+        "thresholds": {
+            "strong_buy": 60,
+            "buy": 33,
+            "weak_buy": 15,
+            "weak_sell": -15,
+            "sell": -33,
+            "strong_sell": -60,
+        },
+    },
+    "neutral": {
+        "label": "NOTR",
+        "score_factor": 1.00,
+        "thresholds": {
+            "strong_buy": 50,
+            "buy": 25,
+            "weak_buy": 10,
+            "weak_sell": -10,
+            "sell": -25,
+            "strong_sell": -50,
+        },
+    },
+}
+
+
+def _safe_number(val, default=0.0):
+    if isinstance(val, (int, float)):
+        return float(val)
+    return float(default)
+
+
+def classify_market_regime(indicators):
+    adx_val = _safe_number(indicators.get("adx"), 0)
+    plus_di = _safe_number(indicators.get("plus_di"), 0)
+    minus_di = _safe_number(indicators.get("minus_di"), 0)
+    price = max(_safe_number(indicators.get("price"), 0), 0.0001)
+    atr_pct = _safe_number(indicators.get("atr_pct"), 0)
+    if atr_pct <= 0:
+        atr = _safe_number(indicators.get("atr"), 0)
+        atr_pct = atr / price if atr > 0 else 0
+
+    bb_upper = _safe_number(indicators.get("bb_upper"), price)
+    bb_lower = _safe_number(indicators.get("bb_lower"), price)
+    bb_width_pct = max(bb_upper - bb_lower, 0) / price
+    di_spread = plus_di - minus_di
+    abs_di_spread = abs(di_spread)
+
+    if adx_val >= 30 and abs_di_spread >= 8:
+        return "trend_up" if di_spread > 0 else "trend_down"
+    if atr_pct >= 0.035 or bb_width_pct >= 0.16:
+        return "high_volatility"
+    if adx_val < 18 and atr_pct <= 0.018 and bb_width_pct <= 0.09:
+        return "range_low_vol"
+    return "neutral"
+
+
+def classify_signal(score, thresholds):
+    if score >= thresholds["strong_buy"]:
+        return "GÜÇLÜ AL", "STRONG_BUY", "#00e676"
+    if score >= thresholds["buy"]:
+        return "AL", "BUY", "#00c853"
+    if score >= thresholds["weak_buy"]:
+        return "HAFİF AL", "WEAK_BUY", "#69f0ae"
+    if score > thresholds["weak_sell"]:
+        return "BEKLE", "HOLD", "#ffd740"
+    if score > thresholds["sell"]:
+        return "HAFİF SAT", "WEAK_SELL", "#ff8a80"
+    if score > thresholds["strong_sell"]:
+        return "SAT", "SELL", "#ff5252"
+    return "GÜÇLÜ SAT", "STRONG_SELL", "#ff1744"
+
+
 def analyze_rsi(indicators):
     """RSI analizi — detaylı açıklama ile."""
     rsi = indicators.get("rsi", 50)
@@ -463,7 +574,6 @@ def generate_detailed_explanation(signal_text, score, confidence, indicators, de
 
 
 def generate_recommendation(indicators, period_name="daily"):
-    """Tüm göstergeleri analiz eder, ağırlıklı skor üretir."""
     details = [
         analyze_rsi(indicators),
         analyze_macd(indicators),
@@ -476,48 +586,24 @@ def generate_recommendation(indicators, period_name="daily"):
         analyze_fibonacci(indicators),
     ]
 
-    total_score = sum(d["weighted_score"] for d in details)
+    raw_total_score = sum(d["weighted_score"] for d in details)
+    regime_key = classify_market_regime(indicators)
+    profile = REGIME_PROFILES.get(regime_key, REGIME_PROFILES["neutral"])
+    score_factor = profile["score_factor"]
+    total_score = raw_total_score * score_factor
+
     max_possible = sum(abs(d["score"]) * d["weight"] for d in details)
     confidence = (abs(total_score) / max_possible * 100) if max_possible > 0 else 0
 
-    # Signal classification
-    if total_score >= 50:
-        signal = "GÜÇLÜ AL"
-        signal_en = "STRONG_BUY"
-        color = "#00e676"
-    elif total_score >= 25:
-        signal = "AL"
-        signal_en = "BUY"
-        color = "#00c853"
-    elif total_score >= 10:
-        signal = "HAFİF AL"
-        signal_en = "WEAK_BUY"
-        color = "#69f0ae"
-    elif total_score > -10:
-        signal = "BEKLE"
-        signal_en = "HOLD"
-        color = "#ffd740"
-    elif total_score > -25:
-        signal = "HAFİF SAT"
-        signal_en = "WEAK_SELL"
-        color = "#ff8a80"
-    elif total_score > -50:
-        signal = "SAT"
-        signal_en = "SELL"
-        color = "#ff5252"
-    else:
-        signal = "GÜÇLÜ SAT"
-        signal_en = "STRONG_SELL"
-        color = "#ff1744"
+    signal, signal_en, color = classify_signal(total_score, profile["thresholds"])
 
-    # Hedef fiyatlar hesapla
     from technical_analysis import calculate_targets
     indicators["_score"] = total_score
     targets = calculate_targets(indicators, period_name)
     indicators["_targets"] = targets
 
-    # Detaylı açıklama
-    explanation = generate_detailed_explanation(signal, total_score, confidence, indicators, details, period_name)
+    regime_note = f"\n\n🧭 PİYASA REJİMİ: {profile['label']} (katsayı: {score_factor:.2f})."
+    explanation = generate_detailed_explanation(signal, total_score, confidence, indicators, details, period_name) + regime_note
 
     return {
         "signal": signal,
@@ -530,4 +616,7 @@ def generate_recommendation(indicators, period_name="daily"):
         "support_resistance": indicators.get("support_resistance", {}),
         "fibonacci": indicators.get("fibonacci", {}),
         "explanation": explanation,
+        "regime": profile["label"],
+        "regime_key": regime_key,
+        "raw_score": round(raw_total_score, 1),
     }

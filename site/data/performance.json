@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-27 12:20",
+  "generated_at": "2026-03-27 13:16",
   "overview": {
     "total": 33,
     "hits": 19,
@@ -52,7 +52,7 @@
     }
   },
   "status_summary": {
-    "open": 28,
+    "open": 32,
     "resolved": 33,
     "hits": 19,
     "stopped": 14,
@@ -96,6 +96,62 @@
     "min_hold_minutes": 60
   },
   "open_targets": [
+    {
+      "ticker": "ENJSA",
+      "period": "weekly",
+      "direction": "buy",
+      "opened_at": "2026-03-27 13:12",
+      "start_price": 116.4,
+      "target_price": 144.21,
+      "target_2": 172.03,
+      "target_3": 219.06,
+      "stop_loss": 106.18,
+      "signal": "HAFİF AL",
+      "confidence": 21.1,
+      "score": 10.4
+    },
+    {
+      "ticker": "KCHOL",
+      "period": "weekly",
+      "direction": "buy",
+      "opened_at": "2026-03-27 13:12",
+      "start_price": 189.5,
+      "target_price": 199.14,
+      "target_2": 220.84,
+      "target_3": 230.67,
+      "stop_loss": 183.81,
+      "signal": "HAFİF AL",
+      "confidence": 31.9,
+      "score": 8.6
+    },
+    {
+      "ticker": "MAVI",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-03-27 13:12",
+      "start_price": 42.6,
+      "target_price": 44.66,
+      "target_2": 46.09,
+      "target_3": 47.87,
+      "stop_loss": 41.0,
+      "signal": "HAFİF AL",
+      "confidence": 40.5,
+      "score": 12.0
+    },
+    {
+      "ticker": "MGROS",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-03-27 13:12",
+      "start_price": 599.5,
+      "target_price": 630.12,
+      "target_2": 656.26,
+      "target_3": 692.17,
+      "stop_loss": 585.48,
+      "signal": "HAFİF AL",
+      "confidence": 42.2,
+      "score": 9.9
+    },
     {
       "ticker": "BIMAS",
       "period": "weekly",

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-27 12:20",
+  "generated_at": "2026-03-27 13:16",
   "overview": {
     "total": 8,
     "hits": 5,
@@ -52,7 +52,7 @@
     }
   },
   "status_summary": {
-    "open": 3,
+    "open": 4,
     "resolved": 8,
     "hits": 5,
     "stopped": 3,
@@ -96,6 +96,20 @@
     "min_hold_minutes": 60
   },
   "open_targets": [
+    {
+      "ticker": "ETH-USD",
+      "period": "weekly",
+      "direction": "sell",
+      "opened_at": "2026-03-27 13:12",
+      "start_price": 2039.494,
+      "target_price": 1386.8,
+      "target_2": 632.95,
+      "target_3": 560.89,
+      "stop_loss": 2170.51,
+      "signal": "HAFİF SAT",
+      "confidence": 24.5,
+      "score": -10.2
+    },
     {
       "ticker": "SI=F",
       "period": "weekly",

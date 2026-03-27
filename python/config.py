@@ -21,8 +21,6 @@ BIST30_TICKERS = {
     "HEKTS.IS": {"name": "Hektaş", "sector": "Kimya"},
     "ISCTR.IS": {"name": "İş Bankası C", "sector": "Bankacılık"},
     "KCHOL.IS": {"name": "Koç Holding", "sector": "Holding"},
-    "KOZAA.IS": {"name": "Koza Altın", "sector": "Madencilik"},
-    "KOZAL.IS": {"name": "Koza Anadolu Metal", "sector": "Madencilik"},
     "KRDMD.IS": {"name": "Kardemir D", "sector": "Metal"},
     "MAVI.IS": {"name": "Mavi Giyim", "sector": "Perakende"},
     "MGROS.IS": {"name": "Migros", "sector": "Perakende"},
