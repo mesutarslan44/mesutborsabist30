@@ -27,3 +27,7 @@ dist/
 build/
 .next/
 out/
+
+# Python
+__pycache__/
+*.py[cod]

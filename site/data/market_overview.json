@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-03-27 12:20",
-  "update_frequency": "Hafta ici her gun 10:01'de otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
+  "update_frequency": "Hafta ici her gun 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
   "bist30": {
     "index_value": 14397.59,
     "change_percent": -0.58,
@@ -374,7 +374,7 @@
     },
     {
       "title": "⏰ Veriler Hafta Ici 10:01'de Otomatik Guncelleniyor",
-      "summary": "Veriler hafta ici her gun saat 10:01'de otomatik guncellenir. Admin isterse panelden manuel olarak anlik yenileme tetikleyebilir.",
+      "summary": "Veriler hafta ici her gun saat 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin isterse panelden manuel olarak anlik yenileme tetikleyebilir.",
       "date": "27.03.2026",
       "category": "bilgi",
       "icon": "⏰"
