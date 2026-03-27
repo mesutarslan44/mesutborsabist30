@@ -3,18 +3,18 @@
   "quality_grade": "C",
   "quality_note": "Sistem dalgali; secicilik ve lot kontrolu artmali.",
   "rule_violation": {
-    "score": 71.1,
+    "score": 68.5,
     "label": "Orta",
     "summary": "Kural ihlali orta seviyede; filtre ve secicilik artmali.",
     "components": [
       {
         "name": "Dusuk Guvenli Islemler",
-        "value": "%77.8",
+        "value": "%80.0",
         "help": "Ne ise yarar? Guveni dusuk islemleri azaltman gerekip gerekmedigini soyler."
       },
       {
         "name": "Zayif Skorlu Islemler",
-        "value": "%22.2",
+        "value": "%30.0",
         "help": "Ne ise yarar? Setup filtresini ne kadar sikilastirman gerektigini gosterir."
       },
       {
@@ -32,7 +32,7 @@
     },
     {
       "title": "Orneklem Bilgisi",
-      "detail": "Analiz edilen kapanan islem sayisi: 9",
+      "detail": "Analiz edilen kapanan islem sayisi: 10",
       "action": "Ne ise yarar? Sonuclarin guvenilirlik seviyesini yorumlamani kolaylastirir."
     }
   ],
