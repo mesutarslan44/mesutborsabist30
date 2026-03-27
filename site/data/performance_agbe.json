@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-27 18:53",
+  "generated_at": "2026-03-27 19:11",
   "overview": {
     "total": 1,
     "hits": 0,
@@ -131,6 +131,17 @@
       "current_records": 1,
       "remaining": 29
     }
+  },
+  "reliability": {
+    "level": "low",
+    "ci_width": 79.3,
+    "sample_sufficient": false,
+    "walk_forward_available": false,
+    "walk_forward_gap": 0.0,
+    "notes": [
+      "low_sample",
+      "wide_ci"
+    ]
   },
   "policy": {
     "single_active_target_per_ticker_period": true,

@@ -136,6 +136,21 @@
         return '%' + Number(ciObj.lower).toFixed(1) + ' - %' + Number(ciObj.upper).toFixed(1);
     }
 
+    function getReliabilityWarning(perfData) {
+        if (!perfData || !perfData.reliability) return '';
+        var rel = perfData.reliability;
+        var level = String(rel.level || '').toLowerCase();
+        if (level === 'high') return '';
+
+        var parts = [];
+        if (rel.sample_sufficient === false) parts.push('orneklem yetersiz');
+        if (Number(rel.ci_width || 0) >= 22) parts.push('guven araligi genis');
+        if (rel.walk_forward_available && Number(rel.walk_forward_gap || 0) <= -6) parts.push('OOS sapmasi var');
+        if (!parts.length) parts.push('temkinli yorumla');
+
+        return 'Temkin: ' + parts.join(', ');
+    }
+
     function formatRange(rangeObj) {
         if (!rangeObj || rangeObj.min == null || rangeObj.max == null) return '-- / --';
         return formatPrice(rangeObj.min) + ' - ' + formatPrice(rangeObj.max);
@@ -1069,6 +1084,8 @@
         if (overall.sample_sufficiency && !overall.sample_sufficiency.is_sufficient) {
             overallMeta += ' | Orneklem dusuk';
         }
+        var relWarning = getReliabilityWarning(performanceData);
+        if (relWarning) overallMeta += ' | ' + relWarning;
         document.getElementById('overallHitCount').textContent = overallMeta;
 
         document.getElementById('dailyHitRate').textContent = (daily.hit_rate || 0).toFixed(1) + '%';

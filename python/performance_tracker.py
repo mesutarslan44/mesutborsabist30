@@ -702,6 +702,50 @@ def _calc_walk_forward(history, min_train=20, test_size=10):
     }
 
 
+def _calc_reliability(overall_stats, walk_forward):
+    ci = overall_stats.get("hit_rate_ci95", {})
+    lower = float(ci.get("lower", 0.0) or 0.0)
+    upper = float(ci.get("upper", 0.0) or 0.0)
+    ci_width = round(max(upper - lower, 0.0), 1)
+
+    suff = overall_stats.get("sample_sufficiency", {})
+    is_sufficient = bool(suff.get("is_sufficient", False))
+
+    wf_summary = (walk_forward or {}).get("summary", {})
+    wf_available = bool((walk_forward or {}).get("available", False))
+    wf_gap = float(wf_summary.get("degradation", 0.0) or 0.0)
+
+    level = "high"
+    notes = []
+
+    if not is_sufficient:
+        level = "low"
+        notes.append("low_sample")
+
+    if ci_width >= 35.0:
+        level = "low"
+        notes.append("wide_ci")
+    elif ci_width >= 22.0 and level != "low":
+        level = "medium"
+        notes.append("medium_ci")
+
+    if wf_available and wf_gap <= -12.0:
+        level = "low"
+        notes.append("walk_forward_drift")
+    elif wf_available and wf_gap <= -6.0 and level == "high":
+        level = "medium"
+        notes.append("walk_forward_soft_drift")
+
+    return {
+        "level": level,
+        "ci_width": ci_width,
+        "sample_sufficient": is_sufficient,
+        "walk_forward_available": wf_available,
+        "walk_forward_gap": round(wf_gap, 1),
+        "notes": notes,
+    }
+
+
 def _calc_direction_stats(history):
     result = {}
     for direction in ["buy", "sell"]:
@@ -894,6 +938,7 @@ def _to_frontend_payload(state, generated_at):
     profit_stats = _calc_profit_stats(history)
     rolling = _calc_rolling_stats(history, as_of_dt)
     walk_forward = _calc_walk_forward(history, min_train=20, test_size=10)
+    reliability = _calc_reliability(stats["overall"], walk_forward)
     status_summary = {
         "open": len(state.get("open_targets", [])),
         "resolved": len(history),
@@ -914,6 +959,7 @@ def _to_frontend_payload(state, generated_at):
         "profit_stats": profit_stats,
         "consistency_score": _calc_consistency_score(stats, rolling),
         "walk_forward": walk_forward,
+        "reliability": reliability,
         "policy": {
             "single_active_target_per_ticker_period": True,
             "daily_expiry_days": DAILY_EXPIRY_DAYS,
