@@ -3,22 +3,37 @@
   "quality_grade": "C",
   "quality_note": "Sistem dalgali; secicilik ve lot kontrolu artmali.",
   "rule_violation": {
-    "score": 50.0,
+    "score": 55.0,
     "label": "Orta",
-    "summary": "Yeterli kapanan islem yok; ihlal skoru varsayilan seviyede.",
+    "summary": "Kural ihlali orta seviyede; filtre ve secicilik artmali.",
     "components": [
       {
-        "name": "Sample",
-        "value": "Dusuk",
-        "help": "Ne ise yarar? Skorun guvenilirligini gosterir."
+        "name": "Dusuk Guvenli Islemler",
+        "value": "%0.0",
+        "help": "Ne ise yarar? Guveni dusuk islemleri azaltman gerekip gerekmedigini soyler."
+      },
+      {
+        "name": "Zayif Skorlu Islemler",
+        "value": "%0.0",
+        "help": "Ne ise yarar? Setup filtresini ne kadar sikilastirman gerektigini gosterir."
+      },
+      {
+        "name": "Sure Asimi",
+        "value": "%100.0",
+        "help": "Ne ise yarar? Yanlis zamanlamayi erken fark ettirir."
       }
     ]
   },
   "error_patterns": [
     {
-      "title": "Yeterli Islem Yok",
-      "detail": "Hata paterni cikarimi icin en az 20 kapanan islem gerekir.",
-      "action": "Ne ise yarar? Erken donemde asiri guvenli karar hatasini onler."
+      "title": "Belirgin Hata Paterni Yok",
+      "detail": "Son kayitlarda tek bir baskin hata paterni gorulmuyor.",
+      "action": "Ne ise yarar? Mevcut disiplinin korundugunu ve tutarliligin artis potansiyelini gosterir."
+    },
+    {
+      "title": "Orneklem Bilgisi",
+      "detail": "Analiz edilen kapanan islem sayisi: 9",
+      "action": "Ne ise yarar? Sonuclarin guvenilirlik seviyesini yorumlamani kolaylastirir."
     }
   ],
   "market_regime": {

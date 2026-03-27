@@ -158,6 +158,14 @@ def build_performance_candidate(ticker_clean, period_name, period_rec, start_pri
             if regime_key == "high_volatility" and signal_en not in {"STRONG_BUY", "STRONG_SELL"}:
                 return None
 
+        allowed_signals = {s.upper() for s in strict.get("allowed_signals", [])}
+        if allowed_signals and signal_en not in allowed_signals:
+            return None
+
+        regime_whitelist = set(strict.get("regime_whitelist", []))
+        if regime_whitelist and regime_key not in regime_whitelist:
+            return None
+
     return {
         "ticker": ticker_clean,
         "period": period_name,

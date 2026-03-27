@@ -477,21 +477,30 @@ def _passes_strict_filters(target):
     if rr_ratio < float(strict.get("min_rr", 0)):
         return False
 
+    regime_key = target.get("regime_key", "neutral")
+    signal_en = target.get("signal_en")
+    if not signal_en:
+        signal_text = str(target.get("signal", "")).upper()
+        if "GÜÇLÜ" in signal_text or "GUCLU" in signal_text:
+            signal_en = "STRONG_BUY" if "AL" in signal_text else "STRONG_SELL"
+        elif "AL" in signal_text:
+            signal_en = "BUY"
+        elif "SAT" in signal_text:
+            signal_en = "SELL"
+        else:
+            signal_en = "HOLD"
+
     if strict.get("high_vol_only_strong", False):
-        regime_key = target.get("regime_key", "neutral")
-        signal_en = target.get("signal_en")
-        if not signal_en:
-            signal_text = str(target.get("signal", "")).upper()
-            if "GÜÇLÜ" in signal_text or "GUCLU" in signal_text:
-                signal_en = "STRONG_BUY" if "AL" in signal_text else "STRONG_SELL"
-            elif "AL" in signal_text:
-                signal_en = "BUY"
-            elif "SAT" in signal_text:
-                signal_en = "SELL"
-            else:
-                signal_en = "HOLD"
         if regime_key == "high_volatility" and signal_en not in ("STRONG_BUY", "STRONG_SELL"):
             return False
+
+    allowed_signals = {s.upper() for s in strict.get("allowed_signals", [])}
+    if allowed_signals and signal_en not in allowed_signals:
+        return False
+
+    regime_whitelist = set(strict.get("regime_whitelist", []))
+    if regime_whitelist and regime_key not in regime_whitelist:
+        return False
 
     return True
 
@@ -797,6 +806,7 @@ def _to_frontend_payload(state, generated_at):
             "daily_expiry_days": DAILY_EXPIRY_DAYS,
             "weekly_expiry_days": WEEKLY_EXPIRY_DAYS,
             "min_hold_minutes": MIN_HOLD_MINUTES,
+            "strict_filters": PERFORMANCE_STRICT_FILTERS,
         },
         "open_targets": sorted(
             state.get("open_targets", []), key=lambda x: x.get("opened_at", ""), reverse=True

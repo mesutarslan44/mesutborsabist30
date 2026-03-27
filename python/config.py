@@ -118,8 +118,10 @@ TARGET_MULTIPLIERS = {
 # Performans takip aday filtreleri (isabet oranini artirmak icin)
 PERFORMANCE_STRICT_FILTERS = {
     "enabled": True,
-    "min_confidence": 45.0,
-    "min_abs_score": 14.0,
-    "min_rr": 1.2,
+    "min_confidence": 70.0,
+    "min_abs_score": 22.0,
+    "min_rr": 1.8,
     "high_vol_only_strong": True,
+    "allowed_signals": ["STRONG_BUY", "BUY", "SELL", "STRONG_SELL"],
+    "regime_whitelist": ["trend_up", "trend_down"],
 }
