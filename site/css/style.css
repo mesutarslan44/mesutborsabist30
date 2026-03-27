@@ -1236,6 +1236,8 @@ body.nav-open .nav-toggle-bar:nth-child(4) {
         gap: 6px;
         max-height: 0;
         overflow: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         opacity: 0;
         padding: 0;
         border-top: 1px solid transparent;
@@ -1258,9 +1260,9 @@ body.nav-open .nav-toggle-bar:nth-child(4) {
     }
 
     body.nav-open .mobile-nav-panel {
-        max-height: 220px;
+        max-height: calc(100dvh - 150px);
         opacity: 1;
-        padding: 10px 0 4px;
+        padding: 10px 0 calc(14px + env(safe-area-inset-bottom));
         border-top-color: var(--border-color);
     }
 
