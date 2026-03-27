@@ -11,6 +11,7 @@
     let performanceData = null;
     let decisionCoachData = null;
     let currentFilter = 'all';
+    let currentQuickAction = 'all';
     let currentSort = { key: 'score', dir: 'desc' };
     let refreshTimer = null;
     let freshnessTimer = null;
@@ -19,7 +20,16 @@
     const REFRESH_PROGRESS_STORAGE = 'manualRefreshProgress';
     const REFRESH_POLL_DELAY_MS = 15000;
     const REFRESH_MAX_ATTEMPTS = 24;
-    const SNAPSHOT_STORAGE_KEY = 'dashboardLastSnapshot';
+    const SNAPSHOT_STORAGE_KEY_BASE = 'dashboardLastSnapshot';
+    const RELIABILITY_TREND_KEY_BASE = 'reliabilityTrendSnapshot';
+
+    function getPageScope() {
+        return window.location.pathname.includes('/agbe') ? 'agbe' : 'bist';
+    }
+
+    function scopedStorageKey(base) {
+        return base + ':' + getPageScope();
+    }
 
     let matrixAnimId = null;
     let manualRefreshTicker = null;
@@ -641,7 +651,7 @@
 
     function readLastSnapshot() {
         try {
-            var raw = localStorage.getItem(SNAPSHOT_STORAGE_KEY);
+            var raw = localStorage.getItem(scopedStorageKey(SNAPSHOT_STORAGE_KEY_BASE));
             if (!raw) return null;
             return JSON.parse(raw);
         } catch (e) {
@@ -651,10 +661,59 @@
 
     function saveLastSnapshot(snapshot) {
         try {
-            localStorage.setItem(SNAPSHOT_STORAGE_KEY, JSON.stringify(snapshot));
+            localStorage.setItem(scopedStorageKey(SNAPSHOT_STORAGE_KEY_BASE), JSON.stringify(snapshot));
         } catch (e) {
             // no-op
         }
+    }
+
+    function getReliabilityTrend(perfData) {
+        var rel = (perfData && perfData.reliability) || {};
+        var level = String(rel.level || '').toLowerCase();
+        var ciWidth = Number(rel.ci_width || 0);
+        var updatedAt = String((perfData && perfData.generated_at) || (summaryData && summaryData.updated_at) || '');
+
+        var scoreMap = { high: 3, medium: 2, low: 1 };
+        var currentScore = scoreMap[level] || 0;
+
+        var symbol = '→';
+        var cls = 'trend-flat';
+
+        try {
+            var key = scopedStorageKey(RELIABILITY_TREND_KEY_BASE);
+            var raw = localStorage.getItem(key);
+            var prev = raw ? JSON.parse(raw) : null;
+
+            if (prev && prev.updated_at && prev.updated_at !== updatedAt) {
+                var prevScore = Number(prev.score || 0);
+                var prevCi = Number(prev.ci_width || 0);
+                if (currentScore > prevScore) {
+                    symbol = '↑';
+                    cls = 'trend-up';
+                } else if (currentScore < prevScore) {
+                    symbol = '↓';
+                    cls = 'trend-down';
+                } else if (Math.abs(ciWidth - prevCi) >= 2.0) {
+                    if (ciWidth < prevCi) {
+                        symbol = '↑';
+                        cls = 'trend-up';
+                    } else {
+                        symbol = '↓';
+                        cls = 'trend-down';
+                    }
+                }
+            }
+
+            localStorage.setItem(key, JSON.stringify({
+                updated_at: updatedAt,
+                score: currentScore,
+                ci_width: ciWidth,
+            }));
+        } catch (e) {
+            // no-op
+        }
+
+        return { symbol: symbol, cls: cls };
     }
 
     function renderTodayChanges() {
@@ -1209,9 +1268,11 @@
         var reliabilityBadge = document.getElementById('reliabilityBadge');
         if (reliabilityBadge) {
             var badgeCfg = getReliabilityBadgeConfig(performanceData);
-            reliabilityBadge.textContent = badgeCfg.text;
-            reliabilityBadge.classList.remove('is-high', 'is-medium', 'is-low', 'is-neutral');
+            var trend = getReliabilityTrend(performanceData);
+            reliabilityBadge.textContent = badgeCfg.text + ' ' + trend.symbol;
+            reliabilityBadge.classList.remove('is-high', 'is-medium', 'is-low', 'is-neutral', 'trend-up', 'trend-down', 'trend-flat');
             reliabilityBadge.classList.add(badgeCfg.cls);
+            reliabilityBadge.classList.add(trend.cls);
         }
         var overallMeta = (overall.hits || 0) + '/' + (overall.total || 0) + ' hedef';
         overallMeta += ' | CI95: ' + formatCI(overall.hit_rate_ci95);
@@ -1351,6 +1412,23 @@
         // Filter
         if (currentFilter !== 'all') {
             stocks = stocks.filter(function (s) { return getFilterGroup(s.signal_en) === currentFilter; });
+        }
+
+        if (currentQuickAction !== 'all') {
+            stocks = stocks.filter(function (s) {
+                var conf = Number(s.confidence || 0);
+                var signalGroup = getFilterGroup(s.signal_en);
+                var signalEn = String(s.signal_en || '');
+                if (currentQuickAction === 'top') {
+                    return conf >= 70 && ['STRONG_BUY', 'BUY', 'STRONG_SELL', 'SELL'].indexOf(signalEn) >= 0;
+                }
+                if (currentQuickAction === 'risk') {
+                    return conf < 55 || Math.abs(Number(s.change_pct || 0)) >= 2.5;
+                }
+                if (currentQuickAction === 'buy') return signalGroup === 'buy';
+                if (currentQuickAction === 'sell') return signalGroup === 'sell';
+                return true;
+            });
         }
 
         // Search
@@ -1550,11 +1628,38 @@
 
         // Filter tabs
         var filterTabs = document.querySelectorAll('.filter-tab');
+        function syncFilterTabs() {
+            for (var j = 0; j < filterTabs.length; j++) {
+                filterTabs[j].classList.toggle('active', filterTabs[j].dataset.filter === currentFilter);
+            }
+        }
+
         for (var i = 0; i < filterTabs.length; i++) {
             filterTabs[i].addEventListener('click', function () {
-                for (var j = 0; j < filterTabs.length; j++) filterTabs[j].classList.remove('active');
-                this.classList.add('active');
                 currentFilter = this.dataset.filter;
+                currentQuickAction = currentFilter;
+                var quickBtns = document.querySelectorAll('.quick-action-btn');
+                for (var q = 0; q < quickBtns.length; q++) {
+                    quickBtns[q].classList.toggle('active', quickBtns[q].dataset.quick === currentQuickAction);
+                }
+                syncFilterTabs();
+                renderTable();
+            });
+        }
+
+        var quickActionButtons = document.querySelectorAll('.quick-action-btn');
+        for (var b = 0; b < quickActionButtons.length; b++) {
+            quickActionButtons[b].addEventListener('click', function () {
+                for (var x = 0; x < quickActionButtons.length; x++) quickActionButtons[x].classList.remove('active');
+                this.classList.add('active');
+
+                currentQuickAction = this.dataset.quick || 'all';
+                if (currentQuickAction === 'buy' || currentQuickAction === 'sell' || currentQuickAction === 'all') {
+                    currentFilter = currentQuickAction;
+                } else {
+                    currentFilter = 'all';
+                }
+                syncFilterTabs();
                 renderTable();
             });
         }

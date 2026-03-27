@@ -2655,6 +2655,18 @@ body.nav-open .nav-toggle-bar:nth-child(4) {
     background: rgba(148, 163, 184, 0.08);
 }
 
+.performance-badge.trend-up {
+    box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.22) inset;
+}
+
+.performance-badge.trend-down {
+    box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.22) inset;
+}
+
+.performance-badge.trend-flat {
+    box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.18) inset;
+}
+
 .performance-meta {
     font-size: 12px;
     color: var(--text-secondary);
@@ -3470,6 +3482,33 @@ body.nav-open .nav-toggle-bar:nth-child(4) {
 
 .table-metrics-guide strong {
     color: var(--text-secondary);
+}
+
+.mobile-quick-actions {
+    display: none;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 4px 1px 2px;
+    margin: 8px 0 10px;
+    scrollbar-width: thin;
+}
+
+.quick-action-btn {
+    flex: 0 0 auto;
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    background: rgba(15, 23, 34, 0.86);
+    color: var(--text-secondary);
+    border-radius: 999px;
+    padding: 7px 11px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.quick-action-btn.active {
+    color: var(--text-primary);
+    border-color: rgba(34, 211, 238, 0.44);
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(59, 130, 246, 0.18));
 }
 
 .alarm-center {
@@ -4494,6 +4533,10 @@ body.advanced-enabled:not(.advanced-open) .advanced-block {
 
 /* ── Mobile Quick Scan Tuning (Sonuc A/B + Global) ── */
 @media (max-width: 768px) {
+    .mobile-quick-actions {
+        display: flex;
+    }
+
     .perf-table tbody tr {
         padding: 12px;
         gap: 6px;

@@ -76,6 +76,35 @@
             </p>
         </div>
 
+        <div class="market-mode-band" id="marketModeBand">
+            <span class="market-mode-label">Piyasa Modu</span>
+            <span class="market-mode-text" id="marketModeText">Yukleniyor...</span>
+        </div>
+
+        <div class="today-change-panel" id="todayChangePanel">
+            <div class="today-change-head">
+                <h3>Bugun Ne Degisti?</h3>
+                <span id="todayChangeTime">Son snapshot karsilastirmasi hazirlaniyor...</span>
+            </div>
+            <div class="today-change-grid">
+                <div class="today-change-card">
+                    <div class="today-change-title">Net AL+SAT sinyali farki</div>
+                    <div class="today-change-value" id="todaySignalDelta">--</div>
+                    <div class="today-change-meta" id="todaySignalDeltaMeta">Hesaplaniyor...</div>
+                </div>
+                <div class="today-change-card">
+                    <div class="today-change-title">Ortalama guven farki</div>
+                    <div class="today-change-value" id="todayConfidenceDelta">--</div>
+                    <div class="today-change-meta" id="todayConfidenceDeltaMeta">Hesaplaniyor...</div>
+                </div>
+                <div class="today-change-card">
+                    <div class="today-change-title">En cok oynayanlar</div>
+                    <div class="today-change-value" id="todayTopMovers">--</div>
+                    <div class="today-change-meta">Mutlak yuzde degisim bazli ilk 3</div>
+                </div>
+            </div>
+        </div>
+
         <div class="quick-guide">
             <div class="quick-guide-item"><strong>1)</strong> Once sinyali gor: <strong>AL / BEKLE / SAT</strong>.</div>
             <div class="quick-guide-item"><strong>2)</strong> Sonra hedef-stop mesafesini kontrol et.</div>
@@ -160,6 +189,14 @@
                 <span class="icon">📋</span>
                 A-G-B-E Canlı Tablo
             </h2>
+        </div>
+
+        <div class="mobile-quick-actions" id="mobileQuickActions">
+            <button class="quick-action-btn active" data-quick="all" type="button">Tum Tablo</button>
+            <button class="quick-action-btn" data-quick="top" type="button">En Gucluler</button>
+            <button class="quick-action-btn" data-quick="risk" type="button">Yuksek Risk</button>
+            <button class="quick-action-btn" data-quick="buy" type="button">Sadece AL</button>
+            <button class="quick-action-btn" data-quick="sell" type="button">Sadece SAT</button>
         </div>
 
         <div class="table-metrics-guide">
