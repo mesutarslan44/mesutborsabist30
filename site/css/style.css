@@ -4087,3 +4087,116 @@ body.advanced-enabled:not(.advanced-open) .advanced-block {
     color: #f59e0b;
     border-color: rgba(245, 158, 11, 0.4);
 }
+
+
+/* ── Mobile Hardening: Global + Sonuc A/B ── */
+@media (max-width: 768px) {
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .container,
+    .navbar,
+    .navbar-inner,
+    .market-bar,
+    .market-bar-inner,
+    .perf-table-wrapper,
+    .stock-table-wrapper {
+        max-width: 100%;
+    }
+
+    .filter-tabs,
+    .perf-filter-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .filter-tabs .filter-tab,
+    .perf-filter-tabs .filter-tab {
+        flex: 1 1 calc(50% - 8px);
+        min-width: 0;
+        text-align: center;
+        padding-inline: 10px;
+    }
+
+    .perf-table {
+        min-width: 0 !important;
+        width: 100% !important;
+        table-layout: fixed;
+    }
+
+    .perf-table tbody tr {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .perf-table tbody td {
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-items: start;
+        align-items: start;
+        gap: 4px;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    .perf-table tbody td::before {
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    .perf-table tbody td strong,
+    .perf-table tbody td span,
+    .perf-table tbody td a {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    .perf-table tbody td .signal-badge,
+    .perf-table tbody td .dir-badge,
+    .perf-table tbody td .target-level-badge {
+        align-self: start;
+        max-width: 100%;
+    }
+
+    .perf-table tbody td[data-label="Acilis Tarihi"],
+    .perf-table tbody td[data-label="Acilis Tp."],
+    .perf-table tbody td[data-label="Kapanis Tp."],
+    .perf-table tbody td[data-label="Acılış Tarihi"],
+    .perf-table tbody td[data-label="Açılış Tp."],
+    .perf-table tbody td[data-label="Kapanış Tp."] {
+        font-size: 12px;
+        line-height: 1.4;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .section-title {
+        font-size: 20px;
+    }
+
+    .perf-hero-title {
+        font-size: 24px;
+    }
+
+    .perf-table tbody tr {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+
+    .bottom-nav-link span {
+        font-size: 11px;
+        line-height: 1.2;
+    }
+}
