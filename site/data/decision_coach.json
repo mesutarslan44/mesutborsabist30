@@ -1,20 +1,20 @@
 {
-  "quality_score": 40.6,
+  "quality_score": 42.5,
   "quality_grade": "C",
   "quality_note": "Sistem dalgali; secicilik ve lot kontrolu artmali.",
   "rule_violation": {
-    "score": 82.4,
+    "score": 82.0,
     "label": "Iyi",
     "summary": "Kural ihlali riski dusuk; disiplin korunuyor.",
     "components": [
       {
         "name": "Dusuk Guvenli Islemler",
-        "value": "%44.1",
+        "value": "%45.7",
         "help": "Ne ise yarar? Guveni dusuk islemleri azaltman gerekip gerekmedigini soyler."
       },
       {
         "name": "Zayif Skorlu Islemler",
-        "value": "%17.6",
+        "value": "%17.1",
         "help": "Ne ise yarar? Setup filtresini ne kadar sikilastirman gerektigini gosterir."
       },
       {
@@ -32,15 +32,15 @@
     },
     {
       "title": "Orneklem Bilgisi",
-      "detail": "Analiz edilen kapanan islem sayisi: 34",
+      "detail": "Analiz edilen kapanan islem sayisi: 35",
       "action": "Ne ise yarar? Sonuclarin guvenilirlik seviyesini yorumlamani kolaylastirir."
     }
   ],
   "market_regime": {
-    "name": "Nötr",
-    "tone": "neutral",
-    "why": "AL/SAT dengesi karisik veya endeks onayi zayif.",
-    "how": "Sadece A/B setup ve net hedef-stop oranli islemleri sec."
+    "name": "Risk-Off",
+    "tone": "negative",
+    "why": "SAT baskisi yuksek, endeks yonu zayif.",
+    "how": "Pozisyon boyutunu azalt, stopu gevsetme, yeni islemde secici ol."
   },
   "coaching_cards": [
     {
@@ -59,9 +59,9 @@
       "rule": "Islem basi riski sabit tut (or: portfoyun %0.5-%1.0 arasi)."
     },
     {
-      "title": "4) Kalibrasyon",
-      "desc": "Ne ise yarar? Dalgali performansta kaybi sinirlar.",
-      "rule": "En az 20 islem logu birikmeden lot buyutme."
+      "title": "4) Koruma Modu",
+      "desc": "Ne ise yarar? Dusus doneminde duygusal islemleri kisar.",
+      "rule": "Yeni islem sayisini yarıya indir, mevcutlarda stop disiplini uygula."
     }
   ],
   "execution_checklist": [
