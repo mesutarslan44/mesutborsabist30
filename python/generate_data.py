@@ -578,15 +578,18 @@ def main():
                 "explanation_short": rec.get("explanation", "")[:200],
             }
             
-            # TL Deger Hesaplamalari (Ons -> Gram, USD -> TL)
+            # TL Deger Hesaplamalari (TRY bazli)
             if ticker_clean == "GC=F":
                 gram_tl = (summary_item["price"] / 31.1034768) * usd_rate
-                summary_item["tl_info"] = f"Gram: ₺{gram_tl:,.0f}"
+                summary_item["price_try"] = round(float(gram_tl), 2)
+                summary_item["tl_info"] = f"Gram TL: ₺{gram_tl:,.2f}"
             elif ticker_clean == "SI=F":
                 gram_tl = (summary_item["price"] / 31.1034768) * usd_rate
-                summary_item["tl_info"] = f"Gram: ₺{gram_tl:,.0f}"
+                summary_item["price_try"] = round(float(gram_tl), 2)
+                summary_item["tl_info"] = f"Gram TL: ₺{gram_tl:,.2f}"
             elif ticker_clean in ["BTC-USD", "ETH-USD"]:
                 coin_tl = summary_item["price"] * usd_rate
+                summary_item["price_try"] = round(float(coin_tl), 2)
                 summary_item["tl_info"] = f"₺{coin_tl:,.0f}"
 
             agbe_summary_list.append(summary_item)

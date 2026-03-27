@@ -1146,27 +1146,39 @@
             var actionText = getActionText(s.signal_en, s.confidence);
             var confidenceText = '%' + Number(s.confidence || 0).toFixed(0);
 
+            // Currency-aware price and naming for AGBE
+            var isAgbePage = window.location.pathname.includes('/agbe');
+            var isPreciousMetal = isAgbePage && (s.ticker === 'GC=F' || s.ticker === 'SI=F');
+            var displayTicker = s.ticker;
+            if (isPreciousMetal) {
+                displayTicker = s.ticker === 'GC=F' ? 'ALTIN' : 'GUMUS';
+            }
+
             var tlInfoHtml = '';
-            if (s.tl_info) {
+            if (s.tl_info && !isPreciousMetal) {
                 tlInfoHtml = ' | <span style="font-weight: 500; color: var(--color-primary);">' + s.tl_info + '</span>';
             }
 
-            // Currency-aware price display for AGBE
-            var isAgbePage = window.location.pathname.includes('/agbe');
             var displayPrice = '';
-            if (isAgbePage && (s.ticker === 'GC=F' || s.ticker === 'SI=F')) {
-                // Altın/Gümüş: TL gram fiyatı göster
-                var tlMatch = s.tl_info ? s.tl_info.match(/[\d.,]+/) : null;
-                displayPrice = '₺' + (tlMatch ? tlMatch[0] : formatPrice(s.price));
+            if (isPreciousMetal) {
+                var gramTry = Number(s.price_try);
+                if (!isFinite(gramTry) || gramTry <= 0) {
+                    var tlMatch = s.tl_info ? s.tl_info.match(/[\d.,]+/) : null;
+                    gramTry = tlMatch ? Number(String(tlMatch[0]).replace(/,/g, '')) : NaN;
+                }
+                if (isFinite(gramTry) && gramTry > 0) {
+                    displayPrice = '₺' + gramTry.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                } else {
+                    displayPrice = formatPrice(s.price);
+                }
             } else if (isAgbePage && (s.ticker === 'BTC-USD' || s.ticker === 'ETH-USD')) {
-                // Kripto: USD göster
                 displayPrice = '$' + Number(s.price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             } else {
                 displayPrice = formatPrice(s.price);
             }
 
             html += '<td data-label="Hisse"><div class="stock-cell-name">';
-            html += '<strong>' + s.ticker + '</strong>';
+            html += '<strong>' + displayTicker + '</strong>';
             html += '<span class="stock-sector">' + s.name + ' · ' + s.sector + tlInfoHtml + '</span>';
             html += '</div></td>';
             html += '<td data-label="Fiyat" class="price-cell"><div class="price-main">' + displayPrice + '</div>';

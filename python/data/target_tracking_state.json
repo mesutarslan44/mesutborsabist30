@@ -1,6 +1,22 @@
 {
   "open_targets": [
     {
+      "ticker": "EREGL",
+      "period": "weekly",
+      "direction": "buy",
+      "opened_at": "2026-03-27 17:01",
+      "start_price": 26.88,
+      "target_price": 27.83,
+      "target_2": 29.7,
+      "target_3": 32.72,
+      "stop_loss": 26.23,
+      "signal": "AL",
+      "confidence": 105.0,
+      "score": 31.1,
+      "regime_key": "trend_up",
+      "rr_ratio": 1.4615
+    },
+    {
       "ticker": "ARCLK",
       "period": "daily",
       "direction": "sell",
@@ -185,22 +201,6 @@
       "signal": "HAFİF SAT",
       "confidence": 49.3,
       "score": -16.9
-    },
-    {
-      "ticker": "EREGL",
-      "period": "weekly",
-      "direction": "buy",
-      "opened_at": "2026-03-27 17:01",
-      "start_price": 26.88,
-      "target_price": 27.83,
-      "target_2": 29.7,
-      "target_3": 32.72,
-      "stop_loss": 26.23,
-      "signal": "AL",
-      "confidence": 105.0,
-      "score": 31.1,
-      "regime_key": "trend_up",
-      "rr_ratio": 1.4615
     }
   ],
   "history": [
