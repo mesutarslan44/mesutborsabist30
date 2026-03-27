@@ -37,10 +37,10 @@
     }
   ],
   "market_regime": {
-    "name": "Risk-Off",
-    "tone": "negative",
-    "why": "SAT baskisi yuksek, endeks yonu zayif.",
-    "how": "Pozisyon boyutunu azalt, stopu gevsetme, yeni islemde secici ol."
+    "name": "Nötr",
+    "tone": "neutral",
+    "why": "AL/SAT dengesi karisik veya endeks onayi zayif.",
+    "how": "Sadece A/B setup ve net hedef-stop oranli islemleri sec."
   },
   "coaching_cards": [
     {
@@ -59,9 +59,9 @@
       "rule": "Islem basi riski sabit tut (or: portfoyun %0.5-%1.0 arasi)."
     },
     {
-      "title": "4) Koruma Modu",
-      "desc": "Ne ise yarar? Dusus doneminde duygusal islemleri kisar.",
-      "rule": "Yeni islem sayisini yarıya indir, mevcutlarda stop disiplini uygula."
+      "title": "4) Kalibrasyon",
+      "desc": "Ne ise yarar? Dalgali performansta kaybi sinirlar.",
+      "rule": "En az 20 islem logu birikmeden lot buyutme."
     }
   ],
   "execution_checklist": [
