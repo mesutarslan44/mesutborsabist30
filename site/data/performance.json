@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-03-27 13:16",
+  "generated_at": "2026-03-27 13:52",
   "overview": {
-    "total": 33,
+    "total": 34,
     "hits": 19,
-    "stopped": 14,
+    "stopped": 15,
     "expired": 0,
-    "hit_rate": 57.6,
-    "stop_rate": 42.4
+    "hit_rate": 55.9,
+    "stop_rate": 44.1
   },
   "daily": {
-    "total": 26,
+    "total": 27,
     "hits": 14,
-    "stopped": 12,
+    "stopped": 13,
     "expired": 0,
-    "hit_rate": 53.8,
+    "hit_rate": 51.9,
     "avg_days_to_hit": 0.9
   },
   "weekly": {
@@ -26,36 +26,36 @@
   },
   "rolling": {
     "7d": {
-      "total": 33,
+      "total": 34,
       "hits": 19,
-      "stopped": 14,
+      "stopped": 15,
       "expired": 0,
-      "hit_rate": 57.6
+      "hit_rate": 55.9
     },
     "30d": {
-      "total": 33,
+      "total": 34,
       "hits": 19,
-      "stopped": 14,
+      "stopped": 15,
       "expired": 0,
-      "hit_rate": 57.6
+      "hit_rate": 55.9
     },
     "90d": {
-      "total": 33,
+      "total": 34,
       "hits": 19,
-      "stopped": 14,
+      "stopped": 15,
       "expired": 0,
-      "hit_rate": 57.6
+      "hit_rate": 55.9
     },
     "weighted": {
-      "hit_rate": 57.5,
+      "hit_rate": 55.8,
       "half_life_days": 30
     }
   },
   "status_summary": {
-    "open": 32,
-    "resolved": 33,
+    "open": 34,
+    "resolved": 34,
     "hits": 19,
-    "stopped": 14,
+    "stopped": 15,
     "expired": 0
   },
   "direction_stats": {
@@ -66,10 +66,10 @@
       "hit_rate": 57.9
     },
     "sell": {
-      "total": 14,
+      "total": 15,
       "hits": 8,
-      "stopped": 6,
-      "hit_rate": 57.1
+      "stopped": 7,
+      "hit_rate": 53.3
     }
   },
   "target_level_stats": {
@@ -83,12 +83,12 @@
   },
   "profit_stats": {
     "avg_win_pct": 2.65,
-    "avg_loss_pct": -3.4,
-    "total_pct": 2.69,
+    "avg_loss_pct": -3.3,
+    "total_pct": 0.79,
     "win_count": 19,
-    "loss_count": 14
+    "loss_count": 15
   },
-  "consistency_score": 43.8,
+  "consistency_score": 41.2,
   "policy": {
     "single_active_target_per_ticker_period": true,
     "daily_expiry_days": 5,
@@ -96,6 +96,48 @@
     "min_hold_minutes": 60
   },
   "open_targets": [
+    {
+      "ticker": "FROTO",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-27 13:52",
+      "start_price": 102.9,
+      "target_price": 98.53,
+      "target_2": 89.72,
+      "target_3": 84.78,
+      "stop_loss": 105.86,
+      "signal": "HAFİF SAT",
+      "confidence": 40.2,
+      "score": -12.0
+    },
+    {
+      "ticker": "TCELL",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-27 13:52",
+      "start_price": 106.5,
+      "target_price": 101.23,
+      "target_2": 93.5,
+      "target_3": 90.13,
+      "stop_loss": 107.72,
+      "signal": "HAFİF SAT",
+      "confidence": 66.1,
+      "score": -16.4
+    },
+    {
+      "ticker": "TOASO",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-27 13:52",
+      "start_price": 279.25,
+      "target_price": 251.82,
+      "target_2": 231.42,
+      "target_3": 224.65,
+      "stop_loss": 291.57,
+      "signal": "HAFİF SAT",
+      "confidence": 62.2,
+      "score": -15.8
+    },
     {
       "ticker": "ENJSA",
       "period": "weekly",
@@ -263,20 +305,6 @@
       "signal": "HAFİF SAT",
       "confidence": 31.5,
       "score": -11.2
-    },
-    {
-      "ticker": "TOASO",
-      "period": "daily",
-      "direction": "sell",
-      "opened_at": "2026-03-27 12:15",
-      "start_price": 273.0,
-      "target_price": 251.82,
-      "target_2": 231.36,
-      "target_3": 227.25,
-      "stop_loss": 278.2,
-      "signal": "HAFİF SAT",
-      "confidence": 76.1,
-      "score": -17.8
     },
     {
       "ticker": "YKBNK",
@@ -546,6 +574,26 @@
     }
   ],
   "recent_resolved": [
+    {
+      "ticker": "TOASO",
+      "period": "daily",
+      "direction": "sell",
+      "opened_at": "2026-03-27 12:15",
+      "closed_at": "2026-03-27 12:30",
+      "start_price": 273.0,
+      "target_price": 251.82,
+      "target_2": 231.36,
+      "target_3": 227.25,
+      "stop_loss": 278.2,
+      "close_price": 278.2,
+      "profit_pct": -1.9,
+      "days_to_result": 0,
+      "hit_level": null,
+      "status": "STOPPED",
+      "signal": "HAFİF SAT",
+      "confidence": 76.1,
+      "score": -17.8
+    },
     {
       "ticker": "ODAS",
       "period": "weekly",
