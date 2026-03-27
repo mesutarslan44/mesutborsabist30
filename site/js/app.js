@@ -679,17 +679,34 @@
         if (!valueEl) return;
 
         function getNextWeekdayRefresh(now) {
-            var next = new Date(now.getTime());
-            next.setHours(10, 1, 0, 0);
+            var schedule = [
+                { hour: 10, minute: 1 },
+                { hour: 12, minute: 30 },
+                { hour: 17, minute: 0 },
+                { hour: 19, minute: 30 }
+            ];
+            var next = null;
 
-            while (
-                next.getDay() === 0 ||
-                next.getDay() === 6 ||
-                next.getTime() <= now.getTime()
-            ) {
-                next.setDate(next.getDate() + 1);
-                next.setHours(10, 1, 0, 0);
+            for (var i = 0; i < schedule.length; i++) {
+                var candidate = new Date(now.getTime());
+                candidate.setHours(schedule[i].hour, schedule[i].minute, 0, 0);
+                if (candidate.getTime() > now.getTime()) {
+                    next = candidate;
+                    break;
+                }
             }
+
+            if (!next) {
+                next = new Date(now.getTime());
+                next.setDate(next.getDate() + 1);
+                next.setHours(schedule[0].hour, schedule[0].minute, 0, 0);
+            }
+
+            while (next.getDay() === 0 || next.getDay() === 6) {
+                next.setDate(next.getDate() + 1);
+                next.setHours(schedule[0].hour, schedule[0].minute, 0, 0);
+            }
+
             return next;
         }
 
@@ -704,7 +721,7 @@
             var m = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
             var s = String(totalSec % 60).padStart(2, '0');
             valueEl.textContent = h + ':' + m + ':' + s;
-            if (metaEl) metaEl.textContent = 'Hafta ici 10:01 otomatik guncellemeye kalan sure';
+            if (metaEl) metaEl.textContent = 'Hafta ici 10:01 / 12:30 / 17:00 / 19:30 otomatik guncellemeye kalan sure';
         }
 
         tick();
@@ -1026,7 +1043,7 @@
         var lastUpdateEl = document.getElementById('lastUpdateText');
         if (lastUpdateEl && summaryData) {
             lastUpdateEl.textContent = 'Son guncelleme: ' + (summaryData.updated_at || 'Bilinmiyor') +
-                ' | Otomatik: Hafta ici 10:01 | Manuel: Admin';
+                ' | Otomatik: Hafta ici 10:01 / 12:30 / 17:00 / 19:30 | Manuel: Admin';
         }
 
         var generatedAt = summaryData ? summaryData.updated_at : null;

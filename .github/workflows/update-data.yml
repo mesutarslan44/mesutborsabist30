@@ -2,7 +2,10 @@ name: BIST 30 Saatlik Veri Güncelleme
 
 on:
   schedule:
-    - cron: "1 7 * * 1-5" # Hafta ici 10:01 (TSI, UTC+3)
+    - cron: "1 7 * * 1-5"  # Hafta ici 10:01 (TSI, UTC+3)
+    - cron: "30 9 * * 1-5" # Hafta ici 12:30 (TSI, UTC+3)
+    - cron: "0 14 * * 1-5" # Hafta ici 17:00 (TSI, UTC+3)
+    - cron: "30 16 * * 1-5" # Hafta ici 19:30 (TSI, UTC+3)
   workflow_dispatch: # Manuel tetikleme
   repository_dispatch: # API üzerinden tetikleme
     types: [update-data-event]

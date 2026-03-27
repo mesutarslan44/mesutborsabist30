@@ -207,8 +207,8 @@ def generate_news_feed():
             "icon": "🎯"
         },
         {
-            "title": "⏰ Veriler Hafta Ici 10:01'de Otomatik Guncelleniyor",
-            "summary": "Veriler hafta ici her gun saat 10:01'de otomatik guncellenir. Admin isterse panelden manuel olarak anlik yenileme tetikleyebilir.",
+            "title": "⏰ Veriler Hafta Ici 10:01 / 12:30 / 17:00 / 19:30'da Otomatik Guncelleniyor",
+            "summary": "Veriler hafta ici her gun saat 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin isterse panelden manuel olarak anlik yenileme tetikleyebilir.",
             "date": now.strftime("%d.%m.%Y"),
             "category": "bilgi",
             "icon": "⏰"
@@ -226,7 +226,7 @@ def process_stock(ticker_yahoo, info, all_data):
         "name": info["name"],
         "sector": info["sector"],
         "updated_at": datetime.now(pytz.timezone('Europe/Istanbul')).strftime("%Y-%m-%d %H:%M"),
-        "update_frequency": "Hafta ici her gun 10:01'de otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
+        "update_frequency": "Hafta ici her gun 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
         "periods": {}
     }
 
@@ -405,7 +405,7 @@ def main():
     # 6. Summary JSON
     summary = {
         "updated_at": generated_at,
-        "update_frequency": "Hafta ici her gun 10:01'de otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
+        "update_frequency": "Hafta ici her gun 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
         "total_stocks": len(stocks_summary),
         "signal_counts": signal_counts,
         "stocks": stocks_summary,
@@ -419,7 +419,7 @@ def main():
     # 7. Market Overview JSON
     market_overview = {
         "updated_at": generated_at,
-        "update_frequency": "Hafta ici her gun 10:01'de otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
+        "update_frequency": "Hafta ici her gun 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
         "bist30": bist30_info,
         "indices": indices,
         "top_buys": top_buys[:5],
@@ -580,7 +580,7 @@ def main():
     
     agbe_overview = {
         "updated_at": generated_at,
-        "update_frequency": "Hafta ici her gun 10:01'de otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
+        "update_frequency": "Hafta ici her gun 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
         "total_assets": len(agbe_summary_list),
         "signal_counts": agbe_signal_counts,
         "assets": agbe_summary_list,

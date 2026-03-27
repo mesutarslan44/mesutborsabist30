@@ -711,7 +711,7 @@
 
         var stockUpdateTime = document.getElementById('stockUpdateTime');
         if (stockUpdateTime) {
-            stockUpdateTime.textContent = 'Son guncelleme: ' + (stockData.updated_at || '--') + ' | Otomatik: Hafta ici 10:01 | Manuel: Admin';
+            stockUpdateTime.textContent = 'Son guncelleme: ' + (stockData.updated_at || '--') + ' | Otomatik: Hafta ici 10:01 / 12:30 / 17:00 / 19:30 | Manuel: Admin';
         }
 
         // Setup tabs
