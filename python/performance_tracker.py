@@ -108,14 +108,12 @@ def _resolve_open_targets(open_targets, current_prices, as_of_dt, historical_dat
         hit_level = None  # Will be "H1", "H2", or "H3"
         hit_date_str = as_of_dt.strftime("%Y-%m-%d %H:%M")
 
-        # Stop-Loss kontrolü KULLANICI İSTEĞİYLE DEVRE DIŞI bırakıldı.
-        # Böylece işlemler banka uygulaması gibi sabırla günlerce/haftalarca açık bekleyecek
-        # ve hedefe ulaşana (veya süresi dolana) kadar kapanmayacak.
-        # if stop_loss is not None:
-        #     if direction == "buy" and current_price <= stop_loss:
-        #         stopped = True
-        #     elif direction == "sell" and current_price >= stop_loss:
-        #         stopped = True
+        # Stop-Loss kontrolü aktif: hedefe gitmeden önce stopa değerse işlem kapanır.
+        if stop_loss is not None:
+            if direction == "buy" and current_price <= stop_loss:
+                stopped = True
+            elif direction == "sell" and current_price >= stop_loss:
+                stopped = True
 
         # If not stopped, check targets (H1 first, then H2, H3)
         if not stopped:

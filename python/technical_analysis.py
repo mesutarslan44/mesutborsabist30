@@ -141,35 +141,144 @@ def calculate_support_resistance(df, lookback=60):
     }
 
 
+TARGET_PROFILE = {
+    "daily": {
+        "stop_atr_mult": 1.2,
+        "min_stop_pct": 0.012,
+        "max_stop_pct": 0.060,
+        "rr": (1.25, 2.0, 2.9),
+    },
+    "weekly": {
+        "stop_atr_mult": 1.5,
+        "min_stop_pct": 0.020,
+        "max_stop_pct": 0.120,
+        "rr": (1.45, 2.4, 3.5),
+    },
+    "monthly": {
+        "stop_atr_mult": 1.8,
+        "min_stop_pct": 0.030,
+        "max_stop_pct": 0.180,
+        "rr": (1.7, 2.9, 4.2),
+    },
+}
+
+
+def _clamp(value, low, high):
+    return max(low, min(high, value))
+
+
+def _collect_price_levels(indicators):
+    """Teknik seviyeleri tek listede toplar (pivot + fibonacci)."""
+    levels = []
+
+    sr = indicators.get("support_resistance") or {}
+    fib = indicators.get("fibonacci") or {}
+
+    for key in ["s3", "s2", "s1", "pivot", "r1", "r2", "r3"]:
+        val = sr.get(key)
+        if isinstance(val, (int, float)) and val > 0:
+            levels.append(float(val))
+
+    for val in fib.values():
+        if isinstance(val, (int, float)) and val > 0:
+            levels.append(float(val))
+
+    unique = sorted(set(round(x, 4) for x in levels))
+    return unique
+
+
+def _pick_stop_from_levels(price, levels, is_buy, atr_abs, fallback_stop):
+    """Stop seviyesini teknik seviyelere yaklaştırır."""
+    buffer = max(atr_abs * 0.20, price * 0.002)
+
+    if is_buy:
+        below = [lvl for lvl in levels if lvl < price]
+        if below:
+            candidate = max(below) - buffer
+            return min(price * 0.999, max(price * 0.05, candidate))
+    else:
+        above = [lvl for lvl in levels if lvl > price]
+        if above:
+            candidate = min(above) + buffer
+            return max(price * 1.001, candidate)
+
+    return fallback_stop
+
+
+def _fit_targets_to_levels(price, levels, is_buy, raw_targets):
+    """Hedefleri teknik seviyelere kilitler, yoksa ham RR hedeflerini korur."""
+    fitted = []
+
+    if is_buy:
+        candidates = [lvl for lvl in levels if lvl > price]
+        for raw in raw_targets:
+            suitable = [lvl for lvl in candidates if lvl >= raw and (not fitted or lvl > fitted[-1])]
+            fitted.append(min(suitable) if suitable else raw)
+    else:
+        candidates = [lvl for lvl in levels if lvl < price]
+        for raw in raw_targets:
+            suitable = [lvl for lvl in candidates if lvl <= raw and (not fitted or lvl < fitted[-1])]
+            fitted.append(max(suitable) if suitable else raw)
+
+    return fitted
+
+
 def calculate_targets(indicators, period_name="daily"):
-    """Hedef fiyat ve stop-loss hesaplar."""
+    """Hedef fiyat ve stop-loss hesaplar (teknik seviye + ATR + RR)."""
     price = indicators.get("price", 0)
-    if price == 0:
+    if not isinstance(price, (int, float)) or price <= 0:
         return {}
 
-    multipliers = TARGET_MULTIPLIERS.get(period_name, TARGET_MULTIPLIERS["daily"])
-    atr_pct = indicators.get("atr_pct", multipliers.get("stop_pct", 0.02))
-    
-    dynamic_stop = max(0.015, min(0.08, atr_pct))
-    dynamic_target = dynamic_stop * 1.5
-    
-    multipliers = {"target_pct": dynamic_target, "stop_pct": dynamic_stop}
-    
     score = indicators.get("_score", 0)
+    is_buy = score > 0
 
-    # Score'a göre hedef ayarla
-    if score > 0:
-        target_1 = price * (1 + multipliers["target_pct"] * 0.5)
-        target_2 = price * (1 + multipliers["target_pct"])
-        target_3 = price * (1 + multipliers["target_pct"] * 1.5)
-        stop_loss = price * (1 - multipliers["stop_pct"])
-        add_level = price * (1 - multipliers["stop_pct"] * 0.5)
+    profile = TARGET_PROFILE.get(period_name, TARGET_PROFILE["daily"])
+    atr_pct_raw = indicators.get("atr_pct", TARGET_MULTIPLIERS.get(period_name, {}).get("stop_pct", 0.02))
+    atr_pct = float(atr_pct_raw) if isinstance(atr_pct_raw, (int, float)) else 0.02
+    atr_pct = _clamp(atr_pct, 0.004, 0.25)
+    atr_abs = price * atr_pct
+
+    stop_pct = _clamp(
+        atr_pct * profile["stop_atr_mult"],
+        profile["min_stop_pct"],
+        profile["max_stop_pct"],
+    )
+
+    fallback_stop = price * (1 - stop_pct) if is_buy else price * (1 + stop_pct)
+    levels = _collect_price_levels(indicators)
+    stop_loss = _pick_stop_from_levels(price, levels, is_buy, atr_abs, fallback_stop)
+
+    if is_buy:
+        stop_loss = _clamp(stop_loss, price * (1 - profile["max_stop_pct"]), price * 0.999)
+        risk = max(price - stop_loss, price * profile["min_stop_pct"])
     else:
-        target_1 = price * (1 - multipliers["target_pct"] * 0.5)
-        target_2 = price * (1 - multipliers["target_pct"])
-        target_3 = price * (1 - multipliers["target_pct"] * 1.5)
-        stop_loss = price * (1 + multipliers["stop_pct"])
-        add_level = price * (1 + multipliers["stop_pct"] * 0.5)
+        stop_loss = _clamp(stop_loss, price * 1.001, price * (1 + profile["max_stop_pct"]))
+        risk = max(stop_loss - price, price * profile["min_stop_pct"])
+
+    rr1, rr2, rr3 = profile["rr"]
+    if is_buy:
+        raw_targets = [
+            price + risk * rr1,
+            price + risk * rr2,
+            price + risk * rr3,
+        ]
+    else:
+        raw_targets = [
+            price - risk * rr1,
+            price - risk * rr2,
+            price - risk * rr3,
+        ]
+
+    target_1, target_2, target_3 = _fit_targets_to_levels(price, levels, is_buy, raw_targets)
+
+    if is_buy:
+        target_2 = max(target_2, target_1 + risk * 0.55)
+        target_3 = max(target_3, target_2 + risk * 0.55)
+        add_level = price - risk * 0.40
+    else:
+        target_2 = min(target_2, target_1 - risk * 0.55)
+        target_3 = min(target_3, target_2 - risk * 0.55)
+        add_level = price + risk * 0.40
 
     return {
         "target_1": round(target_1, 2),
