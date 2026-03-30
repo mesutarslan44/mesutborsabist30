@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-30 18:10",
+  "updated_at": "2026-03-30 20:28",
   "update_frequency": "Hafta ici her gun 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
   "total_assets": 4,
   "signal_counts": {
@@ -16,12 +16,12 @@
       "ticker": "SI=F",
       "name": "Gümüş (Ons)",
       "sector": "Emtia",
-      "price": 71.145,
-      "change_pct": 2.3007,
-      "rsi": 41.4871,
-      "stoch_k": 36.4444,
+      "price": 70.59,
+      "change_pct": 1.5026,
+      "rsi": 40.6325,
+      "stoch_k": 34.4328,
       "adx": 40.597,
-      "volume_ratio": 14.8,
+      "volume_ratio": 15.4,
       "signal": "BEKLE",
       "signal_en": "HOLD",
       "score": -5.5,
@@ -29,10 +29,10 @@
       "color": "#ffd740",
       "targets": {
         "target_1": 61.09,
-        "target_2": 47.72,
-        "target_3": 24.3,
+        "target_2": 47.35,
+        "target_3": 24.12,
         "stop_loss": 74.25,
-        "add_level": 72.39
+        "add_level": 72.05
       },
       "range_3m": {
         "min": 61.09,
@@ -42,99 +42,31 @@
         "min": 45.38,
         "max": 121.3
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺168.14\n  • Direnç 2: ₺144.72\n  • Direnç 1: ₺107.93\n  • Pivot: ₺84.51\n  • D",
-      "price_try": 101.71,
-      "tl_info": "Gram TL: ₺101.71"
-    },
-    {
-      "ticker": "GC=F",
-      "name": "Altın (Ons)",
-      "sector": "Emtia",
-      "price": 4571.1001,
-      "change_pct": 1.7609,
-      "rsi": 41.1322,
-      "stoch_k": 43.127,
-      "adx": 50.1637,
-      "volume_ratio": 17.5,
-      "signal": "HAFİF SAT",
-      "signal_en": "WEAK_SELL",
-      "score": -10.5,
-      "confidence": 33.7,
-      "color": "#ff8a80",
-      "targets": {
-        "target_1": 4418.68,
-        "target_2": 4100.8,
-        "target_3": 3919.2,
-        "stop_loss": 4686.5,
-        "add_level": 4617.26
-      },
-      "range_3m": {
-        "min": 4100.8,
-        "max": 5586.2
-      },
-      "range_6m": {
-        "min": 3754.8,
-        "max": 5586.2
-      },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺6890.00\n  • Direnç 2: ₺6238.10\n  • Direnç 1: ₺5404.60\n  • Pivot: ₺4752.70\n",
-      "price_try": 6534.75,
-      "tl_info": "Gram TL: ₺6,534.75"
-    },
-    {
-      "ticker": "ETH-USD",
-      "name": "Ethereum",
-      "sector": "Kripto",
-      "price": 2069.4971,
-      "change_pct": 4.3851,
-      "rsi": 48.6005,
-      "stoch_k": 29.8143,
-      "adx": 27.5177,
-      "volume_ratio": 0.9,
-      "signal": "BEKLE",
-      "signal_en": "HOLD",
-      "score": -12.2,
-      "confidence": 39.7,
-      "color": "#ffd740",
-      "targets": {
-        "target_1": 1748.63,
-        "target_2": 1604.11,
-        "target_3": 1138.73,
-        "stop_loss": 2167.67,
-        "add_level": 2108.77
-      },
-      "range_3m": {
-        "min": 1748.63,
-        "max": 3040.72
-      },
-      "range_6m": {
-        "min": 1748.63,
-        "max": 3446.62
-      },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺3754.69\n  • Direnç 2: ₺3289.30\n  • Direnç 1: ₺2679.40\n  • Pivot: ₺2214.01\n",
-      "price_try": 92019.98,
-      "tl_info": "₺92,020"
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺167.77\n  • Direnç 2: ₺144.54\n  • Direnç 1: ₺107.56\n  • Pivot: ₺84.33\n  • D",
+      "price_try": 100.9,
+      "tl_info": "Gram TL: ₺100.90"
     },
     {
       "ticker": "BTC-USD",
       "name": "Bitcoin",
       "sector": "Kripto",
-      "price": 67601.7188,
-      "change_pct": 2.4969,
-      "rsi": 45.1988,
-      "stoch_k": 23.873,
+      "price": 66683.1875,
+      "change_pct": 1.1042,
+      "rsi": 42.4775,
+      "stoch_k": 15.5353,
       "adx": 25.5948,
-      "volume_ratio": 0.9,
-      "signal": "HAFİF SAT",
-      "signal_en": "WEAK_SELL",
-      "score": -19.4,
-      "confidence": 54.2,
-      "color": "#ff8a80",
+      "volume_ratio": 1.0,
+      "signal": "BEKLE",
+      "signal_en": "HOLD",
+      "score": -7.2,
+      "confidence": 15.0,
+      "color": "#ffd740",
       "targets": {
         "target_1": 60074.2,
-        "target_2": 56916.56,
-        "target_3": 46231.4,
-        "stop_loss": 69714.29,
-        "add_level": 68446.75
+        "target_2": 56304.21,
+        "target_3": 45925.22,
+        "stop_loss": 69710.61,
+        "add_level": 67894.16
       },
       "range_3m": {
         "min": 60074.2,
@@ -144,9 +76,77 @@
         "min": 60074.2,
         "max": 97860.6
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺105972.48\n  • Direnç 2: ₺95287.32\n  • Direnç 1: ₺81444.52\n  • Pivot: ₺7075",
-      "price_try": 3005903.73,
-      "tl_info": "₺3,005,904"
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺105360.13\n  • Direnç 2: ₺94981.15\n  • Direnç 1: ₺80832.17\n  • Pivot: ₺7045",
+      "price_try": 2964727.84,
+      "tl_info": "₺2,964,728"
+    },
+    {
+      "ticker": "GC=F",
+      "name": "Altın (Ons)",
+      "sector": "Emtia",
+      "price": 4555.5,
+      "change_pct": 1.4136,
+      "rsi": 40.4471,
+      "stoch_k": 41.6965,
+      "adx": 50.1637,
+      "volume_ratio": 17.8,
+      "signal": "HAFİF SAT",
+      "signal_en": "WEAK_SELL",
+      "score": -10.5,
+      "confidence": 33.7,
+      "color": "#ff8a80",
+      "targets": {
+        "target_1": 4100.8,
+        "target_2": 3908.8,
+        "target_3": 3262.1,
+        "stop_loss": 4686.44,
+        "add_level": 4607.88
+      },
+      "range_3m": {
+        "min": 4100.8,
+        "max": 5586.2
+      },
+      "range_6m": {
+        "min": 3754.8,
+        "max": 5586.2
+      },
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺6879.60\n  • Direnç 2: ₺6232.90\n  • Direnç 1: ₺5394.20\n  • Pivot: ₺4747.50\n",
+      "price_try": 6511.72,
+      "tl_info": "Gram TL: ₺6,511.72"
+    },
+    {
+      "ticker": "ETH-USD",
+      "name": "Ethereum",
+      "sector": "Kripto",
+      "price": 2035.1274,
+      "change_pct": 2.6515,
+      "rsi": 46.1104,
+      "stoch_k": 21.93,
+      "adx": 27.5111,
+      "volume_ratio": 0.9,
+      "signal": "HAFİF SAT",
+      "signal_en": "WEAK_SELL",
+      "score": -16.5,
+      "confidence": 46.1,
+      "color": "#ff8a80",
+      "targets": {
+        "target_1": 1748.63,
+        "target_2": 1581.2,
+        "target_3": 1127.27,
+        "stop_loss": 2157.24,
+        "add_level": 2083.97
+      },
+      "range_3m": {
+        "min": 1748.63,
+        "max": 3040.72
+      },
+      "range_6m": {
+        "min": 1748.63,
+        "max": 3446.62
+      },
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺3731.77\n  • Direnç 2: ₺3277.84\n  • Direnç 1: ₺2656.49\n  • Pivot: ₺2202.56\n",
+      "price_try": 90481.56,
+      "tl_info": "₺90,482"
     }
   ]
 }
