@@ -1,37 +1,37 @@
 {
-  "generated_at": "2026-03-27 20:26",
+  "generated_at": "2026-03-30 10:29",
   "overview": {
-    "total": 10,
+    "total": 11,
     "hits": 0,
-    "stopped": 0,
+    "stopped": 1,
     "expired": 10,
     "hit_rate": 0.0,
-    "stop_rate": 0.0,
+    "stop_rate": 9.1,
     "hit_rate_ci95": {
       "lower": 0.0,
-      "upper": 27.8
+      "upper": 25.9
     },
     "sample_sufficiency": {
       "min_recommended": 30,
       "is_sufficient": false,
-      "remaining": 20
+      "remaining": 19
     }
   },
   "daily": {
-    "total": 7,
+    "total": 8,
     "hits": 0,
-    "stopped": 0,
+    "stopped": 1,
     "expired": 7,
     "hit_rate": 0.0,
     "avg_days_to_hit": 0.0,
     "hit_rate_ci95": {
       "lower": 0.0,
-      "upper": 35.4
+      "upper": 32.4
     },
     "sample_sufficiency": {
       "min_recommended": 20,
       "is_sufficient": false,
-      "remaining": 13
+      "remaining": 12
     }
   },
   "weekly": {
@@ -53,23 +53,23 @@
   },
   "rolling": {
     "7d": {
-      "total": 10,
+      "total": 11,
       "hits": 0,
-      "stopped": 0,
+      "stopped": 1,
       "expired": 10,
       "hit_rate": 0.0
     },
     "30d": {
-      "total": 10,
+      "total": 11,
       "hits": 0,
-      "stopped": 0,
+      "stopped": 1,
       "expired": 10,
       "hit_rate": 0.0
     },
     "90d": {
-      "total": 10,
+      "total": 11,
       "hits": 0,
-      "stopped": 0,
+      "stopped": 1,
       "expired": 10,
       "hit_rate": 0.0
     },
@@ -79,17 +79,17 @@
     }
   },
   "status_summary": {
-    "open": 4,
-    "resolved": 10,
+    "open": 3,
+    "resolved": 11,
     "hits": 0,
-    "stopped": 0,
+    "stopped": 1,
     "expired": 10
   },
   "direction_stats": {
     "buy": {
-      "total": 5,
+      "total": 6,
       "hits": 0,
-      "stopped": 0,
+      "stopped": 1,
       "hit_rate": 0.0
     },
     "sell": {
@@ -110,10 +110,10 @@
   },
   "profit_stats": {
     "avg_win_pct": 0.0,
-    "avg_loss_pct": 0.0,
-    "total_pct": 0,
+    "avg_loss_pct": -1.0,
+    "total_pct": -1.0,
     "win_count": 0,
-    "loss_count": 0
+    "loss_count": 1
   },
   "consistency_score": 0.0,
   "walk_forward": {
@@ -128,13 +128,13 @@
       "min_train": 20,
       "test_size": 10,
       "min_records_needed": 30,
-      "current_records": 10,
-      "remaining": 20
+      "current_records": 11,
+      "remaining": 19
     }
   },
   "reliability": {
     "level": "low",
-    "ci_width": 27.8,
+    "ci_width": 25.9,
     "sample_sufficient": false,
     "walk_forward_available": false,
     "walk_forward_gap": 0.0,
@@ -171,22 +171,6 @@
     }
   },
   "open_targets": [
-    {
-      "ticker": "SISE",
-      "period": "daily",
-      "direction": "buy",
-      "opened_at": "2026-03-27 18:53",
-      "start_price": 44.88,
-      "target_price": 45.99,
-      "target_2": 47.87,
-      "target_3": 50.9,
-      "stop_loss": 44.43,
-      "signal": "AL",
-      "confidence": 78.4,
-      "score": 24.8,
-      "regime_key": "trend_up",
-      "rr_ratio": 2.4667
-    },
     {
       "ticker": "EREGL",
       "period": "weekly",
@@ -237,6 +221,26 @@
     }
   ],
   "recent_resolved": [
+    {
+      "ticker": "SISE",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-03-27 18:53",
+      "closed_at": "2026-03-30 09:30",
+      "start_price": 44.88,
+      "target_price": 45.99,
+      "target_2": 47.87,
+      "target_3": 50.9,
+      "stop_loss": 44.43,
+      "close_price": 44.43,
+      "profit_pct": -1.0,
+      "days_to_result": 3,
+      "hit_level": null,
+      "status": "STOPPED",
+      "signal": "AL",
+      "confidence": 78.4,
+      "score": 24.8
+    },
     {
       "ticker": "SISE",
       "period": "daily",
