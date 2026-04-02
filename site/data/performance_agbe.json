@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-02 13:29",
+  "generated_at": "2026-04-02 18:02",
   "overview": {
     "total": 1,
     "hits": 0,
@@ -79,7 +79,7 @@
     }
   },
   "status_summary": {
-    "open": 1,
+    "open": 0,
     "resolved": 1,
     "hits": 0,
     "stopped": 0,
@@ -171,24 +171,7 @@
       ]
     }
   },
-  "open_targets": [
-    {
-      "ticker": "GC=F",
-      "period": "daily",
-      "direction": "sell",
-      "opened_at": "2026-04-02 13:29",
-      "start_price": 4639.5,
-      "target_price": 4418.68,
-      "target_2": 4100.8,
-      "target_3": 3964.8,
-      "stop_loss": 4686.78,
-      "signal": "SAT",
-      "confidence": 80.5,
-      "score": -29.0,
-      "regime_key": "trend_down",
-      "rr_ratio": 4.6705
-    }
-  ],
+  "open_targets": [],
   "recent_resolved": [
     {
       "ticker": "SI=F",
