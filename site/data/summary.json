@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-04-02 20:14",
+  "updated_at": "2026-04-03 11:05",
   "update_frequency": "Hafta ici her gun 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
   "total_stocks": 31,
   "signal_counts": {
     "STRONG_BUY": 0,
-    "BUY": 2,
-    "WEAK_BUY": 5,
-    "HOLD": 20,
-    "WEAK_SELL": 3,
+    "BUY": 1,
+    "WEAK_BUY": 7,
+    "HOLD": 21,
+    "WEAK_SELL": 1,
     "SELL": 1,
     "STRONG_SELL": 0
   },
@@ -16,23 +16,23 @@
       "ticker": "PETKM",
       "name": "Petkim",
       "sector": "Kimya",
-      "price": 20.0,
-      "change_pct": -1.6716,
-      "rsi": 55.0203,
-      "stoch_k": 34.8315,
-      "adx": 52.9431,
-      "volume_ratio": 0.9,
+      "price": 20.1,
+      "change_pct": 0.5,
+      "rsi": 55.696,
+      "stoch_k": 37.6405,
+      "adx": 55.4771,
+      "volume_ratio": 0.1,
       "signal": "AL",
       "signal_en": "BUY",
-      "score": 31.1,
-      "confidence": 100,
+      "score": 29.6,
+      "confidence": 95.5,
       "color": "#00c853",
       "targets": {
-        "target_1": 20.93,
+        "target_1": 20.95,
         "target_2": 22.32,
-        "target_3": 22.74,
-        "stop_loss": 19.5,
-        "add_level": 19.8
+        "target_3": 22.78,
+        "stop_loss": 19.56,
+        "add_level": 19.88
       },
       "range_3m": {
         "min": 16.41,
@@ -48,31 +48,63 @@
       "ticker": "BIMAS",
       "name": "BİM",
       "sector": "Perakende",
-      "price": 703.5,
-      "change_pct": 2.1045,
-      "rsi": 57.329,
-      "stoch_k": 81.4516,
-      "adx": 11.2684,
-      "volume_ratio": 1.1,
-      "signal": "AL",
-      "signal_en": "BUY",
-      "score": 25.4,
-      "confidence": 59.6,
-      "color": "#00c853",
+      "price": 696.0,
+      "change_pct": -1.0661,
+      "rsi": 54.7793,
+      "stoch_k": 74.7826,
+      "adx": 12.0527,
+      "volume_ratio": 0.2,
+      "signal": "HAFİF AL",
+      "signal_en": "WEAK_BUY",
+      "score": 22.6,
+      "confidence": 89.0,
+      "color": "#69f0ae",
       "targets": {
-        "target_1": 760.33,
-        "target_2": 817.17,
-        "target_3": 909.83,
-        "stop_loss": 686.41,
-        "add_level": 696.66
+        "target_1": 724.5,
+        "target_2": 749.83,
+        "target_3": 803.67,
+        "stop_loss": 690.33,
+        "add_level": 692.66
       },
       "range_3m": {
-        "min": 543.0,
+        "min": 551.0,
         "max": 724.5
       },
       "range_6m": {
         "min": 507.48,
         "max": 724.5
+      },
+      "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: HAFİF AL — Yükseliş trendi sürüyor ama momentum azalıyor. | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim aktif. Uz"
+    },
+    {
+      "ticker": "ODAS",
+      "name": "Odaş Elektrik",
+      "sector": "Enerji",
+      "price": 6.19,
+      "change_pct": 1.1438,
+      "rsi": 57.8212,
+      "stoch_k": 82.6667,
+      "adx": 24.3633,
+      "volume_ratio": 0.2,
+      "signal": "HAFİF AL",
+      "signal_en": "WEAK_BUY",
+      "score": 22.0,
+      "confidence": 44.7,
+      "color": "#69f0ae",
+      "targets": {
+        "target_1": 6.57,
+        "target_2": 6.83,
+        "target_3": 7.46,
+        "stop_loss": 5.97,
+        "add_level": 6.1
+      },
+      "range_3m": {
+        "min": 5.04,
+        "max": 6.57
+      },
+      "range_6m": {
+        "min": 4.97,
+        "max": 6.57
       },
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: GÜÇLÜ AL — MACD yukarı kesişim (Golden Cross). Yükseliş başlangıcı! | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim"
     },
@@ -80,26 +112,26 @@
       "ticker": "KCHOL",
       "name": "Koç Holding",
       "sector": "Holding",
-      "price": 193.1,
-      "change_pct": -1.379,
-      "rsi": 53.2284,
-      "stoch_k": 63.8686,
-      "adx": 32.289,
-      "volume_ratio": 0.6,
+      "price": 193.6,
+      "change_pct": 0.2589,
+      "rsi": 53.8847,
+      "stoch_k": 66.2148,
+      "adx": 29.8011,
+      "volume_ratio": 0.1,
       "signal": "HAFİF AL",
       "signal_en": "WEAK_BUY",
       "score": 21.4,
       "confidence": 72.8,
       "color": "#69f0ae",
       "targets": {
-        "target_1": 196.89,
-        "target_2": 202.54,
-        "target_3": 209.54,
+        "target_1": 202.54,
+        "target_2": 209.54,
+        "target_3": 218.65,
         "stop_loss": 190.47,
-        "add_level": 192.05
+        "add_level": 192.35
       },
       "range_3m": {
-        "min": 168.21,
+        "min": 172.74,
         "max": 220.84
       },
       "range_6m": {
@@ -109,122 +141,154 @@
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: AL — Güçlü yükseliş momentumu devam ediyor. | HAFİF AL — Genel trend yukarı yönlü. | AL — Güçlü yükseliş trendi teyit edildi. Trendle gidin.. ⚠️ "
     },
     {
-      "ticker": "ASTOR",
-      "name": "Astor Enerji",
+      "ticker": "ENKAI",
+      "name": "Enka İnşaat",
+      "sector": "İnşaat",
+      "price": 94.1,
+      "change_pct": -0.265,
+      "rsi": 49.7056,
+      "stoch_k": 39.4366,
+      "adx": 15.8841,
+      "volume_ratio": 0.1,
+      "signal": "HAFİF AL",
+      "signal_en": "WEAK_BUY",
+      "score": 15.3,
+      "confidence": 61.2,
+      "color": "#69f0ae",
+      "targets": {
+        "target_1": 98.6,
+        "target_2": 104.7,
+        "target_3": 106.25,
+        "stop_loss": 92.17,
+        "add_level": 93.33
+      },
+      "range_3m": {
+        "min": 78.85,
+        "max": 104.7
+      },
+      "range_6m": {
+        "min": 66.25,
+        "max": 104.7
+      },
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺132.10\n  • Direnç 2: ₺118.40\n  • Direnç 1: ₺106.25\n  • Pivot: ₺92.55\n  • D"
+    },
+    {
+      "ticker": "MGROS",
+      "name": "Migros",
+      "sector": "Perakende",
+      "price": 610.0,
+      "change_pct": -1.6922,
+      "rsi": 49.5263,
+      "stoch_k": 76.1905,
+      "adx": 22.7042,
+      "volume_ratio": 0.2,
+      "signal": "HAFİF AL",
+      "signal_en": "WEAK_BUY",
+      "score": 14.0,
+      "confidence": 44.3,
+      "color": "#69f0ae",
+      "targets": {
+        "target_1": 644.83,
+        "target_2": 665.34,
+        "target_3": 686.33,
+        "stop_loss": 585.63,
+        "add_level": 600.25
+      },
+      "range_3m": {
+        "min": 549.5,
+        "max": 698.5
+      },
+      "range_6m": {
+        "min": 418.19,
+        "max": 698.5
+      },
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺826.83\n  • Direnç 2: ₺762.67\n  • Direnç 1: ₺686.33\n  • Pivot: ₺622.17\n  • "
+    },
+    {
+      "ticker": "TUPRS",
+      "name": "Tüpraş",
       "sector": "Enerji",
-      "price": 207.8,
-      "change_pct": 5.3218,
-      "rsi": 62.2607,
-      "stoch_k": 81.3665,
-      "adx": 27.2371,
-      "volume_ratio": 1.4,
+      "price": 257.75,
+      "change_pct": 0.6836,
+      "rsi": 61.717,
+      "stoch_k": 74.8031,
+      "adx": 39.4844,
+      "volume_ratio": 0.1,
       "signal": "HAFİF AL",
       "signal_en": "WEAK_BUY",
-      "score": 18.3,
-      "confidence": 31.7,
+      "score": 12.5,
+      "confidence": 31.0,
       "color": "#69f0ae",
       "targets": {
-        "target_1": 242.7,
-        "target_2": 277.6,
-        "target_3": 341.4,
-        "stop_loss": 195.33,
-        "add_level": 202.81
+        "target_1": 287.04,
+        "target_2": 316.33,
+        "target_3": 366.34,
+        "stop_loss": 246.58,
+        "add_level": 253.28
       },
       "range_3m": {
-        "min": 115.1,
-        "max": 213.8
+        "min": 184.15,
+        "max": 266.33
       },
       "range_6m": {
-        "min": 88.2,
-        "max": 213.8
+        "min": 164.07,
+        "max": 266.33
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺341.40\n  • Direnç 2: ₺277.60\n  • Direnç 1: ₺242.70\n  • Pivot: ₺178.90\n  • "
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺366.34\n  • Direnç 2: ₺316.33\n  • Direnç 1: ₺287.04\n  • Pivot: ₺237.04\n  • "
     },
     {
-      "ticker": "SASA",
-      "name": "SASA Polyester",
-      "sector": "Kimya",
-      "price": 2.44,
-      "change_pct": 0.8264,
-      "rsi": 53.3311,
-      "stoch_k": 45.4546,
-      "adx": 24.4821,
-      "volume_ratio": 5.3,
-      "signal": "HAFİF AL",
-      "signal_en": "WEAK_BUY",
-      "score": 13.8,
-      "confidence": 38.5,
-      "color": "#69f0ae",
+      "ticker": "AKBNK",
+      "name": "Akbank",
+      "sector": "Bankacılık",
+      "price": 69.2,
+      "change_pct": -0.0722,
+      "rsi": 41.7784,
+      "stoch_k": 42.5529,
+      "adx": 39.1462,
+      "volume_ratio": 0.3,
+      "signal": "BEKLE",
+      "signal_en": "HOLD",
+      "score": 10.1,
+      "confidence": 29.0,
+      "color": "#ffd740",
       "targets": {
-        "target_1": 2.54,
-        "target_2": 2.63,
-        "target_3": 2.78,
-        "stop_loss": 2.37,
-        "add_level": 2.41
+        "target_1": 74.81,
+        "target_2": 77.82,
+        "target_3": 84.57,
+        "stop_loss": 65.05,
+        "add_level": 67.54
       },
       "range_3m": {
-        "min": 2.13,
-        "max": 2.95
+        "min": 65.05,
+        "max": 90.6
       },
       "range_6m": {
-        "min": 2.13,
-        "max": 3.36
+        "min": 51.4,
+        "max": 90.6
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺3.44\n  • Direnç 2: ₺3.11\n  • Direnç 1: ₺2.78\n  • Pivot: ₺2.45\n  • Destek 1"
-    },
-    {
-      "ticker": "SISE",
-      "name": "Şişecam",
-      "sector": "Cam",
-      "price": 44.68,
-      "change_pct": 0.1345,
-      "rsi": 51.3735,
-      "stoch_k": 40.0853,
-      "adx": 36.2582,
-      "volume_ratio": 0.7,
-      "signal": "HAFİF AL",
-      "signal_en": "WEAK_BUY",
-      "score": 13.2,
-      "confidence": 64.2,
-      "color": "#69f0ae",
-      "targets": {
-        "target_1": 45.99,
-        "target_2": 47.87,
-        "target_3": 50.9,
-        "stop_loss": 44.36,
-        "add_level": 44.47
-      },
-      "range_3m": {
-        "min": 38.04,
-        "max": 50.9
-      },
-      "range_6m": {
-        "min": 32.44,
-        "max": 50.9
-      },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺63.90\n  • Direnç 2: ₺57.40\n  • Direnç 1: ₺51.04\n  • Pivot: ₺44.54\n  • Dest"
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺110.39\n  • Direnç 2: ₺100.50\n  • Direnç 1: ₺84.85\n  • Pivot: ₺74.95\n  • De"
     },
     {
       "ticker": "THYAO",
       "name": "Türk Hava Yolları",
       "sector": "Havacılık",
-      "price": 299.75,
-      "change_pct": 0.5872,
-      "rsi": 52.9125,
-      "stoch_k": 71.6814,
-      "adx": 18.6584,
-      "volume_ratio": 1.2,
-      "signal": "HAFİF AL",
-      "signal_en": "WEAK_BUY",
-      "score": 10.8,
-      "confidence": 37.5,
-      "color": "#69f0ae",
+      "price": 297.75,
+      "change_pct": -0.6672,
+      "rsi": 51.0092,
+      "stoch_k": 64.6018,
+      "adx": 16.5472,
+      "volume_ratio": 0.1,
+      "signal": "BEKLE",
+      "signal_en": "HOLD",
+      "score": 9.9,
+      "confidence": 34.6,
+      "color": "#ffd740",
       "targets": {
-        "target_1": 305.25,
+        "target_1": 304.58,
         "target_2": 308.0,
         "target_3": 318.5,
-        "stop_loss": 296.3,
-        "add_level": 298.31
+        "stop_loss": 296.31,
+        "add_level": 296.32
       },
       "range_3m": {
         "min": 263.5,
@@ -234,349 +298,61 @@
         "min": 262.75,
         "max": 352.5
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺436.00\n  • Direnç 2: ₺394.25\n  • Direnç 1: ₺347.00\n  • Pivot: ₺305.25\n  • "
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺434.67\n  • Direnç 2: ₺393.58\n  • Direnç 1: ₺345.67\n  • Pivot: ₺304.58\n  • "
     },
     {
-      "ticker": "ENJSA",
-      "name": "Enerjisa",
+      "ticker": "ASTOR",
+      "name": "Astor Enerji",
       "sector": "Enerji",
-      "price": 119.1,
-      "change_pct": 0.2525,
-      "rsi": 57.4009,
-      "stoch_k": 55.6391,
-      "adx": 25.4153,
-      "volume_ratio": 1.3,
+      "price": 208.3,
+      "change_pct": 0.2406,
+      "rsi": 62.5194,
+      "stoch_k": 82.9193,
+      "adx": 28.0409,
+      "volume_ratio": 0.2,
       "signal": "BEKLE",
       "signal_en": "HOLD",
-      "score": 10.4,
-      "confidence": 33.5,
+      "score": 9.8,
+      "confidence": 20.5,
       "color": "#ffd740",
       "targets": {
-        "target_1": 125.0,
-        "target_2": 132.25,
-        "target_3": 145.4,
-        "stop_loss": 116.6,
-        "add_level": 118.1
+        "target_1": 240.2,
+        "target_2": 272.1,
+        "target_3": 330.4,
+        "stop_loss": 195.8,
+        "add_level": 203.3
       },
       "range_3m": {
-        "min": 91.25,
-        "max": 125.0
+        "min": 115.1,
+        "max": 213.8
       },
       "range_6m": {
-        "min": 72.45,
-        "max": 125.0
+        "min": 88.2,
+        "max": 213.8
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺165.80\n  • Direnç 2: ₺145.40\n  • Direnç 1: ₺132.25\n  • Pivot: ₺111.85\n  • "
-    },
-    {
-      "ticker": "SAHOL",
-      "name": "Sabancı Holding",
-      "sector": "Holding",
-      "price": 90.1,
-      "change_pct": -0.497,
-      "rsi": 43.7073,
-      "stoch_k": 45.6721,
-      "adx": 36.5072,
-      "volume_ratio": 0.7,
-      "signal": "BEKLE",
-      "signal_en": "HOLD",
-      "score": 10.1,
-      "confidence": 29.0,
-      "color": "#ffd740",
-      "targets": {
-        "target_1": 98.96,
-        "target_2": 102.32,
-        "target_3": 106.47,
-        "stop_loss": 84.69,
-        "add_level": 87.94
-      },
-      "range_3m": {
-        "min": 84.74,
-        "max": 113.18
-      },
-      "range_6m": {
-        "min": 72.73,
-        "max": 113.18
-      },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺135.72\n  • Direnç 2: ₺124.45\n  • Direnç 1: ₺107.27\n  • Pivot: ₺96.01\n  • D"
-    },
-    {
-      "ticker": "TCELL",
-      "name": "Turkcell",
-      "sector": "Telekomünikasyon",
-      "price": 106.9,
-      "change_pct": -0.2798,
-      "rsi": 43.6443,
-      "stoch_k": 42.7184,
-      "adx": 32.489,
-      "volume_ratio": 0.6,
-      "signal": "BEKLE",
-      "signal_en": "HOLD",
-      "score": 10.1,
-      "confidence": 29.0,
-      "color": "#ffd740",
-      "targets": {
-        "target_1": 111.18,
-        "target_2": 117.17,
-        "target_3": 121.92,
-        "stop_loss": 103.59,
-        "add_level": 105.58
-      },
-      "range_3m": {
-        "min": 95.55,
-        "max": 129.6
-      },
-      "range_6m": {
-        "min": 88.34,
-        "max": 129.6
-      },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺157.87\n  • Direnç 2: ₺143.73\n  • Direnç 1: ₺125.32\n  • Pivot: ₺111.18\n  • "
-    },
-    {
-      "ticker": "EKGYO",
-      "name": "Emlak Konut GYO",
-      "sector": "GYO",
-      "price": 19.6,
-      "change_pct": -0.6589,
-      "rsi": 38.0138,
-      "stoch_k": 34.5794,
-      "adx": 53.2274,
-      "volume_ratio": 0.9,
-      "signal": "BEKLE",
-      "signal_en": "HOLD",
-      "score": 9.6,
-      "confidence": 21.6,
-      "color": "#ffd740",
-      "targets": {
-        "target_1": 20.63,
-        "target_2": 21.86,
-        "target_3": 22.31,
-        "stop_loss": 18.78,
-        "add_level": 19.27
-      },
-      "range_3m": {
-        "min": 18.86,
-        "max": 27.12
-      },
-      "range_6m": {
-        "min": 17.62,
-        "max": 27.12
-      },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺33.12\n  • Direnç 2: ₺30.12\n  • Direnç 1: ₺24.86\n  • Pivot: ₺21.86\n  • Dest"
-    },
-    {
-      "ticker": "TUPRS",
-      "name": "Tüpraş",
-      "sector": "Enerji",
-      "price": 256.0,
-      "change_pct": 0.8867,
-      "rsi": 60.6908,
-      "stoch_k": 69.2913,
-      "adx": 42.7028,
-      "volume_ratio": 0.8,
-      "signal": "BEKLE",
-      "signal_en": "HOLD",
-      "score": 7.7,
-      "confidence": 21.7,
-      "color": "#ffd740",
-      "targets": {
-        "target_1": 285.88,
-        "target_2": 315.75,
-        "target_3": 365.17,
-        "stop_loss": 246.59,
-        "add_level": 252.23
-      },
-      "range_3m": {
-        "min": 178.87,
-        "max": 266.33
-      },
-      "range_6m": {
-        "min": 164.07,
-        "max": 266.33
-      },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺365.17\n  • Direnç 2: ₺315.75\n  • Direnç 1: ₺285.88\n  • Pivot: ₺236.45\n  • "
-    },
-    {
-      "ticker": "MAVI",
-      "name": "Mavi Giyim",
-      "sector": "Perakende",
-      "price": 42.02,
-      "change_pct": -1.8224,
-      "rsi": 44.3502,
-      "stoch_k": 20.4819,
-      "adx": 27.2984,
-      "volume_ratio": 0.9,
-      "signal": "BEKLE",
-      "signal_en": "HOLD",
-      "score": 6.0,
-      "confidence": 20.3,
-      "color": "#ffd740",
-      "targets": {
-        "target_1": 43.78,
-        "target_2": 44.66,
-        "target_3": 46.09,
-        "stop_loss": 41.0,
-        "add_level": 41.61
-      },
-      "range_3m": {
-        "min": 38.56,
-        "max": 50.75
-      },
-      "range_6m": {
-        "min": 36.7,
-        "max": 50.75
-      },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺61.18\n  • Direnç 2: ₺55.97\n  • Direnç 1: ₺48.99\n  • Pivot: ₺43.78\n  • Dest"
-    },
-    {
-      "ticker": "ASELS",
-      "name": "Aselsan",
-      "sector": "Savunma",
-      "price": 336.5,
-      "change_pct": 5.0742,
-      "rsi": 54.503,
-      "stoch_k": 49.1525,
-      "adx": 14.4599,
-      "volume_ratio": 0.9,
-      "signal": "BEKLE",
-      "signal_en": "HOLD",
-      "score": 5.4,
-      "confidence": 14.9,
-      "color": "#ffd740",
-      "targets": {
-        "target_1": 359.0,
-        "target_2": 376.92,
-        "target_3": 417.33,
-        "stop_loss": 334.34,
-        "add_level": 334.88
-      },
-      "range_3m": {
-        "min": 233.0,
-        "max": 359.0
-      },
-      "range_6m": {
-        "min": 171.28,
-        "max": 359.0
-      },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺475.67\n  • Direnç 2: ₺417.33\n  • Direnç 1: ₺376.92\n  • Pivot: ₺318.58\n  • "
-    },
-    {
-      "ticker": "GARAN",
-      "name": "Garanti BBVA",
-      "sector": "Bankacılık",
-      "price": 131.3,
-      "change_pct": 1.941,
-      "rsi": 41.599,
-      "stoch_k": 40.9938,
-      "adx": 41.8462,
-      "volume_ratio": 1.0,
-      "signal": "BEKLE",
-      "signal_en": "HOLD",
-      "score": 4.8,
-      "confidence": 12.1,
-      "color": "#ffd740",
-      "targets": {
-        "target_1": 141.89,
-        "target_2": 147.2,
-        "target_3": 152.51,
-        "stop_loss": 124.17,
-        "add_level": 128.45
-      },
-      "range_3m": {
-        "min": 124.7,
-        "max": 169.7
-      },
-      "range_6m": {
-        "min": 115.4,
-        "max": 169.7
-      },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺204.10\n  • Direnç 2: ₺186.90\n  • Direnç 1: ₺159.10\n  • Pivot: ₺141.90\n  • "
-    },
-    {
-      "ticker": "ISCTR",
-      "name": "İş Bankası C",
-      "sector": "Bankacılık",
-      "price": 13.18,
-      "change_pct": 1.1512,
-      "rsi": 42.3857,
-      "stoch_k": 51.104,
-      "adx": 43.8987,
-      "volume_ratio": 1.0,
-      "signal": "BEKLE",
-      "signal_en": "HOLD",
-      "score": 4.8,
-      "confidence": 12.1,
-      "color": "#ffd740",
-      "targets": {
-        "target_1": 14.32,
-        "target_2": 14.92,
-        "target_3": 15.52,
-        "stop_loss": 12.39,
-        "add_level": 12.86
-      },
-      "range_3m": {
-        "min": 12.38,
-        "max": 17.46
-      },
-      "range_6m": {
-        "min": 10.65,
-        "max": 17.46
-      },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺21.39\n  • Direnç 2: ₺19.42\n  • Direnç 1: ₺16.30\n  • Pivot: ₺14.34\n  • Dest"
-    },
-    {
-      "ticker": "YKBNK",
-      "name": "Yapı Kredi",
-      "sector": "Bankacılık",
-      "price": 34.62,
-      "change_pct": 1.0508,
-      "rsi": 44.3301,
-      "stoch_k": 56.1905,
-      "adx": 47.6194,
-      "volume_ratio": 0.9,
-      "signal": "BEKLE",
-      "signal_en": "HOLD",
-      "score": 4.8,
-      "confidence": 12.1,
-      "color": "#ffd740",
-      "targets": {
-        "target_1": 38.38,
-        "target_2": 39.82,
-        "target_3": 41.61,
-        "stop_loss": 32.54,
-        "add_level": 33.79
-      },
-      "range_3m": {
-        "min": 32.26,
-        "max": 44.5
-      },
-      "range_6m": {
-        "min": 27.14,
-        "max": 44.5
-      },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺54.23\n  • Direnç 2: ₺49.37\n  • Direnç 1: ₺41.99\n  • Pivot: ₺37.13\n  • Dest"
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺330.40\n  • Direnç 2: ₺272.10\n  • Direnç 1: ₺240.20\n  • Pivot: ₺181.90\n  • "
     },
     {
       "ticker": "TAVHL",
       "name": "TAV Havalimanları",
       "sector": "Havacılık",
-      "price": 322.75,
-      "change_pct": 1.0172,
-      "rsi": 58.5851,
-      "stoch_k": 93.8596,
-      "adx": 28.6509,
-      "volume_ratio": 0.9,
+      "price": 316.5,
+      "change_pct": -1.9365,
+      "rsi": 54.9114,
+      "stoch_k": 82.8947,
+      "adx": 26.4034,
+      "volume_ratio": 0.1,
       "signal": "BEKLE",
       "signal_en": "HOLD",
-      "score": 3.8,
-      "confidence": 7.4,
+      "score": 9.2,
+      "confidence": 22.1,
       "color": "#ffd740",
       "targets": {
         "target_1": 330.9,
         "target_2": 345.46,
-        "target_3": 369.0,
-        "stop_loss": 319.04,
-        "add_level": 321.2
+        "target_3": 367.25,
+        "stop_loss": 306.08,
+        "add_level": 312.33
       },
       "range_3m": {
         "min": 269.25,
@@ -586,135 +362,231 @@
         "min": 217.6,
         "max": 369.0
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺471.17\n  • Direnç 2: ₺420.08\n  • Direnç 1: ₺371.42\n  • Pivot: ₺320.33\n  • "
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺467.00\n  • Direnç 2: ₺418.00\n  • Direnç 1: ₺367.25\n  • Pivot: ₺318.25\n  • "
     },
     {
-      "ticker": "EREGL",
-      "name": "Ereğli Demir Çelik",
-      "sector": "Metal",
-      "price": 28.2,
-      "change_pct": -2.0153,
-      "rsi": 48.1123,
-      "stoch_k": 53.7879,
-      "adx": 37.3248,
-      "volume_ratio": 1.4,
-      "signal": "BEKLE",
-      "signal_en": "HOLD",
-      "score": 3.6,
-      "confidence": 9.3,
-      "color": "#ffd740",
+      "ticker": "SISE",
+      "name": "Şişecam",
+      "sector": "Cam",
+      "price": 44.72,
+      "change_pct": 0.0895,
+      "rsi": 51.5277,
+      "stoch_k": 35.5658,
+      "adx": 33.9495,
+      "volume_ratio": 0.1,
+      "signal": "HAFİF AL",
+      "signal_en": "WEAK_BUY",
+      "score": 8.2,
+      "confidence": 32.2,
+      "color": "#69f0ae",
       "targets": {
-        "target_1": 29.49,
-        "target_2": 30.72,
-        "target_3": 32.53,
-        "stop_loss": 27.38,
-        "add_level": 27.87
+        "target_1": 45.99,
+        "target_2": 47.87,
+        "target_3": 50.9,
+        "stop_loss": 44.37,
+        "add_level": 44.51
       },
       "range_3m": {
-        "min": 24.26,
-        "max": 32.72
+        "min": 38.04,
+        "max": 50.9
       },
       "range_6m": {
-        "min": 23.46,
-        "max": 32.72
+        "min": 32.44,
+        "max": 50.9
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺40.99\n  • Direnç 2: ₺36.85\n  • Direnç 1: ₺32.53\n  • Pivot: ₺28.39\n  • Dest"
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺63.93\n  • Direnç 2: ₺57.41\n  • Direnç 1: ₺51.07\n  • Pivot: ₺44.55\n  • Dest"
     },
     {
-      "ticker": "KRDMD",
-      "name": "Kardemir D",
-      "sector": "Metal",
-      "price": 31.68,
-      "change_pct": -1.2469,
-      "rsi": 56.774,
-      "stoch_k": 82.6087,
-      "adx": 20.3941,
-      "volume_ratio": 0.9,
+      "ticker": "ENJSA",
+      "name": "Enerjisa",
+      "sector": "Enerji",
+      "price": 119.9,
+      "change_pct": 0.6717,
+      "rsi": 58.379,
+      "stoch_k": 61.6542,
+      "adx": 24.9801,
+      "volume_ratio": 0.2,
       "signal": "BEKLE",
       "signal_en": "HOLD",
-      "score": 2.4,
-      "confidence": 5.4,
+      "score": 7.0,
+      "confidence": 25.8,
       "color": "#ffd740",
       "targets": {
-        "target_1": 33.28,
-        "target_2": 34.49,
-        "target_3": 37.31,
-        "stop_loss": 31.54,
-        "add_level": 31.53
+        "target_1": 125.0,
+        "target_2": 132.43,
+        "target_3": 144.97,
+        "stop_loss": 116.85,
+        "add_level": 118.68
       },
       "range_3m": {
-        "min": 26.06,
-        "max": 33.28
+        "min": 91.45,
+        "max": 125.0
       },
       "range_6m": {
-        "min": 23.5,
-        "max": 33.28
+        "min": 72.45,
+        "max": 125.0
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺41.33\n  • Direnç 2: ₺37.31\n  • Direnç 1: ₺34.49\n  • Pivot: ₺30.47\n  • Dest"
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺164.93\n  • Direnç 2: ₺144.97\n  • Direnç 1: ₺132.43\n  • Pivot: ₺112.47\n  • "
     },
     {
-      "ticker": "TKFEN",
-      "name": "Tekfen Holding",
-      "sector": "Holding",
-      "price": 101.9,
-      "change_pct": 4.6201,
-      "rsi": 72.3734,
-      "stoch_k": 91.4397,
-      "adx": 48.6496,
-      "volume_ratio": 1.5,
+      "ticker": "MAVI",
+      "name": "Mavi Giyim",
+      "sector": "Perakende",
+      "price": 42.1,
+      "change_pct": 0.1904,
+      "rsi": 44.7844,
+      "stoch_k": 22.0883,
+      "adx": 23.5505,
+      "volume_ratio": 0.1,
       "signal": "BEKLE",
       "signal_en": "HOLD",
-      "score": 1.6,
-      "confidence": 2.7,
+      "score": 6.8,
+      "confidence": 32.7,
       "color": "#ffd740",
       "targets": {
-        "target_1": 115.0,
-        "target_2": 128.1,
-        "target_3": 152.1,
-        "stop_loss": 95.79,
-        "add_level": 99.45
+        "target_1": 43.8,
+        "target_2": 44.66,
+        "target_3": 46.09,
+        "stop_loss": 41.0,
+        "add_level": 41.66
       },
       "range_3m": {
-        "min": 67.0,
-        "max": 104.1
+        "min": 38.56,
+        "max": 50.75
       },
       "range_6m": {
-        "min": 66.69,
-        "max": 104.1
+        "min": 36.7,
+        "max": 50.75
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺152.10\n  • Direnç 2: ₺128.10\n  • Direnç 1: ₺115.00\n  • Pivot: ₺91.00\n  • D"
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺61.24\n  • Direnç 2: ₺55.99\n  • Direnç 1: ₺49.05\n  • Pivot: ₺43.80\n  • Dest"
     },
     {
       "ticker": "TOASO",
       "name": "Tofaş",
       "sector": "Otomotiv",
-      "price": 269.5,
-      "change_pct": -1.1009,
-      "rsi": 40.0703,
-      "stoch_k": 13.3651,
-      "adx": 17.1704,
-      "volume_ratio": 0.7,
+      "price": 267.0,
+      "change_pct": -0.9276,
+      "rsi": 38.556,
+      "stoch_k": 5.94,
+      "adx": 17.1611,
+      "volume_ratio": 0.2,
       "signal": "BEKLE",
       "signal_en": "HOLD",
-      "score": 1.4,
-      "confidence": 4.5,
+      "score": 5.9,
+      "confidence": 16.4,
       "color": "#ffd740",
       "targets": {
         "target_1": 291.07,
-        "target_2": 310.02,
-        "target_3": 326.97,
-        "stop_loss": 254.09,
-        "add_level": 263.34
+        "target_2": 299.54,
+        "target_3": 310.02,
+        "stop_loss": 254.1,
+        "add_level": 261.84
       },
       "range_3m": {
-        "min": 242.54,
+        "min": 251.66,
         "max": 326.97
       },
       "range_6m": {
         "min": 209.47,
         "max": 326.97
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺384.39\n  • Direnç 2: ₺355.68\n  • Direnç 1: ₺312.59\n  • Pivot: ₺283.88\n  • "
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺382.73\n  • Direnç 2: ₺354.85\n  • Direnç 1: ₺310.92\n  • Pivot: ₺283.05\n  • "
+    },
+    {
+      "ticker": "TCELL",
+      "name": "Turkcell",
+      "sector": "Telekomünikasyon",
+      "price": 108.3,
+      "change_pct": 1.3096,
+      "rsi": 47.2185,
+      "stoch_k": 56.3107,
+      "adx": 29.9613,
+      "volume_ratio": 0.2,
+      "signal": "BEKLE",
+      "signal_en": "HOLD",
+      "score": 5.6,
+      "confidence": 22.6,
+      "color": "#ffd740",
+      "targets": {
+        "target_1": 113.73,
+        "target_2": 117.47,
+        "target_3": 122.11,
+        "stop_loss": 104.21,
+        "add_level": 106.66
+      },
+      "range_3m": {
+        "min": 96.85,
+        "max": 129.6
+      },
+      "range_6m": {
+        "min": 88.34,
+        "max": 129.6
+      },
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺157.73\n  • Direnç 2: ₺143.67\n  • Direnç 1: ₺125.98\n  • Pivot: ₺111.92\n  • "
+    },
+    {
+      "ticker": "KRDMD",
+      "name": "Kardemir D",
+      "sector": "Metal",
+      "price": 31.74,
+      "change_pct": 0.1894,
+      "rsi": 57.0335,
+      "stoch_k": 84.0579,
+      "adx": 19.1885,
+      "volume_ratio": 0.2,
+      "signal": "BEKLE",
+      "signal_en": "HOLD",
+      "score": 4.4,
+      "confidence": 11.1,
+      "color": "#ffd740",
+      "targets": {
+        "target_1": 33.28,
+        "target_2": 34.46,
+        "target_3": 37.18,
+        "stop_loss": 31.59,
+        "add_level": 31.59
+      },
+      "range_3m": {
+        "min": 26.44,
+        "max": 33.28
+      },
+      "range_6m": {
+        "min": 23.5,
+        "max": 33.28
+      },
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺41.08\n  • Direnç 2: ₺37.18\n  • Direnç 1: ₺34.46\n  • Pivot: ₺30.56\n  • Dest"
+    },
+    {
+      "ticker": "TKFEN",
+      "name": "Tekfen Holding",
+      "sector": "Holding",
+      "price": 103.3,
+      "change_pct": 1.3739,
+      "rsi": 73.4888,
+      "stoch_k": 94.3182,
+      "adx": 53.177,
+      "volume_ratio": 0.3,
+      "signal": "BEKLE",
+      "signal_en": "HOLD",
+      "score": 1.6,
+      "confidence": 3.2,
+      "color": "#ffd740",
+      "targets": {
+        "target_1": 116.4,
+        "target_2": 129.5,
+        "target_3": 154.2,
+        "stop_loss": 97.1,
+        "add_level": 100.82
+      },
+      "range_3m": {
+        "min": 67.0,
+        "max": 104.8
+      },
+      "range_6m": {
+        "min": 66.69,
+        "max": 104.8
+      },
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺154.20\n  • Direnç 2: ₺129.50\n  • Direnç 1: ₺116.40\n  • Pivot: ₺91.70\n  • D"
     },
     {
       "ticker": "HEKTS",
@@ -723,9 +595,9 @@
       "price": 2.93,
       "change_pct": 0.0,
       "rsi": 47.5692,
-      "stoch_k": 40.4762,
-      "adx": 8.5787,
-      "volume_ratio": 0.7,
+      "stoch_k": 47.2223,
+      "adx": 7.7224,
+      "volume_ratio": 0.1,
       "signal": "BEKLE",
       "signal_en": "HOLD",
       "score": 1.2,
@@ -749,90 +621,314 @@
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺4.32\n  • Direnç 2: ₺3.98\n  • Direnç 1: ₺3.45\n  • Pivot: ₺3.11\n  • Destek 1"
     },
     {
-      "ticker": "MGROS",
-      "name": "Migros",
-      "sector": "Perakende",
-      "price": 620.5,
-      "change_pct": 0.5673,
-      "rsi": 53.9507,
-      "stoch_k": 92.8571,
-      "adx": 24.9665,
-      "volume_ratio": 1.0,
+      "ticker": "ASELS",
+      "name": "Aselsan",
+      "sector": "Savunma",
+      "price": 336.5,
+      "change_pct": 0.0,
+      "rsi": 54.503,
+      "stoch_k": 49.1525,
+      "adx": 14.4356,
+      "volume_ratio": 0.2,
       "signal": "BEKLE",
       "signal_en": "HOLD",
-      "score": 1.2,
-      "confidence": 2.9,
+      "score": 0.6,
+      "confidence": 1.9,
       "color": "#ffd740",
       "targets": {
-        "target_1": 644.83,
-        "target_2": 665.34,
-        "target_3": 693.33,
-        "stop_loss": 609.19,
-        "add_level": 615.98
+        "target_1": 359.0,
+        "target_2": 375.83,
+        "target_3": 415.17,
+        "stop_loss": 335.11,
+        "add_level": 334.88
       },
       "range_3m": {
-        "min": 530.5,
-        "max": 698.5
+        "min": 238.8,
+        "max": 359.0
       },
       "range_6m": {
-        "min": 418.19,
-        "max": 698.5
+        "min": 171.28,
+        "max": 359.0
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺833.83\n  • Direnç 2: ₺766.17\n  • Direnç 1: ₺693.33\n  • Pivot: ₺625.67\n  • "
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺471.33\n  • Direnç 2: ₺415.17\n  • Direnç 1: ₺375.83\n  • Pivot: ₺319.67\n  • "
+    },
+    {
+      "ticker": "SASA",
+      "name": "SASA Polyester",
+      "sector": "Kimya",
+      "price": 2.39,
+      "change_pct": -2.0492,
+      "rsi": 49.2075,
+      "stoch_k": 37.0371,
+      "adx": 23.5192,
+      "volume_ratio": 1.6,
+      "signal": "BEKLE",
+      "signal_en": "HOLD",
+      "score": -1.4,
+      "confidence": 3.7,
+      "color": "#ffd740",
+      "targets": {
+        "target_1": 2.27,
+        "target_2": 2.13,
+        "target_3": 2.08,
+        "stop_loss": 2.45,
+        "add_level": 2.41
+      },
+      "range_3m": {
+        "min": 2.13,
+        "max": 2.95
+      },
+      "range_6m": {
+        "min": 2.13,
+        "max": 3.3
+      },
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺3.40\n  • Direnç 2: ₺3.10\n  • Direnç 1: ₺2.74\n  • Pivot: ₺2.44\n  • Destek 1"
+    },
+    {
+      "ticker": "EREGL",
+      "name": "Ereğli Demir Çelik",
+      "sector": "Metal",
+      "price": 28.16,
+      "change_pct": -0.1418,
+      "rsi": 47.8607,
+      "stoch_k": 52.2727,
+      "adx": 34.4279,
+      "volume_ratio": 0.2,
+      "signal": "BEKLE",
+      "signal_en": "HOLD",
+      "score": -1.8,
+      "confidence": 7.7,
+      "color": "#ffd740",
+      "targets": {
+        "target_1": 27.62,
+        "target_2": 26.23,
+        "target_3": 24.46,
+        "stop_loss": 28.56,
+        "add_level": 28.32
+      },
+      "range_3m": {
+        "min": 24.26,
+        "max": 32.72
+      },
+      "range_6m": {
+        "min": 23.46,
+        "max": 32.72
+      },
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺40.69\n  • Direnç 2: ₺36.71\n  • Direnç 1: ₺32.43\n  • Pivot: ₺28.45\n  • Dest"
     },
     {
       "ticker": "FROTO",
       "name": "Ford Otosan",
       "sector": "Otomotiv",
-      "price": 100.7,
-      "change_pct": -1.7561,
-      "rsi": 39.9371,
-      "stoch_k": 13.744,
-      "adx": 37.7616,
-      "volume_ratio": 0.9,
+      "price": 100.9,
+      "change_pct": 0.1986,
+      "rsi": 40.3923,
+      "stoch_k": 15.6398,
+      "adx": 38.838,
+      "volume_ratio": 0.2,
       "signal": "BEKLE",
       "signal_en": "HOLD",
-      "score": 0.3,
-      "confidence": 0.8,
+      "score": -4.4,
+      "confidence": 11.9,
       "color": "#ffd740",
       "targets": {
-        "target_1": 111.91,
-        "target_2": 116.39,
-        "target_3": 121.94,
-        "stop_loss": 94.66,
-        "add_level": 98.28
+        "target_1": 94.46,
+        "target_2": 86.6,
+        "target_3": 72.31,
+        "stop_loss": 102.66,
+        "add_level": 101.61
       },
       "range_3m": {
-        "min": 91.51,
+        "min": 92.81,
         "max": 130.91
       },
       "range_6m": {
         "min": 81.38,
         "max": 130.91
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺161.43\n  • Direnç 2: ₺146.17\n  • Direnç 1: ₺123.43\n  • Pivot: ₺108.17\n  • "
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺159.50\n  • Direnç 2: ₺145.20\n  • Direnç 1: ₺123.05\n  • Pivot: ₺108.76\n  • "
+    },
+    {
+      "ticker": "SAHOL",
+      "name": "Sabancı Holding",
+      "sector": "Holding",
+      "price": 89.95,
+      "change_pct": -0.1665,
+      "rsi": 43.3763,
+      "stoch_k": 44.0333,
+      "adx": 36.437,
+      "volume_ratio": 0.2,
+      "signal": "BEKLE",
+      "signal_en": "HOLD",
+      "score": -5.5,
+      "confidence": 18.4,
+      "color": "#ffd740",
+      "targets": {
+        "target_1": 84.74,
+        "target_2": 78.73,
+        "target_3": 67.51,
+        "stop_loss": 91.19,
+        "add_level": 90.45
+      },
+      "range_3m": {
+        "min": 84.74,
+        "max": 113.18
+      },
+      "range_6m": {
+        "min": 72.73,
+        "max": 113.18
+      },
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺135.62\n  • Direnç 2: ₺124.40\n  • Direnç 1: ₺107.17\n  • Pivot: ₺95.96\n  • D"
+    },
+    {
+      "ticker": "EKGYO",
+      "name": "Emlak Konut GYO",
+      "sector": "GYO",
+      "price": 19.98,
+      "change_pct": 1.9388,
+      "rsi": 42.1291,
+      "stoch_k": 52.3364,
+      "adx": 50.5509,
+      "volume_ratio": 0.4,
+      "signal": "BEKLE",
+      "signal_en": "HOLD",
+      "score": -5.7,
+      "confidence": 19.0,
+      "color": "#ffd740",
+      "targets": {
+        "target_1": 18.86,
+        "target_2": 16.85,
+        "target_3": 13.73,
+        "stop_loss": 20.71,
+        "add_level": 20.27
+      },
+      "range_3m": {
+        "min": 18.86,
+        "max": 27.12
+      },
+      "range_6m": {
+        "min": 17.62,
+        "max": 27.12
+      },
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺33.37\n  • Direnç 2: ₺30.25\n  • Direnç 1: ₺25.11\n  • Pivot: ₺21.99\n  • Dest"
+    },
+    {
+      "ticker": "GARAN",
+      "name": "Garanti BBVA",
+      "sector": "Bankacılık",
+      "price": 131.5,
+      "change_pct": 0.1523,
+      "rsi": 41.9634,
+      "stoch_k": 42.236,
+      "adx": 39.481,
+      "volume_ratio": 0.3,
+      "signal": "BEKLE",
+      "signal_en": "HOLD",
+      "score": -5.7,
+      "confidence": 19.0,
+      "color": "#ffd740",
+      "targets": {
+        "target_1": 124.7,
+        "target_2": 114.23,
+        "target_3": 96.97,
+        "stop_loss": 134.86,
+        "add_level": 132.84
+      },
+      "range_3m": {
+        "min": 124.7,
+        "max": 169.7
+      },
+      "range_6m": {
+        "min": 115.4,
+        "max": 169.7
+      },
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺204.23\n  • Direnç 2: ₺186.97\n  • Direnç 1: ₺159.23\n  • Pivot: ₺141.97\n  • "
+    },
+    {
+      "ticker": "ISCTR",
+      "name": "İş Bankası C",
+      "sector": "Bankacılık",
+      "price": 13.19,
+      "change_pct": 0.0759,
+      "rsi": 42.5495,
+      "stoch_k": 51.7436,
+      "adx": 41.6407,
+      "volume_ratio": 0.2,
+      "signal": "BEKLE",
+      "signal_en": "HOLD",
+      "score": -5.7,
+      "confidence": 19.0,
+      "color": "#ffd740",
+      "targets": {
+        "target_1": 12.38,
+        "target_2": 11.23,
+        "target_3": 9.26,
+        "stop_loss": 13.52,
+        "add_level": 13.32
+      },
+      "range_3m": {
+        "min": 12.38,
+        "max": 17.46
+      },
+      "range_6m": {
+        "min": 10.65,
+        "max": 17.46
+      },
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺21.39\n  • Direnç 2: ₺19.43\n  • Direnç 1: ₺16.31\n  • Pivot: ₺14.35\n  • Dest"
+    },
+    {
+      "ticker": "YKBNK",
+      "name": "Yapı Kredi",
+      "sector": "Bankacılık",
+      "price": 34.46,
+      "change_pct": -0.4622,
+      "rsi": 43.6361,
+      "stoch_k": 52.381,
+      "adx": 45.8406,
+      "volume_ratio": 0.2,
+      "signal": "BEKLE",
+      "signal_en": "HOLD",
+      "score": -5.7,
+      "confidence": 19.0,
+      "color": "#ffd740",
+      "targets": {
+        "target_1": 32.26,
+        "target_2": 29.65,
+        "target_3": 24.83,
+        "stop_loss": 35.02,
+        "add_level": 34.68
+      },
+      "range_3m": {
+        "min": 32.26,
+        "max": 44.5
+      },
+      "range_6m": {
+        "min": 27.14,
+        "max": 44.5
+      },
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺54.13\n  • Direnç 2: ₺49.31\n  • Direnç 1: ₺41.89\n  • Pivot: ₺37.07\n  • Dest"
     },
     {
       "ticker": "PGSUS",
       "name": "Pegasus",
       "sector": "Havacılık",
-      "price": 178.9,
-      "change_pct": -0.2787,
-      "rsi": 42.9608,
-      "stoch_k": 69.5035,
-      "adx": 30.2242,
-      "volume_ratio": 0.9,
+      "price": 178.3,
+      "change_pct": -0.3354,
+      "rsi": 42.1435,
+      "stoch_k": 65.2482,
+      "adx": 27.8417,
+      "volume_ratio": 0.1,
       "signal": "BEKLE",
       "signal_en": "HOLD",
-      "score": -4.6,
-      "confidence": 16.0,
+      "score": -9.2,
+      "confidence": 27.4,
       "color": "#ffd740",
       "targets": {
         "target_1": 167.3,
-        "target_2": 155.43,
-        "target_3": 131.97,
-        "stop_loss": 180.6,
-        "add_level": 179.76
+        "target_2": 155.03,
+        "target_3": 131.77,
+        "stop_loss": 180.59,
+        "add_level": 179.22
       },
       "range_3m": {
         "min": 167.3,
@@ -840,127 +936,63 @@
       },
       "range_6m": {
         "min": 167.3,
-        "max": 227.7
+        "max": 226.2
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺273.03\n  • Direnç 2: ₺249.57\n  • Direnç 1: ₺214.23\n  • Pivot: ₺190.77\n  • "
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺272.63\n  • Direnç 2: ₺249.37\n  • Direnç 1: ₺213.83\n  • Pivot: ₺190.57\n  • "
     },
     {
-      "ticker": "ODAS",
-      "name": "Odaş Elektrik",
-      "sector": "Enerji",
-      "price": 6.12,
-      "change_pct": 4.6154,
-      "rsi": 55.9726,
-      "stoch_k": 73.3333,
-      "adx": 25.4582,
-      "volume_ratio": 1.0,
-      "signal": "BEKLE",
-      "signal_en": "HOLD",
-      "score": -5.0,
-      "confidence": 13.5,
-      "color": "#ffd740",
+      "ticker": "GUBRF",
+      "name": "Gübre Fabrikaları",
+      "sector": "Kimya",
+      "price": 489.75,
+      "change_pct": -0.3053,
+      "rsi": 48.9083,
+      "stoch_k": 51.8182,
+      "adx": 34.1351,
+      "volume_ratio": 0.2,
+      "signal": "SAT",
+      "signal_en": "SELL",
+      "score": -23.1,
+      "confidence": 100,
+      "color": "#ff5252",
       "targets": {
-        "target_1": 5.91,
-        "target_2": 5.81,
-        "target_3": 5.62,
-        "stop_loss": 6.23,
-        "add_level": 6.17
+        "target_1": 439.81,
+        "target_2": 405.37,
+        "target_3": 378.67,
+        "stop_loss": 519.13,
+        "add_level": 501.5
       },
       "range_3m": {
-        "min": 5.04,
-        "max": 6.57
+        "min": 357.25,
+        "max": 566.5
       },
       "range_6m": {
-        "min": 4.97,
-        "max": 6.57
+        "min": 261.75,
+        "max": 566.5
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺8.31\n  • Direnç 2: ₺7.44\n  • Direnç 1: ₺6.78\n  • Pivot: ₺5.91\n  • Destek 1"
-    },
-    {
-      "ticker": "ENKAI",
-      "name": "Enka İnşaat",
-      "sector": "İnşaat",
-      "price": 94.35,
-      "change_pct": -0.4222,
-      "rsi": 50.3299,
-      "stoch_k": 47.7419,
-      "adx": 18.0806,
-      "volume_ratio": 0.8,
-      "signal": "HAFİF SAT",
-      "signal_en": "WEAK_SELL",
-      "score": -13.8,
-      "confidence": 69.7,
-      "color": "#ff8a80",
-      "targets": {
-        "target_1": 92.63,
-        "target_2": 91.77,
-        "target_3": 88.72,
-        "stop_loss": 95.21,
-        "add_level": 94.8
-      },
-      "range_3m": {
-        "min": 78.85,
-        "max": 104.7
-      },
-      "range_6m": {
-        "min": 66.25,
-        "max": 104.7
-      },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺132.27\n  • Direnç 2: ₺118.48\n  • Direnç 1: ₺106.42\n  • Pivot: ₺92.63\n  • D"
-    },
-    {
-      "ticker": "AKBNK",
-      "name": "Akbank",
-      "sector": "Bankacılık",
-      "price": 69.25,
-      "change_pct": 1.4652,
-      "rsi": 41.8819,
-      "stoch_k": 43.0657,
-      "adx": 40.8862,
-      "volume_ratio": 0.9,
-      "signal": "HAFİF SAT",
-      "signal_en": "WEAK_SELL",
-      "score": -17.2,
-      "confidence": 69.4,
-      "color": "#ff8a80",
-      "targets": {
-        "target_1": 65.05,
-        "target_2": 59.33,
-        "target_3": 49.42,
-        "stop_loss": 70.8,
-        "add_level": 69.87
-      },
-      "range_3m": {
-        "min": 65.05,
-        "max": 90.6
-      },
-      "range_6m": {
-        "min": 51.4,
-        "max": 90.6
-      },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺110.43\n  • Direnç 2: ₺100.51\n  • Direnç 1: ₺84.88\n  • Pivot: ₺74.97\n  • De"
+      "explanation_short": "🔴 Günlük bazda SATIŞ sinyali veriyoruz. Satış sebepleri: HAFİF SAT — Düşüş trendi var ama zayıflıyor. | HAFİF SAT — Trend aşağı yönlü, dikkatli olun. | HAFİF SAT — Kısa vadeli düşüş baskısı var.. \n\n⬇️"
     },
     {
       "ticker": "ARCLK",
       "name": "Arçelik",
       "sector": "Dayanıklı Tüketim",
-      "price": 110.8,
-      "change_pct": 0.5445,
-      "rsi": 44.8366,
-      "stoch_k": 43.2433,
-      "adx": 18.4693,
-      "volume_ratio": 0.7,
+      "price": 110.4,
+      "change_pct": -0.361,
+      "rsi": 44.1051,
+      "stoch_k": 39.6397,
+      "adx": 18.3419,
+      "volume_ratio": 0.1,
       "signal": "HAFİF SAT",
       "signal_en": "WEAK_SELL",
-      "score": -19.8,
-      "confidence": 70.2,
+      "score": -24.6,
+      "confidence": 74.5,
       "color": "#ff8a80",
       "targets": {
         "target_1": 104.2,
-        "target_2": 98.0,
-        "target_3": 85.2,
+        "target_2": 97.73,
+        "target_3": 85.07,
         "stop_loss": 111.45,
-        "add_level": 111.33
+        "add_level": 110.93
       },
       "range_3m": {
         "min": 104.2,
@@ -970,107 +1002,75 @@
         "min": 99.65,
         "max": 136.0
       },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺161.60\n  • Direnç 2: ₺148.80\n  • Direnç 1: ₺129.80\n  • Pivot: ₺117.00\n  • "
-    },
-    {
-      "ticker": "GUBRF",
-      "name": "Gübre Fabrikaları",
-      "sector": "Kimya",
-      "price": 491.25,
-      "change_pct": 0.0,
-      "rsi": 49.4835,
-      "stoch_k": 52.994,
-      "adx": 31.8566,
-      "volume_ratio": 0.6,
-      "signal": "SAT",
-      "signal_en": "SELL",
-      "score": -23.1,
-      "confidence": 100,
-      "color": "#ff5252",
-      "targets": {
-        "target_1": 438.26,
-        "target_2": 403.4,
-        "target_3": 378.0,
-        "stop_loss": 519.5,
-        "add_level": 502.55
-      },
-      "range_3m": {
-        "min": 351.75,
-        "max": 566.5
-      },
-      "range_6m": {
-        "min": 261.75,
-        "max": 566.5
-      },
-      "explanation_short": "🔴 Günlük bazda SATIŞ sinyali veriyoruz. Satış sebepleri: HAFİF SAT — Düşüş trendi var ama zayıflıyor. | HAFİF SAT — Trend aşağı yönlü, dikkatli olun. | HAFİF SAT — Kısa vadeli düşüş baskısı var.. \n\n⬇️"
+      "explanation_short": "🔴 Günlük bazda SATIŞ sinyali veriyoruz. Satış sebepleri: HAFİF SAT — Düşüş trendi var ama zayıflıyor. | SAT — Tüm ortalamalar üstünde, ağır düşüş trendi. | SAT — Ölüm kesişimi aktif. Uzun vadeli düşüş"
     }
   ],
   "indices": {
     "XU030": {
       "name": "BIST 30",
       "ticker": "XU030.IS",
-      "value": 14881.52,
-      "change": 194.72,
-      "change_pct": 1.33,
-      "weekly_change_pct": 2.96,
-      "monthly_change_pct": 1.53,
+      "value": 14869.6,
+      "change": -11.9,
+      "change_pct": -0.08,
+      "weekly_change_pct": 3.85,
+      "monthly_change_pct": 1.04,
       "yearly_high": 16014.0,
       "yearly_low": 9868.8,
       "volume": 0,
-      "sma20": 14767.61,
-      "sma50": 14978.2,
-      "sma200": 12743.79,
+      "sma20": 14766.14,
+      "sma50": 14994.92,
+      "sma200": 12767.04,
       "trend": "ZAYIF",
       "trend_color": "#ffd740",
       "yorum": "BIST 30 zayıf bir seyir izliyor. Kısa vadeli ortalamalar altında ama uzun vadeli SMA200 üzerinde. Piyasa kararsız, dikkatli olun.",
-      "gunluk_yorum": "Bugün piyasa pozitif seyrediyor. Alıcılar ağırlıkta, olumlu hava devam ediyor."
+      "gunluk_yorum": "Bugün piyasa yatay seyrediyor. Net bir yön belli değil, hacim düşük."
     },
     "XU100": {
       "name": "BIST 100",
       "ticker": "XU100.IS",
-      "value": 13051.69,
-      "change": 113.79,
-      "change_pct": 0.88,
-      "weekly_change_pct": 2.78,
-      "monthly_change_pct": 0.91,
+      "value": 13037.17,
+      "change": -14.53,
+      "change_pct": -0.11,
+      "weekly_change_pct": 3.25,
+      "monthly_change_pct": 0.73,
       "yearly_high": 14532.7,
       "yearly_low": 8964.95,
       "volume": 0,
-      "sma20": 12978.02,
-      "sma50": 13407.11,
-      "sma200": 11548.42,
+      "sma20": 12975.94,
+      "sma50": 13410.82,
+      "sma200": 11567.59,
       "trend": "ZAYIF",
       "trend_color": "#ffd740",
       "yorum": "BIST 100 zayıf bir seyir izliyor. Kısa vadeli ortalamalar altında ama uzun vadeli SMA200 üzerinde. Piyasa kararsız, dikkatli olun.",
-      "gunluk_yorum": "Bugün piyasa pozitif seyrediyor. Alıcılar ağırlıkta, olumlu hava devam ediyor."
+      "gunluk_yorum": "Bugün piyasa yatay seyrediyor. Net bir yön belli değil, hacim düşük."
     }
   },
   "news": [
     {
       "title": "📊 BIST 30 Teknik Analiz Raporu Güncellendi",
-      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 02.04.2026 20:15 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
-      "date": "02.04.2026 20:15",
+      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 03.04.2026 11:06 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
+      "date": "03.04.2026 11:06",
       "category": "analiz",
       "icon": "📊"
     },
     {
       "title": "🔔 Stochastic & ADX Göstergeleri Eklendi",
       "summary": "Yeni teknik göstergeler: Stochastic Oscillator ve ADX (Average Directional Index) artık tüm hisseler için hesaplanıyor. Fibonacci düzeltme seviyeleri de aktif.",
-      "date": "02.04.2026 20:15",
+      "date": "03.04.2026 11:06",
       "category": "güncelleme",
       "icon": "🔔"
     },
     {
       "title": "🎯 Hedef Fiyat Sistemi Aktif",
       "summary": "Her hisse için günlük, haftalık ve aylık hedef fiyatlar, stop-loss seviyeleri ve ekleme noktaları hesaplanıyor.",
-      "date": "02.04.2026 20:15",
+      "date": "03.04.2026 11:06",
       "category": "özellik",
       "icon": "🎯"
     },
     {
       "title": "⏰ Veriler Hafta Ici 10:01 / 12:30 / 17:00 / 19:30'da Otomatik Guncelleniyor",
       "summary": "Veriler hafta ici her gun saat 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin isterse panelden manuel olarak anlik yenileme tetikleyebilir.",
-      "date": "02.04.2026",
+      "date": "03.04.2026",
       "category": "bilgi",
       "icon": "⏰"
     }
