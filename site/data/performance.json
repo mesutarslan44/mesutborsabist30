@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-03 11:05",
+  "generated_at": "2026-04-03 13:07",
   "overview": {
     "total": 12,
     "hits": 0,
@@ -79,7 +79,7 @@
     }
   },
   "status_summary": {
-    "open": 3,
+    "open": 4,
     "resolved": 12,
     "hits": 0,
     "stopped": 2,
@@ -172,20 +172,36 @@
   },
   "open_targets": [
     {
-      "ticker": "SISE",
+      "ticker": "PETKM",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-04-03 13:07",
+      "start_price": 19.98,
+      "target_price": 20.95,
+      "target_2": 22.32,
+      "target_3": 22.7,
+      "stop_loss": 19.52,
+      "signal": "AL",
+      "confidence": 100.0,
+      "score": 31.1,
+      "regime_key": "trend_up",
+      "rr_ratio": 2.1087
+    },
+    {
+      "ticker": "PETKM",
       "period": "weekly",
       "direction": "buy",
-      "opened_at": "2026-04-03 11:05",
-      "start_price": 44.72,
-      "target_price": 50.9,
-      "target_2": 53.1,
-      "target_3": 61.48,
-      "stop_loss": 43.21,
+      "opened_at": "2026-04-03 13:07",
+      "start_price": 19.98,
+      "target_price": 22.32,
+      "target_2": 23.14,
+      "target_3": 26.3,
+      "stop_loss": 19.39,
       "signal": "AL",
-      "confidence": 94.1,
-      "score": 25.4,
+      "confidence": 73.0,
+      "score": 30.7,
       "regime_key": "trend_up",
-      "rr_ratio": 4.0927
+      "rr_ratio": 3.9661
     },
     {
       "ticker": "EREGL",
