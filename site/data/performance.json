@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-07 18:16",
+  "generated_at": "2026-04-07 20:33",
   "overview": {
     "total": 13,
     "hits": 1,
@@ -79,7 +79,7 @@
     }
   },
   "status_summary": {
-    "open": 2,
+    "open": 3,
     "resolved": 13,
     "hits": 1,
     "stopped": 2,
@@ -175,17 +175,33 @@
       "ticker": "BIMAS",
       "period": "weekly",
       "direction": "buy",
-      "opened_at": "2026-04-07 18:16",
-      "start_price": 686.5,
-      "target_price": 810.89,
-      "target_2": 935.27,
-      "target_3": 1146.04,
-      "stop_loss": 638.53,
+      "opened_at": "2026-04-07 20:33",
+      "start_price": 685.5,
+      "target_price": 810.22,
+      "target_2": 934.94,
+      "target_3": 1145.37,
+      "stop_loss": 638.54,
       "signal": "AL",
-      "confidence": 70.1,
-      "score": 24.9,
+      "confidence": 95.5,
+      "score": 29.6,
       "regime_key": "trend_up",
-      "rr_ratio": 2.5931
+      "rr_ratio": 2.6559
+    },
+    {
+      "ticker": "TKFEN",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-04-07 20:33",
+      "start_price": 95.1,
+      "target_price": 105.1,
+      "target_2": 111.13,
+      "target_3": 127.17,
+      "stop_loss": 90.17,
+      "signal": "AL",
+      "confidence": 94.1,
+      "score": 25.4,
+      "regime_key": "trend_up",
+      "rr_ratio": 2.0284
     },
     {
       "ticker": "GUBRF",
