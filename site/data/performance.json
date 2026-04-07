@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-06 20:14",
+  "generated_at": "2026-04-07 11:17",
   "overview": {
     "total": 13,
     "hits": 1,
@@ -53,11 +53,11 @@
   },
   "rolling": {
     "7d": {
-      "total": 3,
+      "total": 1,
       "hits": 1,
-      "stopped": 2,
+      "stopped": 0,
       "expired": 0,
-      "hit_rate": 33.3
+      "hit_rate": 100.0
     },
     "30d": {
       "total": 13,
@@ -79,7 +79,7 @@
     }
   },
   "status_summary": {
-    "open": 1,
+    "open": 3,
     "resolved": 13,
     "hits": 1,
     "stopped": 2,
@@ -171,6 +171,38 @@
     }
   },
   "open_targets": [
+    {
+      "ticker": "EREGL",
+      "period": "weekly",
+      "direction": "buy",
+      "opened_at": "2026-04-07 11:17",
+      "start_price": 30.04,
+      "target_price": 32.72,
+      "target_2": 35.2,
+      "target_3": 40.37,
+      "stop_loss": 29.4,
+      "signal": "AL",
+      "confidence": 95.5,
+      "score": 29.6,
+      "regime_key": "trend_up",
+      "rr_ratio": 4.1875
+    },
+    {
+      "ticker": "SISE",
+      "period": "weekly",
+      "direction": "buy",
+      "opened_at": "2026-04-07 11:17",
+      "start_price": 45.04,
+      "target_price": 50.9,
+      "target_2": 53.3,
+      "target_3": 61.58,
+      "stop_loss": 43.21,
+      "signal": "AL",
+      "confidence": 95.8,
+      "score": 30.5,
+      "regime_key": "trend_up",
+      "rr_ratio": 3.2022
+    },
     {
       "ticker": "GUBRF",
       "period": "weekly",
