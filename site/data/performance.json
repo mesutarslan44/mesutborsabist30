@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-08 18:16",
+  "generated_at": "2026-04-08 20:40",
   "overview": {
     "total": 13,
     "hits": 1,
@@ -79,7 +79,7 @@
     }
   },
   "status_summary": {
-    "open": 3,
+    "open": 2,
     "resolved": 13,
     "hits": 1,
     "stopped": 2,
@@ -175,33 +175,17 @@
       "ticker": "ASTOR",
       "period": "daily",
       "direction": "buy",
-      "opened_at": "2026-04-08 18:16",
-      "start_price": 207.5,
-      "target_price": 235.93,
-      "target_2": 264.37,
-      "target_3": 313.03,
+      "opened_at": "2026-04-08 20:40",
+      "start_price": 207.3,
+      "target_price": 235.8,
+      "target_2": 264.3,
+      "target_3": 312.9,
       "stop_loss": 196.67,
-      "signal": "AL",
-      "confidence": 70.1,
-      "score": 24.9,
-      "regime_key": "trend_up",
-      "rr_ratio": 2.6251
-    },
-    {
-      "ticker": "EREGL",
-      "period": "weekly",
-      "direction": "buy",
-      "opened_at": "2026-04-08 18:16",
-      "start_price": 29.66,
-      "target_price": 34.95,
-      "target_2": 40.24,
-      "target_3": 47.76,
-      "stop_loss": 27.53,
       "signal": "AL",
       "confidence": 95.5,
       "score": 29.6,
       "regime_key": "trend_up",
-      "rr_ratio": 2.4836
+      "rr_ratio": 2.6811
     },
     {
       "ticker": "GUBRF",

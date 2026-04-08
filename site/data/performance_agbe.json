@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-08 18:16",
+  "generated_at": "2026-04-08 20:40",
   "overview": {
     "total": 1,
     "hits": 0,
@@ -176,17 +176,17 @@
       "ticker": "ETH-USD",
       "period": "weekly",
       "direction": "sell",
-      "opened_at": "2026-04-08 18:16",
-      "start_price": 2203.8723,
+      "opened_at": "2026-04-08 20:40",
+      "start_price": 2231.269,
       "target_price": 1386.8,
-      "target_2": 742.54,
-      "target_3": 597.08,
-      "stop_loss": 2468.34,
+      "target_2": 760.8,
+      "target_3": 613.54,
+      "stop_loss": 2499.02,
       "signal": "SAT",
       "confidence": 75.4,
       "score": -22.5,
       "regime_key": "trend_down",
-      "rr_ratio": 3.0895
+      "rr_ratio": 3.1539
     }
   ],
   "recent_resolved": [
