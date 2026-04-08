@@ -37,10 +37,10 @@
     }
   ],
   "market_regime": {
-    "name": "Nötr",
-    "tone": "neutral",
-    "why": "AL/SAT dengesi karisik veya endeks onayi zayif.",
-    "how": "Sadece A/B setup ve net hedef-stop oranli islemleri sec."
+    "name": "Risk-On",
+    "tone": "positive",
+    "why": "AL sinyalleri SAT sinyallerinden belirgin yuksek ve endeksler destekliyor.",
+    "how": "Isleme parca parca gir, 1.5R altindaki kurulumlari ele."
   },
   "coaching_cards": [
     {

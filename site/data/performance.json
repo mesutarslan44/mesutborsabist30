@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-07 20:33",
+  "generated_at": "2026-04-08 11:15",
   "overview": {
     "total": 13,
     "hits": 1,
@@ -172,36 +172,36 @@
   },
   "open_targets": [
     {
-      "ticker": "BIMAS",
+      "ticker": "EREGL",
       "period": "weekly",
       "direction": "buy",
-      "opened_at": "2026-04-07 20:33",
-      "start_price": 685.5,
-      "target_price": 810.22,
-      "target_2": 934.94,
-      "target_3": 1145.37,
-      "stop_loss": 638.54,
+      "opened_at": "2026-04-08 11:15",
+      "start_price": 29.9,
+      "target_price": 32.72,
+      "target_2": 35.11,
+      "target_3": 40.32,
+      "stop_loss": 29.4,
       "signal": "AL",
       "confidence": 95.5,
       "score": 29.6,
       "regime_key": "trend_up",
-      "rr_ratio": 2.6559
+      "rr_ratio": 5.64
     },
     {
-      "ticker": "TKFEN",
-      "period": "daily",
+      "ticker": "SISE",
+      "period": "weekly",
       "direction": "buy",
-      "opened_at": "2026-04-07 20:33",
-      "start_price": 95.1,
-      "target_price": 105.1,
-      "target_2": 111.13,
-      "target_3": 127.17,
-      "stop_loss": 90.17,
+      "opened_at": "2026-04-08 11:15",
+      "start_price": 45.92,
+      "target_price": 50.9,
+      "target_2": 53.9,
+      "target_3": 61.88,
+      "stop_loss": 43.2,
       "signal": "AL",
-      "confidence": 94.1,
-      "score": 25.4,
+      "confidence": 95.8,
+      "score": 30.5,
       "regime_key": "trend_up",
-      "rr_ratio": 2.0284
+      "rr_ratio": 1.8309
     },
     {
       "ticker": "GUBRF",
