@@ -106,6 +106,32 @@
         return '';
     }
 
+    function escapeAttr(text) {
+        return String(text || '')
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
+    function getResolutionReason(record) {
+        var days = Number(record && record.days_to_result || 0);
+        var pl = Number(record && record.profit_pct || 0);
+        var plText = (pl >= 0 ? '+' : '') + pl.toFixed(2) + '%';
+
+        if (record && record.status === 'HIT') {
+            var level = record.hit_level || 'H1';
+            return 'Hedef ' + level + ' seviyesine temas ettigi icin kapandi. Sure: ' + days + ' gun.';
+        }
+        if (record && record.status === 'STOPPED') {
+            return 'Stop-loss seviyesine temas ettigi icin kapandi. Sure: ' + days + ' gun.';
+        }
+        if (record && record.managed_exit) {
+            return 'Sure doldu; yonetimli cikis kabul edildi (' + plText + ').';
+        }
+        return 'Sure limiti doldugu icin hedef/stop gelmeden kapandi.';
+    }
+
     /* ── rendering ─────────────────────────────────── */
 
     function renderHeroMeta() {
@@ -124,23 +150,262 @@
         }
     }
 
+    function renderSampleWarning() {
+        var band = document.getElementById('sampleWarningBand');
+        if (!band) return;
+
+        var overview = (performanceData && performanceData.overview) || {};
+        var suff = overview.sample_sufficiency || {};
+        var reliability = (performanceData && performanceData.reliability) || {};
+        var ci = overview.hit_rate_ci95 || {};
+
+        var isSufficient = !!suff.is_sufficient;
+        var relLevel = String(reliability.level || '').toLowerCase();
+        if (isSufficient && relLevel === 'high') {
+            band.classList.remove('show');
+            band.innerHTML = '';
+            return;
+        }
+
+        var remaining = Number(suff.remaining || 0);
+        var ciText = '--';
+        if (ci.lower != null && ci.upper != null) {
+            ciText = '%' + Number(ci.lower).toFixed(1) + ' - %' + Number(ci.upper).toFixed(1);
+        }
+
+        var head = !isSufficient
+            ? 'Orneklem Uyarisi'
+            : 'Guvenilirlik Uyarisi';
+
+        var body = !isSufficient
+            ? 'Modelin istatistiksel gucu icin en az ' + (suff.min_recommended || 30) + ' kayit onerilir. Kalan: ' + remaining + '.'
+            : 'Orneklem yeterli gorunse de guven seviyesi ' + (reliability.level || 'belirsiz') + '.';
+
+        band.innerHTML =
+            '<strong>' + head + ':</strong> ' + body +
+            ' CI95 araligi: ' + ciText + '.';
+        band.classList.add('show');
+    }
+
+    function renderModeBadge() {
+        var badge = document.getElementById('betaModeBadge');
+        if (!badge) return;
+
+        var overview = (performanceData && performanceData.overview) || {};
+        var suff = overview.sample_sufficiency || {};
+        var total = Number(overview.total || 0);
+        var minRec = Number(suff.min_recommended || 30);
+        if (minRec < 1) minRec = 30;
+
+        var isSufficient = !!suff.is_sufficient;
+        var remaining = Number(
+            suff.remaining != null
+                ? suff.remaining
+                : Math.max(0, minRec - total)
+        );
+
+        badge.classList.add('show');
+        if (!isSufficient || total < minRec) {
+            badge.classList.remove('is-live');
+            badge.classList.add('is-beta');
+            badge.textContent = 'BETA MODU • ' + total + '/' + minRec + ' islem';
+            badge.setAttribute(
+                'title',
+                'Orneklem henuz guvenli degil. En az ' + remaining + ' islem daha gerekli.'
+            );
+            return;
+        }
+
+        badge.classList.remove('is-beta');
+        badge.classList.add('is-live');
+        badge.textContent = 'CANLI MOD • ' + total + ' islem';
+        badge.setAttribute('title', 'Orneklem esigi gecildi; canli mod guven seviyesi daha yuksek.');
+    }
+
+    function parseDateStamp(value) {
+        if (!value) return 0;
+        var text = String(value).trim();
+        if (!text) return 0;
+
+        var normalized = text.replace(' ', 'T');
+        var ts = Date.parse(normalized);
+        if (!isNaN(ts)) return ts;
+
+        ts = Date.parse(normalized + 'Z');
+        return isNaN(ts) ? 0 : ts;
+    }
+
+    function computeEquityStats(records) {
+        if (!records || !records.length) return null;
+
+        var usable = [];
+        for (var i = 0; i < records.length; i++) {
+            var r = records[i] || {};
+            var pl = (r.profit_pct != null) ? Number(r.profit_pct) : calcProfitLoss(r.direction, r.start_price, r.close_price);
+            if (pl == null || isNaN(pl)) continue;
+            usable.push({
+                pct: pl,
+                ts: parseDateStamp(r.closed_at || r.opened_at)
+            });
+        }
+        if (!usable.length) return null;
+
+        usable.sort(function (a, b) { return a.ts - b.ts; });
+
+        var equity = 100;
+        var peak = 100;
+        var maxDrawdown = 0;
+        var points = [equity];
+        var wins = 0;
+        var losses = 0;
+
+        for (var j = 0; j < usable.length; j++) {
+            var pct = usable[j].pct;
+            if (pct >= 0) wins++;
+            else losses++;
+
+            var factor = 1 + (pct / 100);
+            if (factor < 0.01) factor = 0.01;
+            equity *= factor;
+            points.push(equity);
+
+            if (equity > peak) peak = equity;
+            var drawdown = ((equity - peak) / peak) * 100;
+            if (drawdown < maxDrawdown) maxDrawdown = drawdown;
+        }
+
+        return {
+            totalTrades: usable.length,
+            wins: wins,
+            losses: losses,
+            finalEquity: equity,
+            totalReturn: equity - 100,
+            maxDrawdown: maxDrawdown,
+            points: points
+        };
+    }
+
+    function buildSparklineSvg(points) {
+        if (!points || points.length < 2) return '';
+
+        var width = 220;
+        var height = 56;
+        var pad = 4;
+
+        var min = points[0];
+        var max = points[0];
+        for (var i = 1; i < points.length; i++) {
+            if (points[i] < min) min = points[i];
+            if (points[i] > max) max = points[i];
+        }
+        if (max === min) max = min + 1;
+
+        var denominator = max - min;
+        var chartW = width - (pad * 2);
+        var chartH = height - (pad * 2);
+
+        var linePoints = [];
+        for (var j = 0; j < points.length; j++) {
+            var x = pad + (j * chartW / (points.length - 1));
+            var y = height - pad - ((points[j] - min) / denominator) * chartH;
+            linePoints.push(x.toFixed(1) + ',' + y.toFixed(1));
+        }
+
+        var baselineY = height - pad - ((100 - min) / denominator) * chartH;
+        if (!isFinite(baselineY)) baselineY = height / 2;
+        baselineY = Math.max(pad, Math.min(height - pad, baselineY));
+
+        var isUp = points[points.length - 1] >= points[0];
+        var cls = isUp ? 'up' : 'down';
+
+        return ''
+            + '<svg viewBox="0 0 220 56" role="img" aria-label="Equity curve">'
+            + '<line class="baseline" x1="4" y1="' + baselineY.toFixed(1) + '" x2="216" y2="' + baselineY.toFixed(1) + '"></line>'
+            + '<polyline class="curve ' + cls + '" points="' + linePoints.join(' ') + '"></polyline>'
+            + '</svg>';
+    }
+
+    function renderEquityAudit() {
+        var returnEl = document.getElementById('equityReturnValue');
+        var drawdownEl = document.getElementById('maxDrawdownValue');
+        var metaEl = document.getElementById('equityMeta');
+        var sparkEl = document.getElementById('equitySparkline');
+        if (!returnEl || !drawdownEl || !metaEl || !sparkEl) return;
+
+        var records = (performanceData && performanceData.recent_resolved) || [];
+        var stats = computeEquityStats(records);
+        if (!stats) {
+            returnEl.textContent = '--%';
+            drawdownEl.textContent = '--%';
+            metaEl.textContent = 'Yeterli islem verisi yok.';
+            sparkEl.innerHTML = '';
+            return;
+        }
+
+        returnEl.textContent = formatPct(stats.totalReturn);
+        returnEl.classList.remove('profit-positive', 'profit-negative');
+        returnEl.classList.add(stats.totalReturn >= 0 ? 'profit-positive' : 'profit-negative');
+
+        drawdownEl.textContent = stats.maxDrawdown.toFixed(1) + '%';
+        drawdownEl.classList.remove('profit-positive', 'profit-negative');
+        drawdownEl.classList.add(stats.maxDrawdown < 0 ? 'profit-negative' : 'profit-positive');
+
+        metaEl.textContent =
+            stats.totalTrades + ' islem | Win: ' + stats.wins
+            + ' | Loss: ' + stats.losses
+            + ' | Son sermaye: ' + stats.finalEquity.toFixed(1);
+
+        sparkEl.innerHTML = buildSparklineSvg(stats.points);
+    }
+
     function renderKpis() {
         var overview = (performanceData && performanceData.overview) || {};
         var daily = (performanceData && performanceData.daily) || {};
         var weekly = (performanceData && performanceData.weekly) || {};
         var status = (performanceData && performanceData.status_summary) || {};
 
-        document.getElementById('overallHitRateLarge').textContent = formatPct(overview.hit_rate || 0);
-        document.getElementById('overallHitMetaLarge').textContent = (overview.hits || 0) + '/' + (overview.total || 0) + ' hedef';
+        var overallRate = (overview.success_rate != null) ? overview.success_rate : overview.hit_rate;
+        var dailyRate = (daily.success_rate != null) ? daily.success_rate : daily.hit_rate;
+        var weeklyRate = (weekly.success_rate != null) ? weekly.success_rate : weekly.hit_rate;
+        var overallHitRate = Number(overview.hit_rate || 0);
+        var dailyHitRate = Number(daily.hit_rate || 0);
+        var weeklyHitRate = Number(weekly.hit_rate || 0);
 
-        document.getElementById('dailyHitRateLarge').textContent = formatPct(daily.hit_rate || 0);
-        document.getElementById('dailyHitMetaLarge').textContent = (daily.hits || 0) + '/' + (daily.total || 0) + ' | Ort: ' + Number(daily.avg_days_to_hit || 0).toFixed(1) + ' gun';
+        document.getElementById('overallHitRateLarge').textContent = formatPct(overallRate || 0);
+        var overallHitChip = document.getElementById('overallHitChip');
+        var overallSuccessChip = document.getElementById('overallSuccessChip');
+        if (overallHitChip) overallHitChip.textContent = 'Hit: ' + formatPct(overallHitRate);
+        if (overallSuccessChip) overallSuccessChip.textContent = 'Basari: ' + formatPct(overallRate || 0);
+        document.getElementById('overallHitMetaLarge').textContent =
+            (overview.successes || 0) + '/' + (overview.total || 0) + ' basarili | HIT: '
+            + (overview.hits || 0) + ' | Yonetimli: ' + (overview.managed_exits || 0);
 
-        document.getElementById('weeklyHitRateLarge').textContent = formatPct(weekly.hit_rate || 0);
-        document.getElementById('weeklyHitMetaLarge').textContent = (weekly.hits || 0) + '/' + (weekly.total || 0) + ' | Ort: ' + Number(weekly.avg_days_to_hit || 0).toFixed(1) + ' gun';
+        document.getElementById('dailyHitRateLarge').textContent = formatPct(dailyRate || 0);
+        var dailyHitChip = document.getElementById('dailyHitChip');
+        var dailySuccessChip = document.getElementById('dailySuccessChip');
+        if (dailyHitChip) dailyHitChip.textContent = 'Hit: ' + formatPct(dailyHitRate);
+        if (dailySuccessChip) dailySuccessChip.textContent = 'Basari: ' + formatPct(dailyRate || 0);
+        document.getElementById('dailyHitMetaLarge').textContent =
+            (daily.successes || 0) + '/' + (daily.total || 0) + ' | HIT: ' + (daily.hits || 0)
+            + ' | Yonetimli: ' + (daily.managed_exits || 0)
+            + ' | Ort: ' + Number(daily.avg_days_to_hit || 0).toFixed(1) + ' gun';
+
+        document.getElementById('weeklyHitRateLarge').textContent = formatPct(weeklyRate || 0);
+        var weeklyHitChip = document.getElementById('weeklyHitChip');
+        var weeklySuccessChip = document.getElementById('weeklySuccessChip');
+        if (weeklyHitChip) weeklyHitChip.textContent = 'Hit: ' + formatPct(weeklyHitRate);
+        if (weeklySuccessChip) weeklySuccessChip.textContent = 'Basari: ' + formatPct(weeklyRate || 0);
+        document.getElementById('weeklyHitMetaLarge').textContent =
+            (weekly.successes || 0) + '/' + (weekly.total || 0) + ' | HIT: ' + (weekly.hits || 0)
+            + ' | Yonetimli: ' + (weekly.managed_exits || 0)
+            + ' | Ort: ' + Number(weekly.avg_days_to_hit || 0).toFixed(1) + ' gun';
 
         document.getElementById('statusSummaryValue').textContent = (status.open || 0) + ' / ' + (status.resolved || 0);
-        document.getElementById('statusSummaryMeta').textContent = 'HIT: ' + (status.hits || 0) + ' • STOPPED: ' + (status.stopped || 0) + ' • EXPIRED: ' + (status.expired || 0);
+        document.getElementById('statusSummaryMeta').textContent =
+            'HIT: ' + (status.hits || 0)
+            + ' • YONETIMLI: ' + (status.managed_exits || 0)
+            + ' • STOPPED: ' + (status.stopped || 0)
+            + ' • EXPIRED: ' + (status.expired || 0);
     }
 
     function renderAudit() {
@@ -167,14 +432,20 @@
         var r90 = rolling['90d'] || {};
         var weighted = rolling.weighted || {};
 
-        document.getElementById('rolling30Rate').textContent = formatPct(r30.hit_rate || 0);
-        document.getElementById('rolling30Meta').textContent = (r30.hits || 0) + '/' + (r30.total || 0) + ' son 30 gun';
+        document.getElementById('rolling30Rate').textContent = formatPct((r30.success_rate != null) ? r30.success_rate : (r30.hit_rate || 0));
+        document.getElementById('rolling30Meta').textContent =
+            (r30.successes || 0) + '/' + (r30.total || 0) + ' son 30 gun | HIT: '
+            + (r30.hits || 0) + ' | Yonetimli: ' + (r30.managed_exits || 0);
 
-        document.getElementById('rolling90Rate').textContent = formatPct(r90.hit_rate || 0);
-        document.getElementById('rolling90Meta').textContent = (r90.hits || 0) + '/' + (r90.total || 0) + ' son 90 gun';
+        document.getElementById('rolling90Rate').textContent = formatPct((r90.success_rate != null) ? r90.success_rate : (r90.hit_rate || 0));
+        document.getElementById('rolling90Meta').textContent =
+            (r90.successes || 0) + '/' + (r90.total || 0) + ' son 90 gun | HIT: '
+            + (r90.hits || 0) + ' | Yonetimli: ' + (r90.managed_exits || 0);
 
         document.getElementById('weightedRate').textContent = formatPct(weighted.hit_rate || 0);
         document.getElementById('weightedMeta').textContent = 'Yari omur: ' + Number(weighted.half_life_days || 30) + ' gun';
+
+        renderEquityAudit();
     }
 
     function renderOpenTargets() {
@@ -223,7 +494,13 @@
 
         for (var i = 0; i < items.length && i < 200; i++) {
             var r = items[i];
-            if (currentStatusFilter !== 'ALL' && r.status !== currentStatusFilter) continue;
+            if (currentStatusFilter !== 'ALL') {
+                if (currentStatusFilter === 'HIT') {
+                    if (!(r.status === 'HIT' || r.managed_exit)) continue;
+                } else if (r.status !== currentStatusFilter) {
+                    continue;
+                }
+            }
 
             var pl = calcProfitLoss(r.direction, r.start_price, r.close_price);
             var absPl = pl !== null ? Math.abs(pl) : 0;
@@ -277,6 +554,7 @@
                 else badgeText = 'Hedef 1 ✓';
             }
             else if (r.status === 'STOPPED') { badgeClass = 'stopped'; badgeText = 'Stop-Loss'; }
+            else if (r.managed_exit) { badgeClass = 'hold'; badgeText = 'Yonetimli Cikis'; }
             else { badgeClass = 'sell'; badgeText = 'Süre Aşımı'; }
 
             // Use backend hit_level if available, else detect from targets
@@ -304,7 +582,8 @@
             rows += '<td data-label="Kapanış">' + formatPrice(r.close_price, r.ticker) + '</td>';
             rows += '<td data-label="Kâr/Zarar" class="' + plClass + '"><strong>' + plText + '</strong></td>';
             rows += '<td data-label="Gün">' + Number(r.days_to_result || 0) + '</td>';
-            rows += '<td data-label="Durum"><span class="signal-badge ' + badgeClass + '"><span class="dot"></span>' + badgeText + '</span></td>';
+            var reasonText = escapeAttr(getResolutionReason(r));
+            rows += '<td data-label="Durum"><div class="status-cell-wrap"><span class="signal-badge ' + badgeClass + '"><span class="dot"></span>' + badgeText + '</span><span class="row-info-tip" title="' + reasonText + '" aria-label="' + reasonText + '">i</span></div></td>';
             rows += '</tr>';
         }
         return rows;
@@ -354,7 +633,9 @@
 
     function renderAll() {
         renderHeroMeta();
+        renderModeBadge();
         renderKpis();
+        renderSampleWarning();
         renderAudit();
         renderOpenTargets();
         renderResolved();

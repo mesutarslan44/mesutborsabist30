@@ -25,6 +25,14 @@ import math
 
 # Çıktı dizini
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "site", "data")
+YF_CACHE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "python", "data", "yf_cache")
+
+os.makedirs(YF_CACHE_DIR, exist_ok=True)
+try:
+    # Keep timezone cache in workspace to avoid permission errors.
+    yf.set_tz_cache_location(YF_CACHE_DIR)
+except Exception:
+    pass
 
 def clean_nan(obj):
     if isinstance(obj, dict):

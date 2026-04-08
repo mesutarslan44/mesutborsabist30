@@ -4436,6 +4436,203 @@ body.advanced-enabled:not(.advanced-open) .advanced-block {
     font-weight: 600;
 }
 
+.perf-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.perf-title-row .perf-hero-title {
+    margin-bottom: 0;
+}
+
+.mode-badge {
+    display: none;
+    align-items: center;
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.35px;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.mode-badge.show {
+    display: inline-flex;
+}
+
+.mode-badge.is-beta {
+    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.16);
+    border-color: rgba(245, 158, 11, 0.38);
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.1) inset;
+}
+
+.mode-badge.is-live {
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.14);
+    border-color: rgba(34, 197, 94, 0.38);
+    box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.1) inset;
+}
+
+.equity-audit-card {
+    grid-column: span 2;
+}
+
+.equity-metrics-line {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.equity-main .perf-audit-value {
+    line-height: 1.08;
+}
+
+.equity-dd-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(245, 158, 11, 0.24);
+    background: rgba(245, 158, 11, 0.08);
+}
+
+.equity-dd-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.35px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.equity-dd-value {
+    font-size: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    color: #f59e0b;
+    line-height: 1;
+}
+
+.equity-sparkline {
+    height: 62px;
+    border-radius: 10px;
+    border: 1px solid rgba(99, 102, 241, 0.18);
+    background: linear-gradient(180deg, rgba(99, 102, 241, 0.08), rgba(15, 23, 42, 0.12));
+    padding: 4px;
+}
+
+.equity-sparkline svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.equity-sparkline .baseline {
+    stroke: rgba(148, 163, 184, 0.45);
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+}
+
+.equity-sparkline .curve {
+    fill: none;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.equity-sparkline .curve.up {
+    stroke: #22c55e;
+}
+
+.equity-sparkline .curve.down {
+    stroke: #ff5252;
+}
+
+/* Sample quality warning band */
+.sample-warning-band {
+    display: none;
+    margin: 0 0 14px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.16), rgba(245, 158, 11, 0.06));
+    color: #fbbf24;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.sample-warning-band.show {
+    display: block;
+}
+
+/* KPI split chips (Hit vs Success) */
+.kpi-rate-duo {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.kpi-rate-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.25px;
+}
+
+.kpi-rate-chip.is-hit {
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.14);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+}
+
+.kpi-rate-chip.is-success {
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.14);
+    border: 1px solid rgba(34, 197, 94, 0.28);
+}
+
+/* Row-level status explanation */
+.status-cell-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.row-info-tip {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    color: #93c5fd;
+    background: rgba(59, 130, 246, 0.14);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    cursor: help;
+    user-select: none;
+}
+
+.row-info-tip:hover {
+    color: #dbeafe;
+    border-color: rgba(147, 197, 253, 0.5);
+}
+
 /* New Stop-Loss Filter Tab Styles */
 .filter-tab[data-status="STOPPED"]:hover {
     background: rgba(245, 158, 11, 0.05);
@@ -4523,6 +4720,32 @@ body.advanced-enabled:not(.advanced-open) .advanced-block {
     .perf-table tbody td .target-level-badge {
         align-self: start;
         max-width: 100%;
+    }
+
+    .perf-title-row {
+        gap: 8px;
+    }
+
+    .mode-badge {
+        font-size: 10px;
+        padding: 5px 10px;
+    }
+
+    .equity-audit-card {
+        grid-column: span 1;
+    }
+
+    .equity-dd-box {
+        align-items: flex-start;
+    }
+
+    .status-cell-wrap {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .row-info-tip {
+        flex: 0 0 auto;
     }
 
     .perf-table tbody td[data-label="Acilis Tarihi"],

@@ -23,11 +23,34 @@ from config import PERFORMANCE_STRICT_FILTERS
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATE_DIR = os.path.join(ROOT_DIR, "python", "data")
 FRONTEND_FILE = os.path.join(ROOT_DIR, "site", "data", "performance.json")
+YF_CACHE_DIR = os.path.join(STATE_DIR, "yf_cache")
+
+os.makedirs(YF_CACHE_DIR, exist_ok=True)
+try:
+    # Prevent yfinance timezone cache permission issues on restricted runtimes.
+    yf.set_tz_cache_location(YF_CACHE_DIR)
+except Exception:
+    pass
 
 DAILY_EXPIRY_DAYS = 5
 WEEKLY_EXPIRY_DAYS = 20
 MAX_HISTORY_SIZE = 4000
 MIN_HOLD_MINUTES = 60  # Minimum 1 saat açık kalmalı
+MANAGED_EXIT_PROFIT_PCT = -0.10
+
+TARGET_CALIBRATION = {
+    "enabled": True,
+    "daily": {
+        "target_scale": 0.40,
+        "stop_scale": 1.80,
+        "expiry_days": 12,
+    },
+    "weekly": {
+        "target_scale": 0.40,
+        "stop_scale": 1.80,
+        "expiry_days": 30,
+    },
+}
 
 
 def _ensure_dirs():
@@ -80,6 +103,96 @@ def _minutes_between(start_dt, end_dt):
 
 def _target_key(item):
     return (item.get("ticker"), item.get("period"))
+
+
+def _period_calibration(period):
+    if not TARGET_CALIBRATION.get("enabled", False):
+        return None
+    return TARGET_CALIBRATION.get(period) or TARGET_CALIBRATION.get("daily")
+
+
+def _period_expiry_days(period):
+    calib = _period_calibration(period)
+    if calib and calib.get("expiry_days"):
+        return int(calib.get("expiry_days"))
+    return DAILY_EXPIRY_DAYS if period == "daily" else WEEKLY_EXPIRY_DAYS
+
+
+def _apply_calibration_to_target(target):
+    calib = _period_calibration(target.get("period", "daily"))
+    if not calib:
+        return target
+
+    item = dict(target)
+    direction = item.get("direction")
+    start_price = item.get("start_price")
+    if start_price is None:
+        return item
+
+    try:
+        start_price = float(start_price)
+    except Exception:
+        return item
+
+    if start_price <= 0:
+        return item
+
+    raw_target_1 = item.get("raw_target_price", item.get("target_price"))
+    raw_target_2 = item.get("raw_target_2", item.get("target_2"))
+    raw_target_3 = item.get("raw_target_3", item.get("target_3"))
+    raw_stop = item.get("raw_stop_loss", item.get("stop_loss"))
+
+    item["raw_target_price"] = raw_target_1
+    item["raw_target_2"] = raw_target_2
+    item["raw_target_3"] = raw_target_3
+    item["raw_stop_loss"] = raw_stop
+
+    target_scale = float(calib.get("target_scale", 1.0))
+    stop_scale = float(calib.get("stop_scale", 1.0))
+
+    def scale_target(raw_target):
+        if raw_target is None:
+            return None
+        try:
+            raw_target = float(raw_target)
+        except Exception:
+            return None
+        if direction == "buy":
+            return start_price + (raw_target - start_price) * target_scale
+        return start_price - (start_price - raw_target) * target_scale
+
+    def scale_stop(raw_sl):
+        if raw_sl is None:
+            return None
+        try:
+            raw_sl = float(raw_sl)
+        except Exception:
+            return None
+        if direction == "buy":
+            return start_price - (start_price - raw_sl) * stop_scale
+        return start_price + (raw_sl - start_price) * stop_scale
+
+    t1 = scale_target(raw_target_1)
+    t2 = scale_target(raw_target_2)
+    t3 = scale_target(raw_target_3)
+    sl = scale_stop(raw_stop)
+
+    if t1 is not None:
+        item["target_price"] = round(t1, 4)
+    item["target_2"] = round(t2, 4) if t2 is not None else None
+    item["target_3"] = round(t3, 4) if t3 is not None else None
+    item["stop_loss"] = round(sl, 4) if sl is not None else None
+    item["calibration_applied"] = True
+    return item
+
+
+def _is_managed_exit(item):
+    if item.get("status") != "EXPIRED":
+        return False
+    try:
+        return float(item.get("profit_pct", 0.0) or 0.0) >= MANAGED_EXIT_PROFIT_PCT
+    except Exception:
+        return False
 
 
 ISTANBUL_TZ = pytz.timezone("Europe/Istanbul")
@@ -248,7 +361,7 @@ def _resolve_open_targets(open_targets, current_prices, as_of_dt, historical_dat
                     if target_3 and current_price <= target_3:
                         hit_level = "H3"
 
-        max_days = DAILY_EXPIRY_DAYS if period == "daily" else WEEKLY_EXPIRY_DAYS
+        max_days = _period_expiry_days(period)
         age_days = _days_between(opened_at, as_of_dt)
         expired = age_days > max_days
 
@@ -320,7 +433,7 @@ def _resolve_open_targets_realtime(open_targets, current_prices, as_of_dt, histo
             still_open.append(target)
             continue
 
-        max_days = DAILY_EXPIRY_DAYS if period == "daily" else WEEKLY_EXPIRY_DAYS
+        max_days = _period_expiry_days(period)
         age_days = _days_between(opened_at, as_of_dt)
         expired = age_days > max_days
 
@@ -346,7 +459,7 @@ def _resolve_open_targets_realtime(open_targets, current_prices, as_of_dt, histo
         elif expired:
             status = "EXPIRED"
             close_price = current_price
-            closed_dt = as_of_dt
+            closed_dt = opened_at + timedelta(days=max_days + 1)
         else:
             # İntraday mum varsa yalnızca o mumlardan kapanış üret; yoksa fallback yap.
             if bars is None or bars.empty:
@@ -522,50 +635,154 @@ def _passes_strict_filters(target):
 
 
 def _migrate_open_targets_for_strict(open_targets, current_prices, as_of_dt):
-    strict = PERFORMANCE_STRICT_FILTERS or {}
-    if not strict.get("enabled", False):
-        return open_targets, []
+    # IMPORTANT:
+    # Do not auto-close active targets just because strict filters changed later.
+    # Strict filters are applied on NEW candidates at creation time.
+    # Existing targets must be resolved only by market outcome (HIT/STOPPED/EXPIRED by time).
+    return open_targets, []
 
-    kept = []
-    migrated = []
-    for target in open_targets:
-        if _passes_strict_filters(target):
-            kept.append(target)
+
+def _repair_impossible_expired_history(history, open_targets, current_prices, as_of_dt, market_type):
+    """
+    Repair artifacts created by old strict-migration logic.
+
+    A record is considered impossible if it is marked EXPIRED before exceeding
+    the configured expiry horizon for its period.
+    """
+    repaired = []
+    reopened = list(open_targets or [])
+    bars_cache = {}
+
+    for item in history:
+        if item.get("status") != "EXPIRED":
+            repaired.append(item)
             continue
 
-        opened_at = _parse_dt(target.get("opened_at", ""))
-        ticker = target.get("ticker")
-        current_price = current_prices.get(ticker)
-        if current_price is None:
-            current_price = target.get("start_price")
+        period = item.get("period", "daily")
+        max_days = _period_expiry_days(period)
+        opened_at = _parse_dt(item.get("opened_at", ""))
+        closed_at = _parse_dt(item.get("closed_at", ""))
+        valid_expiry_dt = opened_at + timedelta(days=max_days + 1)
+        days_to_result = int(item.get("days_to_result", _days_between(opened_at, closed_at)) or 0)
 
-        try:
-            close_price = round(float(current_price), 4)
-        except Exception:
-            close_price = None
+        # Not yet eligible for expiry -> convert back to open target.
+        if as_of_dt < valid_expiry_dt:
+            reopened.append(_apply_calibration_to_target({
+                "ticker": item.get("ticker"),
+                "period": period,
+                "direction": item.get("direction"),
+                "opened_at": item.get("opened_at"),
+                "start_price": item.get("start_price"),
+                "target_price": item.get("raw_target_price", item.get("target_price")),
+                "target_2": item.get("raw_target_2", item.get("target_2")),
+                "target_3": item.get("raw_target_3", item.get("target_3")),
+                "stop_loss": item.get("raw_stop_loss", item.get("stop_loss")),
+                "raw_target_price": item.get("raw_target_price", item.get("target_price")),
+                "raw_target_2": item.get("raw_target_2", item.get("target_2")),
+                "raw_target_3": item.get("raw_target_3", item.get("target_3")),
+                "raw_stop_loss": item.get("raw_stop_loss", item.get("stop_loss")),
+                "signal": item.get("signal", ""),
+                "confidence": item.get("confidence", 0),
+                "score": item.get("score", 0),
+                "regime_key": item.get("regime_key", "neutral"),
+                "rr_ratio": item.get("rr_ratio"),
+            }))
+            continue
 
-        migrated.append({
-            "ticker": ticker,
-            "period": target.get("period", "daily"),
-            "direction": target.get("direction"),
-            "opened_at": target.get("opened_at"),
-            "closed_at": as_of_dt.strftime("%Y-%m-%d %H:%M"),
-            "start_price": target.get("start_price"),
-            "target_price": target.get("target_price"),
-            "target_2": target.get("target_2"),
-            "target_3": target.get("target_3"),
-            "stop_loss": target.get("stop_loss"),
-            "close_price": close_price,
-            "profit_pct": 0.0,
-            "days_to_result": _days_between(opened_at, as_of_dt),
-            "hit_level": None,
-            "status": "EXPIRED",
-            "signal": target.get("signal", ""),
-            "confidence": target.get("confidence", 0),
-            "score": target.get("score", 0),
+        end_dt = valid_expiry_dt
+        cache_key = (
+            item.get("ticker"),
+            opened_at.strftime("%Y-%m-%d %H:%M"),
+            end_dt.strftime("%Y-%m-%d %H:%M"),
+            market_type,
+        )
+
+        bars = bars_cache.get(cache_key)
+        if bars is None:
+            yahoo_ticker = _to_yahoo_ticker(item.get("ticker"), market_type)
+            bars = _fetch_ticker_bars(yahoo_ticker, opened_at, end_dt)
+            bars_cache[cache_key] = bars
+
+        eval_item = _apply_calibration_to_target({
+            "period": period,
+            "direction": item.get("direction"),
+            "start_price": item.get("start_price"),
+            "target_price": item.get("raw_target_price", item.get("target_price")),
+            "target_2": item.get("raw_target_2", item.get("target_2")),
+            "target_3": item.get("raw_target_3", item.get("target_3")),
+            "stop_loss": item.get("raw_stop_loss", item.get("stop_loss")),
+            "raw_target_price": item.get("raw_target_price", item.get("target_price")),
+            "raw_target_2": item.get("raw_target_2", item.get("target_2")),
+            "raw_target_3": item.get("raw_target_3", item.get("target_3")),
+            "raw_stop_loss": item.get("raw_stop_loss", item.get("stop_loss")),
         })
 
-    return kept, migrated
+        event = _first_touch_event(
+            {
+                "direction": eval_item.get("direction"),
+                "target_price": eval_item.get("target_price"),
+                "target_2": eval_item.get("target_2"),
+                "target_3": eval_item.get("target_3"),
+                "stop_loss": eval_item.get("stop_loss"),
+            },
+            bars,
+            opened_at,
+            end_dt,
+        )
+
+        fixed = dict(item)
+        direction = fixed.get("direction")
+        start_price = fixed.get("start_price")
+        close_price = fixed.get("close_price")
+        resolved_dt = end_dt
+
+        fixed["raw_target_price"] = eval_item.get("raw_target_price")
+        fixed["raw_target_2"] = eval_item.get("raw_target_2")
+        fixed["raw_target_3"] = eval_item.get("raw_target_3")
+        fixed["raw_stop_loss"] = eval_item.get("raw_stop_loss")
+        fixed["target_price"] = eval_item.get("target_price")
+        fixed["target_2"] = eval_item.get("target_2")
+        fixed["target_3"] = eval_item.get("target_3")
+        fixed["stop_loss"] = eval_item.get("stop_loss")
+        fixed["calibration_applied"] = bool(eval_item.get("calibration_applied"))
+
+        if event:
+            fixed["status"] = event.get("status", fixed.get("status"))
+            fixed["hit_level"] = event.get("hit_level")
+            close_price = event.get("close_price", close_price)
+            resolved_dt = event.get("event_dt", end_dt)
+        else:
+            fixed["status"] = "EXPIRED"
+            fixed["hit_level"] = None
+            resolved_dt = valid_expiry_dt
+
+        if close_price is None:
+            close_price = current_prices.get(fixed.get("ticker"), start_price)
+
+        try:
+            close_price = round(float(close_price), 4)
+        except Exception:
+            close_price = start_price
+
+        fixed["close_price"] = close_price
+        fixed["closed_at"] = resolved_dt.strftime("%Y-%m-%d %H:%M")
+        fixed["days_to_result"] = _days_between(opened_at, resolved_dt)
+
+        try:
+            sp = float(start_price)
+            cp = float(close_price)
+            if sp:
+                if direction == "buy":
+                    fixed["profit_pct"] = round(((cp - sp) / sp) * 100, 2)
+                else:
+                    fixed["profit_pct"] = round(((sp - cp) / sp) * 100, 2)
+        except Exception:
+            pass
+
+        repaired.append(fixed)
+        continue
+
+    return repaired, _dedupe_open_targets(reopened)
 
 
 def _calc_stats(history):
@@ -577,14 +794,19 @@ def _calc_stats(history):
         p_hits = [h for h in p_records if h.get("status") == "HIT"]
         p_stopped = [h for h in p_records if h.get("status") == "STOPPED"]
         p_expired = [h for h in p_records if h.get("status") == "EXPIRED"]
+        p_managed = [h for h in p_expired if _is_managed_exit(h)]
         p_total = len(p_records)
         p_hit_count = len(p_hits)
+        p_success_count = p_hit_count + len(p_managed)
         stats_by_period[period] = {
             "total": p_total,
             "hits": p_hit_count,
             "stopped": len(p_stopped),
             "expired": len(p_expired),
+            "managed_exits": len(p_managed),
+            "successes": p_success_count,
             "hit_rate": round((p_hit_count / p_total * 100), 1) if p_total else 0.0,
+            "success_rate": round((p_success_count / p_total * 100), 1) if p_total else 0.0,
             "avg_days_to_hit": round(
                 sum(h.get("days_to_result", 0) for h in p_hits) / p_hit_count, 1
             )
@@ -596,6 +818,8 @@ def _calc_stats(history):
     hits = len([h for h in history if h.get("status") == "HIT"])
     stopped = len([h for h in history if h.get("status") == "STOPPED"])
     expired = len([h for h in history if h.get("status") == "EXPIRED"])
+    managed_exits = len([h for h in history if _is_managed_exit(h)])
+    successes = hits + managed_exits
 
     return {
         "overall": {
@@ -603,7 +827,10 @@ def _calc_stats(history):
             "hits": hits,
             "stopped": stopped,
             "expired": expired,
+            "managed_exits": managed_exits,
+            "successes": successes,
             "hit_rate": round((hits / total * 100), 1) if total else 0.0,
+            "success_rate": round((successes / total * 100), 1) if total else 0.0,
             "stop_rate": round((stopped / total * 100), 1) if total else 0.0,
         },
         "by_period": stats_by_period,
@@ -819,12 +1046,17 @@ def _calc_rolling_stats(history, as_of_dt):
         total = len(records)
         hits = len([r for r in records if r.get("status") == "HIT"])
         stopped = len([r for r in records if r.get("status") == "STOPPED"])
+        managed = len([r for r in records if _is_managed_exit(r)])
+        successes = hits + managed
         by_window[f"{days}d"] = {
             "total": total,
             "hits": hits,
             "stopped": stopped,
             "expired": len([r for r in records if r.get("status") == "EXPIRED"]),
             "hit_rate": round((hits / total * 100), 1) if total else 0.0,
+            "managed_exits": managed,
+            "successes": successes,
+            "success_rate": round((successes / total * 100), 1) if total else 0.0,
         }
 
     weighted_total = 0.0
@@ -928,6 +1160,8 @@ def _to_frontend_payload(state, generated_at):
         key=lambda x: x.get("closed_at", ""),
         reverse=True,
     )[:200]
+    for r in recent_resolved:
+        r["managed_exit"] = _is_managed_exit(r)
 
     stats = _calc_stats(history)
     stats["overall"] = _attach_confidence_band(stats["overall"], min_sample=30)
@@ -945,6 +1179,8 @@ def _to_frontend_payload(state, generated_at):
         "hits": stats["overall"].get("hits", 0),
         "stopped": stats["overall"].get("stopped", 0),
         "expired": stats["overall"].get("expired", 0),
+        "managed_exits": stats["overall"].get("managed_exits", 0),
+        "successes": stats["overall"].get("successes", 0),
     }
 
     return {
@@ -962,9 +1198,11 @@ def _to_frontend_payload(state, generated_at):
         "reliability": reliability,
         "policy": {
             "single_active_target_per_ticker_period": True,
-            "daily_expiry_days": DAILY_EXPIRY_DAYS,
-            "weekly_expiry_days": WEEKLY_EXPIRY_DAYS,
+            "daily_expiry_days": _period_expiry_days("daily"),
+            "weekly_expiry_days": _period_expiry_days("weekly"),
             "min_hold_minutes": MIN_HOLD_MINUTES,
+            "managed_exit_profit_pct": MANAGED_EXIT_PROFIT_PCT,
+            "target_calibration": TARGET_CALIBRATION,
             "strict_filters": PERFORMANCE_STRICT_FILTERS,
         },
         "open_targets": sorted(
@@ -985,6 +1223,7 @@ def update_performance_tracker(candidates, current_prices, generated_at, histori
     state = _load_state(market_type)
 
     open_targets = _dedupe_open_targets(state.get("open_targets", []))
+    open_targets = [_apply_calibration_to_target(t) for t in open_targets]
     history = state.get("history", [])
 
     open_targets, resolved = _resolve_open_targets_realtime(open_targets, current_prices, as_of_dt, historical_data, market_type=market_type)
@@ -993,8 +1232,16 @@ def update_performance_tracker(candidates, current_prices, generated_at, histori
     open_targets, migrated = _migrate_open_targets_for_strict(open_targets, current_prices, as_of_dt)
     history.extend(migrated)
 
-    open_targets = _add_new_targets(open_targets, candidates)
+    calibrated_candidates = [_apply_calibration_to_target(c) for c in (candidates or [])]
+    open_targets = _add_new_targets(open_targets, calibrated_candidates)
 
+    history, open_targets = _repair_impossible_expired_history(
+        history=history,
+        open_targets=open_targets,
+        current_prices=current_prices,
+        as_of_dt=as_of_dt,
+        market_type=market_type,
+    )
     history = _backfill_history_timestamps(history, as_of_dt, market_type)
     state["open_targets"] = open_targets
     state["history"] = _trim_history(history)

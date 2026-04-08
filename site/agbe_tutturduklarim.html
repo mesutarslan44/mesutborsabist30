@@ -48,7 +48,10 @@
 
         <section class="perf-hero">
             <div>
-                <h1 class="perf-hero-title">A-G-B-E Performans Merkezi</h1>
+                <div class="perf-title-row">
+                    <h1 class="perf-hero-title">A-G-B-E Performans Merkezi</h1>
+                    <span class="mode-badge" id="betaModeBadge">BETA MODU</span>
+                </div>
                 <p class="perf-hero-desc">
                     Bu panel, sinyal motorunun gercek piyasa sonucunu denetler: hangi hedefler tuttu, hangileri sure doldu,
                     gunluk/haftalik kalitesi ne durumda ve su an acikta kalan islemler ne kadar saglikli.
@@ -117,6 +120,20 @@
                 <div class="perf-audit-title">Agirlikli Isabet</div>
                 <div class="perf-audit-value" id="weightedRate">--%</div>
                 <div class="perf-audit-meta" id="weightedMeta">--</div>
+            </article>
+            <article class="perf-audit-card equity-audit-card">
+                <div class="perf-audit-title">Equity Curve / Max Drawdown</div>
+                <div class="equity-metrics-line">
+                    <div class="equity-main">
+                        <div class="perf-audit-value" id="equityReturnValue">--%</div>
+                        <div class="perf-audit-meta" id="equityMeta">--</div>
+                    </div>
+                    <div class="equity-dd-box">
+                        <span class="equity-dd-label">Max DD</span>
+                        <strong class="equity-dd-value" id="maxDrawdownValue">--%</strong>
+                    </div>
+                </div>
+                <div class="equity-sparkline" id="equitySparkline" aria-label="Equity curve grafik"></div>
             </article>
         </section>
 

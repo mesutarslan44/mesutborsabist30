@@ -1,15 +1,18 @@
 {
-  "generated_at": "2026-04-08 20:40",
+  "generated_at": "2026-04-09 01:51",
   "overview": {
     "total": 1,
-    "hits": 0,
+    "hits": 1,
     "stopped": 0,
-    "expired": 1,
-    "hit_rate": 0.0,
+    "expired": 0,
+    "managed_exits": 0,
+    "successes": 1,
+    "hit_rate": 100.0,
+    "success_rate": 100.0,
     "stop_rate": 0.0,
     "hit_rate_ci95": {
-      "lower": 0.0,
-      "upper": 79.3
+      "lower": 20.7,
+      "upper": 100.0
     },
     "sample_sufficiency": {
       "min_recommended": 30,
@@ -22,7 +25,10 @@
     "hits": 0,
     "stopped": 0,
     "expired": 0,
+    "managed_exits": 0,
+    "successes": 0,
     "hit_rate": 0.0,
+    "success_rate": 0.0,
     "avg_days_to_hit": 0.0,
     "hit_rate_ci95": {
       "lower": 0.0,
@@ -36,14 +42,17 @@
   },
   "weekly": {
     "total": 1,
-    "hits": 0,
+    "hits": 1,
     "stopped": 0,
-    "expired": 1,
-    "hit_rate": 0.0,
-    "avg_days_to_hit": 0.0,
+    "expired": 0,
+    "managed_exits": 0,
+    "successes": 1,
+    "hit_rate": 100.0,
+    "success_rate": 100.0,
+    "avg_days_to_hit": 5.0,
     "hit_rate_ci95": {
-      "lower": 0.0,
-      "upper": 79.3
+      "lower": 20.7,
+      "upper": 100.0
     },
     "sample_sufficiency": {
       "min_recommended": 20,
@@ -57,40 +66,51 @@
       "hits": 0,
       "stopped": 0,
       "expired": 0,
-      "hit_rate": 0.0
+      "hit_rate": 0.0,
+      "managed_exits": 0,
+      "successes": 0,
+      "success_rate": 0.0
     },
     "30d": {
       "total": 1,
-      "hits": 0,
+      "hits": 1,
       "stopped": 0,
-      "expired": 1,
-      "hit_rate": 0.0
+      "expired": 0,
+      "hit_rate": 100.0,
+      "managed_exits": 0,
+      "successes": 1,
+      "success_rate": 100.0
     },
     "90d": {
       "total": 1,
-      "hits": 0,
+      "hits": 1,
       "stopped": 0,
-      "expired": 1,
-      "hit_rate": 0.0
+      "expired": 0,
+      "hit_rate": 100.0,
+      "managed_exits": 0,
+      "successes": 1,
+      "success_rate": 100.0
     },
     "weighted": {
-      "hit_rate": 0.0,
+      "hit_rate": 100.0,
       "half_life_days": 30
     }
   },
   "status_summary": {
-    "open": 1,
+    "open": 0,
     "resolved": 1,
-    "hits": 0,
+    "hits": 1,
     "stopped": 0,
-    "expired": 1
+    "expired": 0,
+    "managed_exits": 0,
+    "successes": 1
   },
   "direction_stats": {
     "buy": {
       "total": 1,
-      "hits": 0,
+      "hits": 1,
       "stopped": 0,
-      "hit_rate": 0.0
+      "hit_rate": 100.0
     },
     "sell": {
       "total": 0,
@@ -100,22 +120,22 @@
     }
   },
   "target_level_stats": {
-    "total_hits": 0,
-    "H1": 0,
+    "total_hits": 1,
+    "H1": 1,
     "H2": 0,
     "H3": 0,
-    "H1_pct": 0.0,
+    "H1_pct": 100.0,
     "H2_pct": 0.0,
     "H3_pct": 0.0
   },
   "profit_stats": {
-    "avg_win_pct": 0.0,
+    "avg_win_pct": 9.19,
     "avg_loss_pct": 0.0,
-    "total_pct": 0,
-    "win_count": 0,
+    "total_pct": 9.19,
+    "win_count": 1,
     "loss_count": 0
   },
-  "consistency_score": 0.0,
+  "consistency_score": 70.0,
   "walk_forward": {
     "available": false,
     "splits": [],
@@ -145,9 +165,23 @@
   },
   "policy": {
     "single_active_target_per_ticker_period": true,
-    "daily_expiry_days": 5,
-    "weekly_expiry_days": 20,
+    "daily_expiry_days": 12,
+    "weekly_expiry_days": 30,
     "min_hold_minutes": 60,
+    "managed_exit_profit_pct": -0.1,
+    "target_calibration": {
+      "enabled": true,
+      "daily": {
+        "target_scale": 0.4,
+        "stop_scale": 1.8,
+        "expiry_days": 12
+      },
+      "weekly": {
+        "target_scale": 0.4,
+        "stop_scale": 1.8,
+        "expiry_days": 30
+      }
+    },
     "strict_filters": {
       "enabled": true,
       "min_confidence": 70.0,
@@ -171,45 +205,51 @@
       ]
     }
   },
-  "open_targets": [
-    {
-      "ticker": "ETH-USD",
-      "period": "weekly",
-      "direction": "sell",
-      "opened_at": "2026-04-08 20:40",
-      "start_price": 2231.269,
-      "target_price": 1386.8,
-      "target_2": 760.8,
-      "target_3": 613.54,
-      "stop_loss": 2499.02,
-      "signal": "SAT",
-      "confidence": 75.4,
-      "score": -22.5,
-      "regime_key": "trend_down",
-      "rr_ratio": 3.1539
-    }
-  ],
+  "open_targets": [],
   "recent_resolved": [
     {
       "ticker": "SI=F",
       "period": "weekly",
       "direction": "buy",
       "opened_at": "2026-03-27 17:59",
-      "closed_at": "2026-03-27 18:08",
+      "closed_at": "2026-04-01 20:00",
       "start_price": 69.76,
-      "target_price": 85.78,
-      "target_2": 99.35,
-      "target_3": 117.92,
-      "stop_loss": 63.13,
-      "close_price": 70.51,
-      "profit_pct": 0.0,
-      "days_to_result": 0,
-      "hit_level": null,
-      "status": "EXPIRED",
+      "target_price": 76.168,
+      "target_2": 81.596,
+      "target_3": 89.024,
+      "stop_loss": 57.826,
+      "close_price": 76.168,
+      "profit_pct": 9.19,
+      "days_to_result": 5,
+      "hit_level": "H1",
+      "status": "HIT",
       "signal": "AL",
       "confidence": 64.0,
-      "score": 26.2
+      "score": 26.2,
+      "managed_exit": false
     }
   ],
-  "recent_hits": []
+  "recent_hits": [
+    {
+      "ticker": "SI=F",
+      "period": "weekly",
+      "direction": "buy",
+      "opened_at": "2026-03-27 17:59",
+      "closed_at": "2026-04-01 20:00",
+      "start_price": 69.76,
+      "target_price": 76.168,
+      "target_2": 81.596,
+      "target_3": 89.024,
+      "stop_loss": 57.826,
+      "close_price": 76.168,
+      "profit_pct": 9.19,
+      "days_to_result": 5,
+      "hit_level": "H1",
+      "status": "HIT",
+      "signal": "AL",
+      "confidence": 64.0,
+      "score": 26.2,
+      "managed_exit": false
+    }
+  ]
 }
