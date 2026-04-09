@@ -1,11 +1,11 @@
 {
-  "quality_score": 1.1,
+  "quality_score": 13.6,
   "quality_grade": "C",
   "quality_note": "Sistem dalgali; secicilik ve lot kontrolu artmali.",
   "rule_violation": {
-    "score": 61.9,
-    "label": "Orta",
-    "summary": "Kural ihlali orta seviyede; filtre ve secicilik artmali.",
+    "score": 100.0,
+    "label": "Iyi",
+    "summary": "Kural ihlali riski dusuk; disiplin korunuyor.",
     "components": [
       {
         "name": "Dusuk Guvenli Islemler",
@@ -19,20 +19,20 @@
       },
       {
         "name": "Sure Asimi",
-        "value": "%76.9",
+        "value": "%0.0",
         "help": "Ne ise yarar? Yanlis zamanlamayi erken fark ettirir."
       }
     ]
   },
   "error_patterns": [
     {
-      "title": "AL Yonlu Erken Bozulma",
-      "detail": "AL tarafinda sure asimi yuksek. Trend teyidi zayif islemler fazla olabilir.",
-      "action": "Ne ise yarar? AL filtresini sikilastirarak yanlis pozisyon sayisini dusurur."
+      "title": "Belirgin Hata Paterni Yok",
+      "detail": "Son kayitlarda tek bir baskin hata paterni gorulmuyor.",
+      "action": "Ne ise yarar? Mevcut disiplinin korundugunu ve tutarliligin artis potansiyelini gosterir."
     },
     {
       "title": "Orneklem Bilgisi",
-      "detail": "Analiz edilen kapanan islem sayisi: 13",
+      "detail": "Analiz edilen kapanan islem sayisi: 12",
       "action": "Ne ise yarar? Sonuclarin guvenilirlik seviyesini yorumlamani kolaylastirir."
     }
   ],
