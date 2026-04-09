@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-09 18:27",
+  "generated_at": "2026-04-09 20:36",
   "overview": {
     "total": 13,
     "hits": 7,
@@ -210,7 +210,7 @@
       "ticker": "EREGL",
       "period": "weekly",
       "direction": "buy",
-      "opened_at": "2026-04-09 18:27",
+      "opened_at": "2026-04-09 20:36",
       "start_price": 30.1,
       "target_price": 31.148,
       "target_2": 32.156,
@@ -231,7 +231,7 @@
       "ticker": "SISE",
       "period": "weekly",
       "direction": "buy",
-      "opened_at": "2026-04-09 18:27",
+      "opened_at": "2026-04-09 20:36",
       "start_price": 46.42,
       "target_price": 49.544,
       "target_2": 52.672,
