@@ -1,43 +1,43 @@
 {
-  "generated_at": "2026-04-09 13:38",
+  "generated_at": "2026-04-09 18:27",
   "overview": {
-    "total": 12,
+    "total": 13,
     "hits": 7,
     "stopped": 5,
-    "expired": 0,
+    "expired": 1,
     "managed_exits": 0,
     "successes": 7,
-    "hit_rate": 58.3,
-    "success_rate": 58.3,
-    "stop_rate": 41.7,
+    "hit_rate": 53.8,
+    "success_rate": 53.8,
+    "stop_rate": 38.5,
     "hit_rate_ci95": {
-      "lower": 32.0,
-      "upper": 80.7
+      "lower": 29.1,
+      "upper": 76.8
     },
     "sample_sufficiency": {
       "min_recommended": 30,
       "is_sufficient": false,
-      "remaining": 18
+      "remaining": 17
     }
   },
   "daily": {
-    "total": 6,
+    "total": 7,
     "hits": 2,
     "stopped": 4,
-    "expired": 0,
+    "expired": 1,
     "managed_exits": 0,
     "successes": 2,
-    "hit_rate": 33.3,
-    "success_rate": 33.3,
+    "hit_rate": 28.6,
+    "success_rate": 28.6,
     "avg_days_to_hit": 3.5,
     "hit_rate_ci95": {
-      "lower": 9.7,
-      "upper": 70.0
+      "lower": 8.2,
+      "upper": 64.1
     },
     "sample_sufficiency": {
       "min_recommended": 20,
       "is_sufficient": false,
-      "remaining": 14
+      "remaining": 13
     }
   },
   "weekly": {
@@ -62,46 +62,46 @@
   },
   "rolling": {
     "7d": {
-      "total": 5,
+      "total": 6,
       "hits": 4,
       "stopped": 1,
-      "expired": 0,
-      "hit_rate": 80.0,
+      "expired": 1,
+      "hit_rate": 66.7,
       "managed_exits": 0,
       "successes": 4,
-      "success_rate": 80.0
+      "success_rate": 66.7
     },
     "30d": {
-      "total": 12,
+      "total": 13,
       "hits": 7,
       "stopped": 5,
-      "expired": 0,
-      "hit_rate": 58.3,
+      "expired": 1,
+      "hit_rate": 53.8,
       "managed_exits": 0,
       "successes": 7,
-      "success_rate": 58.3
+      "success_rate": 53.8
     },
     "90d": {
-      "total": 12,
+      "total": 13,
       "hits": 7,
       "stopped": 5,
-      "expired": 0,
-      "hit_rate": 58.3,
+      "expired": 1,
+      "hit_rate": 53.8,
       "managed_exits": 0,
       "successes": 7,
-      "success_rate": 58.3
+      "success_rate": 53.8
     },
     "weighted": {
-      "hit_rate": 59.5,
+      "hit_rate": 54.2,
       "half_life_days": 30
     }
   },
   "status_summary": {
-    "open": 3,
-    "resolved": 12,
+    "open": 2,
+    "resolved": 13,
     "hits": 7,
     "stopped": 5,
-    "expired": 0,
+    "expired": 1,
     "managed_exits": 0,
     "successes": 7
   },
@@ -113,10 +113,10 @@
       "hit_rate": 75.0
     },
     "sell": {
-      "total": 4,
+      "total": 5,
       "hits": 1,
       "stopped": 3,
-      "hit_rate": 25.0
+      "hit_rate": 20.0
     }
   },
   "target_level_stats": {
@@ -135,7 +135,7 @@
     "win_count": 7,
     "loss_count": 5
   },
-  "consistency_score": 35.0,
+  "consistency_score": 29.7,
   "walk_forward": {
     "available": false,
     "splits": [],
@@ -148,13 +148,13 @@
       "min_train": 20,
       "test_size": 10,
       "min_records_needed": 30,
-      "current_records": 12,
-      "remaining": 18
+      "current_records": 13,
+      "remaining": 17
     }
   },
   "reliability": {
     "level": "low",
-    "ci_width": 48.7,
+    "ci_width": 47.7,
     "sample_sufficient": false,
     "walk_forward_available": false,
     "walk_forward_gap": 0.0,
@@ -210,20 +210,20 @@
       "ticker": "EREGL",
       "period": "weekly",
       "direction": "buy",
-      "opened_at": "2026-04-09 13:38",
-      "start_price": 30.28,
-      "target_price": 31.256,
-      "target_2": 32.308,
-      "target_3": 34.344,
-      "stop_loss": 28.696,
+      "opened_at": "2026-04-09 18:27",
+      "start_price": 30.1,
+      "target_price": 31.148,
+      "target_2": 32.156,
+      "target_3": 34.216,
+      "stop_loss": 28.84,
       "signal": "AL",
       "confidence": 95.5,
       "score": 29.6,
       "regime_key": "trend_up",
-      "rr_ratio": 2.7727,
+      "rr_ratio": 3.7429,
       "raw_target_price": 32.72,
-      "raw_target_2": 35.35,
-      "raw_target_3": 40.44,
+      "raw_target_2": 35.24,
+      "raw_target_3": 40.39,
       "raw_stop_loss": 29.4,
       "calibration_applied": true
     },
@@ -231,46 +231,51 @@
       "ticker": "SISE",
       "period": "weekly",
       "direction": "buy",
-      "opened_at": "2026-04-09 13:38",
-      "start_price": 46.68,
-      "target_price": 48.368,
-      "target_2": 49.772,
-      "target_3": 52.86,
-      "stop_loss": 45.384,
+      "opened_at": "2026-04-09 18:27",
+      "start_price": 46.42,
+      "target_price": 49.544,
+      "target_2": 52.672,
+      "target_3": 57.128,
+      "stop_loss": 40.624,
       "signal": "AL",
       "confidence": 70.9,
       "score": 25.7,
       "regime_key": "trend_up",
-      "rr_ratio": 5.8611,
-      "raw_target_price": 50.9,
-      "raw_target_2": 54.41,
-      "raw_target_3": 62.13,
-      "raw_stop_loss": 45.96,
+      "rr_ratio": 2.4255,
+      "raw_target_price": 54.23,
+      "raw_target_2": 62.05,
+      "raw_target_3": 73.19,
+      "raw_stop_loss": 43.2,
       "calibration_applied": true
-    },
+    }
+  ],
+  "recent_resolved": [
     {
       "ticker": "ENKAI",
       "period": "daily",
       "direction": "sell",
       "opened_at": "2026-03-27 17:19",
+      "closed_at": "2026-04-09 17:19",
       "start_price": 92.25,
       "target_price": 91.586,
       "target_2": 90.8644,
       "target_3": 90.0484,
       "stop_loss": 100.5444,
+      "close_price": 94.75,
+      "profit_pct": -2.71,
+      "days_to_result": 13,
+      "hit_level": null,
+      "status": "EXPIRED",
+      "signal": "HAFİF SAT",
+      "confidence": 100.0,
+      "score": -22.6,
       "raw_target_price": 90.59,
       "raw_target_2": 88.786,
       "raw_target_3": 86.746,
       "raw_stop_loss": 96.858,
-      "signal": "HAFİF SAT",
-      "confidence": 100.0,
-      "score": -22.6,
-      "regime_key": "neutral",
-      "rr_ratio": null,
-      "calibration_applied": true
-    }
-  ],
-  "recent_resolved": [
+      "calibration_applied": true,
+      "managed_exit": false
+    },
     {
       "ticker": "BIMAS",
       "period": "weekly",
