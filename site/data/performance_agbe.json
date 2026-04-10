@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-10 11:25",
+  "generated_at": "2026-04-10 13:33",
   "overview": {
     "total": 1,
     "hits": 1,
@@ -97,7 +97,7 @@
     }
   },
   "status_summary": {
-    "open": 0,
+    "open": 1,
     "resolved": 1,
     "hits": 1,
     "stopped": 0,
@@ -205,7 +205,29 @@
       ]
     }
   },
-  "open_targets": [],
+  "open_targets": [
+    {
+      "ticker": "ETH-USD",
+      "period": "weekly",
+      "direction": "sell",
+      "opened_at": "2026-04-10 13:33",
+      "start_price": 2192.3225,
+      "target_price": 1870.1135,
+      "target_2": 1609.3295,
+      "target_3": 1551.4535,
+      "stop_loss": 2665.862,
+      "signal": "SAT",
+      "confidence": 75.4,
+      "score": -22.5,
+      "regime_key": "trend_down",
+      "rr_ratio": 3.0619,
+      "raw_target_price": 1386.8,
+      "raw_target_2": 734.84,
+      "raw_target_3": 590.15,
+      "raw_stop_loss": 2455.4,
+      "calibration_applied": true
+    }
+  ],
   "recent_resolved": [
     {
       "ticker": "SI=F",

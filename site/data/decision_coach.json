@@ -1,9 +1,9 @@
 {
-  "quality_score": 13.2,
+  "quality_score": 12.9,
   "quality_grade": "C",
   "quality_note": "Sistem dalgali; secicilik ve lot kontrolu artmali.",
   "rule_violation": {
-    "score": 97.7,
+    "score": 100.0,
     "label": "Iyi",
     "summary": "Kural ihlali riski dusuk; disiplin korunuyor.",
     "components": [
@@ -19,7 +19,7 @@
       },
       {
         "name": "Sure Asimi",
-        "value": "%7.7",
+        "value": "%0.0",
         "help": "Ne ise yarar? Yanlis zamanlamayi erken fark ettirir."
       }
     ]
