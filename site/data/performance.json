@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-15 20:39",
+  "generated_at": "2026-04-16 11:49",
   "overview": {
     "total": 13,
     "hits": 7,
@@ -62,14 +62,14 @@
   },
   "rolling": {
     "7d": {
-      "total": 3,
-      "hits": 2,
+      "total": 1,
+      "hits": 0,
       "stopped": 1,
       "expired": 0,
-      "hit_rate": 66.7,
+      "hit_rate": 0.0,
       "managed_exits": 0,
-      "successes": 2,
-      "success_rate": 66.7
+      "successes": 0,
+      "success_rate": 0.0
     },
     "30d": {
       "total": 13,
@@ -97,7 +97,7 @@
     }
   },
   "status_summary": {
-    "open": 0,
+    "open": 2,
     "resolved": 13,
     "hits": 7,
     "stopped": 6,
@@ -205,7 +205,50 @@
       ]
     }
   },
-  "open_targets": [],
+  "open_targets": [
+    {
+      "ticker": "ASTOR",
+      "period": "weekly",
+      "direction": "buy",
+      "opened_at": "2026-04-16 11:49",
+      "start_price": 191.3,
+      "target_price": 201.06,
+      "target_2": 212.568,
+      "target_3": 233.832,
+      "stop_loss": 174.398,
+      "signal": "AL",
+      "confidence": 70.1,
+      "score": 24.9,
+      "regime_key": "trend_up",
+      "rr_ratio": 2.5985,
+      "raw_target_price": 215.7,
+      "raw_target_2": 244.47,
+      "raw_target_3": 297.63,
+      "raw_stop_loss": 181.91,
+      "calibration_applied": true
+    },
+    {
+      "ticker": "YKBNK",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-04-16 11:49",
+      "start_price": 37.6,
+      "target_price": 38.488,
+      "target_2": 39.204,
+      "target_3": 40.152,
+      "stop_loss": 36.142,
+      "signal": "AL",
+      "confidence": 76.4,
+      "score": 22.5,
+      "regime_key": "trend_up",
+      "rr_ratio": 2.7407,
+      "raw_target_price": 39.82,
+      "raw_target_2": 41.61,
+      "raw_target_3": 43.98,
+      "raw_stop_loss": 36.79,
+      "calibration_applied": true
+    }
+  ],
   "recent_resolved": [
     {
       "ticker": "ENKAI",
