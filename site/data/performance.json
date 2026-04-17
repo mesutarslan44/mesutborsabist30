@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-17 18:03",
+  "generated_at": "2026-04-17 20:13",
   "overview": {
     "total": 13,
     "hits": 7,
@@ -97,7 +97,7 @@
     }
   },
   "status_summary": {
-    "open": 1,
+    "open": 0,
     "resolved": 13,
     "hits": 7,
     "stopped": 6,
@@ -205,29 +205,7 @@
       ]
     }
   },
-  "open_targets": [
-    {
-      "ticker": "SAHOL",
-      "period": "weekly",
-      "direction": "buy",
-      "opened_at": "2026-04-17 18:03",
-      "start_price": 104.6,
-      "target_price": 108.032,
-      "target_2": 111.452,
-      "target_3": 118.264,
-      "stop_loss": 100.046,
-      "signal": "AL",
-      "confidence": 73.0,
-      "score": 30.7,
-      "regime_key": "trend_up",
-      "rr_ratio": 3.3913,
-      "raw_target_price": 113.18,
-      "raw_target_2": 121.73,
-      "raw_target_3": 138.76,
-      "raw_stop_loss": 102.07,
-      "calibration_applied": true
-    }
-  ],
+  "open_targets": [],
   "recent_resolved": [
     {
       "ticker": "ENKAI",
