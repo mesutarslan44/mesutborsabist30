@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-16 20:51",
+  "generated_at": "2026-04-17 11:48",
   "overview": {
     "total": 13,
     "hits": 7,
@@ -207,10 +207,31 @@
   },
   "open_targets": [
     {
+      "ticker": "AKBNK",
+      "period": "daily",
+      "direction": "buy",
+      "opened_at": "2026-04-17 11:48",
+      "start_price": 77.8,
+      "target_price": 80.508,
+      "target_2": 82.912,
+      "target_3": 83.64,
+      "stop_loss": 71.86,
+      "signal": "AL",
+      "confidence": 80.6,
+      "score": 27.7,
+      "regime_key": "trend_up",
+      "rr_ratio": 2.0515,
+      "raw_target_price": 84.57,
+      "raw_target_2": 90.58,
+      "raw_target_3": 92.4,
+      "raw_stop_loss": 74.5,
+      "calibration_applied": true
+    },
+    {
       "ticker": "GARAN",
       "period": "daily",
       "direction": "buy",
-      "opened_at": "2026-04-16 20:51",
+      "opened_at": "2026-04-17 11:48",
       "start_price": 137.0,
       "target_price": 138.196,
       "target_2": 138.792,
@@ -225,27 +246,6 @@
       "raw_target_2": 141.48,
       "raw_target_3": 146.59,
       "raw_stop_loss": 135.83,
-      "calibration_applied": true
-    },
-    {
-      "ticker": "KCHOL",
-      "period": "weekly",
-      "direction": "buy",
-      "opened_at": "2026-04-16 20:51",
-      "start_price": 204.5,
-      "target_price": 211.036,
-      "target_2": 218.94,
-      "target_3": 233.38,
-      "stop_loss": 191.162,
-      "signal": "AL",
-      "confidence": 75.1,
-      "score": 31.2,
-      "regime_key": "trend_up",
-      "rr_ratio": 2.2051,
-      "raw_target_price": 220.84,
-      "raw_target_2": 240.6,
-      "raw_target_3": 276.7,
-      "raw_stop_loss": 197.09,
       "calibration_applied": true
     }
   ],
