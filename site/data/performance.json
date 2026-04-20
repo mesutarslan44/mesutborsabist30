@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-17 20:13",
+  "generated_at": "2026-04-20 12:12",
   "overview": {
     "total": 13,
     "hits": 7,
@@ -62,9 +62,9 @@
   },
   "rolling": {
     "7d": {
-      "total": 1,
+      "total": 0,
       "hits": 0,
-      "stopped": 1,
+      "stopped": 0,
       "expired": 0,
       "hit_rate": 0.0,
       "managed_exits": 0,

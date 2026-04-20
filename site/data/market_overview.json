@@ -1,26 +1,26 @@
 {
-  "updated_at": "2026-04-17 20:13",
+  "updated_at": "2026-04-20 12:12",
   "update_frequency": "Hafta ici her gun 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
   "bist30": {
-    "index_value": 16723.23,
+    "index_value": 16723.2,
     "change_percent": 2.74,
-    "volume": 0,
-    "high": 16753.33,
-    "low": 16244.77,
+    "volume": 13781300,
+    "high": 16753.3,
+    "low": 16244.8,
     "date": "2026-04-17"
   },
   "indices": {
     "XU030": {
       "name": "BIST 30",
       "ticker": "XU030.IS",
-      "value": 16723.23,
-      "change": 445.53,
+      "value": 16723.2,
+      "change": 445.5,
       "change_pct": 2.74,
       "weekly_change_pct": 3.38,
       "monthly_change_pct": 11.76,
-      "yearly_high": 16753.33,
+      "yearly_high": 16753.3,
       "yearly_low": 9868.8,
-      "volume": 0,
+      "volume": 13781300,
       "sma20": 15285.91,
       "sma50": 15216.37,
       "sma200": 13017.8,
@@ -32,14 +32,14 @@
     "XU100": {
       "name": "BIST 100",
       "ticker": "XU100.IS",
-      "value": 14587.93,
-      "change": 386.83,
+      "value": 14587.9,
+      "change": 386.8,
       "change_pct": 2.72,
       "weekly_change_pct": 3.77,
       "monthly_change_pct": 11.23,
-      "yearly_high": 14601.12,
+      "yearly_high": 14601.1,
       "yearly_low": 8964.95,
-      "volume": 0,
+      "volume": 19679600000,
       "sma20": 13373.33,
       "sma50": 13474.91,
       "sma200": 11773.08,
@@ -123,7 +123,7 @@
       "rsi": 51.0203,
       "stoch_k": 49.1379,
       "adx": 27.841,
-      "volume_ratio": 2.8,
+      "volume_ratio": 2.9,
       "signal": "HAFİF AL",
       "signal_en": "WEAK_BUY",
       "score": 24.5,
@@ -248,8 +248,8 @@
   "signal_counts": {
     "STRONG_BUY": 0,
     "BUY": 2,
-    "WEAK_BUY": 10,
-    "HOLD": 18,
+    "WEAK_BUY": 9,
+    "HOLD": 19,
     "WEAK_SELL": 1,
     "SELL": 0,
     "STRONG_SELL": 0
@@ -257,29 +257,29 @@
   "news": [
     {
       "title": "📊 BIST 30 Teknik Analiz Raporu Güncellendi",
-      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 17.04.2026 20:14 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
-      "date": "17.04.2026 20:14",
+      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 20.04.2026 12:13 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
+      "date": "20.04.2026 12:13",
       "category": "analiz",
       "icon": "📊"
     },
     {
       "title": "🔔 Stochastic & ADX Göstergeleri Eklendi",
       "summary": "Yeni teknik göstergeler: Stochastic Oscillator ve ADX (Average Directional Index) artık tüm hisseler için hesaplanıyor. Fibonacci düzeltme seviyeleri de aktif.",
-      "date": "17.04.2026 20:14",
+      "date": "20.04.2026 12:13",
       "category": "güncelleme",
       "icon": "🔔"
     },
     {
       "title": "🎯 Hedef Fiyat Sistemi Aktif",
       "summary": "Her hisse için günlük, haftalık ve aylık hedef fiyatlar, stop-loss seviyeleri ve ekleme noktaları hesaplanıyor.",
-      "date": "17.04.2026 20:14",
+      "date": "20.04.2026 12:13",
       "category": "özellik",
       "icon": "🎯"
     },
     {
       "title": "⏰ Veriler Hafta Ici 10:01 / 12:30 / 17:00 / 19:30'da Otomatik Guncelleniyor",
       "summary": "Veriler hafta ici her gun saat 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin isterse panelden manuel olarak anlik yenileme tetikleyebilir.",
-      "date": "17.04.2026",
+      "date": "20.04.2026",
       "category": "bilgi",
       "icon": "⏰"
     }
