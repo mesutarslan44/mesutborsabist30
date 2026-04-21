@@ -1,52 +1,52 @@
 {
-  "updated_at": "2026-04-21 13:48",
+  "updated_at": "2026-04-21 18:19",
   "update_frequency": "Hafta ici her gun 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
   "bist30": {
-    "index_value": 16620.72,
-    "change_percent": 0.18,
+    "index_value": 16492.29,
+    "change_percent": -0.6,
     "volume": 0,
     "high": 16745.09,
-    "low": 16608.2,
+    "low": 16480.36,
     "date": "2026-04-21"
   },
   "indices": {
     "XU030": {
       "name": "BIST 30",
       "ticker": "XU030.IS",
-      "value": 16620.72,
-      "change": 29.52,
-      "change_pct": 0.18,
-      "weekly_change_pct": 1.55,
-      "monthly_change_pct": 10.42,
+      "value": 16492.29,
+      "change": -98.91,
+      "change_pct": -0.6,
+      "weekly_change_pct": 0.77,
+      "monthly_change_pct": 9.57,
       "yearly_high": 16753.3,
       "yearly_low": 9868.8,
       "volume": 0,
-      "sma20": 15455.99,
-      "sma50": 15283.08,
-      "sma200": 13071.46,
+      "sma20": 15449.57,
+      "sma50": 15280.51,
+      "sma200": 13070.82,
       "trend": "GÜÇLÜ YÜKSELEN",
       "trend_color": "#00e676",
       "yorum": "BIST 30 güçlü yükseliş trendinde! Endeks tüm kısa ve orta vadeli ortalamaların üzerinde. Piyasada alıcılar hakim, risk iştahı yüksek.",
-      "gunluk_yorum": "Bugün piyasa yatay seyrediyor. Net bir yön belli değil, hacim düşük."
+      "gunluk_yorum": "Bugün piyasada satış baskısı var. Dikkatli olun, destek seviyelerini takip edin."
     },
     "XU100": {
       "name": "BIST 100",
       "ticker": "XU100.IS",
-      "value": 14506.6,
-      "change": 21.7,
-      "change_pct": 0.15,
-      "weekly_change_pct": 1.78,
-      "monthly_change_pct": 10.16,
+      "value": 14390.4,
+      "change": -94.5,
+      "change_pct": -0.65,
+      "weekly_change_pct": 0.97,
+      "monthly_change_pct": 9.28,
       "yearly_high": 14616.14,
       "yearly_low": 8964.95,
       "volume": 0,
-      "sma20": 13517.99,
-      "sma50": 13507.53,
-      "sma200": 11817.51,
+      "sma20": 13512.18,
+      "sma50": 13505.21,
+      "sma200": 11816.93,
       "trend": "GÜÇLÜ YÜKSELEN",
       "trend_color": "#00e676",
       "yorum": "BIST 100 güçlü yükseliş trendinde! Endeks tüm kısa ve orta vadeli ortalamaların üzerinde. Piyasada alıcılar hakim, risk iştahı yüksek.",
-      "gunluk_yorum": "Bugün piyasa yatay seyrediyor. Net bir yön belli değil, hacim düşük."
+      "gunluk_yorum": "Bugün piyasada satış baskısı var. Dikkatli olun, destek seviyelerini takip edin."
     }
   },
   "top_buys": [
@@ -54,12 +54,12 @@
       "ticker": "ENJSA",
       "name": "Enerjisa",
       "sector": "Enerji",
-      "price": 118.3,
-      "change_pct": -2.8736,
-      "rsi": 53.0976,
-      "stoch_k": 44.202,
-      "adx": 30.3491,
-      "volume_ratio": 0.6,
+      "price": 118.0,
+      "change_pct": -3.1199,
+      "rsi": 52.6465,
+      "stoch_k": 42.4583,
+      "adx": 30.1684,
+      "volume_ratio": 1.1,
       "signal": "AL",
       "signal_en": "BUY",
       "score": 29.6,
@@ -67,10 +67,10 @@
       "color": "#00c853",
       "targets": {
         "target_1": 127.9,
-        "target_2": 133.21,
-        "target_3": 148.13,
+        "target_2": 133.01,
+        "target_3": 148.03,
         "stop_loss": 114.01,
-        "add_level": 116.58
+        "add_level": 116.4
       },
       "range_3m": {
         "min": 92.76,
@@ -83,58 +83,26 @@
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: HAFİF AL — Yükseliş trendi sürüyor ama momentum azalıyor. | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim aktif. Uz"
     },
     {
-      "ticker": "KRDMD",
-      "name": "Kardemir D",
-      "sector": "Metal",
-      "price": 36.9,
-      "change_pct": 0.545,
-      "rsi": 65.8961,
-      "stoch_k": 72.1429,
-      "adx": 56.5807,
-      "volume_ratio": 0.5,
-      "signal": "AL",
-      "signal_en": "BUY",
-      "score": 24.9,
-      "confidence": 70.1,
-      "color": "#00c853",
-      "targets": {
-        "target_1": 39.24,
-        "target_2": 41.53,
-        "target_3": 46.15,
-        "stop_loss": 36.37,
-        "add_level": 36.69
-      },
-      "range_3m": {
-        "min": 27.7,
-        "max": 39.24
-      },
-      "range_6m": {
-        "min": 23.5,
-        "max": 39.24
-      },
-      "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: HAFİF AL — Yükseliş trendi sürüyor ama momentum azalıyor. | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim aktif. Uz"
-    },
-    {
       "ticker": "ODAS",
       "name": "Odaş Elektrik",
       "sector": "Enerji",
-      "price": 7.04,
-      "change_pct": -1.1236,
-      "rsi": 64.2091,
-      "stoch_k": 77.3006,
-      "adx": 38.9774,
-      "volume_ratio": 0.4,
+      "price": 6.82,
+      "change_pct": -4.2135,
+      "rsi": 58.0826,
+      "stoch_k": 63.8037,
+      "adx": 37.8717,
+      "volume_ratio": 0.7,
       "signal": "AL",
       "signal_en": "BUY",
-      "score": 24.9,
-      "confidence": 70.1,
+      "score": 29.6,
+      "confidence": 95.5,
       "color": "#00c853",
       "targets": {
         "target_1": 7.41,
-        "target_2": 7.88,
-        "target_3": 8.72,
-        "stop_loss": 6.87,
-        "add_level": 6.97
+        "target_2": 7.73,
+        "target_3": 8.65,
+        "stop_loss": 6.56,
+        "add_level": 6.72
       },
       "range_3m": {
         "min": 5.14,
@@ -147,76 +115,108 @@
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: HAFİF AL — Yükseliş trendi sürüyor ama momentum azalıyor. | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim aktif. Uz"
     },
     {
-      "ticker": "SISE",
-      "name": "Şişecam",
-      "sector": "Cam",
-      "price": 47.7,
-      "change_pct": -0.3759,
-      "rsi": 57.476,
-      "stoch_k": 74.3772,
-      "adx": 25.9652,
-      "volume_ratio": 0.3,
-      "signal": "HAFİF AL",
-      "signal_en": "WEAK_BUY",
-      "score": 23.4,
-      "confidence": 65.4,
-      "color": "#69f0ae",
+      "ticker": "KCHOL",
+      "name": "Koç Holding",
+      "sector": "Holding",
+      "price": 205.8,
+      "change_pct": -1.0577,
+      "rsi": 58.3312,
+      "stoch_k": 72.4445,
+      "adx": 35.6132,
+      "volume_ratio": 0.5,
+      "signal": "AL",
+      "signal_en": "BUY",
+      "score": 28.2,
+      "confidence": 91.0,
+      "color": "#00c853",
       "targets": {
-        "target_1": 50.9,
-        "target_2": 52.77,
-        "target_3": 57.83,
-        "stop_loss": 46.13,
-        "add_level": 47.07
+        "target_1": 220.84,
+        "target_2": 226.78,
+        "target_3": 247.77,
+        "stop_loss": 201.72,
+        "add_level": 204.17
       },
       "range_3m": {
-        "min": 38.82,
-        "max": 50.9
+        "min": 172.93,
+        "max": 220.84
       },
       "range_6m": {
-        "min": 33.98,
-        "max": 50.9
+        "min": 153.27,
+        "max": 220.84
       },
       "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: HAFİF AL — Yükseliş trendi sürüyor ama momentum azalıyor. | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim aktif. Uz"
     },
     {
-      "ticker": "FROTO",
-      "name": "Ford Otosan",
-      "sector": "Otomotiv",
-      "price": 104.3,
-      "change_pct": -2.9767,
-      "rsi": 48.3811,
-      "stoch_k": 60.7843,
-      "adx": 35.4881,
-      "volume_ratio": 0.7,
-      "signal": "HAFİF AL",
-      "signal_en": "WEAK_BUY",
-      "score": 22.8,
-      "confidence": 74.0,
-      "color": "#69f0ae",
+      "ticker": "ASELS",
+      "name": "Aselsan",
+      "sector": "Savunma",
+      "price": 397.75,
+      "change_pct": -2.5123,
+      "rsi": 63.1872,
+      "stoch_k": 70.4492,
+      "adx": 47.1054,
+      "volume_ratio": 0.5,
+      "signal": "AL",
+      "signal_en": "BUY",
+      "score": 24.9,
+      "confidence": 70.1,
+      "color": "#00c853",
       "targets": {
-        "target_1": 109.67,
-        "target_2": 110.59,
-        "target_3": 113.73,
-        "stop_loss": 103.48,
-        "add_level": 103.8
+        "target_1": 429.0,
+        "target_2": 456.83,
+        "target_3": 515.92,
+        "stop_loss": 392.95,
+        "add_level": 395.83
       },
       "range_3m": {
-        "min": 96.55,
-        "max": 130.91
+        "min": 283.0,
+        "max": 429.0
       },
       "range_6m": {
-        "min": 84.1,
-        "max": 130.91
+        "min": 171.28,
+        "max": 429.0
       },
-      "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: AL — Güçlü yükseliş momentumu devam ediyor. | HAFİF AL — Genel trend yukarı yönlü. | AL — Güçlü yükseliş trendi teyit edildi. Trendle gidin.. ⚠️ "
+      "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: HAFİF AL — Yükseliş trendi sürüyor ama momentum azalıyor. | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim aktif. Uz"
+    },
+    {
+      "ticker": "KRDMD",
+      "name": "Kardemir D",
+      "sector": "Metal",
+      "price": 36.26,
+      "change_pct": -1.1989,
+      "rsi": 62.6705,
+      "stoch_k": 64.5238,
+      "adx": 56.0256,
+      "volume_ratio": 0.8,
+      "signal": "AL",
+      "signal_en": "BUY",
+      "score": 24.9,
+      "confidence": 70.1,
+      "color": "#00c853",
+      "targets": {
+        "target_1": 39.24,
+        "target_2": 41.1,
+        "target_3": 45.94,
+        "stop_loss": 34.68,
+        "add_level": 35.63
+      },
+      "range_3m": {
+        "min": 27.7,
+        "max": 39.24
+      },
+      "range_6m": {
+        "min": 23.5,
+        "max": 39.24
+      },
+      "explanation_short": "🟢 Günlük bazda ALIŞ sinyali veriyoruz. Alım sebepleri: HAFİF AL — Yükseliş trendi sürüyor ama momentum azalıyor. | AL — Tüm ortalamalar altında, mükemmel teknik görünüm. | AL — Altın kesişim aktif. Uz"
     }
   ],
   "top_sells": [],
   "signal_counts": {
     "STRONG_BUY": 0,
-    "BUY": 3,
-    "WEAK_BUY": 15,
-    "HOLD": 13,
+    "BUY": 8,
+    "WEAK_BUY": 13,
+    "HOLD": 10,
     "WEAK_SELL": 0,
     "SELL": 0,
     "STRONG_SELL": 0
@@ -224,22 +224,22 @@
   "news": [
     {
       "title": "📊 BIST 30 Teknik Analiz Raporu Güncellendi",
-      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 21.04.2026 13:49 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
-      "date": "21.04.2026 13:49",
+      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 21.04.2026 18:20 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
+      "date": "21.04.2026 18:20",
       "category": "analiz",
       "icon": "📊"
     },
     {
       "title": "🔔 Stochastic & ADX Göstergeleri Eklendi",
       "summary": "Yeni teknik göstergeler: Stochastic Oscillator ve ADX (Average Directional Index) artık tüm hisseler için hesaplanıyor. Fibonacci düzeltme seviyeleri de aktif.",
-      "date": "21.04.2026 13:49",
+      "date": "21.04.2026 18:20",
       "category": "güncelleme",
       "icon": "🔔"
     },
     {
       "title": "🎯 Hedef Fiyat Sistemi Aktif",
       "summary": "Her hisse için günlük, haftalık ve aylık hedef fiyatlar, stop-loss seviyeleri ve ekleme noktaları hesaplanıyor.",
-      "date": "21.04.2026 13:49",
+      "date": "21.04.2026 18:20",
       "category": "özellik",
       "icon": "🎯"
     },
