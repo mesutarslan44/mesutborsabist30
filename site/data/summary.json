@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-22 20:32",
+  "updated_at": "2026-04-23 11:58",
   "update_frequency": "Hafta ici her gun 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
   "total_stocks": 31,
   "signal_counts": {
@@ -589,6 +589,38 @@
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺62.30\n  • Direnç 2: ₺56.53\n  • Direnç 1: ₺50.11\n  • Pivot: ₺44.34\n  • Dest"
     },
     {
+      "ticker": "SASA",
+      "name": "SASA Polyester",
+      "sector": "Kimya",
+      "price": 2.97,
+      "change_pct": -1.9802,
+      "rsi": 66.0933,
+      "stoch_k": 63.5417,
+      "adx": 47.5376,
+      "volume_ratio": 0.0,
+      "signal": "HAFİF AL",
+      "signal_en": "WEAK_BUY",
+      "score": 15.4,
+      "confidence": 58.2,
+      "color": "#69f0ae",
+      "targets": {
+        "target_1": 3.32,
+        "target_2": 3.48,
+        "target_3": 4.0,
+        "stop_loss": 2.86,
+        "add_level": 2.93
+      },
+      "range_3m": {
+        "min": 2.13,
+        "max": 3.32
+      },
+      "range_6m": {
+        "min": 2.13,
+        "max": 3.32
+      },
+      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺4.67\n  • Direnç 2: ₺4.00\n  • Direnç 1: ₺3.48\n  • Pivot: ₺2.81\n  • Destek 1"
+    },
+    {
       "ticker": "BIMAS",
       "name": "BİM",
       "sector": "Perakende",
@@ -597,7 +629,7 @@
       "rsi": 64.8661,
       "stoch_k": 91.3793,
       "adx": 51.5785,
-      "volume_ratio": 0.9,
+      "volume_ratio": 1.0,
       "signal": "HAFİF AL",
       "signal_en": "WEAK_BUY",
       "score": 12.1,
@@ -779,38 +811,6 @@
         "max": 3.88
       },
       "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺4.53\n  • Direnç 2: ₺4.08\n  • Direnç 1: ₺3.66\n  • Pivot: ₺3.21\n  • Destek 1"
-    },
-    {
-      "ticker": "SASA",
-      "name": "SASA Polyester",
-      "sector": "Kimya",
-      "price": 2.97,
-      "change_pct": -1.9802,
-      "rsi": 66.0933,
-      "stoch_k": 63.5417,
-      "adx": 47.5376,
-      "volume_ratio": 7.8,
-      "signal": "HAFİF AL",
-      "signal_en": "WEAK_BUY",
-      "score": 8.7,
-      "confidence": 26.5,
-      "color": "#69f0ae",
-      "targets": {
-        "target_1": 3.32,
-        "target_2": 3.48,
-        "target_3": 4.0,
-        "stop_loss": 2.86,
-        "add_level": 2.93
-      },
-      "range_3m": {
-        "min": 2.13,
-        "max": 3.32
-      },
-      "range_6m": {
-        "min": 2.13,
-        "max": 3.32
-      },
-      "explanation_short": "🟡 Günlük bazda BEKLEME sinyali veriyoruz. Göstergeler karışık sinyal üretiyor. \n\n📊 DESTEK & DİRENÇ SEVİYELERİ:\n  • Direnç 3: ₺4.67\n  • Direnç 2: ₺4.00\n  • Direnç 1: ₺3.48\n  • Pivot: ₺2.81\n  • Destek 1"
     },
     {
       "ticker": "ARCLK",
@@ -1009,14 +1009,14 @@
     "XU030": {
       "name": "BIST 30",
       "ticker": "XU030.IS",
-      "value": 16458.09,
-      "change": -13.91,
+      "value": 16458.1,
+      "change": -13.9,
       "change_pct": -0.08,
       "weekly_change_pct": 1.11,
       "monthly_change_pct": 11.51,
       "yearly_high": 16753.3,
       "yearly_low": 9868.8,
-      "volume": 0,
+      "volume": 4326700,
       "sma20": 15531.96,
       "sma50": 15308.97,
       "sma200": 13096.2,
@@ -1028,15 +1028,15 @@
     "XU100": {
       "name": "BIST 100",
       "ticker": "XU100.IS",
-      "value": 14335.49,
-      "change": -39.91,
+      "value": 14335.5,
+      "change": -39.9,
       "change_pct": -0.28,
       "weekly_change_pct": 0.95,
       "monthly_change_pct": 10.87,
       "yearly_high": 14616.1,
       "yearly_low": 8964.95,
-      "volume": 0,
-      "sma20": 13580.0,
+      "volume": 8032300000,
+      "sma20": 13580.01,
       "sma50": 13515.68,
       "sma200": 11837.7,
       "trend": "GÜÇLÜ YÜKSELEN",
@@ -1048,29 +1048,29 @@
   "news": [
     {
       "title": "📊 BIST 30 Teknik Analiz Raporu Güncellendi",
-      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 22.04.2026 20:33 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
-      "date": "22.04.2026 20:33",
+      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 23.04.2026 11:59 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
+      "date": "23.04.2026 11:59",
       "category": "analiz",
       "icon": "📊"
     },
     {
       "title": "🔔 Stochastic & ADX Göstergeleri Eklendi",
       "summary": "Yeni teknik göstergeler: Stochastic Oscillator ve ADX (Average Directional Index) artık tüm hisseler için hesaplanıyor. Fibonacci düzeltme seviyeleri de aktif.",
-      "date": "22.04.2026 20:33",
+      "date": "23.04.2026 11:59",
       "category": "güncelleme",
       "icon": "🔔"
     },
     {
       "title": "🎯 Hedef Fiyat Sistemi Aktif",
       "summary": "Her hisse için günlük, haftalık ve aylık hedef fiyatlar, stop-loss seviyeleri ve ekleme noktaları hesaplanıyor.",
-      "date": "22.04.2026 20:33",
+      "date": "23.04.2026 11:59",
       "category": "özellik",
       "icon": "🎯"
     },
     {
       "title": "⏰ Veriler Hafta Ici 10:01 / 12:30 / 17:00 / 19:30'da Otomatik Guncelleniyor",
       "summary": "Veriler hafta ici her gun saat 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin isterse panelden manuel olarak anlik yenileme tetikleyebilir.",
-      "date": "22.04.2026",
+      "date": "23.04.2026",
       "category": "bilgi",
       "icon": "⏰"
     }

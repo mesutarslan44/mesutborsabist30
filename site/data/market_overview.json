@@ -1,26 +1,26 @@
 {
-  "updated_at": "2026-04-22 20:32",
+  "updated_at": "2026-04-23 11:58",
   "update_frequency": "Hafta ici her gun 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin manuel olarak istedigi zaman yenileyebilir.",
   "bist30": {
-    "index_value": 16458.09,
+    "index_value": 16458.1,
     "change_percent": -0.08,
-    "volume": 0,
-    "high": 16617.77,
-    "low": 16343.59,
+    "volume": 4326700,
+    "high": 16617.8,
+    "low": 16343.6,
     "date": "2026-04-22"
   },
   "indices": {
     "XU030": {
       "name": "BIST 30",
       "ticker": "XU030.IS",
-      "value": 16458.09,
-      "change": -13.91,
+      "value": 16458.1,
+      "change": -13.9,
       "change_pct": -0.08,
       "weekly_change_pct": 1.11,
       "monthly_change_pct": 11.51,
       "yearly_high": 16753.3,
       "yearly_low": 9868.8,
-      "volume": 0,
+      "volume": 4326700,
       "sma20": 15531.96,
       "sma50": 15308.97,
       "sma200": 13096.2,
@@ -32,15 +32,15 @@
     "XU100": {
       "name": "BIST 100",
       "ticker": "XU100.IS",
-      "value": 14335.49,
-      "change": -39.91,
+      "value": 14335.5,
+      "change": -39.9,
       "change_pct": -0.28,
       "weekly_change_pct": 0.95,
       "monthly_change_pct": 10.87,
       "yearly_high": 14616.1,
       "yearly_low": 8964.95,
-      "volume": 0,
-      "sma20": 13580.0,
+      "volume": 8032300000,
+      "sma20": 13580.01,
       "sma50": 13515.68,
       "sma200": 11837.7,
       "trend": "GÜÇLÜ YÜKSELEN",
@@ -224,29 +224,29 @@
   "news": [
     {
       "title": "📊 BIST 30 Teknik Analiz Raporu Güncellendi",
-      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 22.04.2026 20:33 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
-      "date": "22.04.2026 20:33",
+      "summary": "Tüm BIST 30 hisseleri için güncel teknik analiz raporu hazırlandı. 23.04.2026 11:59 itibarıyla 9 farklı gösterge ile analiz yapıldı.",
+      "date": "23.04.2026 11:59",
       "category": "analiz",
       "icon": "📊"
     },
     {
       "title": "🔔 Stochastic & ADX Göstergeleri Eklendi",
       "summary": "Yeni teknik göstergeler: Stochastic Oscillator ve ADX (Average Directional Index) artık tüm hisseler için hesaplanıyor. Fibonacci düzeltme seviyeleri de aktif.",
-      "date": "22.04.2026 20:33",
+      "date": "23.04.2026 11:59",
       "category": "güncelleme",
       "icon": "🔔"
     },
     {
       "title": "🎯 Hedef Fiyat Sistemi Aktif",
       "summary": "Her hisse için günlük, haftalık ve aylık hedef fiyatlar, stop-loss seviyeleri ve ekleme noktaları hesaplanıyor.",
-      "date": "22.04.2026 20:33",
+      "date": "23.04.2026 11:59",
       "category": "özellik",
       "icon": "🎯"
     },
     {
       "title": "⏰ Veriler Hafta Ici 10:01 / 12:30 / 17:00 / 19:30'da Otomatik Guncelleniyor",
       "summary": "Veriler hafta ici her gun saat 10:01, 12:30, 17:00 ve 19:30'da otomatik guncellenir. Admin isterse panelden manuel olarak anlik yenileme tetikleyebilir.",
-      "date": "22.04.2026",
+      "date": "23.04.2026",
       "category": "bilgi",
       "icon": "⏰"
     }
