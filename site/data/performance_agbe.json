@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-23 18:58",
+  "generated_at": "2026-04-23 20:52",
   "overview": {
     "total": 1,
     "hits": 1,
@@ -97,7 +97,7 @@
     }
   },
   "status_summary": {
-    "open": 1,
+    "open": 0,
     "resolved": 1,
     "hits": 1,
     "stopped": 0,
@@ -205,29 +205,7 @@
       ]
     }
   },
-  "open_targets": [
-    {
-      "ticker": "GC=F",
-      "period": "daily",
-      "direction": "buy",
-      "opened_at": "2026-04-23 18:58",
-      "start_price": 4740.0,
-      "target_price": 4851.512,
-      "target_2": 4938.26,
-      "target_3": 5050.88,
-      "stop_loss": 4576.668,
-      "signal": "AL",
-      "confidence": 84.3,
-      "score": 34.2,
-      "regime_key": "trend_up",
-      "rr_ratio": 3.0723,
-      "raw_target_price": 5018.78,
-      "raw_target_2": 5235.65,
-      "raw_target_3": 5517.2,
-      "raw_stop_loss": 4649.26,
-      "calibration_applied": true
-    }
-  ],
+  "open_targets": [],
   "recent_resolved": [
     {
       "ticker": "SI=F",
